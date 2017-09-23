@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "267044808577",
+    "firebase_url": "https://theheylaapp.firebaseio.com",
+    "project_id": "theheylaapp",
+    "storage_bucket": "theheylaapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267044808577:android:15daf0ec559fa0f5",
+        "android_client_info": {
+          "package_name": "com.palprotech.heylaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "267044808577-ol5bl6s3thdune6lt9vglcsag7ftukl5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.palprotech.heylaapp",
+            "certificate_hash": "0359e7dc48fefeb14bc7b8d941c6ca08301ad167"
+          }
+        },
+        {
+          "client_id": "267044808577-fi7ue3cog6dthf3vda35kjjcibk87a4j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBenqrVYiC6PDp0PO3pJg8ROcGK-m9oTgI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "267044808577-fi7ue3cog6dthf3vda35kjjcibk87a4j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
