@@ -3,7 +3,7 @@ package com.palprotech.heylaapp.serviceinterfaces;
 import org.json.JSONObject;
 
 /**
- * Created by Admin on 27-06-2017.
+ * Created by Admin on 25-09-2017.
  */
 
 public interface IServiceListener {
