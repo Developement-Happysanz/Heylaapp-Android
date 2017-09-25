@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Heylaapp</string>
+    <string name="app_name">Heyla</string>
+
+    <string name="error_occurred">Failed to connect to the server. Please try again.</string>
 </resources>
