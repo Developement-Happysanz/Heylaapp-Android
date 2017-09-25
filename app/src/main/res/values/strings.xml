@@ -1,5 +1,15 @@
 <resources>
+    /////// GENERAL ////////
     <string name="app_name">Heyla</string>
-
     <string name="error_occurred">Failed to connect to the server. Please try again.</string>
+
+    /////// LOGIN //////
+    <string name="fb_login_protocol_scheme">fb279152195822147</string>
+    <string name="facebook_app_id">279152195822147</string>
+    <string name="guest">GUEST</string>
+    <string name="signup"><u>sign up</u></string>
+    <string name="signup_promt"><u>Click here to</u></string>
+
+
+
 </resources>
