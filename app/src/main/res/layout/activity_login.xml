@@ -24,22 +24,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_centerHorizontal="true" />
+
+                <ImageView
+                    android:id="@+id/strip"
+                    android:layout_width="10dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/login_strip"
+                    android:layout_alignParentRight="true"/>
+
                 <TextView
                     android:id="@+id/guestlogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
+
+                    android:layout_toLeftOf="@+id/strip"
+                    android:layout_alignTop="@+id/strip"
+                    android:layout_alignBottom="@+id/strip"
                     android:text="@string/guest"
-                    android:gravity="right"
+                    android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
-                <ImageView
-                    android:layout_width="5dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/login_strip"
-                    android:layout_alignParentRight="true"/>
+
 
                 <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/pager"
