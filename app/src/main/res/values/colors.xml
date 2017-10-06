@@ -5,8 +5,7 @@
     <color name="colorAccent">#ff4081</color>
 
 
-    ////// LOGIN MODULE //////
-    <color name="appcolor">#3675b7</color>
+    <!--App base color-->
     <color name="appColorBase">#468dcb</color>
 
 
