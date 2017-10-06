@@ -44,38 +44,38 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
 
-                <EditText
-                    android:id="@+id/username"
-                    android:layout_width="240dp"
-                    android:layout_height="50dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="50dp"
-                    android:background="@drawable/login_username_texbox"
-                    android:hint=" Username"
-                    android:paddingLeft="5dp"
-                    android:drawableLeft="@drawable/login_email"
-                    android:singleLine="true"
-                    android:textSize="15dp" />
+                <!--<EditText-->
+                    <!--android:id="@+id/username"-->
+                    <!--android:layout_width="240dp"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:layout_marginTop="50dp"-->
+                    <!--android:background="@drawable/login_username_texbox"-->
+                    <!--android:hint=" Username"-->
+                    <!--android:paddingLeft="5dp"-->
+                    <!--android:drawableLeft="@drawable/login_email"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:textSize="15dp" />-->
 
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="240dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/username"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/login_username_texbox"
-                    android:hint=" Password"
-                    android:drawableLeft="@drawable/login_password"
-                    android:paddingLeft="5dp"
-                    android:singleLine="true"
-                    android:textSize="15dp" />
+                <!--<EditText-->
+                    <!--android:id="@+id/password"-->
+                    <!--android:layout_width="240dp"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:layout_below="@+id/username"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:background="@drawable/login_username_texbox"-->
+                    <!--android:hint=" Password"-->
+                    <!--android:drawableLeft="@drawable/login_password"-->
+                    <!--android:paddingLeft="5dp"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:textSize="15dp" />-->
 
-            </RelativeLayout>
+            <!--</RelativeLayout>-->
 
 
         </LinearLayout>
