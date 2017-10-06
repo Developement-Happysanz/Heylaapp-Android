@@ -95,6 +95,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
 //    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
 
     compile files('libs/apache-mime4j-0.6.jar')
     compile files('libs/httpclient-4.3.6.jar')

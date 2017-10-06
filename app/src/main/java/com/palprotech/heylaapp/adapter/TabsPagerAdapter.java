@@ -6,37 +6,38 @@ package com.palprotech.heylaapp.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.palprotech.heylaapp.fragment.SignInFragment;
 import com.palprotech.heylaapp.fragment.SignUpFragment;
 
 
-public class TabsPagerAdapter extends FragmentPagerAdapter {
+public class TabsPagerAdapter extends FragmentStatePagerAdapter {
+
+    private String[] titles = {"Sign In", "Sign Up"};
 
     public TabsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
-    public Fragment getItem(int index) {
-
-        switch (index) {
+    public Fragment getItem(int i) {
+        switch(i){
             case 0:
-                // First fragment activity
                 return new SignInFragment();
             case 1:
-                // Second fragment activity
                 return new SignUpFragment();
         }
-
         return null;
     }
 
     @Override
     public int getCount() {
-        // get item count - equal to number of tabs
-        return 2;
+        return titles.length;
     }
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return titles[position];
+    }
 }
