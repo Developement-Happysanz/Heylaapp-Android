@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,33 +18,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <ImageView
+                    android:id="@+id/title"
+                    android:background="@drawable/login_bg_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:text="@string/guest"
-                    android:textColor="@color/text_black"
-                    android:textSize="15sp"/>
+                    android:gravity="right"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:drawableRight="@drawable/login_strip"
+                    android:textStyle="bold"/>
 
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/app_name"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="bold"
-                    android:layout_marginTop="50dp"
-                    android:textSize="35sp"/>
-
-                <TextView
-                    android:id="@+id/signup_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/pager"
                     android:layout_below="@+id/title"
-                    android:layout_marginTop="20dp"
-                    android:text="Click here to "/>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </android.support.v4.view.ViewPager>
 
             </RelativeLayout>
 
@@ -53,8 +49,31 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content" />
+                    android:id="@+id/username"
+                    android:layout_width="240dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/login_username_texbox"
+                    android:hint=" Username"
+                    android:paddingLeft="5dp"
+                    android:drawableLeft="@drawable/login_email"
+                    android:singleLine="true"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="240dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/username"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/login_username_texbox"
+                    android:hint=" Password"
+                    android:drawableLeft="@drawable/login_password"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:textSize="15dp" />
 
             </RelativeLayout>
 

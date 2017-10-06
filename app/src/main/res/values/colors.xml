@@ -5,8 +5,12 @@
     <color name="colorAccent">#FF4081</color>
 
     ////// LOGIN MODULE //////
+    <color name="appcolor">#3675b7</color>
+
+    ////// LOGIN MODULE //////
     <color name="text_black">#000000</color>
     <color name="white">#FFFFFF</color>
-
+    <color name="transparent">#00000000</color>
+    <color name="bordergray">#dedddd</color>
 
 </resources>
