@@ -8,6 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.palprotech.heylaapp.fragment.SignInFragment;
+import com.palprotech.heylaapp.fragment.SignUpFragment;
+
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
@@ -21,10 +24,10 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
         switch (index) {
             case 0:
                 // First fragment activity
-//                return new SignInFragment();
+                return new SignInFragment();
             case 1:
                 // Second fragment activity
-//                return new SignUpFragment();
+                return new SignUpFragment();
         }
 
         return null;
