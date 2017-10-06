@@ -1,47 +1,21 @@
 package com.palprotech.heylaapp.fragment;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
-import android.util.Log;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.palprotech.heylaapp.R;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-/**
- * Created by Narendar on 06/10/17.
- */
-
-public class SignInFragment extends AppCompatActivity {
+public class SignInFragment extends Fragment {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-//        final String token = SharedPrefManager.getInstance(this).getDeviceToken();
-//
-//        String ok = token;
+        View rootView = inflater.inflate(R.layout.fragment_sign_in, container, false);
 
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.palprotech.heylaapp",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        } catch (NoSuchAlgorithmException e) {
-
-        }
-
+        return rootView;
     }
 }

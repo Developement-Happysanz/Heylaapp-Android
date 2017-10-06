@@ -25,15 +25,21 @@
                     android:layout_height="200dp"
                     android:layout_centerHorizontal="true" />
                 <TextView
+                    android:id="@+id/guestlogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
                     android:text="@string/guest"
                     android:gravity="right"
                     android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:drawableRight="@drawable/login_strip"
-                    android:textStyle="bold"/>
+                    android:textSize="15sp" />
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/login_strip"
+                    android:layout_alignParentRight="true"/>
 
                 <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/pager"

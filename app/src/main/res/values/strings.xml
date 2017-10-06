@@ -6,7 +6,7 @@
     /////// LOGIN //////
     <string name="fb_login_protocol_scheme">fb279152195822147</string>
     <string name="facebook_app_id">279152195822147</string>
-    <string name="guest">GUEST</string>
+    <string name="guest">GUEST LOGIN</string>
     <string name="signup"><u>sign up</u></string>
     <string name="signup_promt"><u>Click here to</u></string>
 
