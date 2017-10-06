@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 //        final String token = SharedPrefManager.getInstance(this).getDeviceToken();
-//
 //        String ok = token;
 
         try {
@@ -40,6 +39,5 @@ public class MainActivity extends AppCompatActivity {
         } catch (NoSuchAlgorithmException e) {
 
         }
-
     }
 }
