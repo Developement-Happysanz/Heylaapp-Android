@@ -15,9 +15,14 @@
             android:orientation="vertical">
 
             <RelativeLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <RelativeLayout
+                    android:id="@+id/title_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/title"
                     android:background="@drawable/login_bg_img"
@@ -33,6 +38,13 @@
                     android:background="@drawable/login_strip"
                     android:layout_alignParentRight="true"/>
 
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="150dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/heyla_logo_transparent" />
+
                 <TextView
                     android:id="@+id/guestlogin"
                     android:layout_width="wrap_content"
@@ -45,6 +57,7 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
+                </RelativeLayout>
 
 
                 <LinearLayout
@@ -52,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_below="@+id/title">
+                    android:layout_below="@+id/title_img">
 
                     <com.palprotech.heylaapp.customview.PagerSlidingTabStrip
                         android:id="@+id/tabs"
