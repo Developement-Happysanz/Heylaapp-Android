@@ -47,18 +47,25 @@
                     android:textSize="15sp" />
 
 
-                <com.astuetz.PagerSlidingTabStrip
-                    android:id="@+id/tabs"
-                    android:layout_below="@+id/title"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dip" />
-
-                <android.support.v4.view.ViewPager
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/pager"
+                <LinearLayout
+                    android:id="@+id/tool_bar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/title"/>
+                    android:orientation="vertical"
+                    android:layout_below="@+id/title">
+
+                    <com.palprotech.heylaapp.customview.PagerSlidingTabStrip
+                        android:id="@+id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dip"
+                        android:background="@color/appColorBase" />
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
