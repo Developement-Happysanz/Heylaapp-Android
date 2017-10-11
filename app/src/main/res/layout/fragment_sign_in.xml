@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -19,52 +19,29 @@
             android:background="@drawable/login_username_texbox"
             android:drawableLeft="@drawable/ic_login_email"
             android:hint=" Username"
+
             android:paddingLeft="5dp"
             android:singleLine="true"
             android:textSize="15dp" />
 
-        <!--<EditText-->
-            <!--android:id="@+id/password"-->
-            <!--android:layout_width="240dp"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:layout_below="@+id/username"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:background="@drawable/login_username_texbox"-->
-            <!--android:drawableLeft="@drawable/ic_login_password"-->
-            <!--android:drawableRight="@drawable/ic_login_show_password"-->
-            <!--android:hint=" Password"-->
-            <!--android:paddingLeft="5dp"-->
-            <!--android:paddingRight="5dp"-->
-            <!--android:singleLine="true"-->
-            <!--android:textSize="15dp" />-->
-
-        <android.support.design.widget.TextInputLayout
+        <EditText
             android:id="@+id/password"
             android:layout_width="240dp"
             android:layout_height="50dp"
             android:layout_below="@+id/username"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:hint="Password"
             android:background="@drawable/login_username_texbox"
-
-            app:passwordToggleContentDescription="Description"
-            app:passwordToggleDrawable="@drawable/show_or_hide_password"
-            app:passwordToggleTint="@color/appColorBase">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:singleLine="true"
-                android:drawableLeft="@drawable/ic_login_password"
-                android:textSize="15dp"
-                android:background="@android:color/transparent"
-                android:inputType="textPassword"/>
-        </android.support.design.widget.TextInputLayout>
+            android:drawableLeft="@drawable/ic_login_password"
+            android:drawableRight="@drawable/ic_login_show_password"
+            android:fontFamily="sans-serif"
+            android:hint=" Password"
+            android:longClickable="false"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textSize="15dp" />
 
 
         <Button
