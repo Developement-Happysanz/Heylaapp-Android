@@ -5,117 +5,71 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <ScrollView
+    <RelativeLayout
+        android:id="@+id/title_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/login_bg_img" />
+
+        <ImageView
+            android:id="@+id/strip"
+            android:layout_width="10dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/login_strip" />
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/heyla_logo_transparent" />
+
+        <TextView
+            android:id="@+id/guestlogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignBottom="@+id/strip"
+            android:layout_alignTop="@+id/strip"
+            android:layout_toLeftOf="@+id/strip"
+            android:gravity="center"
+            android:text="@string/guest"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-
+            <com.palprotech.heylaapp.customview.PagerSlidingTabStrip
+                android:id="@+id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="50dip"
+                android:background="@color/appColorBase" />
 
-                <RelativeLayout
-                    android:id="@+id/title_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/title"
-                    android:background="@drawable/login_bg_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_centerHorizontal="true" />
-
-                <ImageView
-                    android:id="@+id/strip"
-                    android:layout_width="10dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/login_strip"
-                    android:layout_alignParentRight="true"/>
-
-                <ImageView
-                    android:id="@+id/logo"
-                    android:layout_width="150dp"
-                    android:layout_height="80dp"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/heyla_logo_transparent" />
-
-                <TextView
-                    android:id="@+id/guestlogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_toLeftOf="@+id/strip"
-                    android:layout_alignTop="@+id/strip"
-                    android:layout_alignBottom="@+id/strip"
-                    android:text="@string/guest"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-                </RelativeLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/tool_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_below="@+id/title_img">
-
-                    <com.palprotech.heylaapp.customview.PagerSlidingTabStrip
-                        android:id="@+id/tabs"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dip"
-                        android:background="@color/appColorBase" />
-
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/viewPager"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
-
-                <!--<EditText-->
-                    <!--android:id="@+id/username"-->
-                    <!--android:layout_width="240dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginTop="50dp"-->
-                    <!--android:background="@drawable/login_username_texbox"-->
-                    <!--android:hint=" Username"-->
-                    <!--android:paddingLeft="5dp"-->
-                    <!--android:drawableLeft="@drawable/ic_login_email"-->
-                    <!--android:singleLine="true"-->
-                    <!--android:textSize="15dp" />-->
-
-                <!--<EditText-->
-                    <!--android:id="@+id/password"-->
-                    <!--android:layout_width="240dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_below="@+id/username"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginTop="10dp"-->
-                    <!--android:background="@drawable/login_username_texbox"-->
-                    <!--android:hint=" Password"-->
-                    <!--android:drawableLeft="@drawable/ic_login_password"-->
-                    <!--android:paddingLeft="5dp"-->
-                    <!--android:singleLine="true"-->
-                    <!--android:textSize="15dp" />-->
-
-            <!--</RelativeLayout>-->
-
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>

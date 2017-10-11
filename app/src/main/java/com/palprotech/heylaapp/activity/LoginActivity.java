@@ -13,6 +13,7 @@ import com.palprotech.heylaapp.customview.PagerSlidingTabStrip;
  */
 
 public class LoginActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, TabsPagerAdapter.onFragmentsRegisteredListener {
+
     private ViewPager viewPager;
     private PagerSlidingTabStrip mPagerSlidingTabStrip;
     private TabsPagerAdapter landingPagerAdapter;
