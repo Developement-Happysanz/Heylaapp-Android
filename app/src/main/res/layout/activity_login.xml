@@ -95,7 +95,7 @@
                     <!--android:background="@drawable/login_username_texbox"-->
                     <!--android:hint=" Username"-->
                     <!--android:paddingLeft="5dp"-->
-                    <!--android:drawableLeft="@drawable/login_email"-->
+                    <!--android:drawableLeft="@drawable/ic_login_email"-->
                     <!--android:singleLine="true"-->
                     <!--android:textSize="15dp" />-->
 
@@ -108,7 +108,7 @@
                     <!--android:layout_marginTop="10dp"-->
                     <!--android:background="@drawable/login_username_texbox"-->
                     <!--android:hint=" Password"-->
-                    <!--android:drawableLeft="@drawable/login_password"-->
+                    <!--android:drawableLeft="@drawable/ic_login_password"-->
                     <!--android:paddingLeft="5dp"-->
                     <!--android:singleLine="true"-->
                     <!--android:textSize="15dp" />-->

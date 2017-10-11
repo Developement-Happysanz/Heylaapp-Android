@@ -18,7 +18,7 @@
             android:background="@drawable/login_username_texbox"
             android:hint=" Email"
             android:paddingLeft="5dp"
-            android:drawableLeft="@drawable/login_email"
+            android:drawableLeft="@drawable/ic_login_email"
             android:singleLine="true"
             android:textSize="15dp" />
 
@@ -31,7 +31,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/login_username_texbox"
             android:hint=" Mobile Number"
-            android:drawableLeft="@drawable/login_mobile"
+            android:drawableLeft="@drawable/ic_login_mobile"
             android:paddingLeft="5dp"
             android:inputType="number"
             android:singleLine="true"
@@ -46,7 +46,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/login_username_texbox"
             android:hint=" Password"
-            android:drawableLeft="@drawable/login_password"
+            android:drawableLeft="@drawable/ic_login_password"
             android:paddingLeft="5dp"
             android:singleLine="true"
             android:textSize="15dp" />
