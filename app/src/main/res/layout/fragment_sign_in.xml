@@ -46,7 +46,8 @@
             android:layout_below="@+id/username"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-
+            android:hint="Password"
+            android:background="@drawable/login_username_texbox"
 
             app:passwordToggleContentDescription="Description"
             app:passwordToggleDrawable="@drawable/show_or_hide_password"
@@ -55,8 +56,13 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Password"
-                android:background="@drawable/login_username_texbox"
+
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:singleLine="true"
+                android:drawableLeft="@drawable/ic_login_password"
+                android:textSize="15dp"
+                android:background="@android:color/transparent"
                 android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
 
