@@ -23,4 +23,32 @@ public class PreferenceStorage {
                 .getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean(HeylaAppConstants.IS_FIRST_TIME_LAUNCH, true);
     }
+
+    public static void saveGCM(Context context, String gcmId) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.KEY_FCM_ID, gcmId);
+        editor.apply();
+    }
+
+    public static String getGCM(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(HeylaAppConstants.KEY_FCM_ID, "");
+    }
+
+    public static void saveIMEI(Context context, String imei) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.KEY_IMEI, imei);
+        editor.apply();
+    }
+
+    public static String getIMEI(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(HeylaAppConstants.KEY_IMEI, "");
+    }
 }

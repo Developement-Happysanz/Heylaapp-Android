@@ -21,4 +21,10 @@ public class HeylaAppConstants {
 
     //     Shared preferences file name
     public static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
+
+    //    Shared FCM ID
+    public static final String KEY_FCM_ID = "fcm_id";
+
+    //    Shared IMEI No
+    public static final String KEY_IMEI = "imei_code";
 }
