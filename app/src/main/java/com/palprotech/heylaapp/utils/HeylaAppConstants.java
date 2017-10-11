@@ -6,9 +6,9 @@ package com.palprotech.heylaapp.utils;
 
 public class HeylaAppConstants {
 
-//     URLS
-//     BASE URL
-//    public static final String BASE_URL = "http://ensyfi.com/";
+    //    URLS
+//    BASE URL
+    //    public static final String BASE_URL = "http://ensyfi.com/";
     public static final String BASE_URL = "http://happysanz.net/";
 
 //    SharedPref
@@ -16,6 +16,9 @@ public class HeylaAppConstants {
     private static final String FCM_SHARED_PREF_NAME = "FCMSharedPref";
     private static final String TAG_TOKEN = "tagtoken";
 
-//    Service Params
+    //    Service Params
     public static String PARAM_MESSAGE = "msg";
+
+    //     Shared preferences file name
+    public static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
 }

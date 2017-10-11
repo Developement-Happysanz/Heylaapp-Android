@@ -15,5 +15,18 @@
     <string name="signin">SIGN IN</string>
     <string name="signup_promt"><u>Click here to</u></string>
 
+    <!--App Intro Screen-->
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">DIVE IN</string>
+
+    <string name="slide_1_title">Explore</string>
+    <string name="slide_1_desc">Explore with just a tap,\nThere\'s something for everyone.</string>
+
+    <string name="slide_2_title">Engage</string>
+    <string name="slide_2_desc">Click. Engage. Escape. into\nthe World of Events</string>
+
+    <string name="slide_3_title">Experience</string>
+    <string name="slide_3_desc">Unfolding new experiences,\nSee the world around you in a new way.</string>
 
 </resources>

@@ -4,15 +4,38 @@
     <color name="colorPrimaryDark">#168dcb</color>
     <color name="colorAccent">#ff4081</color>
 
-
     <!--App base color-->
     <color name="appColorBase">#468DCB</color>
 
-
-    ////// LOGIN MODULE //////
+    <!--Login Module-->
     <color name="text_black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="transparent">#00000000</color>
     <color name="bordergray">#dedddd</color>
+
+    <!-- Screens background color-->
+    <color name="bg_screen1">#468DCB</color>
+
+    <!-- dots inactive colors -->
+    <color name="dot_dark_screen1">#ffffff</color>
+    <color name="dot_dark_screen2">#ffffff</color>
+    <color name="dot_dark_screen3">#ffffff</color>
+
+    <!-- dots active colors -->
+    <color name="dot_light_screen1">#e6e4e4</color>
+    <color name="dot_light_screen2">#e6e4e4</color>
+    <color name="dot_light_screen3">#e6e4e4</color>
+
+    <array name="array_dot_active">
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen2</item>
+        <item>@color/dot_dark_screen3</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen2</item>
+        <item>@color/dot_light_screen3</item>
+    </array>
 
 </resources>
