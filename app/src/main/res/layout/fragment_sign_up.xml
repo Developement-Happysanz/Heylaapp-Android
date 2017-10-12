@@ -14,9 +14,9 @@
             android:layout_width="240dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/login_username_texbox"
-            android:hint=" Email"
+            android:hint="@string/email"
             android:paddingLeft="5dp"
             android:drawableLeft="@drawable/ic_login_email"
             android:singleLine="true"
@@ -30,7 +30,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:background="@drawable/login_username_texbox"
-            android:hint=" Mobile Number"
+            android:hint="@string/mobileno"
             android:drawableLeft="@drawable/ic_login_mobile"
             android:paddingLeft="5dp"
             android:inputType="number"
@@ -45,20 +45,23 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:background="@drawable/login_username_texbox"
-            android:hint=" Password"
+            android:hint="@string/password"
             android:drawableLeft="@drawable/ic_login_password"
             android:paddingLeft="5dp"
+            android:paddingRight="10dp"
             android:singleLine="true"
             android:textSize="15dp" />
 
         <Button
             android:id="@+id/signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
             android:layout_below="@id/password"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:text="Sign Up"/>
+            android:background="@drawable/button_sign_in"
+            android:text="@string/signup"
+            android:textColor="@color/colour_pick" />
 
     </RelativeLayout>
 

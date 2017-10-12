@@ -11,7 +11,7 @@
     <color name="text_black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="transparent">#00000000</color>
-    <color name="bordergray">#dedddd</color>
+    <color name="bordergray">#c9c9c9</color>
 
     <!-- Screens background color-->
     <color name="bg_screen1">#468DCB</color>
