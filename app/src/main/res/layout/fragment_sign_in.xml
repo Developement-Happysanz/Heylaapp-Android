@@ -19,7 +19,6 @@
             android:background="@drawable/login_username_texbox"
             android:drawableLeft="@drawable/ic_login_email"
             android:hint="@string/username"
-
             android:paddingLeft="5dp"
             android:singleLine="true"
             android:textSize="15dp" />
@@ -41,14 +40,31 @@
             android:paddingRight="10dp"
             android:textSize="15dp" />
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/password"
+            app:passwordToggleEnabled="true">
+
+            <EditText
+                android:id="@+id/returning_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textSize="14sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
         <TextView
             android:id="@+id/forgotpassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/password"
             android:layout_alignRight="@+id/password"
+            android:layout_below="@+id/password"
             android:text="@string/forgot"
-            android:textColor="@color/appColorBase"/>
+            android:textColor="@color/appColorBase" />
 
 
         <Button
