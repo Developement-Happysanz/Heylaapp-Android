@@ -12,7 +12,7 @@
         android:layout_height="495dp"
         android:layout_gravity="center"
         android:contentDescription="new"
-        android:src="@drawable/heyla_logo"
+        android:src="@drawable/ic_heyla_logo"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp" />
 

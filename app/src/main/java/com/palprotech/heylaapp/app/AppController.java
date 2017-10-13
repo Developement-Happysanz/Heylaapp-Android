@@ -46,8 +46,8 @@ public class AppController extends android.support.multidex.MultiDexApplication 
     public com.nostra13.universalimageloader.core.ImageLoader getUniversalImageLoader() {
         if (universalImageLoader == null) {
             DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
-                    .cacheOnDisk(true).resetViewBeforeLoading(true).showImageOnLoading(R.drawable.heyla_logo)
-                    .showImageForEmptyUri(R.drawable.heyla_logo)
+                    .cacheOnDisk(true).resetViewBeforeLoading(true).showImageOnLoading(R.drawable.ic_heyla_logo)
+                    .showImageForEmptyUri(R.drawable.ic_heyla_logo)
                     .build();
             // Initialize ImageLoader with configuration.
             ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
@@ -66,9 +66,9 @@ public class AppController extends android.support.multidex.MultiDexApplication 
     public DisplayImageOptions getLogoDisplayOptions() {
         if (logoDisplayOptions == null) {
             logoDisplayOptions = new DisplayImageOptions.Builder().cacheInMemory(true)
-                    .cacheOnDisk(true).resetViewBeforeLoading(true).showImageOnLoading(R.drawable.heyla_logo)
-                    .showImageForEmptyUri(R.drawable.heyla_logo)
-                    .showImageOnFail(R.drawable.heyla_logo)
+                    .cacheOnDisk(true).resetViewBeforeLoading(true).showImageOnLoading(R.drawable.ic_heyla_logo)
+                    .showImageForEmptyUri(R.drawable.ic_heyla_logo)
+                    .showImageOnFail(R.drawable.ic_heyla_logo)
                     .build();
         }
         return logoDisplayOptions;
