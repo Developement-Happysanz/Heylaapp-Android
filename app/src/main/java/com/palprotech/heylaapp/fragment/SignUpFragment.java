@@ -19,7 +19,7 @@ import com.palprotech.heylaapp.R;
 
 public class SignUpFragment extends Fragment {
 
-    EditText mobile,password,email;
+    EditText mobile, password, email;
     View rootView;
     Button signup;
 
@@ -36,35 +36,7 @@ public class SignUpFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        initializeViews();
-        password.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_login_password,0,R.drawable.ic_login_show_password,0);
-        password.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_LEFT = 0;
-                final int DRAWABLE_TOP = 1;
-                final int DRAWABLE_RIGHT = 2;
-                final int DRAWABLE_BOTTOM = 3;
-                Boolean hide = true;
-
-                if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if(event.getRawX() >= (password.getRight() - password.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        password.setTransformationMethod(new PasswordTransformationMethod());
-                        password.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_login_password,0,R.drawable.ic_login_hide_password,0);
-
-                        return true;
-                    }
-                }
-                else if(event.getAction() == MotionEvent.ACTION_DOWN){
-                    password.setTransformationMethod(new HideReturnsTransformationMethod());
-                    password.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_login_password,0,R.drawable.ic_login_show_password,0);
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        return rootView;
+        initializeViews();        return rootView;
     }
 
     protected void initializeViews() {
