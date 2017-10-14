@@ -27,4 +27,13 @@ public class HeylaAppConstants {
 
     //    Shared IMEI No
     public static final String KEY_IMEI = "imei_code";
+
+    //    Shared Remember me
+    public static final String IS_REMEMBER_ENABLED = "IsRemembered";
+
+    //    Shared Username
+    public static final String KEY_USERNAME = "username";
+
+    //    Shared Password
+    public static final String KEY_PASSWORD = "password";
 }

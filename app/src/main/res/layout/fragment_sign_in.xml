@@ -33,12 +33,10 @@
             android:paddingRight="10dp">
 
             <EditText
-                android:id="@+id/username"
+                android:id="@+id/edtUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_email_black_24dp"
-                android:drawableStart="@drawable/ic_email_black_24dp"
-                android:hint="Username/ Email/ Mobile number"
+                android:hint="Username/Email/Mobile number"
                 android:inputType="text"
                 android:singleLine="true"
                 android:textSize="14sp" />
@@ -72,11 +70,9 @@
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_lock_black_24dp"
-                android:drawableStart="@drawable/ic_lock_black_24dp"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:maxLines="1"
