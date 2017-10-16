@@ -2,10 +2,7 @@ package com.palprotech.heylaapp.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -40,9 +37,9 @@ public class SignUpFragment extends Fragment {
     }
 
     protected void initializeViews() {
-        email = rootView.findViewById(R.id.mail);
-        mobile = rootView.findViewById(R.id.mobilenumber);
-        password = rootView.findViewById(R.id.password);
+        email = rootView.findViewById(R.id.edtMail);
+        mobile = rootView.findViewById(R.id.edtMobilenum);
+        password = rootView.findViewById(R.id.edtPassword);
         signup = rootView.findViewById(R.id.signup);
     }
 }
