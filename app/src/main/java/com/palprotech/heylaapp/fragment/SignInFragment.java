@@ -23,13 +23,10 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class SignInFragment extends Fragment implements View.OnClickListener {
 
-    EditText edtUsername, edtPassword;
-    View rootView;
-    Button signIn;
-
-    private String username, password;
+    private EditText edtUsername, edtPassword;
+    private View rootView;
+    private Button signIn;
     private CheckBox saveLoginCheckBox;
-    private Boolean saveLogin;
 
     public static SignInFragment newInstance(int position) {
         SignInFragment frag = new SignInFragment();
@@ -40,8 +37,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_sign_in, container, false);
 
@@ -57,8 +53,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         signIn.setOnClickListener(this);
         saveLoginCheckBox = rootView.findViewById(R.id.saveLoginCheckBox);
 
-        saveLogin = PreferenceStorage.isRemembered(getContext());
-        if (saveLogin == true) {
+        Boolean saveLogin = PreferenceStorage.isRemembered(getContext());
+        if (saveLogin) {
             edtUsername.setText(PreferenceStorage.getUsername(getContext()));
             edtPassword.setText(PreferenceStorage.getPassword(getContext()));
             saveLoginCheckBox.setChecked(true);
@@ -71,8 +67,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(edtUsername.getWindowToken(), 0);
 
-            username = edtUsername.getText().toString();
-            password = edtPassword.getText().toString();
+            String username = edtUsername.getText().toString();
+            String password = edtPassword.getText().toString();
 
             if (saveLoginCheckBox.isChecked()) {
                 PreferenceStorage.saveUsername(getContext(), username);
