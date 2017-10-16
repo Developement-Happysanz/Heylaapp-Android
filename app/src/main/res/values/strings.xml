@@ -11,14 +11,25 @@
     <string name="fb_login_protocol_scheme">fb279152195822147</string>
     <string name="facebook_app_id">279152195822147</string>
     <string name="guest">GUEST LOGIN</string>
-    <string name="signup">SIGN UP</string>
-    <string name="signin">SIGN IN</string>
+    <string name="signup">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="send">Send</string>
+    <string name="confirm">Confirm</string>
     <string name="signup_promt">Login using</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="mobileno">Mobile Number</string>
     <string name="username">Username</string>
+    <string name="usernameormail">Username/Email/Mobile number</string>
+    <string name="remember">Remember me</string>
+    <string name="alternatelogin">\nOr\nLogin using\n</string>
     <string name="forgot">Forgot Password?</string>
+    <string name="verificationcode">Verification Code</string>
+    <string name="mailormobile">Enter registered email or mobile number</string>
+    <string name="didntrecievecode">Didn\'t receive the code?\t</string>
+    <string name="entercodetxt">Enter the verification code \nsent to your mobile</string>
+    <string name="resend">Resend now</string>
+    <string name="changenumber">Change number</string>
 
     <!--App Intro Screen-->
     <string name="next">NEXT</string>
