@@ -1,6 +1,11 @@
 package com.palprotech.heylaapp.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,13 +18,27 @@ import android.widget.EditText;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.LoginActivity;
+import com.palprotech.heylaapp.activity.NumberVerificationActivity;
+import com.palprotech.heylaapp.helper.AlertDialogHelper;
+import com.palprotech.heylaapp.helper.ProgressDialogHelper;
+import com.palprotech.heylaapp.interfaces.DialogClickListener;
+import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
+import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
+import com.palprotech.heylaapp.utils.CommonUtils;
+import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.HeylaAppValidator;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by Narendar on 06/10/17.
  */
 
-public class SignUpFragment extends Fragment implements View.OnClickListener {
+public class SignUpFragment extends Fragment implements View.OnClickListener, IServiceListener, DialogClickListener {
 
     private static final String TAG = LoginActivity.class.getName();
 
@@ -27,6 +46,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     private TextInputLayout inputMobile, inputPassword, inputEmail;
     View rootView;
     Button signUp;
+    private ServiceHelper serviceHelper;
+    private ProgressDialogHelper progressDialogHelper;
 
     public static SignUpFragment newInstance(int position) {
         SignUpFragment frag = new SignUpFragment();
@@ -54,14 +75,38 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         password = rootView.findViewById(R.id.edtPassword);
         signUp = rootView.findViewById(R.id.btnSignup);
         signUp.setOnClickListener(this);
+
+        serviceHelper = new ServiceHelper(getActivity());
+        serviceHelper.setServiceListener(this);
+        progressDialogHelper = new ProgressDialogHelper(getActivity());
     }
 
     @Override
     public void onClick(View v) {
-        if (validateFields()) {
-            Log.d(TAG, "Initiating google plus connection");
+        if (CommonUtils.isNetworkAvailable(getActivity())) {
+            if (v == signUp) {
+                if (validateFields()) {
+                    String GCMKey = PreferenceStorage.getGCM(getContext());
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_ID, email.getText().toString());
+                        jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, mobile.getText().toString());
+                        jsonObject.put(HeylaAppConstants.PARAMS_PASSWORD, mobile.getText().toString());
+                        jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
+                        jsonObject.put(HeylaAppConstants.PARAMS_PLATFORM_TYPE, "1");
+                        jsonObject.put(HeylaAppConstants.PARAMS_SIGNUP_TYPE, "3");
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                    String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.SIGN_UP;
+                    serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+                }
+            }
         } else {
-            Log.d(TAG, "Initiating google plus connection");
+            AlertDialogHelper.showSimpleAlertDialog(getActivity(), "No Network connection available");
         }
     }
 
@@ -102,5 +147,90 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         if (view.requestFocus()) {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
+    }
+
+    @Override
+    public void onAlertPositiveClicked(int tag) {
+
+    }
+
+    @Override
+    public void onAlertNegativeClicked(int tag) {
+
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
+        progressDialogHelper.hideProgressDialog();
+
+        /*Intent homeIntent = new Intent(getActivity(), NumberVerificationActivity.class);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        homeIntent.putExtra("mobile_no", mobile.getText().toString());
+        startActivity(homeIntent);
+        getActivity().finish();*/
+
+        if (validateSignInResponse(response)) {
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+            alertDialogBuilder.setTitle("Registration Successful");
+
+
+            alertDialogBuilder.setMessage("Activation Link sent to your email.");
+            alertDialogBuilder.setPositiveButton("OK",
+                    new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+
+                            Intent homeIntent = new Intent(getActivity(), NumberVerificationActivity.class);
+                            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            homeIntent.putExtra("mobile_no", mobile.getText().toString());
+                            startActivity(homeIntent);
+                            getActivity().finish();
+                        }
+                    });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        } else {
+            Intent homeIntent = new Intent(getActivity(), NumberVerificationActivity.class);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            homeIntent.putExtra("mobile_no", mobile.getText().toString());
+            startActivity(homeIntent);
+            getActivity().finish();
+        }
+    }
+
+    private boolean validateSignInResponse(JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(HeylaAppConstants.PARAM_MESSAGE);
+                Log.d(TAG, "status val" + status + "msg" + msg);
+
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        Log.d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(getContext(), msg);
+
+                    } else {
+                        signInSuccess = true;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return signInSuccess;
+    }
+
+    @Override
+    public void onError(String error) {
+        progressDialogHelper.hideProgressDialog();
+        AlertDialogHelper.showSimpleAlertDialog(getContext(), error);
     }
 }

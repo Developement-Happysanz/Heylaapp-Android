@@ -7,11 +7,28 @@ package com.palprotech.heylaapp.utils;
 public class HeylaAppConstants {
 
     //    URLS
-//    BASE URL
-    //    public static final String BASE_URL = "http://ensyfi.com/";
-    public static final String BASE_URL = "http://happysanz.net/";
+    //    BASE URL
+    public static final String BASE_URL = "http://heylaapp.com/heyla/";
 
-//    SharedPref
+    //    SignUp
+    public static final String SIGN_UP = "apimain/signup/";
+
+    //    SignUp Params
+    public static final String PARAMS_EMAIL_ID = "email_id";
+    public static final String PARAMS_MOBILE_NUMBER = "mobile_no";
+    public static final String PARAMS_PASSWORD = "password";
+    public static final String PARAMS_GCM_KEY = "gcm_key";
+    public static final String PARAMS_PLATFORM_TYPE = "platform_type";
+    public static final String PARAMS_SIGNUP_TYPE = "signup_type";
+
+    //    Mobile Number Verification
+    public static final String MOBILE_NUMBER_VERIFY = "apimain/mobileverify/";
+
+    //    Mobile Number Verification Params
+    public static final String PARAMS_OTP = "OTP";
+    public static final String PARAMS_REQUEST_MODE = "request_mode";
+
+    //    SharedPref
 
     private static final String FCM_SHARED_PREF_NAME = "FCMSharedPref";
     private static final String TAG_TOKEN = "tagtoken";
@@ -36,4 +53,12 @@ public class HeylaAppConstants {
 
     //    Shared Password
     public static final String KEY_PASSWORD = "password";
+
+    // Alert Dialog Constants
+    public static String ALERT_DIALOG_TITLE = "alertDialogTitle";
+    public static String ALERT_DIALOG_MESSAGE = "alertDialogMessage";
+    public static String ALERT_DIALOG_TAG = "alertDialogTag";
+    public static String ALERT_DIALOG_INPUT_HINT = "alert_dialog_input_hint";
+    public static String ALERT_DIALOG_POS_BUTTON = "alert_dialog_pos_button";
+    public static String ALERT_DIALOG_NEG_BUTTON = "alert_dialog_neg_button";
 }

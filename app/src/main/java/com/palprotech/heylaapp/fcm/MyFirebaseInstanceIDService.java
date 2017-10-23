@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 /**
  * Created by Admin on 22-09-2017.
@@ -33,5 +34,6 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     private void storeToken(String token) {
         //saving the token on shared preferences
         SharedPrefManager.getInstance(getApplicationContext()).saveDeviceToken(token);
+        PreferenceStorage.saveGCM(getApplicationContext(), token);
     }
 }

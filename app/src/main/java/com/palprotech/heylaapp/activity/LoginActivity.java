@@ -38,11 +38,6 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
 
         progressDialogHelper = new ProgressDialogHelper(this);
 
-//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//        IMEINo = telephonyManager.getDeviceId();
-
-//        PreferenceStorage.saveIMEI(getApplicationContext(), IMEINo);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         tabLayout.addTab(tabLayout.newTab().setText("SIGN IN"));
