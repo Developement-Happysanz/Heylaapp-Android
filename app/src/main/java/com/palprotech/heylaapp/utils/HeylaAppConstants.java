@@ -28,8 +28,23 @@ public class HeylaAppConstants {
     public static final String PARAMS_OTP = "OTP";
     public static final String PARAMS_REQUEST_MODE = "request_mode";
 
-    //    SharedPref
+    //    SignIn
+    public static final String SIGN_IN = "apimain/login";
 
+    //    SignIn Params
+    public static final String PARAMS_USERNAME = "username";
+    public static final String PARAMS_LOGIN_TYPE = "login_type";
+
+    //    Forgot Password
+    public static final String FORGOT_PASSWORD = "apimain/forgotpassword/";
+
+    //    Forgot Password OTP
+    public static final String FORGOT_PASSWORD_OTP_REQUEST = "apimain/fgpasswordotp/";
+
+    //    Resend OTP
+    public static final String RESEND_OTP_REQUEST = "apimain/resendOTP/";
+
+    //    SharedPref
     private static final String FCM_SHARED_PREF_NAME = "FCMSharedPref";
     private static final String TAG_TOKEN = "tagtoken";
 

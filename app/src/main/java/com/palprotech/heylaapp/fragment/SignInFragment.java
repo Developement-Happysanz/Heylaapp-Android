@@ -1,8 +1,10 @@
 package com.palprotech.heylaapp.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +13,36 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.activity.ForgotPasswordActivity;
+import com.palprotech.heylaapp.activity.LoginActivity;
+import com.palprotech.heylaapp.activity.NumberVerificationActivity;
+import com.palprotech.heylaapp.helper.AlertDialogHelper;
+import com.palprotech.heylaapp.helper.ProgressDialogHelper;
+import com.palprotech.heylaapp.interfaces.DialogClickListener;
+import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
+import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
+import com.palprotech.heylaapp.utils.CommonUtils;
+import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.HeylaAppValidator;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
-public class SignInFragment extends Fragment implements View.OnClickListener {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class SignInFragment extends Fragment implements View.OnClickListener, IServiceListener, DialogClickListener {
+
+    private static final String TAG = LoginActivity.class.getName();
 
     private EditText edtUsername, edtPassword;
     private View rootView;
     private Button signIn;
     private CheckBox saveLoginCheckBox;
+    private ServiceHelper serviceHelper;
+    private ProgressDialogHelper progressDialogHelper;
+    private TextView forgotPassword;
 
     public static SignInFragment newInstance(int position) {
         SignInFragment frag = new SignInFragment();
@@ -46,7 +67,13 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         edtPassword = rootView.findViewById(R.id.edtPassword);
         signIn = rootView.findViewById(R.id.signin);
         signIn.setOnClickListener(this);
+        forgotPassword = rootView.findViewById(R.id.forgotpassword);
+        forgotPassword.setOnClickListener(this);
         saveLoginCheckBox = rootView.findViewById(R.id.saveLoginCheckBox);
+
+        serviceHelper = new ServiceHelper(getActivity());
+        serviceHelper.setServiceListener(this);
+        progressDialogHelper = new ProgressDialogHelper(getActivity());
 
         Boolean saveLogin = PreferenceStorage.isRemembered(getContext());
         if (saveLogin) {
@@ -58,24 +85,48 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v == signIn) {
-            if (validateFields()) {
-                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(edtUsername.getWindowToken(), 0);
+        if (CommonUtils.isNetworkAvailable(getActivity())) {
+            if (v == signIn) {
+                if (validateFields()) {
+                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edtUsername.getWindowToken(), 0);
 
-                String username = edtUsername.getText().toString();
-                String password = edtPassword.getText().toString();
+                    String username = edtUsername.getText().toString();
+                    String password = edtPassword.getText().toString();
+                    String GCMKey = PreferenceStorage.getGCM(getContext());
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put(HeylaAppConstants.PARAMS_USERNAME, username);
+                        jsonObject.put(HeylaAppConstants.PARAMS_PASSWORD, password);
+                        jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
+                        jsonObject.put(HeylaAppConstants.PARAMS_LOGIN_TYPE, "1");
 
-                if (saveLoginCheckBox.isChecked()) {
-                    PreferenceStorage.saveUsername(getContext(), username);
-                    PreferenceStorage.savePassword(getContext(), password);
-                    PreferenceStorage.setRememberMe(getContext(), true);
-                } else {
-                    PreferenceStorage.saveUsername(getContext(), "");
-                    PreferenceStorage.savePassword(getContext(), "");
-                    PreferenceStorage.setRememberMe(getContext(), false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                    String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.SIGN_IN;
+                    serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+                    if (saveLoginCheckBox.isChecked()) {
+                        PreferenceStorage.saveUsername(getContext(), username);
+                        PreferenceStorage.savePassword(getContext(), password);
+                        PreferenceStorage.setRememberMe(getContext(), true);
+                    } else {
+                        PreferenceStorage.saveUsername(getContext(), "");
+                        PreferenceStorage.savePassword(getContext(), "");
+                        PreferenceStorage.setRememberMe(getContext(), false);
+                    }
                 }
+            } else if (v == forgotPassword) {
+                Intent homeIntent = new Intent(getActivity(), ForgotPasswordActivity.class);
+                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+                getActivity().finish();
             }
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(getActivity(), "No Network connection available");
         }
     }
 
@@ -101,5 +152,57 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         if (view.requestFocus()) {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
+    }
+
+    @Override
+    public void onAlertPositiveClicked(int tag) {
+
+    }
+
+    @Override
+    public void onAlertNegativeClicked(int tag) {
+
+    }
+
+    private boolean validateSignInResponse(JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(HeylaAppConstants.PARAM_MESSAGE);
+                Log.d(TAG, "status val" + status + "msg" + msg);
+
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        Log.d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(getContext(), msg);
+
+                    } else {
+                        signInSuccess = true;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return signInSuccess;
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
+        progressDialogHelper.hideProgressDialog();
+
+        if (validateSignInResponse(response)) {
+
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        progressDialogHelper.hideProgressDialog();
+        AlertDialogHelper.showSimpleAlertDialog(getContext(), error);
     }
 }

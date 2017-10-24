@@ -164,41 +164,28 @@ public class SignUpFragment extends Fragment implements View.OnClickListener, IS
 
         progressDialogHelper.hideProgressDialog();
 
-        /*Intent homeIntent = new Intent(getActivity(), NumberVerificationActivity.class);
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        homeIntent.putExtra("mobile_no", mobile.getText().toString());
-        startActivity(homeIntent);
-        getActivity().finish();*/
-
         if (validateSignInResponse(response)) {
 
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+           /* AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
             alertDialogBuilder.setTitle("Registration Successful");
-
 
             alertDialogBuilder.setMessage("Activation Link sent to your email.");
             alertDialogBuilder.setPositiveButton("OK",
                     new DialogInterface.OnClickListener() {
 
                         @Override
-                        public void onClick(DialogInterface arg0, int arg1) {
+                        public void onClick(DialogInterface arg0, int arg1) {*/
 
-                            Intent homeIntent = new Intent(getActivity(), NumberVerificationActivity.class);
-                            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            homeIntent.putExtra("mobile_no", mobile.getText().toString());
-                            startActivity(homeIntent);
-                            getActivity().finish();
-                        }
-                    });
-
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-        } else {
             Intent homeIntent = new Intent(getActivity(), NumberVerificationActivity.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             homeIntent.putExtra("mobile_no", mobile.getText().toString());
             startActivity(homeIntent);
             getActivity().finish();
+                     /*   }
+                    });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();*/
         }
     }
 

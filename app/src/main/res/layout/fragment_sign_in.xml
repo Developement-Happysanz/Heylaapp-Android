@@ -38,6 +38,7 @@
                 android:layout_height="50dp"
                 android:hint="@string/usernameormail"
                 android:inputType="text"
+                android:text="9865301967"
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -75,6 +76,7 @@
                 android:layout_height="50dp"
                 android:hint="@string/password"
                 android:inputType="textPassword"
+                android:text="12345678"
                 android:maxLines="1"
                 android:textSize="14sp" />
 
