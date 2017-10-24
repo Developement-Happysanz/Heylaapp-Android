@@ -120,9 +120,9 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
 
 
-        String sexVal = CommonUtils.getGenderVal(PreferenceStorage.getUserGender(this));
-        if (sexVal != null) {
-            mGender.setText(sexVal);
+        String genderVal = CommonUtils.getGenderVal(PreferenceStorage.getUserGender(this));
+        if (genderVal != null) {
+            mGender.setText(genderVal);
         }
         mGender.setOnClickListener(new View.OnClickListener() {
             @Override
