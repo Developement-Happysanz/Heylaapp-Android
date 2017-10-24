@@ -99,4 +99,56 @@ public class PreferenceStorage {
                 .getDefaultSharedPreferences(context);
         return sharedPreferences.getString(HeylaAppConstants.KEY_PASSWORD, "");
     }
+
+    public static void saveUserOccupation(Context context, String data) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.KEY_USER_OCCUPATION, data);
+        editor.commit();
+
+    }
+
+    public static String getUserOccupation(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String url = sharedPreferences.getString(HeylaAppConstants.KEY_USER_OCCUPATION, "");
+        return url;
+
+    }
+
+    public static void saveUserGender(Context context, String data) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.KEY_USER_GENDER, data);
+        editor.commit();
+
+    }
+
+    public static String getUserGender(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String url = sharedPreferences.getString(HeylaAppConstants.KEY_USER_GENDER, "");
+        return url;
+
+    }
+
+    public static void saveUserBirthday(Context context, String data) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.KEY_USER_BIRTHDAY, data);
+        editor.commit();
+
+    }
+
+    public static String getUserBirthday(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String url = sharedPreferences.getString(HeylaAppConstants.KEY_USER_BIRTHDAY, "");
+        return url;
+
+    }
+
 }
