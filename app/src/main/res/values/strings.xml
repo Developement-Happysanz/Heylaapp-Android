@@ -22,6 +22,7 @@
     <string name="mobileno">Mobile Number</string>
     <string name="username">Username</string>
     <string name="usernameormail">Username/Email/Mobile number</string>
+    <string name="newpassword">New Password</string>
     <string name="remember">Remember me</string>
     <string name="alternatelogin">\nOr\nLogin using\n</string>
     <string name="forgot">Forgot Password?</string>

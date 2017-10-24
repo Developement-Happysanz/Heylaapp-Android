@@ -44,6 +44,12 @@ public class HeylaAppConstants {
     //    Resend OTP
     public static final String RESEND_OTP_REQUEST = "apimain/resendOTP/";
 
+    //    Update Password
+    public static final String UPDATE_PASSWORD = "apimain/resetpassword/";
+
+    //    Update Password Params
+    public static final String PARAMS_USER_ID = "user_id";
+
     //    SharedPref
     private static final String FCM_SHARED_PREF_NAME = "FCMSharedPref";
     private static final String TAG_TOKEN = "tagtoken";
