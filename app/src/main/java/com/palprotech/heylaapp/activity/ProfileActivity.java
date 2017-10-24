@@ -281,7 +281,9 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onClick(View view) {
         if(view == save){
-
+            if(validateFields()) {
+                
+            }
         }
     }
 }
