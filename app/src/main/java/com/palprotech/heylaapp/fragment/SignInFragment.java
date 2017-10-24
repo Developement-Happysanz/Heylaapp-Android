@@ -3,6 +3,7 @@ package com.palprotech.heylaapp.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +19,7 @@ import android.widget.TextView;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.ForgotPasswordActivity;
 import com.palprotech.heylaapp.activity.LoginActivity;
-import com.palprotech.heylaapp.activity.NumberVerificationActivity;
+import com.palprotech.heylaapp.activity.ProfileActivity;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
@@ -37,6 +38,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
     private static final String TAG = LoginActivity.class.getName();
 
     private EditText edtUsername, edtPassword;
+    private TextInputLayout inputUsername, inputPassword;
     private View rootView;
     private Button signIn;
     private CheckBox saveLoginCheckBox;
@@ -63,6 +65,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
     }
 
     protected void initializeViews() {
+        inputUsername = rootView.findViewById(R.id.ti_username);
+        inputPassword = rootView.findViewById(R.id.ti_password);
         edtUsername = rootView.findViewById(R.id.edtUsername);
         edtPassword = rootView.findViewById(R.id.edtPassword);
         signIn = rootView.findViewById(R.id.signin);
@@ -118,6 +122,10 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                         PreferenceStorage.savePassword(getContext(), "");
                         PreferenceStorage.setRememberMe(getContext(), false);
                     }
+                    Intent homeIntent = new Intent(getActivity(), ProfileActivity.class);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(homeIntent);
+                    getActivity().finish();
                 }
             } else if (v == forgotPassword) {
                 Intent homeIntent = new Intent(getActivity(), ForgotPasswordActivity.class);

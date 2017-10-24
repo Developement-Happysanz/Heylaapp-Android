@@ -2,6 +2,7 @@ package com.palprotech.heylaapp.activity;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
@@ -44,9 +45,9 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     private List<String> mGenderList = new ArrayList<String>();
 
     private TextInputLayout inputGender, inputAddress1, inputAddress2, inputAddress3, inputPincode, inputName,
-            inputUsername, inputBirthday, inputOccupation;
+            inputUsername, inputBirthday, inputOccupation, inputCountry, inputState, inputCity;
     EditText mBirthday, mGender, mOccupation, address1, address2, address3, pincode, name,
-            username, birthday, occupation;
+            username, country, state, city;
 
     Button save;
 
@@ -58,13 +59,14 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         setUI();
-
     }
 
     void setUI() {
         save = (Button) findViewById(R.id.saveprofile);
         mGender = (EditText) findViewById(R.id.genderList);
+        mGender.setFocusable(false);
         mBirthday = (EditText) findViewById(R.id.edtBirthday);
+        mBirthday.setFocusable(false);
         inputGender = (TextInputLayout) findViewById(R.id.ti_gender);
         inputAddress1 = (TextInputLayout) findViewById(R.id.ti_address_line_one);
         inputAddress2 = (TextInputLayout) findViewById(R.id.ti_address_line_two);
@@ -74,13 +76,23 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         inputUsername = (TextInputLayout) findViewById(R.id.ti_username);
         inputBirthday = (TextInputLayout) findViewById(R.id.ti_birthday);
         inputOccupation = (TextInputLayout) findViewById(R.id.ti_occupation);
+        inputCountry = (TextInputLayout) findViewById(R.id.ti_country);
+        inputState = (TextInputLayout) findViewById(R.id.ti_state);
+        inputCity = (TextInputLayout) findViewById(R.id.ti_city);
         address1 = (EditText) findViewById(R.id.edtAddressLineOne);
         address2 = (EditText) findViewById(R.id.edtAddressLinetwo);
         address3 = (EditText) findViewById(R.id.edtAddressLinethree);
         pincode = (EditText) findViewById(R.id.edtPincode);
         name = (EditText) findViewById(R.id.edtName);
         username = (EditText) findViewById(R.id.edtUsername);
-        occupation = (EditText) findViewById(R.id.occupationlist);
+        country = (EditText) findViewById(R.id.countryList);
+        country.setFocusable(false);
+        state = (EditText) findViewById(R.id.stateList);
+        state.setFocusable(false);
+        city = (EditText) findViewById(R.id.cityList);
+        city.setFocusable(false);
+        mOccupation = (EditText) findViewById(R.id.occupationlist);
+        mOccupation.setFocusable(false);
 
         save.setOnClickListener(this);
 
@@ -119,7 +131,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         };
 
 
-
         String genderVal = CommonUtils.getGenderVal(PreferenceStorage.getUserGender(this));
         if (genderVal != null) {
             mGender.setText(genderVal);
@@ -134,7 +145,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         //occupation related data
         mOccupationList.add("Student");
         mOccupationList.add("Employed");
-
         mOccupationList.add("Self Employed/Business");
         mOccupationList.add("Home Maker");
         mOccupationList.add("Other");
@@ -247,8 +257,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             inputUsername.setError(getString(R.string.err_username));
             requestFocus(username);
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
@@ -267,6 +276,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         // Showing selected spinner item
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
+
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
@@ -280,9 +290,11 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onClick(View view) {
-        if(view == save){
-            if(validateFields()) {
-
+        if (view == save) {
+            if (validateFields()) {
+                Intent homeIntent = new Intent(this.getApplicationContext(), MainActivity.class);
+                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
             }
         }
     }

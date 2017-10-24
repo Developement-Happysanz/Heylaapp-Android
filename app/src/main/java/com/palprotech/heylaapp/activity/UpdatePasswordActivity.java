@@ -33,8 +33,8 @@ public class UpdatePasswordActivity extends AppCompatActivity implements View.On
     private ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
     private Button btnSubmit;
-    private TextInputLayout inputNewPassword, inputConfirmPassword;
-    private EditText edtNewPassword, edtConfirmPassword;
+    private TextInputLayout inputNewPassword;
+    private EditText edtNewPassword;
     private String userId;
 
     @Override
@@ -52,10 +52,8 @@ public class UpdatePasswordActivity extends AppCompatActivity implements View.On
         btnSubmit.setOnClickListener(this);
 
         inputNewPassword = (TextInputLayout) findViewById(R.id.ti_newpassword);
-        inputConfirmPassword = (TextInputLayout) findViewById(R.id.ti_confirm_password);
 
         edtNewPassword = (EditText) findViewById(R.id.edtNewPassword);
-        edtConfirmPassword = (EditText) findViewById(R.id.edtConfirmPassword);
 
     }
 
@@ -126,17 +124,6 @@ public class UpdatePasswordActivity extends AppCompatActivity implements View.On
             return false;
         } else if (!HeylaAppValidator.checkStringMinLength(6, this.edtNewPassword.getText().toString().trim())) {
             inputNewPassword.setError(getString(R.string.err_min_pass_length));
-            return false;
-        }
-        if (!HeylaAppValidator.checkNullString(this.edtConfirmPassword.getText().toString().trim())) {
-            inputConfirmPassword.setError(getString(R.string.err_empty_password));
-            return false;
-        } else if (!HeylaAppValidator.checkStringMinLength(6, this.edtConfirmPassword.getText().toString().trim())) {
-            inputConfirmPassword.setError(getString(R.string.err_min_pass_length));
-            return false;
-        }
-        else if (!(edtNewPassword.getText().toString().equals(edtConfirmPassword.getText().toString()))) {
-            inputConfirmPassword.setError(getString(R.string.err_min_pass_length));
             return false;
         } else {
             return true;

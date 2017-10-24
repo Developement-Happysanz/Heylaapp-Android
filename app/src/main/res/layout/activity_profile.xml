@@ -20,16 +20,20 @@
 
                 <ImageView
                     android:id="@+id/profile_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true" />
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_default_profile"/>
 
                 <TextView
+                    android:id="@+id/profile_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/profile_img"
                     android:layout_centerInParent="true"
                     android:textColor="@color/white"
+                    android:hint="New User"
+                    android:textColorHint="@color/white"
                     android:textSize="18sp" />
 
             </RelativeLayout>
@@ -77,7 +81,8 @@
                             android:hint="@string/username"
                             android:inputType="text"
                             android:singleLine="true"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:imeOptions="actionDone"/>
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -191,7 +196,8 @@
                             android:hint="@string/address2"
                             android:inputType="text"
                             android:singleLine="true"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:imeOptions="actionDone"/>
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -209,7 +215,8 @@
                             android:hint="@string/address3"
                             android:inputType="text"
                             android:singleLine="true"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:imeOptions="actionDone"/>
 
                     </android.support.design.widget.TextInputLayout>
 

@@ -56,6 +56,7 @@
     <string name="err_name">Enter valid name</string>
     <string name="err_username">Enter valid username</string>
     <string name="err_mobile">Enter valid mobile phone number</string>
+    <string name="err_pincode">Enter valid pincode number</string>
     <string name="err_empty_password">Enter valid password</string>
     <string name="err_min_pass_length">Short passwords are easy to guess! Try one with at least 6 characters&#8230;</string>
 

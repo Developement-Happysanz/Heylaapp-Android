@@ -11,6 +11,7 @@
     <color name="text_black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="transparent">#00000000</color>
+    <color name="temp">#7e000000</color>
     <color name="bordergray">#c9c9c9</color>
     <color name="light_line_color">#f9f9f9</color>
 
