@@ -67,5 +67,21 @@
     <!--General-->
     <string name="progress_loading">Loading&#8230;</string>
 
+    <!--Profile-->
+    <string name="name">Name</string>
+    <string name="gender">Gender</string>
+    <string name="occupation">Occupation</string>
+    <string name="birthday">Birthday</string>
+    <string name="address1">Address Line 1</string>
+    <string name="address2">Address Line 2</string>
+    <string name="address3">Landmark (Optional)</string>
+    <string name="selectcountry">Select Country</string>
+    <string name="selectstate">Select State</string>
+    <string name="selectcity">Select City</string>
+    <string name="pincode">Pincode</string>
+    <string name="subscribe">Subscribe to Newsletter</string>
+    <string name="save">Save</string>
+
+
 
 </resources>
