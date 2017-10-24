@@ -22,11 +22,13 @@
     <string name="mobileno">Mobile Number</string>
     <string name="username">Username</string>
     <string name="usernameormail">Username/Email/Mobile number</string>
+    <string name="new_mobile_number">Mobile Number</string>
     <string name="newpassword">New Password</string>
     <string name="remember">Remember me</string>
     <string name="alternatelogin">\nOr\nLogin using\n</string>
     <string name="forgot">Forgot Password?</string>
     <string name="verificationcode">Verification Code</string>
+    <string name="mobile_number">New Mobile Number</string>
     <string name="verificationcodeforforgotpassword">Enter Your OTP</string>
     <string name="mailormobile">Enter registered email or mobile number</string>
     <string name="didntrecievecode">Didn\'t receive the code?\t</string>

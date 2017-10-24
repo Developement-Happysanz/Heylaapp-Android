@@ -2,15 +2,15 @@ package com.palprotech.heylaapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
-import com.palprotech.heylaapp.customview.CustomOtpEditText;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
@@ -23,35 +23,31 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by Narendar on 16/10/17.
+ * Created by Admin on 24-10-2017.
  */
 
-public class NumberVerificationActivity extends AppCompatActivity implements View.OnClickListener, IServiceListener, DialogClickListener {
+public class ChangeNumberActivity extends AppCompatActivity implements View.OnClickListener, IServiceListener, DialogClickListener {
 
-    private static final String TAG = NumberVerificationActivity.class.getName();
+    private static final String TAG = ChangeNumberActivity.class.getName();
 
-    private CustomOtpEditText otpEditText;
-    private TextView tvResendOTP;
+    private TextInputLayout inputMobileNo;
+    private EditText edtMobileNo;
     private Button btnConfirm;
-    private Button btnChangeNumber;
-    private String mobileNo;
-
-    private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
+    private ServiceHelper serviceHelper;
+    private String oldMobileNo;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_number_verification);
+        setContentView(R.layout.activity_change_number);
 
-        mobileNo = getIntent().getStringExtra("mobile_no");
-        otpEditText = (CustomOtpEditText) findViewById(R.id.otp_view);
-        tvResendOTP = (TextView) findViewById(R.id.resend);
-        tvResendOTP.setOnClickListener(this);
+        inputMobileNo = (TextInputLayout) findViewById(R.id.ti_mobile_number);
+        edtMobileNo = (EditText) findViewById(R.id.edtMobileNumber);
         btnConfirm = (Button) findViewById(R.id.sendcode);
         btnConfirm.setOnClickListener(this);
-        btnChangeNumber = (Button) findViewById(R.id.changenumber);
-        btnChangeNumber.setOnClickListener(this);
+
+        oldMobileNo = getIntent().getStringExtra("mobile_no");
 
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
@@ -60,42 +56,30 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onClick(View v) {
+
         if (CommonUtils.isNetworkAvailable(getApplicationContext())) {
-            if (v == tvResendOTP) {
+            if (v == btnConfirm) {
+                String username = edtMobileNo.getText().toString();
 
-            } else if (v == btnConfirm) {
+                JSONObject jsonObject = new JSONObject();
+                try {
 
-                if (otpEditText.hasValidOTP()) {
+                    jsonObject.put(HeylaAppConstants.PARMAS_OLD_MOBILE_NUMBER, oldMobileNo);
+                    jsonObject.put(HeylaAppConstants.PARMAS_NEW_MOBILE_NUMBER, edtMobileNo.getText().toString());
 
-                    JSONObject jsonObject = new JSONObject();
-                    try {
-                        jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, mobileNo);
-                        jsonObject.put(HeylaAppConstants.PARAMS_OTP, otpEditText.getOTP());
-                        jsonObject.put(HeylaAppConstants.PARAMS_REQUEST_MODE, "1");
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-                    String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.MOBILE_NUMBER_VERIFY;
-                    serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-                } else {
-                    AlertDialogHelper.showSimpleAlertDialog(this, "Invalid OTP");
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
-            } else if (v == btnChangeNumber) {
-
-                Intent homeIntent = new Intent(getApplicationContext(), ChangeNumberActivity.class);
-                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                homeIntent.putExtra("mobile_no", mobileNo);
-                startActivity(homeIntent);
-                finish();
-
+                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.CHANGE_MOBILE_NUMBER;
+                serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
             }
+
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection available");
+            AlertDialogHelper.showSimpleAlertDialog(getApplicationContext(), "No Network connection available");
         }
+
     }
 
     @Override
@@ -137,16 +121,21 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
     @Override
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
+
         if (validateSignInResponse(response)) {
-            Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+
+         /*   Intent homeIntent = new Intent(getApplicationContext(), ForgotPasswordNumberVerificationActivity.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            homeIntent.putExtra("mobile_no", edtEmailOrMobileNo.getText().toString());
             startActivity(homeIntent);
-            this.finish();
+            finish();*/
+
         }
     }
 
     @Override
     public void onError(String error) {
-
+        progressDialogHelper.hideProgressDialog();
+        AlertDialogHelper.showSimpleAlertDialog(this, error);
     }
 }

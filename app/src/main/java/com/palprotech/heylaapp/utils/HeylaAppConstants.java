@@ -50,6 +50,13 @@ public class HeylaAppConstants {
     //    Update Password Params
     public static final String PARAMS_USER_ID = "user_id";
 
+    //    Change Mobile Number
+    public static final String CHANGE_MOBILE_NUMBER = "apimain/updatemobile/";
+
+    //    Change Mobile Number Params
+    public static final String PARMAS_OLD_MOBILE_NUMBER = "old_mobile_no";
+    public static final String PARMAS_NEW_MOBILE_NUMBER = "new_mobile_no";
+
     //    SharedPref
     private static final String FCM_SHARED_PREF_NAME = "FCMSharedPref";
     private static final String TAG_TOKEN = "tagtoken";
