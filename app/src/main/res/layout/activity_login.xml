@@ -38,10 +38,11 @@
             android:id="@+id/guestlogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_alignBottom="@+id/strip"
             android:layout_alignTop="@+id/strip"
+            android:padding="2dp"
             android:layout_toLeftOf="@+id/strip"
+            android:background="@color/half_transparent"
             android:gravity="center"
             android:text="@string/guest"
             android:textColor="@color/white"

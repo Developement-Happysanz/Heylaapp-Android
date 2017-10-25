@@ -21,7 +21,6 @@ public class HeylaAppConstants {
     public static final String PARAMS_PLATFORM_TYPE = "platform_type";
     public static final String PARAMS_SIGNUP_TYPE = "signup_type";
 
-
     //    Mobile Number Verification
     public static final String MOBILE_NUMBER_VERIFY = "apimain/mobileverify/";
 
@@ -34,6 +33,7 @@ public class HeylaAppConstants {
 
     //    SignIn Params
     public static final String PARAMS_USERNAME = "username";
+    public static final String PARAMS_NAME = "name";
     public static final String PARAMS_LOGIN_TYPE = "login_type";
 
     //    Forgot Password
@@ -58,9 +58,23 @@ public class HeylaAppConstants {
     public static final String PARMAS_OLD_MOBILE_NUMBER = "old_mobile_no";
     public static final String PARMAS_NEW_MOBILE_NUMBER = "new_mobile_no";
 
+    //    Facebook Gmail login
+    public static final String FB_GPLUS_LOGIN = "apimain/fbgmlogin/";
+
+    //    Guest Login
+    public static final String GUEST_LOGIN = "apimain/guestlogin/";
+
+    //    Guest Login Params
+    public static final String PARAMS_UNIQUE_ID = "unique_id";
+    //    Loginmode constants
+    public static final int FACEBOOK = 1;
+    public static final int NORMAL_SIGNUP = 2;
+    public static final int GOOGLE_PLUS = 3;
+
     //    SharedPref
     private static final String FCM_SHARED_PREF_NAME = "FCMSharedPref";
     private static final String TAG_TOKEN = "tagtoken";
+    public static final String KEY_LOGIN_MODE = "loginMode";
 
     //    Service Params
     public static String PARAM_MESSAGE = "msg";

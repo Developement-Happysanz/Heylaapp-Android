@@ -1,5 +1,6 @@
 package com.palprotech.heylaapp.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,10 +8,12 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.utils.FirstTimePreference;
+import com.palprotech.heylaapp.utils.PermissionUtil;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 /**
@@ -29,16 +34,33 @@ import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 public class WelcomeActivity extends AppCompatActivity {
 
+    private static final String TAG = WelcomeActivity.class.getName();
+
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
     private Button btnSkip, btnNext;
+    private static String[] PERMISSIONS_ALL = {Manifest.permission.READ_CONTACTS,
+            Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CALENDAR,
+            Manifest.permission.WRITE_CALENDAR, Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CALL_PHONE,
+            Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+    private static final int REQUEST_PERMISSION_All = 111;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FirstTimePreference prefFirstTime = new FirstTimePreference(getApplicationContext());
+
+        if (prefFirstTime.runTheFirstTime("FirstTimePermit")) {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                requestAllPermissions();
+            }
+        }
 
         // Checking for first time launch - before calling setContentView()
         boolean haspreferences = PreferenceStorage.isFirstTimeLaunch(getApplicationContext());
@@ -96,6 +118,26 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void requestAllPermissions() {
+
+        boolean requestPermission = PermissionUtil.requestAllPermissions(this);
+
+        if (requestPermission == true) {
+
+            Log.i(TAG,
+                    "Displaying contacts permission rationale to provide additional context.");
+
+            // Display a SnackBar with an explanation and a button to trigger the request.
+
+            ActivityCompat
+                    .requestPermissions(this, PERMISSIONS_ALL,
+                            REQUEST_PERMISSION_All);
+        } else {
+
+            ActivityCompat.requestPermissions(this, PERMISSIONS_ALL, REQUEST_PERMISSION_All);
+        }
     }
 
     private void addBottomDots(int currentPage) {

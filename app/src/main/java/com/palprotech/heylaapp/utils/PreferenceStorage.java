@@ -151,4 +151,19 @@ public class PreferenceStorage {
 
     }
 
+    public static void saveLoginMode(Context context, int type) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(HeylaAppConstants.KEY_LOGIN_MODE, type);
+        editor.commit();
+    }
+
+    public static int getLoginMode(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        Integer mode = sharedPreferences.getInt(HeylaAppConstants.KEY_LOGIN_MODE, 0);
+        return mode;
+    }
+
 }
