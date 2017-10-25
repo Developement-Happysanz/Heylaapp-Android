@@ -113,6 +113,8 @@ dependencies {
     compile "com.android.support:percent:26+"
     compile "com.android.support:cardview-v7:26+"
     compile "com.android.support:gridlayout-v7:26+"
+    compile 'com.google.android.gms:play-services-auth:9.4.0'
+
 
 }
 

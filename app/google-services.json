@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "267044808577-fsg3mnh1r4pth9tee3s90tap4fkr1gia.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.palprotech.heylaapp",
+            "certificate_hash": "9747bf26424f1afcb8e0fcb462a4f18b7f5e4fd9"
+          }
+        },
+        {
           "client_id": "267044808577-ol5bl6s3thdune6lt9vglcsag7ftukl5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
