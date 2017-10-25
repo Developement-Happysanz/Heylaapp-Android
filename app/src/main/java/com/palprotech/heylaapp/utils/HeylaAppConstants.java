@@ -21,6 +21,7 @@ public class HeylaAppConstants {
     public static final String PARAMS_PLATFORM_TYPE = "platform_type";
     public static final String PARAMS_SIGNUP_TYPE = "signup_type";
 
+
     //    Mobile Number Verification
     public static final String MOBILE_NUMBER_VERIFY = "apimain/mobileverify/";
 
@@ -81,6 +82,11 @@ public class HeylaAppConstants {
 
     //    Shared Password
     public static final String KEY_PASSWORD = "password";
+
+    //Profile
+    public static final String KEY_USER_BIRTHDAY = "birthday";
+    public static final String KEY_USER_OCCUPATION = "occupation";
+    public static final String KEY_USER_GENDER = "gender";
 
     // Alert Dialog Constants
     public static String ALERT_DIALOG_TITLE = "alertDialogTitle";

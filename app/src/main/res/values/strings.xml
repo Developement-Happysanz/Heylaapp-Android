@@ -53,7 +53,10 @@
 
     <!--Sign Up -->
     <string name="err_email">Enter valid email address</string>
+    <string name="err_name">Enter valid name</string>
+    <string name="err_username">Enter valid username</string>
     <string name="err_mobile">Enter valid mobile phone number</string>
+    <string name="err_pincode">Enter valid pincode number</string>
     <string name="err_empty_password">Enter valid password</string>
     <string name="err_min_pass_length">Short passwords are easy to guess! Try one with at least 6 characters&#8230;</string>
 
@@ -64,6 +67,22 @@
 
     <!--General-->
     <string name="progress_loading">Loading&#8230;</string>
+
+    <!--Profile-->
+    <string name="name">Name</string>
+    <string name="gender">Gender</string>
+    <string name="occupation">Occupation</string>
+    <string name="birthday">Birthday</string>
+    <string name="address1">Address Line 1</string>
+    <string name="address2">Address Line 2</string>
+    <string name="address3">Landmark (Optional)</string>
+    <string name="selectcountry">Select Country</string>
+    <string name="selectstate">Select State</string>
+    <string name="selectcity">Select City</string>
+    <string name="pincode">Pincode</string>
+    <string name="subscribe">Subscribe to Newsletter</string>
+    <string name="save">Save</string>
+
 
 
 </resources>

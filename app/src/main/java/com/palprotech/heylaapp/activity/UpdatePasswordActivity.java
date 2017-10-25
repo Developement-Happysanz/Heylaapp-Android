@@ -2,6 +2,7 @@ package com.palprotech.heylaapp.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.CommonUtils;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
+import com.palprotech.heylaapp.utils.HeylaAppValidator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +33,7 @@ public class UpdatePasswordActivity extends AppCompatActivity implements View.On
     private ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
     private Button btnSubmit;
+    private TextInputLayout inputNewPassword;
     private EditText edtNewPassword;
     private String userId;
 
@@ -48,6 +51,8 @@ public class UpdatePasswordActivity extends AppCompatActivity implements View.On
         btnSubmit = (Button) findViewById(R.id.sendcode);
         btnSubmit.setOnClickListener(this);
 
+        inputNewPassword = (TextInputLayout) findViewById(R.id.ti_newpassword);
+
         edtNewPassword = (EditText) findViewById(R.id.edtNewPassword);
 
     }
@@ -56,19 +61,20 @@ public class UpdatePasswordActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         if (CommonUtils.isNetworkAvailable(getApplicationContext())) {
             if (v == btnSubmit) {
+                if (validateFields()) {
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put(HeylaAppConstants.PARAMS_USER_ID, userId);
+                        jsonObject.put(HeylaAppConstants.PARAMS_PASSWORD, edtNewPassword.getText().toString());
 
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put(HeylaAppConstants.PARAMS_USER_ID, userId);
-                    jsonObject.put(HeylaAppConstants.PARAMS_PASSWORD, edtNewPassword.getText().toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                    String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.UPDATE_PASSWORD;
+                    serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
                 }
-
-                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.UPDATE_PASSWORD;
-                serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
             }
         } else {
             AlertDialogHelper.showSimpleAlertDialog(getApplicationContext(), "No Network connection available");
@@ -110,6 +116,18 @@ public class UpdatePasswordActivity extends AppCompatActivity implements View.On
             }
         }
         return signInSuccess;
+    }
+
+    private boolean validateFields() {
+        if (!HeylaAppValidator.checkNullString(this.edtNewPassword.getText().toString().trim())) {
+            inputNewPassword.setError(getString(R.string.err_empty_password));
+            return false;
+        } else if (!HeylaAppValidator.checkStringMinLength(6, this.edtNewPassword.getText().toString().trim())) {
+            inputNewPassword.setError(getString(R.string.err_min_pass_length));
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override

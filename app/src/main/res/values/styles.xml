@@ -32,4 +32,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="datePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/appColorBase</item>
+        <item name="android:textColorSecondary">@color/appColorBase</item>
+        <item name="android:textColorTertiary">@color/appColorBase</item>
+        <item name="android:colorBackground">@color/white</item>
+    </style>
+
 </resources>

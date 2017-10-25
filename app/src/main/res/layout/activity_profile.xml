@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:background="@color/appColorBase">
+
+                <ImageView
+                    android:id="@+id/profile_img"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_default_profile"/>
+
+                <TextView
+                    android:id="@+id/profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile_img"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/white"
+                    android:hint="New User"
+                    android:textColorHint="@color/white"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/name_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/ti_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <EditText
+                            android:id="@+id/edtName"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="@string/name"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:textSize="14sp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/ti_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <EditText
+                            android:id="@+id/edtUsername"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="@string/username"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:textSize="14sp"
+                            android:imeOptions="actionDone"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name_section"
+                    android:orientation="vertical">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/ti_birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <EditText
+                            android:id="@+id/edtBirthday"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="@string/birthday"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:textSize="14sp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/ti_occupation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp">
+
+                            <EditText
+                                android:id="@+id/occupationlist"
+                                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:hint="@string/occupation"
+                                android:textSize="14sp" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/ti_gender"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp">
+
+                            <EditText
+                                android:id="@+id/genderList"
+                                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_weight="0.5"
+                                android:hint="@string/gender"
+                                android:textSize="14sp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dob"
+                    android:orientation="vertical">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/ti_address_line_one"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <EditText
+                            android:id="@+id/edtAddressLineOne"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="@string/address1"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:textSize="14sp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/ti_address_line_two"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <EditText
+                            android:id="@+id/edtAddressLinetwo"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="@string/address2"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:textSize="14sp"
+                            android:imeOptions="actionDone"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/ti_address_line_three"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <EditText
+                            android:id="@+id/edtAddressLinethree"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="@string/address3"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:textSize="14sp"
+                            android:imeOptions="actionDone"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/address"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/ti_country"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp">
+
+                            <EditText
+                                android:id="@+id/countryList"
+                                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_weight="0.5"
+                                android:hint="@string/selectcountry"
+                                android:spinnerMode="dropdown"
+                                android:textSize="14sp" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/ti_state"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp">
+
+                            <EditText
+                                android:id="@+id/stateList"
+                                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_weight="0.5"
+                                android:hint="@string/selectstate"
+                                android:spinnerMode="dropdown"
+                                android:textSize="14sp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/ti_city"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp">
+
+                            <EditText
+                                android:id="@+id/cityList"
+                                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_weight="0.5"
+                                android:hint="@string/selectcity"
+                                android:spinnerMode="dropdown"
+                                android:textSize="14sp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/ti_pincode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp">
+
+                            <EditText
+                                android:id="@+id/edtPincode"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:hint="@string/pincode"
+                                android:inputType="text"
+                                android:singleLine="true"
+                                android:textSize="14sp" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/subscription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/appColorBase"
+                    android:layout_below="@+id/location"
+                    android:text="@string/subscribe"
+                    android:layout_marginStart="10dp"/>
+
+                <Button
+                    android:id="@+id/saveprofile"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/subscription"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_sign_in"
+                    android:text="@string/save"
+                    android:textColor="@color/colour_pick" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

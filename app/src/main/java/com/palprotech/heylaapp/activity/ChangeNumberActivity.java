@@ -1,6 +1,5 @@
 package com.palprotech.heylaapp.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -18,6 +17,7 @@ import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.CommonUtils;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
+import com.palprotech.heylaapp.utils.HeylaAppValidator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,21 +59,24 @@ public class ChangeNumberActivity extends AppCompatActivity implements View.OnCl
 
         if (CommonUtils.isNetworkAvailable(getApplicationContext())) {
             if (v == btnConfirm) {
-                String username = edtMobileNo.getText().toString();
+                if(validateFields()){
+                    String username = edtMobileNo.getText().toString();
 
-                JSONObject jsonObject = new JSONObject();
-                try {
+                    JSONObject jsonObject = new JSONObject();
+                    try {
 
-                    jsonObject.put(HeylaAppConstants.PARMAS_OLD_MOBILE_NUMBER, oldMobileNo);
-                    jsonObject.put(HeylaAppConstants.PARMAS_NEW_MOBILE_NUMBER, edtMobileNo.getText().toString());
+                        jsonObject.put(HeylaAppConstants.PARMAS_OLD_MOBILE_NUMBER, oldMobileNo);
+                        jsonObject.put(HeylaAppConstants.PARMAS_NEW_MOBILE_NUMBER, edtMobileNo.getText().toString());
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                    String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.CHANGE_MOBILE_NUMBER;
+                    serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
                 }
 
-                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.CHANGE_MOBILE_NUMBER;
-                serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
             }
 
         } else {
@@ -130,6 +133,19 @@ public class ChangeNumberActivity extends AppCompatActivity implements View.OnCl
             startActivity(homeIntent);
             finish();*/
 
+        }
+    }
+
+    private boolean validateFields(){
+        if (!HeylaAppValidator.checkNullString(this.edtMobileNo.getText().toString().trim())) {
+            inputMobileNo.setError(getString(R.string.err_mobile));
+            return false;
+        } else if (!HeylaAppValidator.checkMobileNumLength(this.edtMobileNo.getText().toString().trim())) {
+            inputMobileNo.setError(getString(R.string.err_mobile));
+            return false;
+        }
+        else {
+            return true;
         }
     }
 
