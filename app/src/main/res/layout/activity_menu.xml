@@ -267,6 +267,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/sign_out_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
@@ -279,7 +280,7 @@
                     android:layout_below="@+id/wishlist_img">
 
                     <ImageView
-                        android:id="@+id/sign_out_img"
+                        android:id="@+id/sign_out"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:layout_centerHorizontal="true"
@@ -289,7 +290,7 @@
                         android:id="@+id/sign_out_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/sign_out_img"
+                        android:layout_below="@+id/sign_out"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="5dp"
                         android:text="Sign Out"
