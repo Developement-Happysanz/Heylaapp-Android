@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_favorites"
+        android:enabled="true"
+        android:icon="@drawable/temp_ic_home_white_24dp"
+        android:title="Favourites"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_popular"
+        android:enabled="true"
+        android:icon="@drawable/temp_ic_thumb_up_white_24dp"
+        android:title="Popular"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_hotspot"
+        android:enabled="true"
+        android:icon="@drawable/temp_ic_whatshot_white_24dp"
+        android:title="Hotspot"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_leaderboard"
+        android:enabled="true"
+        android:icon="@drawable/temp_icons8-Trophy-50"
+        android:title="Leaderboard"
+        app:showAsAction="ifRoom" />
+</menu>
