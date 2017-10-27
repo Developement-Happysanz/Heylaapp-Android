@@ -207,6 +207,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                     jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_ID, acct.getEmail());
                     jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
                     jsonObject.put(HeylaAppConstants.PARAMS_LOGIN_TYPE, "1");
+                    jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -249,7 +250,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                         jsonObject.put(HeylaAppConstants.PARAMS_USERNAME, username);
                         jsonObject.put(HeylaAppConstants.PARAMS_PASSWORD, password);
                         jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
-                        jsonObject.put(HeylaAppConstants.PARAMS_LOGIN_TYPE, "1");
+                        jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -336,6 +337,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                                                 jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_ID, email);
                                                 jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
                                                 jsonObject.put(HeylaAppConstants.PARAMS_LOGIN_TYPE, "1");
+                                                jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }

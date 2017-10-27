@@ -138,7 +138,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
-            Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent homeIntent = new Intent(getApplicationContext(), ProfileActivity.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
             this.finish();

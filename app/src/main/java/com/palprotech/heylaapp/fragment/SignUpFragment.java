@@ -91,10 +91,9 @@ public class SignUpFragment extends Fragment implements View.OnClickListener, IS
                     try {
                         jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_ID, email.getText().toString());
                         jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, mobile.getText().toString());
-                        jsonObject.put(HeylaAppConstants.PARAMS_PASSWORD, mobile.getText().toString());
+                        jsonObject.put(HeylaAppConstants.PARAMS_PASSWORD, password.getText().toString());
                         jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
-                        jsonObject.put(HeylaAppConstants.PARAMS_PLATFORM_TYPE, "1");
-                        jsonObject.put(HeylaAppConstants.PARAMS_SIGNUP_TYPE, "3");
+                        jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
 
                     } catch (JSONException e) {
                         e.printStackTrace();

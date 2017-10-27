@@ -18,8 +18,8 @@ public class HeylaAppConstants {
     public static final String PARAMS_MOBILE_NUMBER = "mobile_no";
     public static final String PARAMS_PASSWORD = "password";
     public static final String PARAMS_GCM_KEY = "gcm_key";
-    public static final String PARAMS_PLATFORM_TYPE = "platform_type";
-    public static final String PARAMS_SIGNUP_TYPE = "signup_type";
+//    public static final String PARAMS_PLATFORM_TYPE = "platform_type";
+//    public static final String PARAMS_SIGNUP_TYPE = "signup_type";
 
     //    Mobile Number Verification
     public static final String MOBILE_NUMBER_VERIFY = "apimain/mobileverify/";
@@ -35,6 +35,7 @@ public class HeylaAppConstants {
     public static final String PARAMS_USERNAME = "username";
     public static final String PARAMS_NAME = "name";
     public static final String PARAMS_LOGIN_TYPE = "login_type";
+    public static final String PARAMS_MOBILE_TYPE = "mobile_type";
 
     //    Forgot Password
     public static final String FORGOT_PASSWORD = "apimain/forgotpassword/";
