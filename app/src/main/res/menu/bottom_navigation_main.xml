@@ -22,7 +22,7 @@
     <item
         android:id="@+id/action_leaderboard"
         android:enabled="true"
-        android:icon="@drawable/temp_icons8-Trophy-50"
+        android:icon="@drawable/temp_icons8_trophy"
         android:title="Leaderboard"
         app:showAsAction="ifRoom" />
 </menu>
