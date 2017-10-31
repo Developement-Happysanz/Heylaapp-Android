@@ -66,11 +66,13 @@ android {
     android.applicationVariants.all { variant ->
 
         variant.outputs.all { output ->
-            def finalVersionCode = 10000 + versionCode
+           /* def finalVersionCode = 10000 + versionCode
             output.versionCodeOverride = finalVersionCode
             outputFileName = new File(
                     output.outputFile.parent,
-                    outputFileName.replace("Heylaapp.apk", "-${finalVersionCode}Heylaapp.apk"))
+                    outputFileName.replace("Heylaapp.apk", "-${finalVersionCode}Heylaapp.apk"))*/
+//            outputFileName = file("$project.buildDir/apk/Heylaapp.apk")
+            outputFileName = "${variant.name}-${variant.versionName}.apk"
         }
     }
     productFlavors {
