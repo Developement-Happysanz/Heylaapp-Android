@@ -7,6 +7,7 @@ android {
             keyPassword 'Heylaapp@123'
             storeFile file('heylaapp.jks')
             storePassword 'Heylaapp@123'
+            flavorDimensions "default"
         }
     }
 
@@ -61,9 +62,15 @@ android {
         }
     }
 
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            output.outputFile = file("$project.buildDir/apk/Heyla.apk")
+//            outputFileName = file("$project.buildDir/apk/Heylaapp.apk")
+    android.applicationVariants.all { variant ->
+
+        variant.outputs.all { output ->
+            def finalVersionCode = 10000 + versionCode
+            output.versionCodeOverride = finalVersionCode
+            outputFileName = new File(
+                    output.outputFile.parent,
+                    outputFileName.replace("Heylaapp.apk", "-${finalVersionCode}Heylaapp.apk"))
         }
     }
     productFlavors {

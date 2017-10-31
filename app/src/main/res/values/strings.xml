@@ -20,7 +20,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="mobileno">Mobile Number</string>
-    <string name="username">Username</string>
+    <string name="username">Username*</string>
     <string name="usernameormail">Username/Email/Mobile number</string>
     <string name="new_mobile_number">Mobile Number</string>
     <string name="newpassword">New Password</string>
@@ -69,7 +69,7 @@
     <string name="progress_loading">Loading&#8230;</string>
 
     <!--Profile-->
-    <string name="name">Name</string>
+    <string name="name">Name*</string>
     <string name="gender">Gender</string>
     <string name="occupation">Occupation</string>
     <string name="birthday">Birthday</string>

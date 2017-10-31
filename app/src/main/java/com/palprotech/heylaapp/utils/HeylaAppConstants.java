@@ -67,11 +67,14 @@ public class HeylaAppConstants {
 
     //    Guest Login Params
     public static final String PARAMS_UNIQUE_ID = "unique_id";
+
     //    Loginmode constants
     public static final int FACEBOOK = 1;
     public static final int NORMAL_SIGNUP = 2;
     public static final int GOOGLE_PLUS = 3;
 
+    //    Profile Image Upload
+    public static final String PROFILE_IMAGE = "apimain/profile_picupload/";
     //    SharedPref
     private static final String FCM_SHARED_PREF_NAME = "FCMSharedPref";
     private static final String TAG_TOKEN = "tagtoken";

@@ -1,8 +1,12 @@
 package com.palprotech.heylaapp.activity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
@@ -19,10 +23,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.helper.ProgressDialogHelper;
+import com.palprotech.heylaapp.interfaces.DialogClickListener;
+import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
+import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
+import com.palprotech.heylaapp.utils.AndroidMultiPartEntity;
 import com.palprotech.heylaapp.utils.CommonUtils;
+import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.HeylaAppValidator;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,7 +59,8 @@ import java.util.Locale;
  * Created by Narendar on 23/10/17.
  */
 
-public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener, View.OnClickListener {
+public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener, View.OnClickListener,IServiceListener, DialogClickListener {
+
     private static final String TAG = ProfileActivity.class.getName();
 
     private List<String> mOccupationList = new ArrayList<String>();
@@ -54,6 +79,16 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     private DatePickerDialog mDatePicker;
     private SimpleDateFormat mDateFormatter;
 
+    private ServiceHelper serviceHelper;
+    private ProgressDialogHelper progressDialogHelper;
+    private String mActualFilePath = null;
+    private Uri mSelectedImageUri = null;
+    private Bitmap mCurrentUserImageBitmap = null;
+    private ProgressDialog mProgressDialog = null;
+    private String mUpdatedImageUrl = null;
+    private UploadFileToServer mUploadTask = null;
+    long totalSize = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +97,11 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     }
 
     void setUI() {
+
+        serviceHelper = new ServiceHelper(this);
+        serviceHelper.setServiceListener(this);
+        progressDialogHelper = new ProgressDialogHelper(this);
+
         save = (Button) findViewById(R.id.saveprofile);
         mGender = (EditText) findViewById(R.id.genderList);
         mGender.setFocusable(false);
@@ -172,6 +212,113 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         });
     }
 
+    void saveProfile(){
+
+    }
+
+    /**
+     * Uploading the file to server
+     */
+    private class UploadFileToServer extends AsyncTask<Void, Integer, String>{
+        private static final String TAG = "UploadFileToServer";
+        private HttpClient httpclient;
+        HttpPost httppost;
+        public boolean isTaskAborted = false;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... progress) {
+
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            return uploadFile();
+        }
+
+        @SuppressWarnings("deprecation")
+        private String uploadFile() {
+            String responseString = null;
+
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost(String.format(HeylaAppConstants.BASE_URL +  HeylaAppConstants.PROFILE_IMAGE + Integer.parseInt(PreferenceStorage.getGCM(ProfileActivity.this))));
+
+            try {
+                AndroidMultiPartEntity entity = new AndroidMultiPartEntity(
+                        new AndroidMultiPartEntity.ProgressListener() {
+
+                            @Override
+                            public void transferred(long num) {
+
+                            }
+                        });
+                Log.d(TAG, "actual file path is" + mActualFilePath);
+                if (mActualFilePath != null) {
+
+                    File sourceFile = new File(mActualFilePath);
+
+                    // Adding file data to http body
+                    //fileToUpload
+                    entity.addPart("user_pic", new FileBody(sourceFile));
+
+                    // Extra parameters if you want to pass to server
+//                    entity.addPart("user_id", new StringBody(PreferenceStorage.getUserId(ProfileActivity.this)));
+//                    entity.addPart("user_type", new StringBody(PreferenceStorage.getUserType(ProfileActivity.this)));
+
+                    totalSize = entity.getContentLength();
+                    httppost.setEntity(entity);
+
+                    // Making server call
+                    HttpResponse response = httpclient.execute(httppost);
+                    HttpEntity r_entity = response.getEntity();
+
+                    int statusCode = response.getStatusLine().getStatusCode();
+                    if (statusCode == 200) {
+                        // Server response
+                        responseString = EntityUtils.toString(r_entity);
+                        try {
+                            JSONObject resp = new JSONObject(responseString);
+                            String successVal = resp.getString("status");
+
+                            mUpdatedImageUrl = resp.getString("user_picture");
+
+                            Log.d(TAG, "updated image url is" + mUpdatedImageUrl);
+                            if (successVal.equalsIgnoreCase("success")) {
+                                Log.d(TAG, "Updated image succesfully");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        responseString = "Error occurred! Http Status Code: "
+                                + statusCode;
+                    }
+                }
+
+            } catch (ClientProtocolException e) {
+                responseString = e.toString();
+            } catch (IOException e) {
+                responseString = e.toString();
+            }
+
+            return responseString;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+    }
+
     private void showGenderList() {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
 
@@ -237,7 +384,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             } finally {
                 mDatePicker = new DatePickerDialog(this, R.style.datePickerTheme, this, year, month, day);
                 mDatePicker.show();
-
             }
         } else {
             Log.d(TAG, "show default date");
@@ -292,10 +438,31 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     public void onClick(View view) {
         if (view == save) {
             if (validateFields()) {
-                Intent homeIntent = new Intent(this.getApplicationContext(), MainActivity.class);
+       /*         Intent homeIntent = new Intent(this.getApplicationContext(), MainActivity.class);
                 homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(homeIntent);
+//                finish();*/
             }
         }
+    }
+
+    @Override
+    public void onAlertPositiveClicked(int tag) {
+
+    }
+
+    @Override
+    public void onAlertNegativeClicked(int tag) {
+
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
+    }
+
+    @Override
+    public void onError(String error) {
+
     }
 }
