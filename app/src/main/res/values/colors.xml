@@ -16,6 +16,10 @@
     <color name="light_line_color">#f9f9f9</color>
     <color name="half_transparent">#1e468dcb</color>
 
+
+    <!--Login Module-->
+    <color name="ticket_yellow">#fcb316</color>
+
     <!-- Screens background color-->
     <color name="bg_screen1">#468DCB</color>
 
