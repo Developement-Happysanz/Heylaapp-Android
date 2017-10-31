@@ -1,13 +1,16 @@
 package com.palprotech.heylaapp.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.customview.CustomOtpEditText;
@@ -18,6 +21,7 @@ import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.CommonUtils;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +39,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
     private Button btnConfirm;
     private Button btnChangeNumber;
     private String mobileNo;
-
+    private String checkVerify;
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
 
@@ -44,7 +48,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number_verification);
 
-        mobileNo = getIntent().getStringExtra("mobile_no");
+        mobileNo = PreferenceStorage.getMobileNo(getApplicationContext());
         otpEditText = (CustomOtpEditText) findViewById(R.id.otp_view);
         tvResendOTP = (TextView) findViewById(R.id.resend);
         tvResendOTP.setOnClickListener(this);
@@ -61,12 +65,46 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
     @Override
     public void onClick(View v) {
         if (CommonUtils.isNetworkAvailable(getApplicationContext())) {
+
             if (v == tvResendOTP) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("Do you want to resend OTP ?");
+                alertDialogBuilder.setMessage("Confirm your mobile number : " + mobileNo);
+                alertDialogBuilder.setPositiveButton("Proceed",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                checkVerify = "Resend";
+                                JSONObject jsonObject = new JSONObject();
+                                try {
+
+                                    jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, mobileNo);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.RESEND_OTP_REQUEST;
+                                serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+                            }
+                        });
+                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+//                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialogBuilder.show();
 
             } else if (v == btnConfirm) {
 
                 if (otpEditText.hasValidOTP()) {
-
+                    checkVerify = "Confirm";
                     JSONObject jsonObject = new JSONObject();
                     try {
                         jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, mobileNo);
@@ -87,10 +125,10 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
             } else if (v == btnChangeNumber) {
 
                 Intent homeIntent = new Intent(getApplicationContext(), ChangeNumberActivity.class);
-                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                homeIntent.putExtra("mobile_no", mobileNo);
+//                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                homeIntent.putExtra("mobile_no", mobileNo);
                 startActivity(homeIntent);
-                finish();
+//                finish();
 
             }
         } else {
@@ -138,10 +176,14 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
-            Intent homeIntent = new Intent(getApplicationContext(), ProfileActivity.class);
-            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(homeIntent);
-            this.finish();
+            if (checkVerify.equalsIgnoreCase("Resend")) {
+                Toast.makeText(getApplicationContext(), "OTP resent successfully", Toast.LENGTH_SHORT).show();
+            } else if (checkVerify.equalsIgnoreCase("Confirm")) {
+                Intent homeIntent = new Intent(getApplicationContext(), ProfileActivity.class);
+                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+                this.finish();
+            }
         }
     }
 

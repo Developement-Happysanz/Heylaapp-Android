@@ -166,4 +166,19 @@ public class PreferenceStorage {
         return mode;
     }
 
+    public static void saveMobileNo(Context context, String type) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.KEY_MOBILE_NUMBER, type);
+        editor.apply();
+    }
+
+    public static String getMobileNo(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String mobileNo = sharedPreferences.getString(HeylaAppConstants.KEY_MOBILE_NUMBER, "");
+        return mobileNo;
+    }
+
 }

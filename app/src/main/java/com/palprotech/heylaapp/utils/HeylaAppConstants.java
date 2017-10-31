@@ -76,6 +76,7 @@ public class HeylaAppConstants {
     private static final String FCM_SHARED_PREF_NAME = "FCMSharedPref";
     private static final String TAG_TOKEN = "tagtoken";
     public static final String KEY_LOGIN_MODE = "loginMode";
+    public static final String KEY_MOBILE_NUMBER = "mobile_number";
 
     //    Service Params
     public static String PARAM_MESSAGE = "msg";

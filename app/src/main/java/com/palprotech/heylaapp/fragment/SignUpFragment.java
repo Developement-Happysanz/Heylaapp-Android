@@ -175,9 +175,10 @@ public class SignUpFragment extends Fragment implements View.OnClickListener, IS
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {*/
 
+            PreferenceStorage.saveMobileNo(getApplicationContext(), mobile.getText().toString());
             Intent homeIntent = new Intent(getActivity(), NumberVerificationActivity.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            homeIntent.putExtra("mobile_no", mobile.getText().toString());
+//            homeIntent.putExtra("mobile_no", mobile.getText().toString());
             startActivity(homeIntent);
             getActivity().finish();
                      /*   }

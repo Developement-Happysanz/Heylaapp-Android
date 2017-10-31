@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
@@ -18,9 +19,12 @@ import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.CommonUtils;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.HeylaAppValidator;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by Admin on 24-10-2017.
@@ -47,7 +51,7 @@ public class ChangeNumberActivity extends AppCompatActivity implements View.OnCl
         btnConfirm = (Button) findViewById(R.id.sendcode);
         btnConfirm.setOnClickListener(this);
 
-        oldMobileNo = getIntent().getStringExtra("mobile_no");
+        oldMobileNo = PreferenceStorage.getMobileNo(getApplicationContext());
 
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
@@ -59,7 +63,7 @@ public class ChangeNumberActivity extends AppCompatActivity implements View.OnCl
 
         if (CommonUtils.isNetworkAvailable(getApplicationContext())) {
             if (v == btnConfirm) {
-                if(validateFields()){
+                if (validateFields()) {
                     String username = edtMobileNo.getText().toString();
 
                     JSONObject jsonObject = new JSONObject();
@@ -132,19 +136,21 @@ public class ChangeNumberActivity extends AppCompatActivity implements View.OnCl
 //            homeIntent.putExtra("mobile_no", edtEmailOrMobileNo.getText().toString());
             startActivity(homeIntent);
             finish();*/
+            PreferenceStorage.saveMobileNo(getApplicationContext(), edtMobileNo.getText().toString());
+            Toast.makeText(getApplicationContext(), "Mobile number has been changed successfully", Toast.LENGTH_SHORT).show();
+            finish();
 
         }
     }
 
-    private boolean validateFields(){
+    private boolean validateFields() {
         if (!HeylaAppValidator.checkNullString(this.edtMobileNo.getText().toString().trim())) {
             inputMobileNo.setError(getString(R.string.err_mobile));
             return false;
         } else if (!HeylaAppValidator.checkMobileNumLength(this.edtMobileNo.getText().toString().trim())) {
             inputMobileNo.setError(getString(R.string.err_mobile));
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }

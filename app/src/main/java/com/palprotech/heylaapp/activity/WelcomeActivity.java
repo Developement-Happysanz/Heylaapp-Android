@@ -3,6 +3,7 @@ package com.palprotech.heylaapp.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -24,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.bean.database.SQLiteHelper;
 import com.palprotech.heylaapp.utils.FirstTimePreference;
 import com.palprotech.heylaapp.utils.PermissionUtil;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
@@ -49,10 +51,13 @@ public class WelcomeActivity extends AppCompatActivity {
             Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
     private static final int REQUEST_PERMISSION_All = 111;
+    SQLiteHelper database;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        database = new SQLiteHelper(getApplicationContext());
 
         FirstTimePreference prefFirstTime = new FirstTimePreference(getApplicationContext());
 
@@ -69,6 +74,13 @@ public class WelcomeActivity extends AppCompatActivity {
             finish();
         }
 
+        // Checking for first time launch - before calling setContentView()
+        /*int hasAppInfoChecked = database.appInfoCheck();
+        if (hasAppInfoChecked > 0) {
+            launchHomeScreen();
+            finish();
+        }*/
+
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -80,7 +92,6 @@ public class WelcomeActivity extends AppCompatActivity {
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
-
 
 
         // layouts of all welcome sliders
@@ -165,6 +176,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         PreferenceStorage.setFirstTimeLaunch(getApplicationContext(), false);
+//        database.app_info_check_insert("Y");
         startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
         finish();
     }
