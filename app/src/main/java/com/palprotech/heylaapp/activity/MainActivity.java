@@ -6,16 +6,20 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.fragment.FavouriteFragment;
 import com.palprotech.heylaapp.fragment.HotspotFragment;
-import com.palprotech.heylaapp.fragment.PopularFragment;
 import com.palprotech.heylaapp.fragment.LeaderboardFragment;
+import com.palprotech.heylaapp.fragment.PopularFragment;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -33,11 +37,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView sample;
 
+    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initToolBar();
 
         fabView = (FloatingActionButton) this.findViewById(R.id.viewOptions);
 
@@ -128,6 +135,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_landing, menu);
+        return true;
+    }
+
     private void changeFragment(int position) {
 
         Fragment newFragment = null;
@@ -168,6 +182,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Change settings icon to 'X' icon
         fabView.setImageResource(R.drawable.ic_close);
         fabExpanded = true;
+    }
+
+    public void initToolBar() {
+        toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.ic_side_menu);
+        toolbar.setNavigationOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(MainActivity.this, "clicking the toolbar!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+        );
     }
 
     @Override

@@ -8,29 +8,33 @@
     android:orientation="vertical"
     tools:context="com.palprotech.heylaapp.activity.MainActivity">
 
-    <Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
+        android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:orientation="vertical">
 
-    </Toolbar>
+        <include
+            android:id="@+id/activity_toolbar"
+            layout="@layout/tool_bar" />
+
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navigation"
-        />
+        android:layout_below="@+id/tool_bar"
+        android:layout_above="@+id/bottom_navigation" />
 
     <!--<ImageView-->
-        <!--android:layout_width="138dp"-->
-        <!--android:layout_height="495dp"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:contentDescription="new"-->
-        <!--android:src="@drawable/ic_heyla_logo"-->
-        <!--tools:layout_editor_absoluteX="8dp"-->
-        <!--tools:layout_editor_absoluteY="8dp" />-->
+    <!--android:layout_width="138dp"-->
+    <!--android:layout_height="495dp"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:contentDescription="new"-->
+    <!--android:src="@drawable/ic_heyla_logo"-->
+    <!--tools:layout_editor_absoluteX="8dp"-->
+    <!--tools:layout_editor_absoluteY="8dp" />-->
 
     <FrameLayout
         android:id="@+id/fabFrame"
@@ -48,7 +52,8 @@
             android:id="@+id/sampleViewChanger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal" />
 
         <LinearLayout
             android:id="@+id/layoutFabMapView"
@@ -66,8 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_floating_sub_two"
-                app:fabSize="mini"
-                app:backgroundTint="@color/ticket_yellow"/>
+                app:backgroundTint="@color/ticket_yellow"
+                app:fabSize="mini" />
 
         </LinearLayout>
 
@@ -86,8 +91,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_floating_sub_one"
-                app:fabSize="mini"
-                app:backgroundTint="@color/ticket_yellow"/>
+                app:backgroundTint="@color/ticket_yellow"
+                app:fabSize="mini" />
 
         </LinearLayout>
 
@@ -107,8 +112,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_floating_sub_three"
-                app:fabSize="mini"
-                app:backgroundTint="@color/ticket_yellow"/>
+                app:backgroundTint="@color/ticket_yellow"
+                app:fabSize="mini" />
 
         </LinearLayout>
 
@@ -118,9 +123,9 @@
             android:layout_height="55dp"
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="10dp"
-            app:backgroundTint="@color/ticket_yellow"
             android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_plus" />
+            android:src="@drawable/ic_plus"
+            app:backgroundTint="@color/ticket_yellow" />
 
     </FrameLayout>
 
