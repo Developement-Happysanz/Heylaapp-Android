@@ -104,13 +104,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             case R.id.action_favorites:
                                 changeFragment(0);
+                                fabView.setVisibility(View.VISIBLE);
                                 break;
 
                             case R.id.action_popular:
                                 changeFragment(1);
+                                fabView.setVisibility(View.VISIBLE);
                                 break;
                             case R.id.action_hotspot:
                                 changeFragment(2);
+                                fabView.setVisibility(View.VISIBLE);
                                 break;
                             case R.id.action_leaderboard:
                                 changeFragment(3);
