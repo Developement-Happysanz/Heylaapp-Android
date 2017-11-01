@@ -99,6 +99,9 @@ public class HeylaAppConstants {
     //    Shared Username
     public static final String KEY_USERNAME = "username";
 
+    //    Shared Username
+    public static final String KEY_USER_ID = "user_id";
+
     //    Shared Password
     public static final String KEY_PASSWORD = "password";
 

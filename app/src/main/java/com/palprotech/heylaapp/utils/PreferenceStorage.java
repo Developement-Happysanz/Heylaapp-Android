@@ -70,6 +70,21 @@ public class PreferenceStorage {
         return sharedPreferences.getBoolean(HeylaAppConstants.IS_REMEMBER_ENABLED, false);
     }
 
+    /*To store userId*/
+    public static void saveUserId(Context context, String userName) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.KEY_USER_ID, userName);
+        editor.apply();
+    }
+
+    public static String getUserId(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(HeylaAppConstants.KEY_USER_ID, "");
+    }
+
     /*To store username*/
     public static void saveUsername(Context context, String userName) {
         SharedPreferences sharedPreferences = PreferenceManager

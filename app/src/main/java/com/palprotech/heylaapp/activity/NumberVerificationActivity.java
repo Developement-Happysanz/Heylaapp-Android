@@ -64,6 +64,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onClick(View v) {
+
         if (CommonUtils.isNetworkAvailable(getApplicationContext())) {
 
             if (v == tvResendOTP) {
@@ -176,19 +177,26 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
-            if (checkVerify.equalsIgnoreCase("Resend")) {
-                Toast.makeText(getApplicationContext(), "OTP resent successfully", Toast.LENGTH_SHORT).show();
-            } else if (checkVerify.equalsIgnoreCase("Confirm")) {
-                Intent homeIntent = new Intent(getApplicationContext(), ProfileActivity.class);
+            try {
+                if (checkVerify.equalsIgnoreCase("Resend")) {
+                    Toast.makeText(getApplicationContext(), "OTP resent successfully", Toast.LENGTH_SHORT).show();
+                } else if (checkVerify.equalsIgnoreCase("Confirm")) {
+                    String userId = response.getString("user_id");
+                    PreferenceStorage.saveUserId(getApplicationContext(), userId);
+                    Intent homeIntent = new Intent(getApplicationContext(), ProfileActivity.class);
 //                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(homeIntent);
+                    startActivity(homeIntent);
 //                this.finish();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
     }
 
     @Override
     public void onError(String error) {
-
+        progressDialogHelper.hideProgressDialog();
+        AlertDialogHelper.showSimpleAlertDialog(this, error);
     }
 }
