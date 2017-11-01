@@ -526,7 +526,11 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             inputUsername.setError(getString(R.string.err_username));
             requestFocus(username);
             return false;
-        } else {
+        } else if (!HeylaAppValidator.checkStringMinLength(4, this.username.getText().toString().trim())) {
+            inputUsername.setError(getString(R.string.err_username));
+            requestFocus(username);
+            return false;
+        }else {
             return true;
         }
     }
