@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             case R.id.action_leaderboard:
                                 changeFragment(3);
                                 fabView.setVisibility(View.INVISIBLE);
+                                closeSubMenusFab();
                                 break;
 
                         }

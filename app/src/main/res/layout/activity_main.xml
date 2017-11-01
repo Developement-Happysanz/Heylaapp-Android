@@ -8,6 +8,14 @@
     android:orientation="vertical"
     tools:context="com.palprotech.heylaapp.activity.MainActivity">
 
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    </Toolbar>
+
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
