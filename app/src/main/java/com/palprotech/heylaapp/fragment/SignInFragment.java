@@ -437,7 +437,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
         progressDialogHelper.hideProgressDialog();
 
         if (validateSignInResponse(response)) {
-
+            Intent homeIntent = new Intent(getActivity(), MainActivity.class);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
         }
     }
 

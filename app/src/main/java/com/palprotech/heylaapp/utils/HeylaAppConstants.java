@@ -75,6 +75,25 @@ public class HeylaAppConstants {
 
     //    Profile Image Upload
     public static final String PROFILE_IMAGE = "apimain/profile_picupload/";
+
+    //    Profile Info Update
+    public static final String PROFILE_DATA = "apimain/profileupdate/";
+
+    //    Profile Params
+    public static final String PARAMS_FULL_NAME = "full_name";
+    public static final String PARAMS_DATE_OF_BIRTH = "date_of_birth";
+    public static final String PARAMS_GENDER = "gender";
+    public static final String PARAMS_OCCUPATION = "occupation";
+    public static final String PARAMS_ADDRESS_LINE_1 = "address_line_1";
+    public static final String PARAMS_ADDRESS_LINE_2 = "address_line_2";
+    public static final String PARAMS_ADRESS_LINE_3 = "address_line_3";
+    public static final String PARAMS_COUNTRY_ID = "country_id";
+    public static final String PARAMS_STATE_ID = "state_id";
+    public static final String PARAMS_CITY_ID = "city_id";
+    public static final String PARAMS_ZIP_CODE = "zip_code";
+    public static final String PARAMS_NEWS_LETTER = "news_letter";
+
+
     //    SharedPref
     private static final String FCM_SHARED_PREF_NAME = "FCMSharedPref";
     private static final String TAG_TOKEN = "tagtoken";
@@ -109,6 +128,7 @@ public class HeylaAppConstants {
     public static final String KEY_USER_BIRTHDAY = "birthday";
     public static final String KEY_USER_OCCUPATION = "occupation";
     public static final String KEY_USER_GENDER = "gender";
+    public static final String KEY_USER_IMAGE = "user_pic";
 
     // Alert Dialog Constants
     public static String ALERT_DIALOG_TITLE = "alertDialogTitle";

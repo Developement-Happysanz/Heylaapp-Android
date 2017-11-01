@@ -100,7 +100,7 @@ public class PreferenceStorage {
         return sharedPreferences.getString(HeylaAppConstants.KEY_USERNAME, "");
     }
 
-    /*To store username*/
+    /*To store password*/
     public static void savePassword(Context context, String password) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
@@ -113,6 +113,23 @@ public class PreferenceStorage {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         return sharedPreferences.getString(HeylaAppConstants.KEY_PASSWORD, "");
+    }
+
+    // User Image
+    public static void saveUserPicture(Context context, String userPicture) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.KEY_USER_IMAGE, userPicture);
+        editor.apply();
+    }
+
+    public static String getUserPicture(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String userPicture;
+        userPicture = sharedPreferences.getString(HeylaAppConstants.KEY_USER_IMAGE, "");
+        return userPicture;
     }
 
     public static void saveUserOccupation(Context context, String data) {

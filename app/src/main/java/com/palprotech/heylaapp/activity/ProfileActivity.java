@@ -2,12 +2,22 @@ package com.palprotech.heylaapp.activity;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,10 +30,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
@@ -33,6 +45,7 @@ import com.palprotech.heylaapp.utils.CommonUtils;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.HeylaAppValidator;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -47,6 +60,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -75,6 +89,9 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     EditText mBirthday, mGender, mOccupation, address1, address2, address3, pincode, name,
             username, country, state, city;
     private CheckBox cbSubscription;
+    private ImageView mProfileImage = null;
+    private Uri outputFileUri;
+    static final int REQUEST_IMAGE_GET = 1;
     Button save;
 
     private DatePickerDialog mDatePicker;
@@ -103,6 +120,14 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
 
+        String url = PreferenceStorage.getUserPicture(this);
+
+        if (((url != null) && !(url.isEmpty()))) {
+            Picasso.with(this).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(mProfileImage);
+        }
+
+        mProfileImage = (ImageView) findViewById(R.id.profile_img);
+        mProfileImage.setOnClickListener(this);
         inputName = (TextInputLayout) findViewById(R.id.ti_name);
         name = (EditText) findViewById(R.id.edtName);
         inputUsername = (TextInputLayout) findViewById(R.id.ti_username);
@@ -144,6 +169,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
             mBirthday.setText(birthdayval);
         }
+
         mBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,6 +262,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     }
 
     private void saveProfileData() {
+
         String fullName = "";
         String userName = "";
         String birthDay = "";
@@ -270,8 +297,36 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         if (newsLetter) {
             newsLetterStatus = "Y";
         }
+        if (validateFields()) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put(HeylaAppConstants.PARAMS_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+                jsonObject.put(HeylaAppConstants.PARAMS_FULL_NAME, fullName);
+                jsonObject.put(HeylaAppConstants.PARAMS_USERNAME, userName);
+                jsonObject.put(HeylaAppConstants.PARAMS_DATE_OF_BIRTH, birthDay);
+                jsonObject.put(HeylaAppConstants.PARAMS_GENDER, gender);
+                jsonObject.put(HeylaAppConstants.PARAMS_OCCUPATION, occupation);
+                jsonObject.put(HeylaAppConstants.PARAMS_ADDRESS_LINE_1, addressLineOne);
+                jsonObject.put(HeylaAppConstants.PARAMS_ADDRESS_LINE_2, addressLineTwo);
+                jsonObject.put(HeylaAppConstants.PARAMS_ADRESS_LINE_3, landMark);
+                jsonObject.put(HeylaAppConstants.PARAMS_COUNTRY_ID, countryName);
+                jsonObject.put(HeylaAppConstants.PARAMS_STATE_ID, stateName);
+                jsonObject.put(HeylaAppConstants.PARAMS_CITY_ID, cityName);
+                jsonObject.put(HeylaAppConstants.PARAMS_ZIP_CODE, pinCode);
+                jsonObject.put(HeylaAppConstants.PARAMS_NEWS_LETTER, newsLetter);
 
-        String url = newsLetterStatus;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.PROFILE_DATA;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+        } else {
+            if (mProgressDialog != null) {
+                mProgressDialog.cancel();
+            }
+        }
     }
 
     /**
@@ -367,8 +422,18 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+        protected void onPostExecute(String result) {
+            Log.e(TAG, "Response from server: " + result);
+
+            super.onPostExecute(result);
+            if ((result == null) || (result.isEmpty()) || (result.contains("Error"))) {
+                Toast.makeText(ProfileActivity.this, "Unable to save profile picture", Toast.LENGTH_SHORT).show();
+            } else {
+                if (mUpdatedImageUrl != null) {
+                    PreferenceStorage.saveUserPicture(ProfileActivity.this, mUpdatedImageUrl);
+                }
+            }
+            saveProfileData();
         }
 
         @Override
@@ -496,12 +561,172 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     public void onClick(View view) {
         if (view == save) {
             if (validateFields()) {
-//                saveProfile();
-                Intent homeIntent = new Intent(this.getApplicationContext(), MainActivity.class);
+                saveProfile();
+                /*Intent homeIntent = new Intent(this.getApplicationContext(), MainActivity.class);
                 homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(homeIntent);
+                startActivity(homeIntent);*/
 //                finish();
             }
+        } else if (view == mProfileImage) {
+            openImageIntent();
+        }
+    }
+
+    private void openImageIntent() {
+
+// Determine Uri of camera image to save.
+        final File root = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MyDir");
+
+        if (!root.exists()) {
+            if (!root.mkdirs()) {
+                Log.d(TAG, "Failed to create directory for storing images");
+                return;
+            }
+        }
+
+        final String fname = PreferenceStorage.getUserId(this) + ".png";
+        final File sdImageMainDirectory = new File(root.getPath() + File.separator + fname);
+        outputFileUri = Uri.fromFile(sdImageMainDirectory);
+        Log.d(TAG, "camera output Uri" + outputFileUri);
+
+        // Camera.
+        final List<Intent> cameraIntents = new ArrayList<Intent>();
+        final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        final PackageManager packageManager = getPackageManager();
+        final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+        for (ResolveInfo res : listCam) {
+            final String packageName = res.activityInfo.packageName;
+            final Intent intent = new Intent(captureIntent);
+            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+            intent.setPackage(packageName);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+            cameraIntents.add(intent);
+        }
+
+        // Filesystem.
+        final Intent galleryIntent = new Intent();
+        galleryIntent.setType("image/*");
+        galleryIntent.setAction(Intent.ACTION_PICK);
+
+        // Chooser of filesystem options.
+        final Intent chooserIntent = Intent.createChooser(galleryIntent, "Select Profile Photo");
+
+        // Add the camera options.
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[cameraIntents.size()]));
+
+        startActivityForResult(chooserIntent, REQUEST_IMAGE_GET);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == RESULT_OK) {
+
+            if (requestCode == REQUEST_IMAGE_GET) {
+                Log.d(TAG, "ONActivity Result");
+                final boolean isCamera;
+                if (data == null) {
+                    Log.d(TAG, "camera is true");
+                    isCamera = true;
+                } else {
+                    final String action = data.getAction();
+                    Log.d(TAG, "camera action is" + action);
+                    if (action == null) {
+                        isCamera = false;
+                    } else {
+                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    }
+                }
+
+                Uri selectedImageUri;
+
+                if (isCamera) {
+                    Log.d(TAG, "Add to gallery");
+                    selectedImageUri = outputFileUri;
+                    mActualFilePath = outputFileUri.getPath();
+                    galleryAddPic(selectedImageUri);
+                } else {
+                    selectedImageUri = data == null ? null : data.getData();
+                    mActualFilePath = getRealPathFromURI(this, selectedImageUri);
+                    Log.d(TAG, "path to image is" + mActualFilePath);
+
+                }
+                Log.d(TAG, "image Uri is" + selectedImageUri);
+                if (selectedImageUri != null) {
+                    Log.d(TAG, "image URI is" + selectedImageUri);
+                    setPic(selectedImageUri);
+                }
+            }
+        }
+    }
+
+    private void galleryAddPic(Uri urirequest) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(urirequest.getPath());
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }
+
+    public String getRealPathFromURI(Context context, Uri contentUri) {
+        String result = null;
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            CursorLoader loader = new CursorLoader(context, contentUri, proj, null, null, null);
+
+
+            Cursor cursor = loader.loadInBackground();
+            if (cursor != null) {
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                cursor.moveToFirst();
+                result = cursor.getString(column_index);
+                cursor.close();
+            } else {
+                Log.d(TAG, "cursor is null");
+            }
+        } catch (Exception e) {
+            result = null;
+            Toast.makeText(this, "Was unable to save  image", Toast.LENGTH_SHORT).show();
+
+        } finally {
+            return result;
+        }
+
+    }
+
+    private void setPic(Uri selectedImageUri) {
+        // Get the dimensions of the View
+        int targetW = mProfileImage.getWidth();
+        int targetH = mProfileImage.getHeight();
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        try {
+            BitmapFactory.decodeStream(this.getContentResolver().openInputStream(selectedImageUri), null, bmOptions);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+        mSelectedImageUri = selectedImageUri;
+
+        Bitmap bitmap = null;
+        try {
+            bitmap = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(selectedImageUri), null, bmOptions);
+            mProfileImage.setImageBitmap(bitmap);
+            mCurrentUserImageBitmap = bitmap;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -515,13 +740,48 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
     }
 
+    private boolean validateSignInResponse(JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(HeylaAppConstants.PARAM_MESSAGE);
+                Log.d(TAG, "status val" + status + "msg" + msg);
+
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        Log.d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                    } else {
+                        signInSuccess = true;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return signInSuccess;
+    }
+
     @Override
     public void onResponse(JSONObject response) {
 
+        if (mProgressDialog != null) {
+            mProgressDialog.cancel();
+        }
+        progressDialogHelper.hideProgressDialog();
+        if (validateSignInResponse(response)) {}
     }
 
     @Override
     public void onError(String error) {
-
+        if (mProgressDialog != null) {
+            mProgressDialog.cancel();
+        }
+        progressDialogHelper.hideProgressDialog();
+        AlertDialogHelper.showSimpleAlertDialog(this, "Error saving your profile. Try again");
     }
 }
