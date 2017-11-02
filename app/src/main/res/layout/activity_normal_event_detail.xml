@@ -7,7 +7,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bookingbar">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -16,11 +17,12 @@
             <FrameLayout
                 android:id="@+id/eventimglayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
                     <ImageView
                         android:id="@+id/eventimg"
@@ -32,17 +34,60 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:paddingBottom="10dp"
+                        android:layout_alignBottom="@+id/eventimg"
                         android:layout_marginStart="10dp"
+                        android:paddingBottom="10dp"
                         android:text="CAKE POINT"
                         android:textColor="@color/white"
                         android:textSize="20dp" />
 
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/eventimg"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_menu_share_app"
+                        android:layout_marginTop="-18dp"
+                        android:background="@drawable/ic_round_full_color" />
+
+                    <TextView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/eventimg"
+                        android:text="QA"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:layout_marginEnd="60dp"
+                        android:layout_marginTop="-18dp"
+                        android:background="@drawable/ic_round_full_color" />
+
+                    <ImageView
+                        android:id="@+id/eventviews"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:layout_toLeftOf="@id/addfav"
+                        android:src="@drawable/ic_hide"/>
+
+                    <ImageView
+                        android:id="@+id/addfav"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/ic_unlike"/>
+
                 </RelativeLayout>
+
             </FrameLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,8 +95,144 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
                 android:background="@drawable/round_btn_nocolor">
+
+                <RelativeLayout
+                    android:id="@+id/addresslayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/addressimg"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignEnd="@+id/addresstxt"
+                        android:layout_alignStart="@+id/addresstxt"
+                        android:src="@drawable/ic_address" />
+
+                    <TextView
+                        android:id="@+id/addresstxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/addressimg"
+                        android:text="Address"
+                        android:textColor="@color/appColorBase" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/addresslayout"
+                    android:layout_alignTop="@+id/addresslayout"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@+id/addresslayout"
+                    android:gravity="center"
+                    android:text="51, Mariamman Kovil Street Peelamedu" />
+
+                <RelativeLayout
+                    android:id="@+id/timelayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@id/addresslayout"
+                    android:layout_alignStart="@id/addresslayout"
+                    android:layout_below="@id/addresslayout"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/timeimg"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignEnd="@+id/timetxt"
+                        android:layout_alignStart="@+id/timetxt"
+                        android:src="@drawable/ic_clock" />
+
+                    <TextView
+                        android:id="@+id/timetxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/timeimg"
+                        android:text="Time"
+                        android:textColor="@color/appColorBase" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/timelayout"
+                    android:layout_alignTop="@+id/timelayout"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@+id/timelayout"
+                    android:gravity="center"
+                    android:text="51, Mariamman Kovil Street Peelamedu" />
+
+                <RelativeLayout
+                    android:id="@+id/datelayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@id/addresslayout"
+                    android:layout_alignStart="@id/addresslayout"
+                    android:layout_below="@id/timelayout"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/dateimg"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignEnd="@+id/datetxt"
+                        android:layout_alignStart="@+id/datetxt"
+                        android:src="@drawable/ic_calender" />
+
+                    <TextView
+                        android:id="@+id/datetxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/dateimg"
+                        android:text="Date"
+                        android:textColor="@color/appColorBase" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/datelayout"
+                    android:layout_alignTop="@+id/datelayout"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@+id/datelayout"
+                    android:gravity="center"
+                    android:text="51, Mariamman Kovil Street Peelamedu" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/one"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical"
+                android:background="@drawable/round_btn_nocolor">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Event Details"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/text_black"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -65,27 +246,69 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/two"
-
+                android:id="@+id/three"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/one"
+                android:layout_below="@+id/two"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical"
+                android:background="@drawable/round_btn_nocolor">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Venue"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:textSize="20dp"
+                android:textColor="@color/text_black"
+                android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/four"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/three"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/round_btn_nocolor">
 
                 <TextView
+                    android:id="@+id/orgtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Organiser Details"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/text_black"
+                    android:textStyle="bold"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignTop="@+id/orgtitle"
+                    android:layout_alignBottom="@+id/orgtitle"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_follow"
+                    android:layout_marginEnd="10dp"/>
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/orgtitle"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:text="abcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsd" />
 
-            </LinearLayout>
-
+            </RelativeLayout>
 
         </RelativeLayout>
 
@@ -93,6 +316,7 @@
     </ScrollView>
 
     <RelativeLayout
+        android:id="@+id/bookingbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -103,19 +327,19 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
-            android:src="@drawable/ic_floating_sub_one" />
+            android:src="@drawable/ic_review" />
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_floating_sub_one" />
+            android:src="@drawable/ic_checkin_white" />
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_floating_sub_one" />
+            android:src="@drawable/ic_booknow_white" />
 
 
     </RelativeLayout>
