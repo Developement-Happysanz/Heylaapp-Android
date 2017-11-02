@@ -270,11 +270,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
 
                     PreferenceStorage.saveLoginMode(getActivity(), HeylaAppConstants.NORMAL_SIGNUP);
                     mSelectedLoginMode = HeylaAppConstants.NORMAL_SIGNUP;
-
-                    Intent homeIntent = new Intent(getActivity(), MainActivity.class);
-                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(homeIntent);
-                    getActivity().finish();
                 }
             } else if (v == forgotPassword) {
                 Intent homeIntent = new Intent(getActivity(), ForgotPasswordActivity.class);
