@@ -93,6 +93,16 @@ public class HeylaAppConstants {
     public static final String PARAMS_ZIP_CODE = "zip_code";
     public static final String PARAMS_NEWS_LETTER = "news_letter";
 
+    //    Country list
+    public static final String COUNTRY_LIST = "apimain/selectcountry/";
+
+    //    State list
+    public static final String STATE_LIST = "apimain/selectstate/";
+
+    //    City list
+    public static final String CITY_LIST = "apimain/selectcity/";
+
+
 
     //    SharedPref
     private static final String FCM_SHARED_PREF_NAME = "FCMSharedPref";
@@ -118,11 +128,14 @@ public class HeylaAppConstants {
     //    Shared Username
     public static final String KEY_USERNAME = "username";
 
-    //    Shared Username
+    //    Shared UserID
     public static final String KEY_USER_ID = "user_id";
 
     //    Shared Password
     public static final String KEY_PASSWORD = "password";
+
+    //    Shared ProfileState
+    public static final String KEY_PROFILE_STATE = "profile_state";
 
     //Profile
     public static final String KEY_USER_BIRTHDAY = "birthday";

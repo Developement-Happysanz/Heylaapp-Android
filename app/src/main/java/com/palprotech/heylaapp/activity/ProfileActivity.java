@@ -35,6 +35,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.bean.support.StoreCity;
+import com.palprotech.heylaapp.bean.support.StoreCountry;
+import com.palprotech.heylaapp.bean.support.StoreState;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
@@ -56,6 +59,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -84,6 +88,15 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     private ArrayAdapter<String> mGenderAdapter = null;
     private List<String> mGenderList = new ArrayList<String>();
 
+    ArrayAdapter<StoreCountry> mCountryAdapter = null;
+    ArrayList<StoreCountry> countryList;
+
+    ArrayAdapter<StoreState> mStateAdapter = null;
+    ArrayList<StoreState> stateList;
+
+    ArrayAdapter<StoreCity> mCityAdapter = null;
+    ArrayList<StoreCity> cityList;
+
     private TextInputLayout inputGender, inputAddress1, inputAddress2, inputAddress3, inputPincode, inputName,
             inputUsername, inputBirthday, inputOccupation, inputCountry, inputState, inputCity;
     EditText mBirthday, mGender, mOccupation, address1, address2, address3, pincode, name,
@@ -93,7 +106,8 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     private Uri outputFileUri;
     static final int REQUEST_IMAGE_GET = 1;
     Button save;
-
+    private String checkProfileState = "";
+    private String checkInternalState = "";
     private DatePickerDialog mDatePicker;
     private SimpleDateFormat mDateFormatter;
 
@@ -107,6 +121,24 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     private UploadFileToServer mUploadTask = null;
     long totalSize = 0;
 
+    String fullName = "";
+    String userName = "";
+    String birthDay = "";
+    String occupation = "";
+    String gender = "";
+    String addressLineOne = "";
+    String addressLineTwo = "";
+    String landMark = "";
+    String countryName = "";
+    String countryId = "";
+    String stateName = "";
+    String stateId = "";
+    String cityName = "";
+    String cityId = "";
+    String pinCode = "";
+    boolean newsLetter = false;
+    String newsLetterStatus = "N";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +151,10 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
+
+//        Bundle extras = getIntent().getExtras();
+//        checkProfileState = extras.getString("profile_state");
+        checkProfileState = PreferenceStorage.getCheckFirstTimeProfile(getApplicationContext());
 
         String url = PreferenceStorage.getUserPicture(this);
 
@@ -149,12 +185,15 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         address3 = (EditText) findViewById(R.id.edtAddressLinethree);
         inputCountry = (TextInputLayout) findViewById(R.id.ti_country);
         country = (EditText) findViewById(R.id.countryList);
+        country.setOnClickListener(this);
         country.setFocusable(false);
         inputState = (TextInputLayout) findViewById(R.id.ti_state);
         state = (EditText) findViewById(R.id.stateList);
+        state.setOnClickListener(this);
         state.setFocusable(false);
         inputCity = (TextInputLayout) findViewById(R.id.ti_city);
         city = (EditText) findViewById(R.id.cityList);
+        city.setOnClickListener(this);
         city.setFocusable(false);
         inputPincode = (TextInputLayout) findViewById(R.id.ti_pincode);
         pincode = (EditText) findViewById(R.id.edtPincode);
@@ -239,6 +278,32 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 showOccupationList();
             }
         });
+
+        GetCountry();
+    }
+
+    private void GetCountry() {
+
+        checkInternalState = "country";
+
+        if (CommonUtils.isNetworkAvailable(this)) {
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.COUNTRY_LIST;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+        }
     }
 
     void saveProfile() {
@@ -263,24 +328,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
     private void saveProfileData() {
 
-        String fullName = "";
-        String userName = "";
-        String birthDay = "";
-        String occupation = "";
-        String gender = "";
-        String addressLineOne = "";
-        String addressLineTwo = "";
-        String landMark = "";
-        String countryName = "";
-        String countryId = "";
-        String stateName = "";
-        String stateId = "";
-        String cityName = "";
-        String cityId = "";
-        String pinCode = "";
-        boolean newsLetter = false;
-        String newsLetterStatus = "N";
-
         fullName = name.getText().toString();
         userName = username.getText().toString();
         birthDay = mBirthday.getText().toString();
@@ -297,23 +344,37 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         if (newsLetter) {
             newsLetterStatus = "Y";
         }
+
+        String date = mBirthday.getText().toString();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd HH:MM:SS");
+        Date testDate = null;
+        try {
+            testDate = sdf.parse(date);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/mm/dd");
+        String newFormat = formatter.format(testDate);
+        System.out.println(".....Date..."+newFormat);
+
         if (validateFields()) {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put(HeylaAppConstants.PARAMS_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
                 jsonObject.put(HeylaAppConstants.PARAMS_FULL_NAME, fullName);
                 jsonObject.put(HeylaAppConstants.PARAMS_USERNAME, userName);
-                jsonObject.put(HeylaAppConstants.PARAMS_DATE_OF_BIRTH, birthDay);
+                jsonObject.put(HeylaAppConstants.PARAMS_DATE_OF_BIRTH, newFormat);
                 jsonObject.put(HeylaAppConstants.PARAMS_GENDER, gender);
                 jsonObject.put(HeylaAppConstants.PARAMS_OCCUPATION, occupation);
                 jsonObject.put(HeylaAppConstants.PARAMS_ADDRESS_LINE_1, addressLineOne);
                 jsonObject.put(HeylaAppConstants.PARAMS_ADDRESS_LINE_2, addressLineTwo);
                 jsonObject.put(HeylaAppConstants.PARAMS_ADRESS_LINE_3, landMark);
-                jsonObject.put(HeylaAppConstants.PARAMS_COUNTRY_ID, countryName);
-                jsonObject.put(HeylaAppConstants.PARAMS_STATE_ID, stateName);
-                jsonObject.put(HeylaAppConstants.PARAMS_CITY_ID, cityName);
+                jsonObject.put(HeylaAppConstants.PARAMS_COUNTRY_ID, countryId);
+                jsonObject.put(HeylaAppConstants.PARAMS_STATE_ID, stateId);
+                jsonObject.put(HeylaAppConstants.PARAMS_CITY_ID, cityId);
                 jsonObject.put(HeylaAppConstants.PARAMS_ZIP_CODE, pinCode);
-                jsonObject.put(HeylaAppConstants.PARAMS_NEWS_LETTER, newsLetter);
+                jsonObject.put(HeylaAppConstants.PARAMS_NEWS_LETTER, newsLetterStatus);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -397,7 +458,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                             JSONObject resp = new JSONObject(responseString);
                             String successVal = resp.getString("status");
 
-                            mUpdatedImageUrl = resp.getString("user_picture");
+                            mUpdatedImageUrl = resp.getString("picture_url");
 
                             Log.d(TAG, "updated image url is" + mUpdatedImageUrl);
                             if (successVal.equalsIgnoreCase("success")) {
@@ -561,6 +622,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     public void onClick(View view) {
         if (view == save) {
             if (validateFields()) {
+                checkInternalState = "profile_update";
                 saveProfile();
                 /*Intent homeIntent = new Intent(this.getApplicationContext(), MainActivity.class);
                 homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -569,6 +631,12 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             }
         } else if (view == mProfileImage) {
             openImageIntent();
+        } else if (view == country) {
+            showCountryList();
+        } else if (view == state) {
+            showStateList();
+        } else if (view == city) {
+            showCityList();
         }
     }
 
@@ -773,7 +841,227 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             mProgressDialog.cancel();
         }
         progressDialogHelper.hideProgressDialog();
-        if (validateSignInResponse(response)) {}
+
+        try {
+            if (validateSignInResponse(response)) {
+
+                if (checkInternalState.equalsIgnoreCase("profile_update")) {
+                    if (checkProfileState.equalsIgnoreCase("new")) {
+                        PreferenceStorage.saveCheckFirstTimeProfile(getApplicationContext(), "reuse");
+                        Intent homeIntent = new Intent(getApplicationContext(), SelectCityActivity.class);
+                        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(homeIntent);
+                        finish();
+                    } else if (checkProfileState.equalsIgnoreCase("reuse")) {
+                        Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+                        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(homeIntent);
+                        finish();
+                    }
+                } else if (checkInternalState.equalsIgnoreCase("country")) {
+
+                    JSONArray getData = response.getJSONArray("Countries");
+                    int getLength = getData.length();
+                    String countryId = "";
+                    String countryName = "";
+                    countryList = new ArrayList<>();
+
+                    for (int i = 0; i < getLength; i++) {
+
+                        countryId = getData.getJSONObject(i).getString("id");
+                        countryName = getData.getJSONObject(i).getString("country_name");
+
+                        countryList.add(new StoreCountry(countryId, countryName));
+                    }
+
+                    //fill data in spinner
+                    mCountryAdapter = new ArrayAdapter<StoreCountry>(getApplicationContext(), R.layout.gender_layout, R.id.gender_name, countryList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
+                        @Override
+                        public View getView(int position, View convertView, ViewGroup parent) {
+                            Log.d(TAG, "getview called" + position);
+                            View view = getLayoutInflater().inflate(R.layout.gender_layout, parent, false);
+                            TextView gendername = (TextView) view.findViewById(R.id.gender_name);
+                            gendername.setText(countryList.get(position).getCountryName());
+
+                            // ... Fill in other views ...
+                            return view;
+                        }
+                    };
+
+                } else if (checkInternalState.equalsIgnoreCase("state")) {
+
+                    JSONArray getData = response.getJSONArray("States");
+                    int getLength = getData.length();
+                    String stateId = "";
+                    String stateName = "";
+                    stateList = new ArrayList<>();
+
+                    for (int i = 0; i < getLength; i++) {
+
+                        stateId = getData.getJSONObject(i).getString("id");
+                        stateName = getData.getJSONObject(i).getString("state_name");
+
+                        stateList.add(new StoreState(stateId, stateName));
+                    }
+
+                    //fill data in spinner
+                    mStateAdapter = new ArrayAdapter<StoreState>(getApplicationContext(), R.layout.gender_layout, R.id.gender_name, stateList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
+                        @Override
+                        public View getView(int position, View convertView, ViewGroup parent) {
+                            Log.d(TAG, "getview called" + position);
+                            View view = getLayoutInflater().inflate(R.layout.gender_layout, parent, false);
+                            TextView gendername = (TextView) view.findViewById(R.id.gender_name);
+                            gendername.setText(stateList.get(position).getStateName());
+
+                            // ... Fill in other views ...
+                            return view;
+                        }
+                    };
+
+                } else if (checkInternalState.equalsIgnoreCase("city")) {
+
+                    JSONArray getData = response.getJSONArray("Cities");
+                    int getLength = getData.length();
+                    String cityId = "";
+                    String cityName = "";
+                    cityList = new ArrayList<>();
+
+                    for (int i = 0; i < getLength; i++) {
+
+                        cityId = getData.getJSONObject(i).getString("id");
+                        cityName = getData.getJSONObject(i).getString("city_name");
+
+                        cityList.add(new StoreCity(cityId, cityName));
+                    }
+
+                    //fill data in spinner
+                    mCityAdapter = new ArrayAdapter<StoreCity>(getApplicationContext(), R.layout.gender_layout, R.id.gender_name, cityList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
+                        @Override
+                        public View getView(int position, View convertView, ViewGroup parent) {
+                            Log.d(TAG, "getview called" + position);
+                            View view = getLayoutInflater().inflate(R.layout.gender_layout, parent, false);
+                            TextView gendername = (TextView) view.findViewById(R.id.gender_name);
+                            gendername.setText(cityList.get(position).getCityName());
+
+                            // ... Fill in other views ...
+                            return view;
+                        }
+                    };
+
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showCountryList() {
+        Log.d(TAG, "Show country list");
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
+        TextView header = (TextView) view.findViewById(R.id.gender_header);
+        header.setText("Select Country");
+        builderSingle.setCustomTitle(view);
+
+        builderSingle.setAdapter(mCountryAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        StoreCountry county = countryList.get(which);
+                        country.setText(county.getCountryName());
+                        countryId = county.getCountryId();
+                        callStates(countryId);
+                    }
+                });
+        builderSingle.show();
+    }
+
+    private void showStateList() {
+        Log.d(TAG, "Show state list");
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
+        TextView header = (TextView) view.findViewById(R.id.gender_header);
+        header.setText("Select State");
+        builderSingle.setCustomTitle(view);
+
+        builderSingle.setAdapter(mStateAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        StoreState stae = stateList.get(which);
+                        state.setText(stae.getStateName());
+                        stateId = stae.getStateId();
+                        callCity(countryId, stateId);
+                    }
+                });
+        builderSingle.show();
+    }
+
+    private void showCityList() {
+        Log.d(TAG, "Show city list");
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
+        TextView header = (TextView) view.findViewById(R.id.gender_header);
+        header.setText("Select City");
+        builderSingle.setCustomTitle(view);
+
+        builderSingle.setAdapter(mCityAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        StoreCity cty = cityList.get(which);
+                        city.setText(cty.getCityName());
+                        cityId = cty.getCityId();
+                    }
+                });
+        builderSingle.show();
+    }
+
+    private void callStates(String CountryId) {
+        checkInternalState = "state";
+
+        if (CommonUtils.isNetworkAvailable(this)) {
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put(HeylaAppConstants.PARAMS_COUNTRY_ID, CountryId);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.STATE_LIST;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+        }
+    }
+
+    private void callCity(String CountryId, String StateId) {
+        checkInternalState = "city";
+
+        if (CommonUtils.isNetworkAvailable(this)) {
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put(HeylaAppConstants.PARAMS_COUNTRY_ID, CountryId);
+                jsonObject.put(HeylaAppConstants.PARAMS_STATE_ID, StateId);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.CITY_LIST;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+        }
     }
 
     @Override
