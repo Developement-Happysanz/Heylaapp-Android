@@ -44,44 +44,44 @@
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
                         android:layout_alignParentEnd="true"
                         android:layout_below="@+id/eventimg"
                         android:layout_marginEnd="10dp"
-                        android:src="@drawable/ic_menu_share_app"
                         android:layout_marginTop="-18dp"
-                        android:background="@drawable/ic_round_full_color" />
+                        android:background="@drawable/ic_round_full_color"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/ic_menu_share_app" />
 
                     <TextView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_alignParentEnd="true"
                         android:layout_below="@+id/eventimg"
-                        android:text="QA"
-                        android:gravity="center"
-                        android:textColor="@color/white"
                         android:layout_marginEnd="60dp"
                         android:layout_marginTop="-18dp"
-                        android:background="@drawable/ic_round_full_color" />
+                        android:background="@drawable/ic_round_full_color"
+                        android:gravity="center"
+                        android:text="QA"
+                        android:textColor="@color/white" />
 
                     <ImageView
                         android:id="@+id/eventviews"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
                         android:layout_toLeftOf="@id/addfav"
-                        android:src="@drawable/ic_hide"/>
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/ic_hide" />
 
                     <ImageView
                         android:id="@+id/addfav"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_unlike"/>
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/ic_unlike" />
 
                 </RelativeLayout>
 
@@ -132,7 +132,8 @@
                     android:layout_marginStart="10dp"
                     android:layout_toRightOf="@+id/addresslayout"
                     android:gravity="center"
-                    android:text="51, Mariamman Kovil Street Peelamedu" />
+                    android:text="51, Mariamman Kovil Street Peelamedu"
+                    android:textColor="@color/text_black" />
 
                 <RelativeLayout
                     android:id="@+id/timelayout"
@@ -170,7 +171,8 @@
                     android:layout_marginStart="10dp"
                     android:layout_toRightOf="@+id/timelayout"
                     android:gravity="center"
-                    android:text="51, Mariamman Kovil Street Peelamedu" />
+                    android:text="51, Mariamman Kovil Street Peelamedu"
+                    android:textColor="@color/text_black" />
 
                 <RelativeLayout
                     android:id="@+id/datelayout"
@@ -179,8 +181,8 @@
                     android:layout_alignEnd="@id/addresslayout"
                     android:layout_alignStart="@id/addresslayout"
                     android:layout_below="@id/timelayout"
-                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center">
 
                     <ImageView
@@ -209,7 +211,8 @@
                     android:layout_marginStart="10dp"
                     android:layout_toRightOf="@+id/datelayout"
                     android:gravity="center"
-                    android:text="51, Mariamman Kovil Street Peelamedu" />
+                    android:text="51, Mariamman Kovil Street Peelamedu"
+                    android:textColor="@color/text_black" />
 
             </RelativeLayout>
 
@@ -221,18 +224,18 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:orientation="vertical"
-                android:background="@drawable/round_btn_nocolor">
+                android:background="@drawable/round_btn_nocolor"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Event Details"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="20dp"
+                    android:text="Event Details"
                     android:textColor="@color/text_black"
-                    android:textStyle="bold"/>
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -241,7 +244,8 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:text="abcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsd" />
+                    android:text="abcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsd"
+                    android:textColor="@color/text_black" />
 
             </LinearLayout>
 
@@ -251,20 +255,21 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/two"
                 android:layout_marginBottom="10dp"
+
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:orientation="vertical"
-                android:background="@drawable/round_btn_nocolor">
+                android:background="@drawable/round_btn_nocolor"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Venue"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:textSize="20dp"
-                android:textColor="@color/text_black"
-                android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Venue"
+                    android:textColor="@color/text_black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -282,23 +287,25 @@
                     android:id="@+id/orgtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Organiser Details"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="20dp"
+                    android:text="Organiser Details"
                     android:textColor="@color/text_black"
-                    android:textStyle="bold"/>
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
                 <ImageView
+                    android:id="@+id/followrequest"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_alignTop="@+id/orgtitle"
                     android:layout_alignBottom="@+id/orgtitle"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_follow"
-                    android:layout_marginEnd="10dp"/>
+                    android:layout_alignTop="@+id/orgtitle"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_follow" />
 
                 <TextView
+                    android:id="@+id/organiser_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/orgtitle"
@@ -306,7 +313,140 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:text="abcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsd" />
+                    android:text="BaBaga, Head of cake point"
+                    android:textColor="@color/text_black" />
+
+                <RelativeLayout
+                    android:id="@+id/organisermobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignStart="@+id/organiser_name"
+                    android:layout_below="@+id/organiser_name"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mobile"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/text_black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"
+                        android:layout_marginStart="125dp"
+                        android:textColor="@color/text_black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9999999999"
+                        android:layout_marginStart="135dp"
+                        android:textColor="@color/text_black"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/organisermail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/organiser_name"
+                    android:layout_alignStart="@+id/organiser_name"
+                    android:layout_below="@+id/organisermobile"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/text_black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"
+                        android:layout_marginStart="125dp"
+                        android:textColor="@color/text_black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9999999999"
+                        android:layout_marginStart="135dp"
+                        android:textColor="@color/text_black"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/organiserfb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/organiser_name"
+                    android:layout_alignStart="@+id/organiser_name"
+                    android:layout_below="@+id/organisermail"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Facebook ID"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/text_black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"
+                        android:layout_marginStart="125dp"
+                        android:textColor="@color/text_black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9999999999"
+                        android:layout_marginStart="135dp"
+                        android:textColor="@color/text_black"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/organiserurl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/organiser_name"
+                    android:layout_alignStart="@+id/organiser_name"
+                    android:layout_below="@+id/organiserfb"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Website"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/text_black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"
+                        android:layout_marginStart="125dp"
+                        android:textColor="@color/text_black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9999999999"
+                        android:layout_marginStart="135dp"
+                        android:textColor="@color/text_black"/>
+
+                </RelativeLayout>
 
             </RelativeLayout>
 
