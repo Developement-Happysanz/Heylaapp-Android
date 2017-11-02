@@ -114,6 +114,13 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
+            android:name=".activity.SelectCityActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBarLogin"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

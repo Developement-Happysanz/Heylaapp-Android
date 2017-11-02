@@ -158,12 +158,15 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
         String url = PreferenceStorage.getUserPicture(this);
 
+
+
+        mProfileImage = (ImageView) findViewById(R.id.profile_img);
+        mProfileImage.setOnClickListener(this);
+
         if (((url != null) && !(url.isEmpty()))) {
             Picasso.with(this).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(mProfileImage);
         }
 
-        mProfileImage = (ImageView) findViewById(R.id.profile_img);
-        mProfileImage.setOnClickListener(this);
         inputName = (TextInputLayout) findViewById(R.id.ti_name);
         name = (EditText) findViewById(R.id.edtName);
         inputUsername = (TextInputLayout) findViewById(R.id.ti_username);

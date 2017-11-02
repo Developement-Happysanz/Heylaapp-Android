@@ -72,7 +72,7 @@ android {
                     output.outputFile.parent,
                     outputFileName.replace("Heylaapp.apk", "-${finalVersionCode}Heylaapp.apk"))*/
 //            outputFileName = file("$project.buildDir/apk/Heylaapp.apk")
-            outputFileName = "${"Heyla"}-${variant.versionName}.apk"
+//            outputFileName = "${variant.name}-${variant.versionName}.apk"
 //            outputFileName = file("$project.buildDir/apk/Heylaapp.apk")
         }
     }
