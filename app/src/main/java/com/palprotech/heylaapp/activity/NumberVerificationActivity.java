@@ -179,14 +179,20 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
         if (validateSignInResponse(response)) {
             try {
                 if (checkVerify.equalsIgnoreCase("Resend")) {
+
                     Toast.makeText(getApplicationContext(), "OTP resent successfully", Toast.LENGTH_SHORT).show();
+
                 } else if (checkVerify.equalsIgnoreCase("Confirm")) {
+
                     String userId = response.getString("user_id");
                     PreferenceStorage.saveUserId(getApplicationContext(), userId);
+                    PreferenceStorage.saveCheckFirstTimeProfile(getApplicationContext(), "new");
                     Intent homeIntent = new Intent(getApplicationContext(), ProfileActivity.class);
-//                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    homeIntent.putExtra("profile_state", "new");
                     startActivity(homeIntent);
-//                this.finish();
+                    this.finish();
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
