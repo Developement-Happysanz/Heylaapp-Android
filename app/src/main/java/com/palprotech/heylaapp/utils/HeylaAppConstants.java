@@ -102,6 +102,9 @@ public class HeylaAppConstants {
     //    City list
     public static final String CITY_LIST = "apimain/selectcity/";
 
+    //    Event City list
+    public static final String EVENT_CITY_LIST = "apimain/selectallcity/";
+
 
 
     //    SharedPref

@@ -159,7 +159,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         String url = PreferenceStorage.getUserPicture(this);
 
 
-
         mProfileImage = (ImageView) findViewById(R.id.profile_img);
         mProfileImage.setOnClickListener(this);
 
@@ -348,18 +347,22 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             newsLetterStatus = "Y";
         }
 
-        String date = mBirthday.getText().toString();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+        String newFormat = "";
+        if (mBirthday.getText().toString() != null && mBirthday.getText().toString() == "") {
+
+            String date = mBirthday.getText().toString();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd HH:MM:SS");
-        Date testDate = null;
-        try {
-            testDate = sdf.parse(date);
-        }catch(Exception ex){
-            ex.printStackTrace();
+            Date testDate = null;
+            try {
+                testDate = sdf.parse(date);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/mm/dd");
+            newFormat = formatter.format(testDate);
+            System.out.println(".....Date..." + newFormat);
         }
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/mm/dd");
-        String newFormat = formatter.format(testDate);
-        System.out.println(".....Date..."+newFormat);
 
         if (validateFields()) {
             JSONObject jsonObject = new JSONObject();
@@ -594,7 +597,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             inputUsername.setError(getString(R.string.err_username));
             requestFocus(username);
             return false;
-        }else {
+        } else {
             return true;
         }
     }

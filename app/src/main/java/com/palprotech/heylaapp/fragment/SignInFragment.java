@@ -41,6 +41,7 @@ import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.ForgotPasswordActivity;
 import com.palprotech.heylaapp.activity.LoginActivity;
 import com.palprotech.heylaapp.activity.MainActivity;
+import com.palprotech.heylaapp.activity.SelectCityActivity;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
@@ -432,7 +433,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
         progressDialogHelper.hideProgressDialog();
 
         if (validateSignInResponse(response)) {
-            Intent homeIntent = new Intent(getActivity(), MainActivity.class);
+            Intent homeIntent = new Intent(getActivity(), SelectCityActivity.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
         }
