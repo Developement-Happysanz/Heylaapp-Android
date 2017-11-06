@@ -66,11 +66,11 @@ android {
     android.applicationVariants.all { variant ->
 
         variant.outputs.all { output ->
-           /* def finalVersionCode = 10000 + versionCode
-            output.versionCodeOverride = finalVersionCode
-            outputFileName = new File(
-                    output.outputFile.parent,
-                    outputFileName.replace("Heylaapp.apk", "-${finalVersionCode}Heylaapp.apk"))*/
+            /* def finalVersionCode = 10000 + versionCode
+             output.versionCodeOverride = finalVersionCode
+             outputFileName = new File(
+                     output.outputFile.parent,
+                     outputFileName.replace("Heylaapp.apk", "-${finalVersionCode}Heylaapp.apk"))*/
 //            outputFileName = file("$project.buildDir/apk/Heylaapp.apk")
 //            outputFileName = "${variant.name}-${variant.versionName}.apk"
 //            outputFileName = file("$project.buildDir/apk/Heylaapp.apk")
@@ -108,10 +108,16 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.facebook.android:facebook-android-sdk:4.0.0'
     compile 'com.google.android.gms:play-services-gcm:11.0.4'
     compile 'com.google.android.gms:play-services-location:11.0.4'
-    compile 'com.facebook.android:facebook-android-sdk:4.0.0'
-    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.google.android.gms:play-services:11.0.4'
+    compile 'com.google.android.gms:play-services-auth:11.0.4'
+    compile 'com.google.android.gms:play-services-ads:11.0.4'
+    compile 'com.google.android.gms:play-services-analytics:11.0.4'
+    compile 'com.google.android.gms:play-services-identity:11.0.4'
+    compile 'com.google.android.gms:play-services-plus:11.0.4'
 
     compile files('libs/apache-mime4j-0.6.jar')
     compile files('libs/httpclient-4.3.6.jar')
@@ -123,7 +129,6 @@ dependencies {
     compile "com.android.support:percent:26+"
     compile "com.android.support:cardview-v7:26+"
     compile "com.android.support:gridlayout-v7:26+"
-    compile 'com.google.android.gms:play-services-auth:11.0.4'
 }
 
 apply plugin: 'com.google.gms.google-services'

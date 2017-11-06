@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //boolean flag to know if main FAB is in open or closed state.
     private boolean fabExpanded = false;
-    private FloatingActionButton fabView;
+//    private FloatingActionButton fabView;
 
     //Linear layout holding the Save submenu
     private LinearLayout layoutFabMapview;
@@ -46,19 +46,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initToolBar();
 
-        fabView = (FloatingActionButton) this.findViewById(R.id.viewOptions);
+//        fabView = (FloatingActionButton) this.findViewById(R.id.viewOptions);
 
-        layoutFabListView = (LinearLayout) this.findViewById(R.id.layoutFabListView);
-        layoutFabNearby = (LinearLayout) this.findViewById(R.id.layoutFabNearby);
-        layoutFabMapview = (LinearLayout) this.findViewById(R.id.layoutFabMapView);
+//        layoutFabListView = (LinearLayout) this.findViewById(R.id.layoutFabListView);
+//        layoutFabNearby = (LinearLayout) this.findViewById(R.id.layoutFabNearby);
+//        layoutFabMapview = (LinearLayout) this.findViewById(R.id.layoutFabMapView);
 
-        sample = (TextView) findViewById(R.id.sampleViewChanger);
-        sample.setText("List View");
+//        sample = (TextView) findViewById(R.id.sampleViewChanger);
+//        sample.setText("List View");
 
         //When main Fab (Settings) is clicked, it expands if not expanded already.
         //Collapses if main FAB was open already.
         //This gives FAB (Settings) open/close behavior
-        fabView.setOnClickListener(new View.OnClickListener() {
+        /*fabView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (fabExpanded) {
@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     openSubMenusFab();
                 }
             }
-        });
+        });*/
 
-        layoutFabListView.setOnClickListener(new View.OnClickListener() {
+/*        layoutFabListView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (fabExpanded) {
@@ -94,14 +94,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     sample.setText("Nearby View");
                 }
             }
-        });
+        });*/
 
         //Only main FAB is visible in the beginning
         closeSubMenusFab();
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
-        changeFragment(0);
+//        changeFragment(0);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -110,22 +110,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         switch (item.getItemId()) {
 
                             case R.id.action_favorites:
-                                changeFragment(0);
-                                fabView.setVisibility(View.VISIBLE);
+//                                changeFragment(0);
+//                                fabView.setVisibility(View.VISIBLE);
                                 break;
 
                             case R.id.action_popular:
-                                changeFragment(1);
-                                fabView.setVisibility(View.VISIBLE);
+//                                changeFragment(1);
+//                                fabView.setVisibility(View.VISIBLE);
                                 break;
                             case R.id.action_hotspot:
-                                changeFragment(2);
-                                fabView.setVisibility(View.VISIBLE);
+//                                changeFragment(2);
+//                                fabView.setVisibility(View.VISIBLE);
                                 break;
                             case R.id.action_leaderboard:
-                                changeFragment(3);
-                                fabView.setVisibility(View.INVISIBLE);
-                                closeSubMenusFab();
+//                                changeFragment(3);
+//                                fabView.setVisibility(View.INVISIBLE);
+//                                closeSubMenusFab();
                                 break;
 
                         }
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    private void changeFragment(int position) {
+   /* private void changeFragment(int position) {
 
         Fragment newFragment = null;
 
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getFragmentManager().beginTransaction().replace(
                 R.id.fragmentContainer, newFragment)
                 .commit();
-    }
+    }*/
 
 
 //        final String token = SharedPrefManager.getInstance(this).getDeviceToken();
@@ -167,21 +167,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //closes FAB submenus
     private void closeSubMenusFab() {
-        layoutFabListView.setVisibility(View.INVISIBLE);
-        layoutFabNearby.setVisibility(View.INVISIBLE);
-        layoutFabMapview.setVisibility(View.INVISIBLE);
-        fabView.setImageResource(R.drawable.ic_plus);
-        fabExpanded = false;
+//        layoutFabListView.setVisibility(View.INVISIBLE);
+//        layoutFabNearby.setVisibility(View.INVISIBLE);
+//        layoutFabMapview.setVisibility(View.INVISIBLE);
+//        fabView.setImageResource(R.drawable.ic_plus);
+//        fabExpanded = false;
     }
 
     //Opens FAB submenus
     private void openSubMenusFab() {
-        layoutFabListView.setVisibility(View.VISIBLE);
-        layoutFabNearby.setVisibility(View.VISIBLE);
-        layoutFabMapview.setVisibility(View.VISIBLE);
+//        layoutFabListView.setVisibility(View.VISIBLE);
+//        layoutFabNearby.setVisibility(View.VISIBLE);
+//        layoutFabMapview.setVisibility(View.VISIBLE);
         //Change settings icon to 'X' icon
-        fabView.setImageResource(R.drawable.ic_close);
-        fabExpanded = true;
+//        fabView.setImageResource(R.drawable.ic_close);
+//        fabExpanded = true;
     }
 
     public void initToolBar() {
@@ -198,7 +198,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(homeIntent);
                     }
                 }
-
         );
     }
 

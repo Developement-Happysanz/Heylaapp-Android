@@ -59,7 +59,6 @@ public class SelectCityActivity extends AppCompatActivity implements View.OnClic
         loadMoreListView.setOnItemClickListener(this);
         eventCitiesArrayList = new ArrayList<>();
 
-
         GetEventCities();
     }
 
@@ -196,7 +195,7 @@ public class SelectCityActivity extends AppCompatActivity implements View.OnClic
         } else {
             eventCities = eventCitiesArrayList.get(position);
         }
-        Intent intent = new Intent(this, SetUpPreferenceActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("eventObj", eventCities);
         startActivity(intent);
     }

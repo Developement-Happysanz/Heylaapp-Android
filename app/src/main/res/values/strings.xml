@@ -37,6 +37,8 @@
     <string name="resend_otp">Resend OTP?</string>
     <string name="changenumber">Change number</string>
 
+    <string name="google_maps_key">AIzaSyAIzZ7X2BP_NlmTCPLqcpOetJpfVWKOY5k</string>
+
     <!--App Intro Screen-->
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>

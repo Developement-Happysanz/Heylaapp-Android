@@ -16,6 +16,7 @@
     <color name="light_line_color">#f9f9f9</color>
     <color name="half_transparent">#1e468dcb</color>
     <color name="background_grey">#e5e6e9</color>
+    <color name="trans">#01ffffff</color>
 
 
     <!--Login Module-->

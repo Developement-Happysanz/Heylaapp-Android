@@ -1,8 +1,10 @@
 package com.palprotech.heylaapp.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -115,15 +117,39 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     @Override
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
+        try {
+            if (validateSignInResponse(response)) {
 
-        if (validateSignInResponse(response)) {
+                String reqType = response.getString("type");
+                if (reqType.equalsIgnoreCase("Mobile")) {
+                    Intent homeIntent = new Intent(getApplicationContext(), ForgotPasswordNumberVerificationActivity.class);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    homeIntent.putExtra("mobile_no", edtEmailOrMobileNo.getText().toString());
+                    startActivity(homeIntent);
+                    finish();
+                } else {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
+                    alertDialogBuilder.setTitle("Reset Successful");
 
-            Intent homeIntent = new Intent(getApplicationContext(), ForgotPasswordNumberVerificationActivity.class);
-            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            homeIntent.putExtra("mobile_no", edtEmailOrMobileNo.getText().toString());
-            startActivity(homeIntent);
-            finish();
+                    alertDialogBuilder.setMessage("Activation Link sent to your email.");
+                    alertDialogBuilder.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    Intent homeIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    homeIntent.putExtra("mobile_no", edtEmailOrMobileNo.getText().toString());
+                                    startActivity(homeIntent);
+                                    finish();
+                                }
+                            });
 
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
