@@ -24,8 +24,16 @@
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tool_bar"
-        android:layout_above="@+id/bottom_navigation" />
+        android:layout_above="@+id/bottom_navigation"
+        android:layout_below="@+id/tool_bar">
+
+        <ListView
+            android:id="@+id/listView_events"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/white"
+            android:dividerHeight="4dp" />
+    </FrameLayout>
 
     <!--<ImageView-->
     <!--android:layout_width="138dp"-->
@@ -38,8 +46,9 @@
 
     <FrameLayout
         android:id="@+id/fabFrame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_above="@+id/bottom_navigation"
         android:layout_marginTop="?attr/actionBarSize"
         android:orientation="vertical"
@@ -52,8 +61,8 @@
             android:id="@+id/sampleViewChanger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp" />
 
         <LinearLayout
             android:id="@+id/layoutFabMapView"
