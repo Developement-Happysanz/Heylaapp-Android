@@ -70,7 +70,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
             if (v == tvResendOTP) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle("Do you want to resend OTP ?");
-                alertDialogBuilder.setMessage("Confirm your mobile number : " + mobileNo);
+                alertDialogBuilder.setMessage("Confirm your mobile number : " + PreferenceStorage.getMobileNo(getApplicationContext()));
                 alertDialogBuilder.setPositiveButton("Proceed",
                         new DialogInterface.OnClickListener() {
 
@@ -80,7 +80,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
                                 JSONObject jsonObject = new JSONObject();
                                 try {
 
-                                    jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, mobileNo);
+                                    jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, PreferenceStorage.getMobileNo(getApplicationContext()));
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -108,7 +108,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
                     checkVerify = "Confirm";
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, mobileNo);
+                        jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, PreferenceStorage.getMobileNo(getApplicationContext()));
                         jsonObject.put(HeylaAppConstants.PARAMS_OTP, otpEditText.getOTP());
                         jsonObject.put(HeylaAppConstants.PARAMS_REQUEST_MODE, "1");
 
