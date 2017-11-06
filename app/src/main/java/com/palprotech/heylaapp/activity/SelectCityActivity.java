@@ -1,19 +1,20 @@
 package com.palprotech.heylaapp.activity;
 
-import android.content.pm.PackageManager;
-import android.location.Location;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-import com.palprotech.heylaapp.Manifest;
+import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.adapter.EventCitiesAdapter;
+import com.palprotech.heylaapp.bean.support.EventCities;
+import com.palprotech.heylaapp.bean.support.EventCitiesList;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
@@ -23,21 +24,28 @@ import com.palprotech.heylaapp.utils.CommonUtils;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Admin on 01-11-2017.
  */
 
-public class SelectCityActivity extends AppCompatActivity implements View.OnClickListener, IServiceListener, DialogClickListener {
+public class SelectCityActivity extends AppCompatActivity implements View.OnClickListener, IServiceListener, DialogClickListener, AdapterView.OnItemClickListener {
 
     private static final String TAG = SelectCityActivity.class.getName();
 
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
-    Location mLastLocation = null;
-    GoogleApiClient mGoogleApiClient = null;
+    ListView loadMoreListView;
+    EventCitiesAdapter eventCitiesAdapter;
+    ArrayList<EventCities> eventCitiesArrayList;
+    Handler mHandler = new Handler();
+    int pageNumber = 0, totalCount = 0;
+    protected boolean isLoadingForFirstTime = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +55,10 @@ public class SelectCityActivity extends AppCompatActivity implements View.OnClic
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
+        loadMoreListView = (ListView) findViewById(R.id.listView_events);
+        loadMoreListView.setOnItemClickListener(this);
+        eventCitiesArrayList = new ArrayList<>();
+
 
         GetEventCities();
     }
@@ -79,19 +91,50 @@ public class SelectCityActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
-    public void onResponse(JSONObject response) {
+    public void onResponse(final JSONObject response) {
 
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
+            try {
+                JSONArray getData = response.getJSONArray("Cities");
+                if (getData != null && getData.length() > 0) {
 
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressDialogHelper.hideProgressDialog();
+                            Gson gson = new Gson();
+                            EventCitiesList eventCitiesList = gson.fromJson(response.toString(), EventCitiesList.class);
+                            if (eventCitiesList.getEventCities() != null && eventCitiesList.getEventCities().size() > 0) {
+                                totalCount = eventCitiesList.getCount();
+                                isLoadingForFirstTime = false;
+                                updateListAdapter(eventCitiesList.getEventCities());
+                            }
+                        }
+                    });
+                } else {
+                    if (eventCitiesArrayList != null) {
+                        eventCitiesArrayList.clear();
+                        eventCitiesAdapter = new EventCitiesAdapter(this, this.eventCitiesArrayList);
+                        loadMoreListView.setAdapter(eventCitiesAdapter);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
-    public void onError(String error) {
+    public void onError(final String error) {
 
-        progressDialogHelper.hideProgressDialog();
-        AlertDialogHelper.showSimpleAlertDialog(this, error);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                progressDialogHelper.hideProgressDialog();
+                AlertDialogHelper.showSimpleAlertDialog(SelectCityActivity.this, error);
+            }
+        });
 
     }
 
@@ -121,6 +164,16 @@ public class SelectCityActivity extends AppCompatActivity implements View.OnClic
         return signInSuccess;
     }
 
+    protected void updateListAdapter(ArrayList<EventCities> eventCitiesArrayList) {
+        this.eventCitiesArrayList.addAll(eventCitiesArrayList);
+        if (eventCitiesAdapter == null) {
+            eventCitiesAdapter = new EventCitiesAdapter(this, this.eventCitiesArrayList);
+            loadMoreListView.setAdapter(eventCitiesAdapter);
+        } else {
+            eventCitiesAdapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onAlertPositiveClicked(int tag) {
 
@@ -129,5 +182,22 @@ public class SelectCityActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onAlertNegativeClicked(int tag) {
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d(TAG, "onEvent list item click" + position);
+        EventCities eventCities = null;
+        if ((eventCitiesAdapter != null) && (eventCitiesAdapter.ismSearching())) {
+            Log.d(TAG, "while searching");
+            int actualindex = eventCitiesAdapter.getActualEventPos(position);
+            Log.d(TAG, "actual index" + actualindex);
+            eventCities = eventCitiesArrayList.get(actualindex);
+        } else {
+            eventCities = eventCitiesArrayList.get(position);
+        }
+        Intent intent = new Intent(this, SetUpPreferenceActivity.class);
+        intent.putExtra("eventObj", eventCities);
+        startActivity(intent);
     }
 }
