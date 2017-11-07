@@ -1,11 +1,14 @@
 package com.palprotech.heylaapp.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,8 +26,6 @@ import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by Admin on 24-10-2017.
@@ -97,6 +98,14 @@ public class ChangeNumberActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onAlertNegativeClicked(int tag) {
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.
+                INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        return true;
     }
 
     private boolean validateSignInResponse(JSONObject response) {
