@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
@@ -128,24 +129,25 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                     startActivity(homeIntent);
                     finish();
                 } else {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
+                  /*  AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
                     alertDialogBuilder.setTitle("Reset Successful");
 
                     alertDialogBuilder.setMessage("Activation Link sent to your email.");
                     alertDialogBuilder.setPositiveButton("OK",
                             new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface arg0, int arg1) {
-                                    Intent homeIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    homeIntent.putExtra("mobile_no", edtEmailOrMobileNo.getText().toString());
-                                    startActivity(homeIntent);
-                                    finish();
-                                }
+                                public void onClick(DialogInterface arg0, int arg1) {*/
+                    Toast.makeText(getApplicationContext(), "Activation Link sent to your email.", Toast.LENGTH_LONG).show();
+                    Intent homeIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    homeIntent.putExtra("mobile_no", edtEmailOrMobileNo.getText().toString());
+                    startActivity(homeIntent);
+                    finish();
+                               /* }
                             });
 
                     AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
+                    alertDialog.show();*/
                 }
             }
         } catch (JSONException e) {
