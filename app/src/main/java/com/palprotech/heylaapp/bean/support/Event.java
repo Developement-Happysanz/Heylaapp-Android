@@ -14,15 +14,19 @@
 //    @SerializedName("id")
 //    @Expose
 //    private String id;
+//
 //    @SerializedName("category_id")
 //    @Expose
 //    private String CategoryId;
+//
 //    @SerializedName("event_name")
 //    @Expose
 //    private String eventName;
+//
 //    @SerializedName("event_venue")
 //    @Expose
 //    private String eventVenue;
+//
 //    @SerializedName("event_address")
 //    @Expose
 //    private String eventAddress;
@@ -125,36 +129,28 @@
 //
 //
 //
-//    public String getEventEmail() {
-//        return eventEmail;
+//    public String getContactMail() {
+//        return contactEmail;
 //    }
 //
-//    public void setEventEmail(String eventEmail) {
-//        this.eventEmail = eventEmail;
+//    public void setContactMail(String contactEmail) {
+//        this.contactEmail = contactEmail;
 //    }
 //
 //    public String getEventBookingStatus() {
-//        return eventBookingStatus;
+//        return bookingStatus;
 //    }
 //
-//    public void setEventBookingStatus(String eventBookingStatus) {
-//        this.eventBookingStatus = eventBookingStatus;
+//    public void setEventBookingStatus(String bookingStatus) {
+//        this.bookingStatus = bookingStatus;
 //    }
 //
 //    public String getIsAd() {
-//        return isAd;
+//        return advStatus;
 //    }
 //
-//    public void setIsAd(String isAd) {
-//        this.isAd = isAd;
-//    }
-//
-//    public String getEvent_cost() {
-//        return event_cost;
-//    }
-//
-//    public void setEvent_cost(String event_cost) {
-//        this.event_cost = event_cost;
+//    public void setIsAd(String advStatus) {
+//        this.advStatus = advStatus;
 //    }
 //
 //    public String getEventLatitude() {
@@ -191,14 +187,14 @@
 //     * @return The eventCategoryId
 //     */
 //    public String getEventCategoryId() {
-//        return eventCategoryId;
+//        return CategoryId;
 //    }
 //
 //    /**
-//     * @param eventCategoryId The event_category_id
+//     * @param CategoryId The CategoryId
 //     */
-//    public void setEventCategoryId(String eventCategoryId) {
-//        this.eventCategoryId = eventCategoryId;
+//    public void setEventCategoryId(String CategoryId) {
+//        this.CategoryId = CategoryId;
 //    }
 //
 //    /**
@@ -286,21 +282,49 @@
 //    }
 //
 //    /**
+//     * @return The primaryContactNo
+//     */
+//    public String getPrimaryContactNo() {
+//        return primaryContactNo;
+//    }
+//
+//    /**
+//     * @param primaryContactNo The primaryContactNo
+//     */
+//    public void setPrimaryContactNo(String primaryContactNo) {
+//        this.primaryContactNo = primaryContactNo;
+//    }
+//
+//    /**
+//     * @return The secondaryContactNo
+//     */
+//    public String getSecondaryContactNo() {
+//        return secondaryContactNo;
+//    }
+//
+//    /**
+//     * @param secondaryContactNo The secondaryContactNo
+//     */
+//    public void setSecondaryContactNo(String secondaryContactNo) {
+//        this.secondaryContactNo = secondaryContactNo;
+//    }
+//
+//    /**
 //     * @return The contact
 //     */
-//    public String getContact() {
-//        return contact;
+//    public String getContactPerson() {
+//        return contactPerson;
 //    }
 //
 //    /**
-//     * @param contact The contact
+//     * @param contactPerson The contactPerson
 //     */
-//    public void setContact(String contact) {
-//        this.contact = contact;
+//    public void setContactPerson(String contactPerson) {
+//        this.contactPerson = contactPerson;
 //    }
 //
 //    /**
-//     * @return The categoryName
+//     * @return The c
 //     */
 //    public String getCategoryName() {
 //        return categoryName;
