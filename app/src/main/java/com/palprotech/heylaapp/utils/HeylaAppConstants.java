@@ -86,12 +86,19 @@ public class HeylaAppConstants {
     public static final String PARAMS_OCCUPATION = "occupation";
     public static final String PARAMS_ADDRESS_LINE_1 = "address_line_1";
     public static final String PARAMS_ADDRESS_LINE_2 = "address_line_2";
-    public static final String PARAMS_ADRESS_LINE_3 = "address_line_3";
+    public static final String PARAMS_ADDRESS_LINE_3 = "address_line_3";
     public static final String PARAMS_COUNTRY_ID = "country_id";
+    public static final String PARAMS_COUNTRY_NAME = "country_name";
     public static final String PARAMS_STATE_ID = "state_id";
+    public static final String PARAMS_STATE_NAME = "state_name";
     public static final String PARAMS_CITY_ID = "city_id";
+    public static final String PARAMS_CITY_NAME = "city_name";
     public static final String PARAMS_ZIP_CODE = "zip_code";
     public static final String PARAMS_NEWS_LETTER = "news_letter";
+    public static final String PARAMS_EMAIL_VERIFY = "email_verify";
+    public static final String PARAMS_USER_ROLE = "user_role";
+    public static final String PARAMS_USER_ROLE_NAME = "user_role_name";
+    public static final String PARAMS_USER_REFERRAL_CODE = "user_referral_code";
 
     //    Country list
     public static final String COUNTRY_LIST = "apimain/selectcountry/";
@@ -105,7 +112,8 @@ public class HeylaAppConstants {
     //    Event City list
     public static final String EVENT_CITY_LIST = "apimain/selectallcity/";
 
-
+    //    Preferences list
+    public static final String PREFERENCES_LIST = "apimain/userpreferrence/";
 
     //    SharedPref
     private static final String FCM_SHARED_PREF_NAME = "FCMSharedPref";
@@ -137,10 +145,17 @@ public class HeylaAppConstants {
     //    Shared Password
     public static final String KEY_PASSWORD = "password";
 
+    //    Shared Event City Id
+    public static final String KEY_EVENT_CITY_ID = "event_city_id";
+
+    //    Shared Event City Name
+    public static final String KEY_EVENT_CITY_NAME = "event_city_name";
+
     //    Shared ProfileState
     public static final String KEY_PROFILE_STATE = "profile_state";
 
     //Profile
+    public static final String KEY_USER_EMAIL_ID = "email_id";
     public static final String KEY_USER_BIRTHDAY = "birthday";
     public static final String KEY_USER_OCCUPATION = "occupation";
     public static final String KEY_USER_GENDER = "gender";

@@ -250,7 +250,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                         jsonObject.put(HeylaAppConstants.PARAMS_PASSWORD, password);
                         jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
                         jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -433,9 +432,114 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
         progressDialogHelper.hideProgressDialog();
 
         if (validateSignInResponse(response)) {
+            try {
+                JSONObject userData = response.getJSONObject("userData");
+                String userId = userData.getString("user_id");
+                String userName = userData.getString("user_name");
+                String mobileNo = userData.getString("mobile_no");
+                String emailId = userData.getString("email_id");
+                String fullName = userData.getString("full_name");
+                String birthDate = userData.getString("birth_date");
+                String gender = userData.getString("gender");
+                String occupation = userData.getString("occupation");
+                String addressLine1 = userData.getString("address_line_1");
+                String addressLine2 = userData.getString("address_line_2");
+                String addressLine3 = userData.getString("address_line_3");
+                String countryId = userData.getString("country_id");
+                String countryName = userData.getString("country_name");
+                String stateId = userData.getString("state_id");
+                String stateName = userData.getString("state_name");
+                String cityId = userData.getString("city_id");
+                String cityName = userData.getString("city_name");
+                String zip = userData.getString("zip");
+                String pictureUrl = userData.getString("picture_url");
+                String newsLetterStatus = userData.getString("newsletter_status");
+                String emailVerifyStatus = userData.getString("email_verify_status");
+                String userRole = userData.getString("user_role");
+                String userRoleName = userData.getString("user_role_name");
+                String referralCode = userData.getString("referal_code");
+
+                if ((userId != null) && !(userId.isEmpty()) && !userId.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserId(getActivity(), userId);
+                }
+                if ((userName != null) && !(userName.isEmpty()) && !userName.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUsername(getActivity(), userName);
+                }
+                if ((mobileNo != null) && !(mobileNo.isEmpty()) && !mobileNo.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveMobileNo(getActivity(), mobileNo);
+                }
+                if ((emailId != null) && !(emailId.isEmpty()) && !emailId.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveEmailId(getActivity(), emailId);
+                }
+                if ((fullName != null) && !(fullName.isEmpty()) && !fullName.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveFullName(getActivity(), fullName);
+                }
+                if ((birthDate != null) && !(birthDate.isEmpty()) && !birthDate.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserBirthday(getActivity(), birthDate);
+                }
+                if ((gender != null) && !(gender.isEmpty()) && !gender.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserGender(getActivity(), gender);
+                }
+                if ((occupation != null) && !(occupation.isEmpty()) && !occupation.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserOccupation(getActivity(), occupation);
+                }
+                if ((addressLine1 != null) && !(addressLine1.isEmpty()) && !addressLine1.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserAddressLine1(getActivity(), addressLine1);
+                }
+                if ((addressLine2 != null) && !(addressLine2.isEmpty()) && !addressLine2.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserAddressLine2(getActivity(), addressLine2);
+                }
+                if ((addressLine3 != null) && !(addressLine3.isEmpty()) && !addressLine3.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserAddressLine3(getActivity(), addressLine3);
+                }
+                if ((countryId != null) && !(countryId.isEmpty()) && !countryId.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserCountryId(getActivity(), countryId);
+                }
+                if ((countryName != null) && !(countryName.isEmpty()) && !countryName.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserCountryName(getActivity(), countryName);
+                }
+                if ((stateId != null) && !(stateId.isEmpty()) && !stateId.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserStateId(getActivity(), stateId);
+                }
+                if ((stateName != null) && !(stateName.isEmpty()) && !stateName.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserStateName(getActivity(), stateName);
+                }
+                if ((cityId != null) && !(cityId.isEmpty()) && !cityId.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserCityId(getActivity(), cityId);
+                }
+                if ((cityName != null) && !(cityName.isEmpty()) && !cityName.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserCityName(getActivity(), cityName);
+                }
+                if ((zip != null) && !(zip.isEmpty()) && !zip.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserZipCode(getActivity(), zip);
+                }
+                if ((pictureUrl != null) && !(pictureUrl.isEmpty()) && !pictureUrl.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserPicture(getActivity(), pictureUrl);
+                }
+                if ((newsLetterStatus != null) && !(newsLetterStatus.isEmpty()) && !newsLetterStatus.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserNewsLetterStatus(getActivity(), newsLetterStatus);
+                }
+                if ((emailVerifyStatus != null) && !(emailVerifyStatus.isEmpty()) && !emailVerifyStatus.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserEmailVerifyStatus(getActivity(), emailVerifyStatus);
+                }
+                if ((userRole != null) && !(userRole.isEmpty()) && !userRole.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserRole(getActivity(), userRole);
+                }
+                if ((userRoleName != null) && !(userRoleName.isEmpty()) && !userRoleName.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserRoleName(getActivity(), userRoleName);
+                }
+                if ((referralCode != null) && !(referralCode.isEmpty()) && !referralCode.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserReferralCode(getActivity(), referralCode);
+                }
+
+            } catch (JSONException ex) {
+                ex.printStackTrace();
+            }
+
             Intent homeIntent = new Intent(getActivity(), SelectCityActivity.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
+            getActivity().finish();
         }
     }
 

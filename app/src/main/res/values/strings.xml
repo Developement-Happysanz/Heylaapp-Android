@@ -33,6 +33,7 @@
     <string name="mailormobile">Enter registered email or mobile number</string>
     <string name="didntrecievecode">Didn\'t receive the code?\t</string>
     <string name="entercodetxt">Enter the verification code \nsent to your mobile</string>
+    <string name="no_connectivity">Please check your internet connectivity and try again.</string>
     <string name="resend">Resend now</string>
     <string name="resend_otp">Resend OTP?</string>
     <string name="changenumber">Change number</string>
