@@ -198,7 +198,6 @@
                             android:layout_height="50dp"
                             android:maxLength="50"
                             android:hint="@string/address2"
-                            android:imeOptions="actionDone"
                             android:inputType="text"
                             android:singleLine="true"
                             android:textSize="14sp" />
@@ -218,7 +217,6 @@
                             android:layout_height="50dp"
                             android:maxLength="50"
                             android:hint="@string/address3"
-                            android:imeOptions="actionDone"
                             android:inputType="text"
                             android:singleLine="true"
                             android:textSize="14sp" />
