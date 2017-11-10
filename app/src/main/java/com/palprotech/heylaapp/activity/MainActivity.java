@@ -1,14 +1,10 @@
 package com.palprotech.heylaapp.activity;
 
-import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -24,10 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
-import com.palprotech.heylaapp.fragment.FavouriteFragment;
-import com.palprotech.heylaapp.fragment.HotspotFragment;
-import com.palprotech.heylaapp.fragment.LeaderboardFragment;
-import com.palprotech.heylaapp.fragment.PopularFragment;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
@@ -66,11 +58,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initToolBar();
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        serviceHelper = new ServiceHelper(this);
-        serviceHelper.setServiceListener(this);
-        progressDialogHelper = new ProgressDialogHelper(this);
+//        initToolBar();
+//        viewPager = (ViewPager) findViewById(R.id.viewPager);
+//        serviceHelper = new ServiceHelper(this);
+//        serviceHelper.setServiceListener(this);
+//        progressDialogHelper = new ProgressDialogHelper(this);
 
     }
 

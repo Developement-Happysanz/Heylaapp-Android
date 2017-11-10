@@ -47,4 +47,9 @@
         <item>@color/dot_light_screen3</item>
     </array>
 
+    <color name="default_selected">#468dcb</color>
+    <color name="default_selected_text">#FFFFFF</color>
+    <color name="default_base">#FFFFFF</color>
+    <color name="default_base_text">#000000</color>
+
 </resources>
