@@ -40,6 +40,10 @@
 
     <string name="google_maps_key">AIzaSyAIzZ7X2BP_NlmTCPLqcpOetJpfVWKOY5k</string>
 
+    <string name="gps_network_not_enabled">Enable GPS</string>
+    <string name="open_location_settings">Open location manager</string>
+    <string name="Cancel">Cancel</string>
+
     <!--App Intro Screen-->
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
