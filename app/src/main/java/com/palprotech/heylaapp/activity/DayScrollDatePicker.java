@@ -179,15 +179,15 @@ public class DayScrollDatePicker extends LinearLayout implements TitleValueCallb
 
     @Override
     public void onDateSelectedChild(@Nullable LocalDate date) {
-//        if(date != null) {
-//            mFullDateTextView.setText(String.format("%s %s %s", date.toString("dd"),
-//                    date.toString("mm"), date.toString("yyyy")));
-//            mListener.onDateSelected(date.toDate());
-//        }
+        if(date != null) {
+            mFullDateTextView.setText(String.format("%s %s %s", date.toString("dd"),
+                    date.toString("MMMM"), date.toString("yyyy")));
+            mListener.onDateSelected(date.toDate());
+        }
     }
 
     @Override
     public void onTitleValueReturned(LocalDate date) {
-        mMonthTextView.setText(date.toString("mm"));
+        mMonthTextView.setText(date.toString("MMMM"));
     }
 }

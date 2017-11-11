@@ -8,21 +8,338 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center">
 
         <RelativeLayout
+            android:id="@+id/userinfo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="225dp"
+            android:background="@color/appColorBase">
+
+            <com.palprotech.heylaapp.customview.CircleImageView
+                android:id="@+id/profile_img"
+                android:layout_width="60dp"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_default_profile" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/profile_img"
+                android:layout_marginStart="-5dp"
+                android:layout_toRightOf="@+id/profile_img"
+                android:paddingBottom="10dp"
+                android:paddingEnd="10dp"
+                android:src="@drawable/ic_leaderboard_edit" />
+
+            <Button
+                android:id="@+id/follow"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/ic_leaderboard_follow" />
 
             <TextView
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_img"
                 android:layout_centerInParent="true"
-                android:text="Leaderboard"
-                android:textSize="22dp"
-                android:textColor="@color/appColorBase"
-                android:textStyle="bold"/>
+                android:hint="Narendar"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:layout_centerInParent="true"
+                android:drawablePadding="10dp"
+                android:hint="varvn"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/levelpoints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userinfo"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="-50dp"
+            android:background="@drawable/round_btn_nocolor">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="0.1"
+                android:gravity="center"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/starone"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_leaderboard_star" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/starone"
+                    android:layout_alignStart="@+id/starone"
+                    android:layout_below="@+id/starone"
+                    android:text="+50 points for next level"
+                    android:textColor="@color/text_black" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/startwo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_leaderboard_star" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/startwo"
+                    android:layout_alignStart="@+id/startwo"
+                    android:layout_below="@+id/startwo"
+                    android:text="+50 points for next level"
+                    android:textColor="@color/text_black" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/starthree"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_leaderboard_star" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/starthree"
+                    android:layout_alignStart="@+id/starthree"
+                    android:layout_below="@+id/starthree"
+                    android:text="+50 points for next level"
+                    android:textColor="@color/text_black" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/levelpoints">
+
+            <LinearLayout
+                android:id="@+id/myboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_leaderboard_ribbon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="My Board"
+                    android:textColor="@color/text_black"
+                    android:textSize="22sp" />
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/myboard">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/progress_one"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginStart="20dp"
+                            android:src="@drawable/ic_leaderboard_contact" />
+
+
+                        <ProgressBar
+                            android:id="@+id/progress_sharing"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="30dp"
+                            android:layout_marginStart="20dp"
+                            android:max="100"
+                            android:progress="50"
+                            android:progressDrawable="@drawable/progress_one_drawable" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/progress_two"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/progress_one"
+                        android:layout_marginTop="15dp">
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginStart="20dp"
+                            android:src="@drawable/ic_leaderboard_message" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_engagement"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="30dp"
+                            android:layout_marginStart="20dp"
+                            android:max="100"
+                            android:progress="25"
+                            android:progressDrawable="@drawable/progress_two_drawable" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/progress_three"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/progress_two"
+                        android:layout_marginTop="15dp">
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginStart="20dp"
+                            android:src="@drawable/ic_leaderboard_location" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_checkin"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="30dp"
+                            android:layout_marginStart="20dp"
+                            android:max="100"
+                            android:progress="50"
+                            android:progressDrawable="@drawable/progress_three_drawable" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/progress_four"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/progress_three"
+                        android:layout_marginTop="15dp">
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginStart="20dp"
+                            android:src="@drawable/ic_leaderboard_ticket" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_booking"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="30dp"
+                            android:layout_marginStart="20dp"
+                            android:max="100"
+                            android:progress="50"
+                            android:progressDrawable="@drawable/progress_four_drawable" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/progress_five"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/progress_four"
+                        android:layout_marginTop="15dp">
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginStart="20dp"
+                            android:src="@drawable/ic_leaderboard_profile_friend" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_friends"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="30dp"
+                            android:layout_marginStart="20dp"
+                            android:max="100"
+                            android:progress="50"
+                            android:progressDrawable="@drawable/progress_five_drawable" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/view_statistics"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/progress_five"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/appColorBase"
+                        android:gravity="center"
+                        android:text="View Full Statistics"
+                        android:textColor="@color/white"
+                        android:textSize="22sp" />
+
+                </RelativeLayout>
+
+            </ScrollView>
 
         </RelativeLayout>
 
