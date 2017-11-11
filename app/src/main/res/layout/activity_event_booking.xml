@@ -4,6 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+    <com.palprotech.heylaapp.activity.DayScrollDatePicker
+        android:id="@+id/day_date_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
