@@ -47,6 +47,8 @@ public class DayScrollDatePicker extends LinearLayout implements TitleValueCallb
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.date_picker_scroll_day, this, true);
         getViewElements();
+        mMonthTextView.setVisibility(GONE);
+        mFullDateTextView.setVisibility(GONE);
         setAttributeValues(context.getTheme().obtainStyledAttributes(attrs, R.styleable.ScrollDatePicker, 0, 0));
         DayScrollDatePickerViewHolder.onDateSelected(this);
         initView();
@@ -182,7 +184,7 @@ public class DayScrollDatePicker extends LinearLayout implements TitleValueCallb
         if(date != null) {
             mFullDateTextView.setText(String.format("%s %s %s", date.toString("dd"),
                     date.toString("MMMM"), date.toString("yyyy")));
-            mListener.onDateSelected(date.toDate());
+//            mListener.onDateSelected(date.toDate());
         }
     }
 

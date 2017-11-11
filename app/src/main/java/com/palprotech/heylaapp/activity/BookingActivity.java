@@ -11,6 +11,9 @@ import com.palprotech.heylaapp.R;
  */
 
 public class BookingActivity extends AppCompatActivity {
+
+    DayScrollDatePicker datePicker;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

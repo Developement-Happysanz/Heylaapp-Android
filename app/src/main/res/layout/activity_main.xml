@@ -43,9 +43,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="1dp"
-        app:itemBackground="@color/white"
-        app:itemIconTint="@color/appColorBase"
-        app:itemTextColor="@color/appColorBase"
+        app:itemBackground="@color/appColorBase"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
         app:menu="@menu/bottom_navigation_main" />
 
 </RelativeLayout>

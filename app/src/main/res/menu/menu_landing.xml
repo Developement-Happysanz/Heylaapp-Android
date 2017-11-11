@@ -12,6 +12,7 @@
     <item
         android:id="@+id/action_filter"
         android:icon="@drawable/ic_advance_filter"
+        android:iconTint="@color/white"
         android:title="event name"
         app:showAsAction="always" />
 
