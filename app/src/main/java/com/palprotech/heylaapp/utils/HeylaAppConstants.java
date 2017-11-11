@@ -115,6 +115,9 @@ public class HeylaAppConstants {
     //    Preferences list
     public static final String PREFERENCES_LIST = "apimain/userpreferrence/";
 
+    //    Preferences list
+    public static final String USER_PREFERENCES_LIST = "apimain/userpreferrence/";
+
     //    Test event list
     public static final String TEST_EVENT_LIST = "apimain/viewevents_test/";
 
@@ -156,6 +159,8 @@ public class HeylaAppConstants {
 
     //    Shared ProfileState
     public static final String KEY_PROFILE_STATE = "profile_state";
+
+    public static final String KEY_USER_HAS_PREFERENCES = "hasPreferences";
 
     //Profile
     public static final String KEY_USER_EMAIL_ID = "email_id";

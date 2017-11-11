@@ -43,6 +43,8 @@
     <string name="gps_network_not_enabled">Enable GPS</string>
     <string name="open_location_settings">Open location manager</string>
     <string name="Cancel">Cancel</string>
+    <string name="get_started">Get Started</string>
+    <string name="select_preference">Select Category</string>
 
     <!--App Intro Screen-->
     <string name="next">NEXT</string>

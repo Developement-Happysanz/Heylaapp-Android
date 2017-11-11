@@ -588,4 +588,21 @@ public class PreferenceStorage {
     }
     /*End*/
 
+    /*Preferences Storeage*/
+    public static void savePreferencesSelected(Context context, boolean selected) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(HeylaAppConstants.KEY_USER_HAS_PREFERENCES, selected);
+        editor.apply();
+    }
+
+    public static boolean isPreferencesPresent(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        boolean logged = sharedPreferences.getBoolean(HeylaAppConstants.KEY_USER_HAS_PREFERENCES, false);
+        return logged;
+    }
+    /*End*/
+
 }
