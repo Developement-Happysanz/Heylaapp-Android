@@ -128,13 +128,13 @@ public class EventsListAdapter extends BaseAdapter {
         }
         holder.txtEventVenue.setText(result);
         // Log.d("Event Adapter","event isAd "+ event.getIsAd());
-        String isAd = event.getIsAd();
-        if( (isAd != null) && (isAd.equalsIgnoreCase("1"))){
+//        String isAd = event.getIsAd();
+       /* if( (isAd != null) && (isAd.equalsIgnoreCase("1"))){
             // Log.d("EventAdapter", "setting the ad image to visible");
             holder.adImage.setVisibility(View.VISIBLE);
         }else{
             holder.adImage.setVisibility(View.INVISIBLE);
-        }
+        }*/
         String paidBtnVal = event.getEventType();
         if( paidBtnVal!= null){
 //            holder.paidBtn.setText(event.getEvent_cost());
@@ -148,11 +148,11 @@ public class EventsListAdapter extends BaseAdapter {
         }
 
         //imageLoader.displayImage(events.get(position).getEventLogo(), holder.imageView, AppController.getInstance().getLogoDisplayOptions());
-        if(HeylaAppValidator.checkNullString(events.get(position).getEventBanner())) {
+        /*if(HeylaAppValidator.checkNullString(events.get(position).getEventBanner())) {
             Picasso.with(this.context).load(events.get(position).getEventBanner()).fit().transform(this.transformation).placeholder(R.drawable.ic_heyla_logo).error(R.drawable.ic_heyla_logo).into(holder.imageView);
         } else {
             holder.imageView.setImageResource(R.drawable.ic_heyla_logo);
-        }
+        }*/
         String start = HeylaAppHelper.getDate(events.get(position).getStartDate());
         String end = HeylaAppHelper.getDate(events.get(position).getEndDate());
 
@@ -165,21 +165,21 @@ public class EventsListAdapter extends BaseAdapter {
         start = HeylaAppHelper.getTime(events.get(position).getStartDate());
         end = HeylaAppHelper.getTime(events.get(position).getEndDate());
         String startTime="", endTime="";
-        try {
-            final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            final Date startDateObj = sdf.parse(start);
-            final Date endDateObj = sdf.parse(end);
-            System.out.println(startDateObj);
-            startTime = (new SimpleDateFormat("hh:mm a").format(startDateObj));
-            endTime = (new SimpleDateFormat("hh:mm a").format(endDateObj));
-        } catch (final ParseException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+////            final Date startDateObj = sdf.parse(start);
+////            final Date endDateObj = sdf.parse(end);
+////            System.out.println(startDateObj);
+////            startTime = (new SimpleDateFormat("hh:mm a").format(startDateObj));
+////            endTime = (new SimpleDateFormat("hh:mm a").format(endDateObj));
+//        } catch (final ParseException e) {
+//            e.printStackTrace();
+//        }
         if((startTime != null) && (end != null)){
             holder.txtTime.setText(startTime +" - "+ endTime);
         }
 
-        holder.txtCategory.setText("  "+events.get(position).getEventCategoryId()+"  ");
+//        holder.txtCategory.setText("  "+events.get(position).getEventCategoryId()+"  ");
 
         //Add animation if searching
        /* if(mSearching) {

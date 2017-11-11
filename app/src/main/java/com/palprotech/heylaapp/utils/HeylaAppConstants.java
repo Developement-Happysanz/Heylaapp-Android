@@ -115,6 +115,9 @@ public class HeylaAppConstants {
     //    Preferences list
     public static final String PREFERENCES_LIST = "apimain/userpreferrence/";
 
+    //    Test event list
+    public static final String TEST_EVENT_LIST = "apimain/viewevents_test/";
+
     //    SharedPref
     private static final String FCM_SHARED_PREF_NAME = "FCMSharedPref";
     private static final String TAG_TOKEN = "tagtoken";

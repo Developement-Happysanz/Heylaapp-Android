@@ -38,7 +38,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Field;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, DialogClickListener,IServiceListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, DialogClickListener, IServiceListener {
 
     private static final String TAG = MainActivity.class.getName();
     private static final int TAG_LOGOUT = 100;
@@ -49,9 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Context context;
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
-    //boolean flag to know if main FAB is in open or closed state.
-    private boolean fabExpanded = false;
-//    private FloatingActionButton fabView;
+
 
     //Linear layout holding the Save submenu
     private LinearLayout layoutFabMapview;
@@ -71,6 +69,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+
+        changeFragment(0);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+
+                            case R.id.action_favorites:
+                                changeFragment(0);
+//                                fabView.setVisibility(View.VISIBLE);
+                                break;
+
+                            case R.id.action_popular:
+                                changeFragment(1);
+//                                fabView.setVisibility(View.VISIBLE);
+                                break;
+                            case R.id.action_hotspot:
+                                changeFragment(2);
+//                                fabView.setVisibility(View.VISIBLE);
+                                break;
+                            case R.id.action_leaderboard:
+                                changeFragment(3);
+//                                fabView.setVisibility(View.INVISIBLE);
+//                                closeSubMenusFab();
+                                break;
+
+                        }
+                        return true;
+                    }
+                });
 
     }
 
@@ -95,11 +126,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void changeFragment(int position) {
+
+        Fragment newFragment = null;
+
+        if (position == 0) {
+            newFragment = new FavouriteFragment();
+        } else if (position == 1) {
+            newFragment = new PopularFragment();
+        } else if (position == 2) {
+            newFragment = new HotspotFragment();
+        } else if (position == 3) {
+            newFragment = new LeaderboardFragment();
+        }
+
+        getFragmentManager().beginTransaction().replace(
+                R.id.fragmentContainer, newFragment)
+                .commit();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_landing, menu);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+       /* SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
         mSearchView =
                 (SearchView) menu.findItem(R.id.action_search_view).getActionView();
@@ -131,11 +181,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int currentpage = viewPager.getCurrentItem();
                 Log.d(TAG, "current item is" + currentpage);
 
-              /*  LandingPagerFragment landingPagerFragment = (LandingPagerFragment)
+              *//*  LandingPagerFragment landingPagerFragment = (LandingPagerFragment)
                         landingPagerAdapter.getRegisteredFragment(currentpage);
                 if (landingPagerFragment != null) {
                     landingPagerFragment.searchForEvent(s);
-                }   */
+                }   *//*
 
                 return false;
             }
@@ -144,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public boolean onQueryTextChange(String s) {
                 int currentpage = viewPager.getCurrentItem();
                 Log.d(TAG, "current item is" + currentpage);
-              /*  LandingPagerFragment landingPagerFragment = (LandingPagerFragment)
+              *//*  LandingPagerFragment landingPagerFragment = (LandingPagerFragment)
                         landingPagerAdapter.getRegisteredFragment(currentpage);
 
                 if ((s != null) && (!s.isEmpty())) {
@@ -156,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.d(TAG, "call exit search");
                         landingPagerFragment.exitSearch();
                     }
-                }*/
+                }*//*
 
                 return false;
             }
@@ -169,18 +219,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 int currentpage = viewPager.getCurrentItem();
                 Log.d(TAG, "current item is" + currentpage);
-                /*LandingPagerFragment landingPagerFragment = (LandingPagerFragment)
+                *//*LandingPagerFragment landingPagerFragment = (LandingPagerFragment)
                         landingPagerAdapter.getRegisteredFragment(currentpage);
                 if (landingPagerFragment != null) {
                     Log.d(TAG, "call exit search");
                     landingPagerFragment.exitSearch();
-                }*/
+                }*//*
 
                 return false;
             }
         });
 
-        mSearchView.setQueryHint("Search Event name");
+        mSearchView.setQueryHint("Search Event name");*/
 
         return true;
     }
