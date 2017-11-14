@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/total_layout"
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:id="@+id/total_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Points"
+                    android:textColor="@color/text_black"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/total_star"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignEnd="@id/total_text"
+                    android:layout_alignStart="@+id/total_text"
+                    android:layout_below="@+id/total_text"
+                    android:src="@drawable/ic_leaderboard_star" />
+
+                <TextView
+                    android:id="@+id/total_points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@id/total_text"
+                    android:layout_alignStart="@+id/total_text"
+                    android:layout_below="@+id/total_star"
+                    android:gravity="center"
+                    android:hint="!()@!*)"
+                    android:textColor="@color/text_black" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/stats_layout"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_below="@id/total_layout"
+            android:background="@color/bordergray"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/sharing_info_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp">
+
+                <ImageView
+                    android:id="@+id/sharing_info_img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_leaderboard_contact" />
+
+                <TextView
+                    android:id="@+id/sharing_info_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/sharing_info_img"
+                    android:layout_alignTop="@+id/sharing_info_img"
+                    android:layout_toEndOf="@+id/sharing_info_img"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:text="999"
+                    android:textColor="@color/text_black" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/engagements_info_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp">
+
+                <ImageView
+                    android:id="@+id/engagements_info_img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_leaderboard_message" />
+
+                <TextView
+                    android:id="@+id/engagements_info_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/engagements_info_img"
+                    android:layout_alignTop="@+id/engagements_info_img"
+                    android:layout_toEndOf="@+id/engagements_info_img"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:text="999"
+                    android:textColor="@color/text_black" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/checkin_info_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp">
+
+                <ImageView
+                    android:id="@+id/checkin_info_img"
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_leaderboard_location" />
+
+                <TextView
+                    android:id="@+id/checkin_info_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/checkin_info_img"
+                    android:layout_alignTop="@+id/checkin_info_img"
+                    android:layout_toEndOf="@+id/checkin_info_img"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:text="999"
+                    android:textColor="@color/text_black" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/booking_info_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp">
+
+                <ImageView
+                    android:id="@+id/booking_info_img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_leaderboard_ticket" />
+
+                <TextView
+                    android:id="@+id/booking_info_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/booking_info_img"
+                    android:layout_alignTop="@+id/booking_info_img"
+                    android:layout_toEndOf="@+id/booking_info_img"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:text="999"
+                    android:textColor="@color/text_black" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stats_layout">
+
+            <RelativeLayout
+                android:id="@+id/sharing_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp">
+
+                <ImageView
+                    android:id="@+id/sharing_img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_leaderboard_contact" />
+
+                <TextView
+                    android:id="@+id/sharing_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/sharing_img"
+                    android:layout_alignTop="@+id/sharing_img"
+                    android:layout_toEndOf="@+id/sharing_img"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:text="Photo Sharing"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/sharing_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_toRightOf="@id/sharing_text"
+                    android:layout_alignTop="@id/sharing_text"
+                    android:layout_alignBottom="@id/sharing_text"
+                    android:layout_marginStart="10dp"/>
+
+                <ImageView
+                    android:id="@+id/photo_star"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_leaderboard_star"
+                    android:layout_alignTop="@id/sharing_text"
+                    android:layout_alignBottom="@id/sharing_text"
+                    android:layout_alignParentEnd="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/photo_star"
+                    android:layout_alignBottom="@id/photo_star"
+                    android:text="0"
+                    android:gravity="center"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/text_black"
+                    android:layout_toLeftOf="@id/photo_star"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/engagements_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sharing_layout"
+                android:layout_marginStart="20dp">
+
+                <ImageView
+                    android:id="@+id/engagements_img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_leaderboard_message" />
+
+                <TextView
+                    android:id="@+id/engagements_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/engagements_img"
+                    android:layout_alignTop="@+id/engagements_img"
+                    android:layout_toEndOf="@+id/engagements_img"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:text="Engagement"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/engagements_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_toRightOf="@id/engagements_text"
+                    android:layout_alignTop="@id/engagements_text"
+                    android:layout_alignBottom="@id/engagements_text"
+                    android:layout_marginStart="10dp"/>
+
+                <ImageView
+                    android:id="@+id/engagements_star"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_leaderboard_star"
+                    android:layout_alignTop="@id/engagements_text"
+                    android:layout_alignBottom="@id/engagements_text"
+                    android:layout_alignParentEnd="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/engagements_star"
+                    android:layout_alignBottom="@id/engagements_star"
+                    android:text="0"
+                    android:gravity="center"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/text_black"
+                    android:layout_toLeftOf="@id/engagements_star"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/checkin_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/engagements_layout"
+                android:layout_marginStart="20dp">
+
+                <ImageView
+                    android:id="@+id/checkin_img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_leaderboard_location" />
+
+                <TextView
+                    android:id="@+id/checkin_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/checkin_img"
+                    android:layout_alignTop="@+id/checkin_img"
+                    android:layout_toEndOf="@+id/checkin_img"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:text="Check-In"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/checkin_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_toRightOf="@id/checkin_text"
+                    android:layout_alignTop="@id/checkin_text"
+                    android:layout_alignBottom="@id/checkin_text"
+                    android:layout_marginStart="10dp"/>
+
+                <ImageView
+                    android:id="@+id/checkin_star"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_leaderboard_star"
+                    android:layout_alignTop="@id/checkin_text"
+                    android:layout_alignBottom="@id/checkin_text"
+                    android:layout_alignParentEnd="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/checkin_star"
+                    android:layout_alignBottom="@id/checkin_star"
+                    android:text="0"
+                    android:gravity="center"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/text_black"
+                    android:layout_toLeftOf="@id/checkin_star"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/booking_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/checkin_layout"
+                android:layout_marginStart="20dp">
+
+                <ImageView
+                    android:id="@+id/booking_img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_leaderboard_ticket" />
+
+                <TextView
+                    android:id="@+id/booking_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/booking_img"
+                    android:layout_alignTop="@+id/booking_img"
+                    android:layout_toEndOf="@+id/booking_img"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:text="Booking"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/booking_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_toRightOf="@id/booking_text"
+                    android:layout_alignTop="@id/booking_text"
+                    android:layout_alignBottom="@id/booking_text"
+                    android:layout_marginStart="10dp"/>
+
+                <ImageView
+                    android:id="@+id/booking_star"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_leaderboard_star"
+                    android:layout_alignTop="@id/booking_text"
+                    android:layout_alignBottom="@id/booking_text"
+                    android:layout_alignParentEnd="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/booking_star"
+                    android:layout_alignBottom="@id/booking_star"
+                    android:text="0"
+                    android:gravity="center"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/text_black"
+                    android:layout_toLeftOf="@id/booking_star"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

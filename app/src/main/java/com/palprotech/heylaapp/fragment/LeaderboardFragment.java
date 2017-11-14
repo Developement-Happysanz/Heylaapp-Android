@@ -1,6 +1,7 @@
 package com.palprotech.heylaapp.fragment;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.activity.LeaderboardStatistics;
 import com.palprotech.heylaapp.customview.CircleImageView;
 
 /**
@@ -56,6 +58,11 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-
+        if(view == viewFullStatistics) {
+            Intent homeIntent = new Intent(getActivity(), LeaderboardStatistics.class);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+            getActivity().finish();
+        }
     }
 }

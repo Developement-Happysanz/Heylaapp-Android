@@ -2,6 +2,7 @@ package com.palprotech.heylaapp.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -31,11 +32,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        vBooking = (RelativeLayout)findViewById(R.id.booking_history_img);
+        vBooking = (RelativeLayout) findViewById(R.id.booking_history_img);
         vBooking.setOnClickListener(this);
-        vCategory = (RelativeLayout)findViewById(R.id.category_img);
+        vCategory = (RelativeLayout) findViewById(R.id.category_img);
         vCategory.setOnClickListener(this);
-        vChangeCity = (RelativeLayout)findViewById(R.id.change_city_img);
+        vChangeCity = (RelativeLayout) findViewById(R.id.change_city_img);
         vChangeCity.setOnClickListener(this);
         vWishList = (RelativeLayout) findViewById(R.id.wishlist_img);
         vWishList.setOnClickListener(this);
@@ -67,17 +68,18 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 //            Intent homeIntent = new Intent(getApplicationContext(), BookingActivity.class);
 //            startActivity(homeIntent);
         }
-        if (v == vBooking) {
+        if (v == vShare) {
             Intent homeIntent = new Intent(getApplicationContext(), BookingActivity.class);
             startActivity(homeIntent);
         }
-        if (v == vBooking) {
-            Intent homeIntent = new Intent(getApplicationContext(), BookingActivity.class);
-            startActivity(homeIntent);
+        if (v == vAboutUs) {
+//            Intent homeIntent = new Intent(getApplicationContext(), BookingActivity.class);
+//            startActivity(homeIntent);
         }
-        if (v == vBooking) {
-            Intent homeIntent = new Intent(getApplicationContext(), BookingActivity.class);
-            startActivity(homeIntent);
+        if (v == vRateUs) {
+            Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.palprotech.heylaapp&hl=en");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         }
         if (v == vSignOut) {
             doLogout();

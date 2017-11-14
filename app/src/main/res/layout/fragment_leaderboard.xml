@@ -89,16 +89,18 @@
 
                 <ImageView
                     android:id="@+id/starone"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignStart="@+id/starone_text"
+                    android:layout_alignEnd="@+id/starone_text"
                     android:src="@drawable/ic_leaderboard_star" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/starone_text"
+                    android:layout_width="85dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/starone"
-                    android:layout_alignStart="@+id/starone"
                     android:layout_below="@+id/starone"
+                    android:gravity="center"
                     android:text="+50 points for next level"
                     android:textColor="@color/text_black" />
 
@@ -112,16 +114,18 @@
 
                 <ImageView
                     android:id="@+id/startwo"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignStart="@+id/startwo_text"
+                    android:layout_alignEnd="@+id/startwo_text"
                     android:src="@drawable/ic_leaderboard_star" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/startwo_text"
+                    android:layout_width="85dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/startwo"
-                    android:layout_alignStart="@+id/startwo"
                     android:layout_below="@+id/startwo"
+                    android:gravity="center"
                     android:text="+50 points for next level"
                     android:textColor="@color/text_black" />
 
@@ -135,16 +139,18 @@
 
                 <ImageView
                     android:id="@+id/starthree"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignStart="@+id/starthree_text"
+                    android:layout_alignEnd="@+id/starthree_text"
                     android:src="@drawable/ic_leaderboard_star" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/starthree_text"
+                    android:layout_width="85dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/starthree"
-                    android:layout_alignStart="@+id/starthree"
                     android:layout_below="@+id/starthree"
+                    android:gravity="center"
                     android:text="+50 points for next level"
                     android:textColor="@color/text_black" />
 
@@ -329,7 +335,7 @@
                         android:id="@+id/view_statistics"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_below="@+id/progress_five"
+                        android:layout_alignParentBottom="true"
                         android:layout_marginTop="20dp"
                         android:background="@color/appColorBase"
                         android:gravity="center"
