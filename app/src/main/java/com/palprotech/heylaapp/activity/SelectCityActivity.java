@@ -200,7 +200,7 @@ public class SelectCityActivity extends AppCompatActivity implements View.OnClic
         PreferenceStorage.saveEventCityName(getApplicationContext(), eventCities.getCityName());
         Toast.makeText(getApplicationContext(), "You are in now " + eventCities.getCityName(), Toast.LENGTH_LONG).show();
 
-        Intent intent = new Intent(this, SetUpPreferenceActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
 //        intent.putExtra("eventObj", eventCities);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
