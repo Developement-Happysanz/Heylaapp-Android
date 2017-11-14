@@ -4,13 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/menu_side_bg"/>
 
     <ScrollView
         android:layout_width="match_parent"
+        android:background="@drawable/menu_side_bg"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -65,8 +62,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/profile_img"
-
-                            android:hint="Bala Murali Krishna"
+                            android:hint="Kamal"
                             android:textColor="@color/white"
                             android:textColorHint="@color/white"
                             android:textSize="18sp" />
