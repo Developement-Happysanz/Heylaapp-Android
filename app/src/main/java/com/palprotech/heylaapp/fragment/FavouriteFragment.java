@@ -590,7 +590,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
         if (eventsList != null) {
             Log.d(TAG, "fetched all event list count" + eventsList.getCount());
         }
-        updateListAdapter(eventsList.getEvents());
+//        updateListAdapter(eventsList.getEvents());
         int totalNearbyCount = 0;
         if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
             if (mLastLocation != null) {
