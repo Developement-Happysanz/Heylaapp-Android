@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:background="@drawable/menu_side_bg"
         android:layout_height="match_parent">
@@ -62,7 +62,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/profile_img"
+                            android:layout_alignStart="@+id/profile_img"
+                            android:layout_alignEnd="@id/profile_img"
                             android:hint="Kamal"
+                            android:gravity="center"
                             android:textColor="@color/white"
                             android:textColorHint="@color/white"
                             android:textSize="18sp" />
@@ -345,6 +348,6 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </LinearLayout>
 
 </LinearLayout>
