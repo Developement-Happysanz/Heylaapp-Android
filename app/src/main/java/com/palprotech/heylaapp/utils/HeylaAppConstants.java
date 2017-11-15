@@ -121,8 +121,13 @@ public class HeylaAppConstants {
     //    Preferences Update
     public static final String USER_PREFERENCES_UPDATE = "apimain/updatepreferrence/";
 
-    //    Test event list
-    public static final String TEST_EVENT_LIST = "apimain/viewevents_test/";
+    //    Event list
+    public static final String EVENT_LIST = "apimain/viewevents/";
+//    public static final String EVENT_LIST = "apimain/viewevents_test/";
+
+    //    Event list params
+    public static final String KEY_EVENT_TYPE = "event_type";
+
 
     //    SharedPref
     private static final String FCM_SHARED_PREF_NAME = "FCMSharedPref";

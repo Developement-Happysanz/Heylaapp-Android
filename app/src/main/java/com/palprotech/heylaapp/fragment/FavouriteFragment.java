@@ -51,6 +51,7 @@ import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.CommonUtils;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -357,15 +358,17 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
         JSONObject jsonObject = new JSONObject();
         try {
 
-            jsonObject.put(HeylaAppConstants.PARMAS_OLD_MOBILE_NUMBER, "");
-//            jsonObject.put(HeylaAppConstants.PARMAS_NEW_MOBILE_NUMBER, edtMobileNo.getText().toString());
+            jsonObject.put(HeylaAppConstants.KEY_EVENT_TYPE, "General");
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getActivity()));
+            jsonObject.put(HeylaAppConstants.KEY_USER_TYPE, PreferenceStorage.getUserType(getActivity()));
+            jsonObject.put(HeylaAppConstants.KEY_EVENT_CITY_ID, PreferenceStorage.getEventCityId(getActivity()));
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.TEST_EVENT_LIST;
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_LIST;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
@@ -598,10 +601,10 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
                 int i = 0;
                 for (Event event : eventsList.getEvents()) {
                     //Testing. remove later
-                    if(latitude.get(i) != null){
+                    if (latitude.get(i) != null) {
                         event.setEventLatitude(latitude.get(i));
                     }
-                    if(longitude.get(i) != null){
+                    if (longitude.get(i) != null) {
                         event.setEventLongitude(longitude.get(i));
                     }
                     //end of testing
@@ -612,8 +615,8 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
                         temEventLoc.setLongitude(Double.parseDouble(event.getEventLongitude()));
                         float distance = mLastLocation.distanceTo(temEventLoc);
                         Log.d(TAG, "calculated distance is" + distance);
-                        if (distanceFlag==2){
-                            if(distance < (5 * 1000)) {
+                        if (distanceFlag == 2) {
+                            if (distance < (5 * 1000)) {
                                 mNearbyLIst.add(event);
                             }
                         } else {

@@ -216,6 +216,7 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+                jsonObject.put(HeylaAppConstants.KEY_USER_TYPE, PreferenceStorage.getUserType(getApplicationContext()));
 
             } catch (JSONException e) {
                 e.printStackTrace();
