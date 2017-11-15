@@ -108,6 +108,21 @@ public class PreferenceStorage {
     }
     /*End*/
 
+    public static void saveUserType(Context context, String userType) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.KEY_USER_TYPE, userType);
+        editor.apply();
+    }
+
+    public static String getUserType(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String userId = sharedPreferences.getString(HeylaAppConstants.KEY_USER_TYPE, "");
+        return userId;
+    }
+
     /**/
     /*User data*/
     /**/

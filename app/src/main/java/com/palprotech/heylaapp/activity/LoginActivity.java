@@ -2,6 +2,7 @@ package com.palprotech.heylaapp.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -179,7 +180,23 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
         progressDialogHelper.hideProgressDialog();
 
         if (validateSignInResponse(response)) {
+            try {
+                JSONObject userData = response.getJSONObject("userData");
+                String userId = userData.getString("user_id");
 
+                if ((userId != null) && !(userId.isEmpty()) && !userId.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserId(getApplicationContext(), userId);
+                }
+
+                Intent homeIntent = new Intent(getApplicationContext(), SelectCityActivity.class);
+                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+                finish();
+
+                PreferenceStorage.saveUserType(getApplicationContext(), "1");
+            } catch (JSONException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 

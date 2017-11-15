@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class PreferenceListAdapter extends RecyclerView.Adapter<PreferenceListAd
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
         public ImageView mImageView, Selecttick;
+        public CheckBox checkTick;
         public TextView mPrefTextView;
         public RelativeLayout rlPref;
         public RelativeLayout slPref;
@@ -46,8 +48,9 @@ public class PreferenceListAdapter extends RecyclerView.Adapter<PreferenceListAd
             mImageView = (ImageView) v.findViewById(R.id.txt_preference_name);
             mPrefTextView = (TextView) v.findViewById(R.id.txt_pref_category_name);
             Selecttick = (ImageView) v.findViewById(R.id.pref_tick);
+            checkTick = (CheckBox) v.findViewById(R.id.checkBoxTick);
             if (viewType == 1) {
-                rlPref = (RelativeLayout)v.findViewById(R.id.rlPref);
+                rlPref = (RelativeLayout) v.findViewById(R.id.rlPref);
             } else {
                 rlPref = (RelativeLayout) v;
             }
@@ -86,8 +89,8 @@ public class PreferenceListAdapter extends RecyclerView.Adapter<PreferenceListAd
         View parentView;
         //Log.d("CategoryAdapter","viewType is"+ viewType);
         //if (viewType == 1) {
-            parentView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.preference_view_type1, parent, false);
+        parentView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.preference_view_type1, parent, false);
 
 //        }
 //        else {
@@ -107,24 +110,26 @@ public class PreferenceListAdapter extends RecyclerView.Adapter<PreferenceListAd
         holder.mPrefTextView.setText(categoryArrayList.get(position).getCategory());
 
         //imageLoader.displayImage(events.get(position).getEventLogo(), holder.imageView, AppController.getInstance().getLogoDisplayOptions());
-        if(HeylaAppValidator.checkNullString(categoryArrayList.get(position).getImgPath())) {
+        if (HeylaAppValidator.checkNullString(categoryArrayList.get(position).getImgPath())) {
             Picasso.with(this.context).load(categoryArrayList.get(position).getImgPath()).fit().transform(this.transformation).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(holder.mImageView);
         } else {
             holder.mImageView.setImageResource(R.drawable.ic_default_profile);
         }
 
 //        GradientDrawable bgShape = (GradientDrawable) holder.mPrefTextView.getBackground();
-        if (categoryArrayList.get(position).getCategoryPreference().equals("no")) {
+        if (categoryArrayList.get(position).getCategoryPreference().equals("N")) {
             // holder.tickImage.setVisibility(View.INVISIBLE);
 //            holder.rlPref.setBackgroundColor(context.getResources().getColor(R.color.white));
 //            holder.mPrefTextView.setTextColor(context.getResources().getColor(R.color.black));
-            holder.Selecttick.setVisibility(View.GONE);
+//            holder.Selecttick.setVisibility(View.GONE);
+            holder.checkTick.setChecked(false);
 
         } else {
             if (context instanceof SetUpPreferenceActivity) {
                 ((SetUpPreferenceActivity) context).onCategorySelected(position);
             }
-            holder.Selecttick.setVisibility(View.VISIBLE);
+//            holder.Selecttick.setVisibility(View.VISIBLE);
+            holder.checkTick.setChecked(true);
 //            holder.mPrefTextView.setTextColor(context.getResources().getColor(R.color.preference_orange));
 //            holder.rlPref.setBackgroundColor(context.getResources().getColor(R.color.preference_orange));
         }
@@ -150,7 +155,7 @@ public class PreferenceListAdapter extends RecyclerView.Adapter<PreferenceListAd
         } else {
             return 1;
         }*/
-        if(categoryArrayList.get(position)!=null || categoryArrayList.get(position).getSize()>0)
+        if (categoryArrayList.get(position) != null || categoryArrayList.get(position).getSize() > 0)
             return categoryArrayList.get(position).getSize();
         else
             return 1;

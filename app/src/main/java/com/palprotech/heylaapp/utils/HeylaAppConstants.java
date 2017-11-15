@@ -118,6 +118,9 @@ public class HeylaAppConstants {
     //    Preferences list
     public static final String USER_PREFERENCES_LIST = "apimain/userpreferrence/";
 
+    //    Preferences Update
+    public static final String USER_PREFERENCES_UPDATE = "apimain/updatepreferrence/";
+
     //    Test event list
     public static final String TEST_EVENT_LIST = "apimain/viewevents_test/";
 
@@ -126,6 +129,7 @@ public class HeylaAppConstants {
     private static final String TAG_TOKEN = "tagtoken";
     public static final String KEY_LOGIN_MODE = "loginMode";
     public static final String KEY_MOBILE_NUMBER = "mobile_number";
+    public static final String KEY_USER_TYPE = "user_type";
 
     //    Service Params
     public static String PARAM_MESSAGE = "msg";
@@ -147,6 +151,9 @@ public class HeylaAppConstants {
 
     //    Shared UserID
     public static final String KEY_USER_ID = "user_id";
+
+    //    Shared Categories Id
+    public static final String KEY_CATEGORIES_ID = "category_ids";
 
     //    Shared Password
     public static final String KEY_PASSWORD = "password";

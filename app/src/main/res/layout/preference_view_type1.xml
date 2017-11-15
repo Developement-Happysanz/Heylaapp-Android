@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/background_grey">
 
     <RelativeLayout
         android:id="@+id/rlPref"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0.5dp"
+        android:background="@color/white"
         android:padding="2dp">
 
         <!--<ImageView-->
@@ -21,42 +22,64 @@
         <!--android:gravity="center"-->
         <!--android:padding="2dp" />-->
 
-        <com.palprotech.heylaapp.customview.CircleImageView
-            android:id="@+id/txt_preference_name"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:fitsSystemWindows="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_default_profile"
-            app:layout_collapseMode="parallax" />
+        <CheckBox
+            android:id="@+id/checkBoxTick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!--<com.palprotech.heylaapp.customview.CircleImageView
+                android:id="@+id/txt_preference_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+
+
+                />-->
+
+            <ImageView
+                android:id="@+id/txt_preference_name"
+                android:layout_width="130dp"
+                android:layout_height="130dp"                 />
+
+            <!--android:src="@drawable/ic_default_profile"-->
+
+            <TextView
+                android:id="@+id/txt_pref_category_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                android:gravity="center"
+                android:text="hi"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/text_black"
+                android:textSize="12dp" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/pref_tick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_alignParentRight="true"
-            android:background="@drawable/ic_tick" />
+            android:background="@drawable/ic_tick"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rlPref"
-        android:layout_marginLeft="30dp">
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/rlPref"-->
+    <!--android:layout_marginLeft="30dp">-->
 
-        <TextView
-            android:id="@+id/txt_pref_category_name"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="hi"
-            android:textColor="@color/text_black"
-            android:textSize="15dp" />
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
 </RelativeLayout>

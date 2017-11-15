@@ -18,77 +18,61 @@ public class Category {
     @Expose
     private String categoryPreference;
 
-//    @SerializedName("size")
-//    @Expose
-    private int size;
+    @SerializedName("size")
+    @Expose
+    private int size = 2;
 
     /**
-     *
-     * @return
-     * The id
+     * @return The id
      */
     public String getId() {
         return id;
     }
 
     /**
-     *
-     * @param id
-     * The id
+     * @param id The id
      */
     public void setId(String id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return
-     * The category
+     * @return The category
      */
     public String getCategory() {
         return category;
     }
 
     /**
-     *
-     * @param category
-     * The category
+     * @param category The category
      */
     public void setCategory(String category) {
         this.category = category;
     }
 
     /**
-     *
-     * @return
-     * The imgPath
+     * @return The imgPath
      */
     public String getImgPath() {
         return imgPath;
     }
 
     /**
-     *
-     * @param imgPath
-     * The img_path
+     * @param imgPath The img_path
      */
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
     }
 
     /**
-     *
-     * @return
-     * The categoryPreference
+     * @return The categoryPreference
      */
     public String getCategoryPreference() {
         return categoryPreference;
     }
 
     /**
-     *
-     * @param categoryPreference
-     * The category_preference
+     * @param categoryPreference The category_preference
      */
     public void setCategoryPreference(String categoryPreference) {
         this.categoryPreference = categoryPreference;
@@ -99,6 +83,6 @@ public class Category {
     }
 
     public void setSize(int size) {
-        this.size = 2;
+        this.size = size;
     }
 }

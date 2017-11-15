@@ -24,6 +24,7 @@ import com.palprotech.heylaapp.adapter.PreferenceListAdapter;
 import com.palprotech.heylaapp.bean.support.Category;
 import com.palprotech.heylaapp.bean.support.EventCities;
 import com.palprotech.heylaapp.bean.support.Preference;
+import com.palprotech.heylaapp.bean.support.SetCategory;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
@@ -33,18 +34,22 @@ import com.palprotech.heylaapp.utils.CommonUtils;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Admin on 06-11-2017.
  */
 
-public class SetUpPreferenceActivity extends AppCompatActivity implements IServiceListener,DialogClickListener,View.OnClickListener,PreferenceListAdapter.OnItemClickListener {
+public class SetUpPreferenceActivity extends AppCompatActivity implements IServiceListener, DialogClickListener, View.OnClickListener, PreferenceListAdapter.OnItemClickListener {
 
     private static final String TAG = SetUpPreferenceActivity.class.getName();
     private RecyclerView mRecyclerView;
@@ -59,7 +64,7 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
     int pos;
     private TextView txtGetStarted, txtSelect, txtSelectAll;
     HashSet<String> hashSet;
-
+    private String responseActivity = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,8 +92,6 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
         });
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-
-        //mRecyclerView.setOnItemClickListener(this);
         selectedList = new ArrayList<>();
         hashSet = new HashSet<String>();
 
@@ -142,20 +145,74 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
             preferences.add(preference);
         }
 
-        /*SetCategory setCategory = new SetCategory();
+        SetCategory setCategory = new SetCategory();
         setCategory.setPreferences(preferences);
-        setCategory.setFuncName("user_preference");
-        setCategory.setUserId(PreferenceStorage.getUserId(this));
-        setCategory.setUserType(PreferenceStorage.getUserType(this));
-        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         Gson gson = new Gson();
-        String json = gson.toJson(setCategory);
-        categoryServiceHelper.makeSetCategoryServiceCall(json);*/
+        String json = gson.toJson(preferences);
+
+        String removeSquareBracketOpen = "[";
+        String removeSquareBracketClose = "]";
+        String removeEtcCharSet1 = "{\"category_id\":\"";
+        String removeEtcCharSet2 = "\"}";
+
+        String new_string = json.replace(removeSquareBracketOpen, "");
+        String new_string1 = new_string.replace(removeSquareBracketClose, "");
+        String new_string2 = new_string1.replace(removeEtcCharSet1, "");
+        String new_string3 = new_string2.replace(removeEtcCharSet2, "");
+
+        String[] strArray = new_string3.split(",");
+        final int[] animalsArray = new int[strArray.length];
+        for (int i = 0; i < strArray.length; i++) {
+            animalsArray[i] = Integer.parseInt(strArray[i]);
+        }
+
+        System.out.println(Arrays.toString(animalsArray));
+        final int[] buckets = new int[1001];
+        for (final int i : animalsArray) {
+            buckets[i]++;
+        }
+        final int[] unique = new int[animalsArray.length];
+        int count = 0;
+        for (int i = 0; i < buckets.length; ++i) {
+            if (buckets[i] > 0) {
+                unique[count++] = i;
+            }
+        }
+        final int[] compressed = new int[count];
+        System.arraycopy(unique, 0, compressed, 0, count);
+        System.out.println(Arrays.toString(compressed));
+
+        String newOk = Arrays.toString(compressed);
+
+        String newOk3 = newOk.replace(removeSquareBracketOpen, "");
+        String newOk4 = newOk3.replace(removeSquareBracketClose, "");
+
+
+        if (CommonUtils.isNetworkAvailable(this)) {
+            responseActivity = "update";
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+                jsonObject.put(HeylaAppConstants.KEY_USER_TYPE, PreferenceStorage.getUserType(getApplicationContext()));
+                jsonObject.put(HeylaAppConstants.KEY_CATEGORIES_ID, newOk4);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_PREFERENCES_UPDATE;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+        }
     }
 
-    private void GetPreferences(){
+    private void GetPreferences() {
         if (CommonUtils.isNetworkAvailable(this)) {
-
+            responseActivity = "view";
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
@@ -175,7 +232,6 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
     }
 
 
-
     @Override
     public void onAlertPositiveClicked(int tag) {
 
@@ -188,14 +244,27 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
 
     @Override
     public void onResponse(JSONObject response) {
-        String ok ="";
         progressDialogHelper.hideProgressDialog();
-        Gson gson = new Gson();
-        Type listType = new TypeToken<ArrayList<Category>>() {
-        }.getType();
-        categoryArrayList = (ArrayList<Category>) gson.fromJson(response.toString(), listType);
-        preferenceAdatper = new PreferenceListAdapter(this, categoryArrayList, this);
-        mRecyclerView.setAdapter(preferenceAdatper);
+        if (validateSignInResponse(response)) {
+            if (responseActivity.equalsIgnoreCase("view")) {
+                try {
+                    JSONArray getData = response.getJSONArray("Categories");
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<ArrayList<Category>>() {
+                    }.getType();
+                    categoryArrayList = (ArrayList<Category>) gson.fromJson(getData.toString(), listType);
+                    preferenceAdatper = new PreferenceListAdapter(this, categoryArrayList, this);
+                    mRecyclerView.setAdapter(preferenceAdatper);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else if (responseActivity.equalsIgnoreCase("update")) {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        }
     }
 
     @Override
@@ -203,8 +272,6 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
         progressDialogHelper.hideProgressDialog();
         AlertDialogHelper.showSimpleAlertDialog(this, error);
     }
-
-    private SparseBooleanArray selectedItems;
 
     public void onCategorySelected(int position) {
         Log.d(TAG, "selected category position" + position);
@@ -249,7 +316,6 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
                 setPreferences();
             } else {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                //alertDialogBuilder.setTitle("Registration Successful");
                 alertDialogBuilder.setTitle("Not enough categories selected");
                 alertDialogBuilder.setMessage("Please select atleast four categories");
                 alertDialogBuilder.setPositiveButton("OK",
@@ -270,70 +336,35 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
                 for (pos = 0; pos < categoryArrayList.size(); pos++) {
                     Category tag = preferenceAdatper.getItem(pos);
                     selectedList.add(tag);
-                    tag.setCategoryPreference("yes");
+                    tag.setCategoryPreference("Y");
                     preferenceAdatper.notifyDataSetChanged();
-//                    categoryArrayList.remove(pos);
-//                    mRecyclerView.removeViewAt(pos);
-//                    preferenceAdatper.notifyItemRemoved(pos);
-//                    preferenceAdatper.notifyItemRangeChanged(pos, categoryArrayList.size());
                 }
             } else {
                 selval = false;
                 for (pos = 0; pos < categoryArrayList.size(); pos++) {
                     Category tag = preferenceAdatper.getItem(pos);
-                    tag.setCategoryPreference("no");
+                    tag.setCategoryPreference("N");
                     selectedList.removeAll(selectedList);
                     preferenceAdatper.notifyDataSetChanged();
                 }
             }
             preferenceAdatper.notifyDataSetChanged();
-//            Intent navigationIntent = new Intent(this, SelectPreferenceActivity.class);
-//            navigationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            startActivity(navigationIntent);
-
         }
     }
 
     @Override
     public void onItemClick(View view, int position) {
         Category tag = preferenceAdatper.getItem(position);
-        RelativeLayout textView = (RelativeLayout) view;
+        if (tag.getCategoryPreference().equals("N")) {
 
-//        GradientDrawable bgShape = (GradientDrawable) textView.getBackground();
-        if (tag.getCategoryPreference().equals("no")) {
-//            bgShape.setColor(getResources().getColor(R.color.preference_orange));
-//            textView.setBackgroundColor(getResources().getColor(R.color.preference_orange));
-//            TextView mtextView = (TextView) view;
-//            mtextView.setTextColor(getResources().getColor(R.color.preference_orange));
-//            PrefSelect.setBackgroundResource(imgResource);
-            tag.setCategoryPreference("yes");
+            tag.setCategoryPreference("Y");
             selectedList.add(tag);
 
             preferenceAdatper.notifyItemChanged(position);
         } else {
-//            bgShape.setColor(getResources().getColor(R.color.white));
-//            textView.setBackgroundColor(getResources().getColor(R.color.black));
-//            TextView mtextView = (TextView) view;
-            tag.setCategoryPreference("no");
+            tag.setCategoryPreference("N");
             selectedList.remove(tag);
             preferenceAdatper.notifyItemChanged(position);
         }
-//        preferenceAdatper.notifyItemChanged(position);
-//        ImageView tickImage = (ImageView) view.findViewById(R.id.tickImage);
-//        ImageView logoImage = (ImageView) view.findViewById(R.id.img_category);
-//        if (tag.getCategoryPreference().equals("no")) {
-//            tickImage.setVisibility(View.VISIBLE);
-//            tag.setCategoryPreference("yes");
-//            logoImage.setAlpha((float) 0.1);
-//        } else {
-//            tickImage.setVisibility(View.INVISIBLE);
-//            tag.setCategoryPreference("no");
-//            logoImage.setAlpha((float) 1);
-//        }
-//        if (selectedList.contains(tag)) {
-//            selectedList.remove(tag);
-//        } else {
-//            selectedList.add(tag);
-//        }
     }
 }

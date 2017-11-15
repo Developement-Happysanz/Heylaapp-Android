@@ -532,6 +532,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                     PreferenceStorage.saveUserReferralCode(getActivity(), referralCode);
                 }
 
+                PreferenceStorage.saveUserType(getActivity(), "1");
+
             } catch (JSONException ex) {
                 ex.printStackTrace();
             }
