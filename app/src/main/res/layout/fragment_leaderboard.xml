@@ -18,7 +18,7 @@
 
             <com.palprotech.heylaapp.customview.CircleImageView
                 android:id="@+id/profile_img"
-                android:layout_width="60dp"
+                android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
