@@ -103,16 +103,16 @@
 
             <ImageView
                 android:id="@+id/login_using_fb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/ic_login_facebook" />
 
             <ImageView
                 android:id="@+id/login_using_gplus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:src="@drawable/ic_login_google_plus" />
 
         </LinearLayout>

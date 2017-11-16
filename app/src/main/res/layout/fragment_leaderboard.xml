@@ -82,15 +82,16 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="0.1"
                 android:gravity="center"
                 android:paddingBottom="10dp">
 
                 <ImageView
                     android:id="@+id/starone"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_alignStart="@+id/starone_text"
                     android:layout_alignEnd="@+id/starone_text"
                     android:src="@drawable/ic_leaderboard_star" />
@@ -110,12 +111,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:gravity="center">
 
                 <ImageView
                     android:id="@+id/startwo"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_alignStart="@+id/startwo_text"
                     android:layout_alignEnd="@+id/startwo_text"
                     android:src="@drawable/ic_leaderboard_star" />
@@ -135,12 +138,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:gravity="center">
 
                 <ImageView
                     android:id="@+id/starthree"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_alignStart="@+id/starthree_text"
                     android:layout_alignEnd="@+id/starthree_text"
                     android:src="@drawable/ic_leaderboard_star" />
