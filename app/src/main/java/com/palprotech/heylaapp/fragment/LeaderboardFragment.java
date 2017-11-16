@@ -3,7 +3,11 @@ package com.palprotech.heylaapp.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,6 +38,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
         initializeViews();
 
+
         return rootView;
     }
 
@@ -54,15 +59,25 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         follow.setOnClickListener(this);
         viewFullStatistics = rootView.findViewById(R.id.view_statistics);
         viewFullStatistics.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View view) {
-        if(view == viewFullStatistics) {
+        if (view == viewFullStatistics) {
             Intent homeIntent = new Intent(getActivity(), LeaderboardStatistics.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
             getActivity().finish();
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.menu_landing, menu);
+        menu.findItem(R.id.action_filter);
+        menu.findItem(R.id.action_search_view);
     }
 }
