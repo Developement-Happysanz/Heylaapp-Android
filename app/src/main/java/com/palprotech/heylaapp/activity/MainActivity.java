@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Context context;
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
-
+    private String isMenuEnable = "yes";
 
     //Linear layout holding the Save submenu
     private LinearLayout layoutFabMapview;
@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             newFragment = new HotspotFragment();
         } else if (position == 3) {
             newFragment = new LeaderboardFragment();
+            isMenuEnable = "no";
         }
 
         getFragmentManager().beginTransaction().replace(
@@ -143,6 +144,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_landing, menu);
+
+        /*if (isMenuEnable.equalsIgnoreCase("no")) {
+            menu.findItem(R.id.action_filter).setVisible(false);
+            menu.findItem(R.id.action_search_view).setVisible(false);
+        }*/
        /* SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
         mSearchView =

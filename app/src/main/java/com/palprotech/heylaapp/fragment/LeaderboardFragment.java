@@ -37,7 +37,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         rootView = inflater.inflate(R.layout.fragment_leaderboard, container, false);
 
         initializeViews();
-
+        setHasOptionsMenu(true);
 
         return rootView;
     }
@@ -74,10 +74,11 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        if (menu != null) {
+            menu.findItem(R.id.action_filter).setVisible(false);
+            menu.findItem(R.id.action_search_view).setVisible(false);
+        }
         super.onCreateOptionsMenu(menu, inflater);
-        inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.menu_landing, menu);
-        menu.findItem(R.id.action_filter);
-        menu.findItem(R.id.action_search_view);
     }
 }

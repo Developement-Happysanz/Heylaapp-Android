@@ -8,9 +8,12 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Narendar on 24/10/17.
@@ -27,6 +30,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout vAboutUs;
     private RelativeLayout vRateUs;
     private RelativeLayout vSignOut;
+    private ImageView vUserImage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,13 +52,19 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         vRateUs.setOnClickListener(this);
         vSignOut = (RelativeLayout) findViewById(R.id.sign_out_img);
         vSignOut.setOnClickListener(this);
+        vUserImage = (ImageView) findViewById(R.id.profile_img);
+        vUserImage.setOnClickListener(this);
+        String url = PreferenceStorage.getUserPicture(this);
+        if (((url != null) && !(url.isEmpty()))) {
+            Picasso.with(this).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(vUserImage);
+        }
     }
 
     @Override
     public void onClick(View v) {
         if (v == vBooking) {
-            Intent homeIntent = new Intent(getApplicationContext(), BookingActivity.class);
-            startActivity(homeIntent);
+            /*Intent homeIntent = new Intent(getApplicationContext(), BookingActivity.class);
+            startActivity(homeIntent);*/
         }
         if (v == vCategory) {
             Intent homeIntent = new Intent(getApplicationContext(), SetUpPreferenceActivity.class);
@@ -69,8 +79,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 //            startActivity(homeIntent);
         }
         if (v == vShare) {
-            Intent homeIntent = new Intent(getApplicationContext(), BookingActivity.class);
-            startActivity(homeIntent);
+            Intent i = new Intent(android.content.Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share");
+            i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey! Get Heyla app and win some exciting rewards. https://goo.gl/JTmdEX");
+            startActivity(Intent.createChooser(i, "Share via"));
         }
         if (v == vAboutUs) {
 //            Intent homeIntent = new Intent(getApplicationContext(), BookingActivity.class);
@@ -83,6 +96,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (v == vSignOut) {
             doLogout();
+        }
+        if (v == vUserImage) {
+            Intent homeIntent = new Intent(getApplicationContext(), ProfileActivity.class);
+            startActivity(homeIntent);
         }
     }
 
