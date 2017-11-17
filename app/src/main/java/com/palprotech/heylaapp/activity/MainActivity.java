@@ -1,24 +1,20 @@
 package com.palprotech.heylaapp.activity;
 
 import android.app.Fragment;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,8 +30,6 @@ import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 
 import org.json.JSONObject;
-
-import java.lang.reflect.Field;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, DialogClickListener, IServiceListener {
@@ -248,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // Toast.makeText(this, "advance filter clicked", Toast.LENGTH_SHORT).show();
                 Context appContext = this;
 
-                startActivity(new Intent(MainActivity.this, SelectCityActivity.class));
+                startActivity(new Intent(MainActivity.this, AdvanceFilterActivity.class));
 
             default:
                 return super.onOptionsItemSelected(item);
