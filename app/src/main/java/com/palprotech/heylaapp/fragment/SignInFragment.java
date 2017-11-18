@@ -18,7 +18,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.CallbackManager;
@@ -40,7 +39,6 @@ import com.google.android.gms.common.api.Status;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.ForgotPasswordActivity;
 import com.palprotech.heylaapp.activity.LoginActivity;
-import com.palprotech.heylaapp.activity.MainActivity;
 import com.palprotech.heylaapp.activity.SelectCityActivity;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
@@ -69,8 +67,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
     private CheckBox saveLoginCheckBox;
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
-    private TextView forgotPassword;
-    private ImageView btnFacebook, btnGoogle;
+    private TextView forgotPassword, btnGoogle, btnFacebook;
     private static final int RC_SIGN_IN = 9001;
     private int mSelectedLoginMode = 0;
     private GoogleApiClient mGoogleApiClient;

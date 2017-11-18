@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:background="@drawable/bg_one"
+        android:background="@drawable/bg_onee"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -132,7 +132,7 @@
                             android:layout_height="45dp"
                             android:layout_alignEnd="@+id/category_txt"
                             android:layout_alignStart="@+id/category_txt"
-                            android:src="@drawable/ic_menu_category" />
+                            android:src="@drawable/ic_category" />
 
                         <TextView
                             android:id="@+id/category_txt"
@@ -140,7 +140,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/category"
                             android:layout_marginTop="5dp"
-                            android:text="Category"
+                            android:text="Preference"
                             android:textColor="@color/white" />
 
                     </RelativeLayout>

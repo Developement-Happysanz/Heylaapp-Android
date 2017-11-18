@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="vertical">
+    android:scrollbars="vertical"
+    android:background="@color/background_grey">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -99,21 +100,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <ImageView
+            <TextView
                 android:id="@+id/login_using_fb"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/ic_login_facebook" />
+                android:drawableLeft="@drawable/ic_fb_login"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Connect with Facebook"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/btn_square_facebook"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:textSize="15sp"
+                android:paddingEnd="8dp"/>
 
-            <ImageView
+            <TextView
                 android:id="@+id/login_using_gplus"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:src="@drawable/ic_login_google_plus" />
+                android:drawableLeft="@drawable/ic_btn_google_light_normal_ios"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Connect with Google"
+                android:gravity="center"
+                android:background="@drawable/btn_google_sign_in"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:textSize="15sp"
+                android:paddingEnd="8dp"/>
+
+            <!--<ImageView-->
+                <!--android:id="@+id/login_using_fb"-->
+                <!--android:layout_width="45dp"-->
+                <!--android:layout_height="45dp"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:src="@drawable/ic_login_facebook" />-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/login_using_gplus"-->
+                <!--android:layout_width="45dp"-->
+                <!--android:layout_height="45dp"-->
+                <!--android:src="@drawable/ic_login_google_plus" />-->
 
         </LinearLayout>
 

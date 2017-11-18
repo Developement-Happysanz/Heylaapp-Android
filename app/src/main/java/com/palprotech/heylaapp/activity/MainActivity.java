@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setSupportActionBar(toolbar);
 
-        toolbar.setNavigationIcon(R.drawable.ic_side_menu);
+        toolbar.setNavigationIcon(R.drawable.ic_sidemenu);
         toolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {
                     @Override

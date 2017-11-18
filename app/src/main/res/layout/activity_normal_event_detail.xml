@@ -95,7 +95,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/round_btn_nocolor">
+                android:background="@drawable/btn_round_nocolor">
 
                 <RelativeLayout
                     android:id="@+id/addresslayout"
@@ -224,7 +224,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/round_btn_nocolor"
+                android:background="@drawable/btn_round_nocolor"
                 android:orientation="vertical">
 
                 <TextView
@@ -258,7 +258,7 @@
 
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/round_btn_nocolor"
+                android:background="@drawable/btn_round_nocolor"
                 android:orientation="vertical">
 
                 <TextView
@@ -281,7 +281,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/round_btn_nocolor">
+                android:background="@drawable/btn_round_nocolor">
 
                 <TextView
                     android:id="@+id/orgtitle"
@@ -458,39 +458,80 @@
     <RelativeLayout
         android:id="@+id/bookingbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@color/appColorBase"
         android:orientation="horizontal">
 
-        <ImageView
+        <TextView
             android:id="@+id/live_chat"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
             android:layout_marginStart="10dp"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/ic_review" />
+            android:text="Live Chat" />
 
-        <ImageView
+        <TextView
             android:id="@+id/checkin"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_checkin_white" />
+            android:text="Check-In" />
 
-        <ImageView
+        <TextView
             android:id="@+id/book_tickets"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
             android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_booknow_white" />
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text="Book" />
+
+        <!--<ImageView-->
+            <!--android:id="@+id/live_chat"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:paddingStart="5dp"-->
+            <!--android:paddingEnd="5dp"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:src="@drawable/ic_review" />-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/checkin"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:paddingStart="5dp"-->
+            <!--android:paddingEnd="5dp"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:src="@drawable/ic_checkin_white" />-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/book_tickets"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:paddingStart="5dp"-->
+            <!--android:paddingEnd="5dp"-->
+            <!--android:layout_marginEnd="10dp"-->
+            <!--android:src="@drawable/ic_booknow_white" />-->
 
 
     </RelativeLayout>

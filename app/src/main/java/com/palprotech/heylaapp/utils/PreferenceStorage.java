@@ -620,4 +620,34 @@ public class PreferenceStorage {
     }
     /*End*/
 
+    public static String getFilterCity(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String userId = sharedPreferences.getString(HeylaAppConstants.FILTERCITY, "");
+        return userId;
+    }
+
+    public static void saveFilterCitySelection(Context context, int index) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(HeylaAppConstants.FILTERCITYINDEX, index);
+        editor.commit();
+    }
+
+    public static void saveFilterCatgry(Context context, String singledate) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.FILTERCAT, singledate);
+        editor.commit();
+    }
+
+    public static String getFilterCatgry(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String userId = sharedPreferences.getString(HeylaAppConstants.FILTERCAT, "");
+        return userId;
+    }
+
 }

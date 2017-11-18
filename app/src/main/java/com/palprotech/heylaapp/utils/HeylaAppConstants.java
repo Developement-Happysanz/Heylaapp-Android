@@ -188,4 +188,15 @@ public class HeylaAppConstants {
     public static String ALERT_DIALOG_INPUT_HINT = "alert_dialog_input_hint";
     public static String ALERT_DIALOG_POS_BUTTON = "alert_dialog_pos_button";
     public static String ALERT_DIALOG_NEG_BUTTON = "alert_dialog_neg_button";
+
+
+    public static final String FROMDATE = "fromdate";
+    public static final String TODATE = "todate";
+    public static final String FILTERCITY = "filtercity";
+    public static final String FILTEREVENTTYPE = "filtereventtype";
+    public static final String FILTEREVENTTYPECATEGORY = "filtereventtypecategory";
+    public static final String FILTERCAT = "filtercat";
+    public static final String FILTERCITYINDEX = "filtercityindex";
+    public static final String FILTEREVENTTYPEINDEX = "filtereventtypeindex";
+    public static final String FILTEREVENTTYPECATEGORYINDEX = "filtereventtypecategoryindex";
 }
