@@ -9,12 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -22,7 +21,6 @@ import com.google.gson.reflect.TypeToken;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.adapter.PreferenceListAdapter;
 import com.palprotech.heylaapp.bean.support.Category;
-import com.palprotech.heylaapp.bean.support.EventCities;
 import com.palprotech.heylaapp.bean.support.Preference;
 import com.palprotech.heylaapp.bean.support.SetCategory;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
@@ -42,8 +40,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Admin on 06-11-2017.
@@ -62,7 +58,8 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
     private boolean selval = false;
     private ImageView PrefSelect;
     int pos;
-    private TextView txtGetStarted, txtSelect, txtSelectAll;
+    private TextView txtGetStarted, txtSelect;
+    private CheckBox txtSelectAll;
     HashSet<String> hashSet;
     private String responseActivity = "";
 
@@ -74,7 +71,7 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
         txtGetStarted = (TextView) findViewById(R.id.text_getStarted);
         txtGetStarted.setOnClickListener(this);
         txtSelect = (TextView) findViewById(R.id.text_select);
-        txtSelectAll = (TextView) findViewById(R.id.checkBox);
+        txtSelectAll = findViewById(R.id.checkBox);
         txtSelectAll.setOnClickListener(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_categories);
         PrefSelect = (ImageView) findViewById(R.id.pref_tick);
@@ -340,6 +337,7 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
                     tag.setCategoryPreference("Y");
                     preferenceAdatper.notifyDataSetChanged();
                 }
+
             } else {
                 selval = false;
                 for (pos = 0; pos < categoryArrayList.size(); pos++) {

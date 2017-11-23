@@ -3,11 +3,9 @@ package com.palprotech.heylaapp.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,6 +14,7 @@ import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.LeaderboardStatistics;
+import com.palprotech.heylaapp.activity.ProfileActivity;
 import com.palprotech.heylaapp.customview.CircleImageView;
 
 /**
@@ -66,6 +65,12 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         if (view == viewFullStatistics) {
             Intent homeIntent = new Intent(getActivity(), LeaderboardStatistics.class);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+            getActivity().finish();
+        }
+        else if (view == profileImg) {
+            Intent homeIntent = new Intent(getActivity(), ProfileActivity.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
             getActivity().finish();

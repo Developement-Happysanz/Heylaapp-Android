@@ -58,6 +58,12 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         if (((url != null) && !(url.isEmpty()))) {
             Picasso.with(this).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(vUserImage);
         }
+        findViewById(R.id.menu_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

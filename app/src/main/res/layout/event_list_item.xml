@@ -90,17 +90,16 @@
                     android:layout_below="@+id/txt_event_name"
                     android:layout_gravity="center"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
                     android:layout_toEndOf="@id/txt_event_location"
                     android:drawablePadding="5dp"
-                    android:drawableStart="@drawable/ic_location"
                     android:ellipsize="end"
-                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="Paid"
-                    android:textColor="@android:color/white"
-                    android:textSize="11dp" />
+                    android:textColor="@color/appColorBase"
+                    android:textSize="12dp" />
 
                 <Button
                     android:id="@+id/event_paid_btn"

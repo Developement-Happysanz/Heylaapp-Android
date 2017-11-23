@@ -18,14 +18,6 @@
         android:textColor="@android:color/white"
         android:textSize="19sp" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/listView_categories"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="1dp" />
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,5 +52,13 @@
             android:textSize="16sp" />
 
     </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listView_categories"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="1dp" />
+
 
 </LinearLayout>

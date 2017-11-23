@@ -2,6 +2,7 @@ package com.palprotech.heylaapp.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -16,14 +17,24 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.bean.support.Category;
 import com.palprotech.heylaapp.bean.support.StoreCity;
+import com.palprotech.heylaapp.helper.AlertDialogHelper;
+import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
+import com.palprotech.heylaapp.utils.CommonUtils;
+import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -35,26 +46,32 @@ import java.util.HashSet;
 public class AdvanceFilterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, IServiceListener {
     private static final String TAG = AdvanceFilterActivity.class.getName();
 
+
+    String cityId = "";
+    String preferenceId = "";
+
+
+    private String checkState = "";
     String singleDate = "";
     boolean todayPressed = false, tomorrowPressed = false, datePressed = false;
-    EditText eventTypeList, eventPreferenceList, eventCategoryList, selectCityList; //spincity
-    private ArrayList<String> selecteditemIndexList;
+    EditText eventTypeList, eventPreferenceList, eventCategoryList, txtCityDropDown; //spincity
+
     AlertDialog.Builder builder;
     StringBuilder sb;
+
+    ArrayAdapter<Category> mPreferenceAdapter = null;
+    ArrayList<Category> PreferenceList;
+
     ArrayAdapter<StoreCity> mCityAdapter = null;
     ArrayList<StoreCity> cityList;
-    private EditText txtCityDropDown;
+
+    private ProgressDialog mProgressDialog = null;
+    private ProgressDialogHelper progressDialogHelper;
 
     private Activity activity;
     private boolean isdoneclick = false;
-    String[] categoryarray = {"Sports & Fitness", "Spirituality", "Lifestyle", "Government", "Travel & Adventure", "Charity", "Health", "Entertainment", "Training / Workshop"
-            , "Entertainment", "Training / Workshop", "Others"
-    };
-    boolean[] isSelectedArray = {
-            false, false, false, false, false, false, false, false, false, false, false, false
-    };
+
     DatePickerDialog mFromDatePickerDialog = null;
-    private ArrayList<String> categoryArrayList = new ArrayList<String>();
     private ServiceHelper serviceHelper;
     HashSet<Integer> mSelectedCategoryList = new HashSet<Integer>();
     private String mFromDateVal = null;
@@ -69,151 +86,34 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
     }
 
     private void iniView() {
+
+        serviceHelper = new ServiceHelper(this);
+        serviceHelper.setServiceListener(this);
 //        getSupportActionBar().hide();
+        eventTypeList = findViewById(R.id.eventTypeList);
+        eventTypeList.setOnClickListener(this);
+        eventTypeList.setFocusable(false);
+        eventCategoryList = findViewById(R.id.eventCategoryList);
+        eventCategoryList.setOnClickListener(this);
+        eventCategoryList.setFocusable(false);
+        eventPreferenceList = findViewById(R.id.eventPreferenceList);
+        eventPreferenceList.setOnClickListener(this);
+        eventPreferenceList.setFocusable(false);
+        txtCityDropDown = findViewById(R.id.selectCityList);
+        txtCityDropDown.setOnClickListener(this);
+        txtCityDropDown.setFocusable(false);
+
         findViewById(R.id.btnselectdate).setOnClickListener(this);
         findViewById(R.id.btntomorrow).setOnClickListener(this);
         findViewById(R.id.btntoday).setOnClickListener(this);
-        eventPreferenceList = findViewById(R.id.eventPreferenceList);
-        eventPreferenceList.setOnClickListener(this);
-        String storedPreference = PreferenceStorage.getFilterCatgry(this);
-        if ((storedPreference != null) && !(storedPreference.isEmpty())) {
-            eventPreferenceList.setText(storedPreference);
-        }
-        cityList = new ArrayList<>();
-        //cityList.add("Coimbatore");
-//        new FetchCity().execute();
-        activity = this;
-        txtCityDropDown = findViewById(R.id.selectCityList);
-        txtCityDropDown.setOnClickListener(this);
-//        spincity = (Spinner) findViewById(R.id.cityspinner);
-        mCityAdapter = new ArrayAdapter<StoreCity>(getApplicationContext(), R.layout.gender_layout, R.id.gender_name, cityList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                Log.d(TAG, "getview called" + position);
-                View view = getLayoutInflater().inflate(R.layout.gender_layout, parent, false);
-                TextView gendername = (TextView) view.findViewById(R.id.gender_name);
-                gendername.setText(cityList.get(position).getCityName());
 
-                // ... Fill in other views ...
-                return view;
-            }
-        };
-//        spincity.setOnItemSelectedListener(this);
-        //ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, R.layout.spinner_item_ns, getResources().getStringArray(R.array.india_top_places));
-//        spincity.setAdapter(citySpinnerAdapter);
-//        int index = PreferenceStorage.getFilterCityIndex(this);
-//        if((index >=0) && index < (getResources().getStringArray(R.array.india_top_places).length)){
-//            spincity.setSelection(index);
-//        }
-//        String cityName = PreferenceStorage.getUserCity(this);
-//        if ((cityName != null) && !cityName.isEmpty()) {
-//            txtCityDropDown.setText(cityName);
-//        }
-//        spinEventType = (Spinner) findViewById(R.id.eventtypespinner);
-//        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, R.layout.spinner_item_ns, getResources().getStringArray(R.array.events_type));
-//        spinEventType.setAdapter(dataAdapter2);
-//        int index1 = PreferenceStorage.getFilterEventTypeIndex(this);
-//        if ((index1 >= 0) && index1 < (getResources().getStringArray(R.array.events_type).length)) {
-//            spinEventType.setSelection(index1);
-//        }
-//
-//        spinEventType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                String item = parent.getItemAtPosition(position).toString();
-//                PreferenceStorage.saveFilterEventTypeSelection(getApplicationContext(), position);
-//                //Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//
-//        spinEventTypeCategory = (Spinner) findViewById(R.id.eventtypespinnercategory);
-//        ArrayAdapter<String> dataAdapter3 = new ArrayAdapter<String>(this, R.layout.spinner_item_ns, getResources().getStringArray(R.array.events_type_category));
-//        spinEventTypeCategory.setAdapter(dataAdapter3);
-//        int index2 = PreferenceStorage.getFilterEventTypeCategoryIndex(this);
-//        if ((index2 >= 0) && index2 < (getResources().getStringArray(R.array.events_type_category).length)) {
-//            spinEventTypeCategory.setSelection(index1);
-//        }
-//
-//        spinEventTypeCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                String item = parent.getItemAtPosition(position).toString();
-//                PreferenceStorage.saveFilterEventTypeCategorySelection(getApplicationContext(), position);
-//                //Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+        GetPreferences();
+
 
         DatePickerSelection();
         findViewById(R.id.btnapply).setOnClickListener(this);
         findViewById(R.id.btncancel).setOnClickListener(this);
-//        fetchCategoryValues();
-
-//        categoryAdapter = new ArrayAdapter<String>(this, R.layout.category_list_item, R.id.category_list_name, categoryArrayList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup parent) {
-//                Log.d(TAG, "getview called" + position);
-//                View view = getLayoutInflater().inflate(R.layout.category_list_item, parent, false);
-//                TextView name = (TextView) view.findViewById(R.id.category_list_name);
-//                name.setText(categoryArrayList.get(position));
-//
-//                CheckBox checkbox = (CheckBox) view.findViewById(R.id.item_selection);
-//                checkbox.setTag(Integer.toString(position));
-//                if (mSelectedCategoryList.contains(position)) {
-//                    checkbox.setChecked(true);
-//                } else {
-//                    checkbox.setChecked(false);
-//                }
-//                checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                    @Override
-//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                        String tag = (String) buttonView.getTag();
-//                        if (tag != null) {
-//                            int index = Integer.parseInt(tag);
-//                            if (mSelectedCategoryList.contains(index)) {
-//                                mSelectedCategoryList.remove(index);
-//                            } else {
-//                                mSelectedCategoryList.add(index);
-//                            }
-//
-//                        }
-//                    }
-//                });
-//
-//                // ... Fill in other views ...
-//                return view;
-//            }
-//        };
-
-//        PreferenceStorage.saveFilterCatgry(this, "");
-//        PreferenceStorage.IsFilterApply(this, false);
-//        PreferenceStorage.saveFilterCity(this, "");
-//        PreferenceStorage.saveFilterFromDate(this, "");
-//        PreferenceStorage.saveFilterToDate(this, "");
-//        PreferenceStorage.saveFilterSingleDate(this, "");
     }
-
-//    private void fetchCategoryValues() {
-//        categoryServiceHelper = new CategoryServiceHelper(this);
-//        categoryServiceHelper.setCategoryServiceListener(this);
-//        JSONObject jsonObject = new JSONObject();
-//        try {
-//            jsonObject.put(FindAFunConstants.PARAMS_FUNC_NAME, "category_list");
-//            jsonObject.put(FindAFunConstants.PARAMS_USER_ID, PreferenceStorage.getUserId(this));
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        categoryServiceHelper.makeGetCategoryServiceCall(jsonObject);
-//    }
 
     private void DatePickerSelection() {
         final Calendar c = Calendar.getInstance();
@@ -350,12 +250,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
     private static String formatDateServer(int year, int month, int day) {
 
-            /*Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(0);
-            cal.set(year, month, day);
-            Date date = cal.getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-mmm-yyyy");
-            return sdf.format(date);*/
         String formattedDay = "", formattedMonth = "";
         month = month + 1;
         if (day < 10) {
@@ -375,12 +269,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
     private static String formatDate(int year, int month, int day) {
 
-            /*Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(0);
-            cal.set(year, month, day);
-            Date date = cal.getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-mmm-yyyy");
-            return sdf.format(date);*/
         String formattedDay = "", formattedMonth = "";
         month = month + 1;
         if (day < 10) {
@@ -401,8 +289,29 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
     @Override
     public void onClick(View v) {
 
-        if (v == selectCityList) {
-//            showCityList();
+        if (v == eventTypeList) {
+
+            checkState = "type";
+
+        }
+
+        if (v == eventCategoryList) {
+
+            checkState = "category";
+
+        }
+
+        if (v == eventPreferenceList) {
+            showPreferenceList();
+            checkState = "preference";
+
+        }
+
+        if (v == txtCityDropDown) {
+            GetEventCities();
+            showCityList();
+            checkState = "city";
+
         }
 
         switch (v.getId()) {
@@ -525,323 +434,197 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 break;
             case R.id.btnapply:
                 findViewById(R.id.btnapply).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-//////                String eventType = spinEventType.getSelectedItem().toString();
-//////                String eventTypeCategory = spinEventTypeCategory.getSelectedItem().toString();
-//////                String city = txtCityDropDown.getText().toString();
-////////                String city = spincity.getSelectedItem().toString();
-//////                String catgry = spincat.getText().toString();
-//////                String fromdate = ((Button) findViewById(R.id.btnfrom)).getText().toString();
-//////                String todate = ((Button) findViewById(R.id.btnto)).getText().toString();
-//////                if (!singleDate.equalsIgnoreCase("") && singleDate != null) {
-//////                    PreferenceStorage.IsFilterApply(this, true);
-//////                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
-//////                    //  Toast.makeText(this, "Filter applied", Toast.LENGTH_SHORT).show();
-//////                    PreferenceStorage.saveFilterFromDate(this, "");
-//////                    PreferenceStorage.saveFilterToDate(this, "");
-//////                    if (!city.equalsIgnoreCase("Select Your City")) {
-//////                        PreferenceStorage.saveFilterCity(this, city);
-//////                    }
-//////                    //if (!eventType.equalsIgnoreCase("Select Your Event Type")) {
-//////                    PreferenceStorage.saveFilterEventType(this, eventType);
-//////                    PreferenceStorage.saveFilterEventTypeCategory(this, eventTypeCategory);
-//////
-//////                    //}
-//////                    if (!catgry.equalsIgnoreCase("Select Category")) {
-//////                        PreferenceStorage.saveFilterCatgry(this, catgry);
-//////                    }
-//////
-//////                    startActivity(new Intent(AdvanceFilterActivity.this, AdvanceFilterActivity.class));
-//////                    //finish();
-//////                } else if (fromdate.trim().length() > 0 || todate.trim().length() > 0) {
-//////                    singleDate = "";
-//////                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
-//////                    PreferenceStorage.IsFilterApply(this, true);
-//////
-//////                    if (fromdate.equalsIgnoreCase("")) {
-//////                        Toast.makeText(this, "Select From Date", Toast.LENGTH_SHORT).show();
-//////                    } else if (todate.equalsIgnoreCase("")) {
-//////                        Toast.makeText(this, "Select To Date", Toast.LENGTH_SHORT).show();
-//////                    } else {
-//////
-//////                        PreferenceStorage.saveFilterFromDate(this, mFromDateVal);
-//////                        PreferenceStorage.saveFilterToDate(this, mTodateVal);
-//////                        if (!city.equalsIgnoreCase("Select Your City")) {
-//////                            PreferenceStorage.saveFilterCity(this, city);
-//////                        }
-//////                        PreferenceStorage.saveFilterEventType(this, eventType);
-//////                        PreferenceStorage.saveFilterEventTypeCategory(this, eventTypeCategory);
-//////
-//////                        if (!catgry.equalsIgnoreCase("Select Category")) {
-//////                            PreferenceStorage.saveFilterCatgry(this, catgry);
-//////                        }
-//////                        startActivity(new Intent(AdvanceFilterActivity.this, AdvanceFilterActivity.class));
-//////                        //finish();
-//////                    }
-//////
-//////                } else if (!city.equalsIgnoreCase("Select Your City") || !catgry.equalsIgnoreCase("Select Category")) {
-//////                    PreferenceStorage.IsFilterApply(this, true);
-//////                    singleDate = "";
-//////                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
-//////                    if (!city.equalsIgnoreCase("Select Your City")) {
-//////                        PreferenceStorage.saveFilterCity(this, city);
-//////                    }
-//////
-//////                    PreferenceStorage.saveFilterEventType(this, eventType);
-//////                    PreferenceStorage.saveFilterEventTypeCategory(this, eventTypeCategory);
-////
-////                    if (!catgry.equalsIgnoreCase("Select Category")) {
-////                        PreferenceStorage.saveFilterCatgry(this, catgry);
-////                    }
-////                    startActivity(new Intent(AdvanceFilterActivity.this, AdvanceFilterActivity.class));
-////                    //finish();
-////                } else {
-////                    Toast.makeText(AdvanceFilterActivity.this, "select any criteria", Toast.LENGTH_SHORT).show();
-////                }
-////
-////                break;
-////            case R.id.btncancel:
-////                findViewById(R.id.btncancel).setBackgroundResource(R.drawable.bg_advance_filter_orange);
-////                findViewById(R.id.btnapply).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-////                finish();
-////                break;
-////            case R.id.catgoryspinner:
-////                AlertDialog.Builder builder = new AlertDialog.Builder(AdvanceFilterActivity.this);
-////                sb = new StringBuilder();
-////                // String array for alert dialog multi choice items
-////
-////                final AlertDialog dialog = new AlertDialog.Builder(this)
-////                        .setTitle("Select Category")
-////                        .setAdapter(categoryAdapter, null)
-////                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-////                            @Override
-////                            public void onClick(DialogInterface dialog, int which) {
-////                                //fetch all the selected category'
-////                                int ival = 0;
-////                                for (Integer i : mSelectedCategoryList) {
-////                                    String name = categoryArrayList.get(i);
-////                                    if (ival == 0) {
-////                                        sb = sb.append(name);
-////                                    } else {
-////                                        sb = sb.append("," + name);
-////                                    }
-////                                    ival++;
-////                                }
-////                                spincat.setText(sb.toString());
-////                            }
-////                        })
-////                        .setNegativeButton("Cancel", null)
-////                        .create();
-////
-////                dialog.getListView().setItemsCanFocus(false);
-////                dialog.getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-////                dialog.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-////                    @Override
-////                    public void onItemClick(AdapterView<?> parent, View view,
-////                                            int position, long id) {
-////                        Log.d(TAG, "Item clicked");
-////
-////                    }
-////                });
-////
-////                dialog.show();
-////
-////                /*// Convert the color array to list
-////                final List<String> colorsList = Arrays.asList(categoryarray);
-////
-////
-////                builder.setMultiChoiceItems(categoryarray, isSelectedArray, new DialogInterface.OnMultiChoiceClickListener() {
-////                    @Override
-////                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-////
-////                        // Update the current focused item's checked status
-////                        isSelectedArray[which] = isChecked;
-////
-////                        // Get the current focused item
-////                        String currentItem = colorsList.get(which);
-////
-////                        // Notify the current action
-////
-////                    }
-////                });*/
-////
-////               /* // Specify the dialog is not cancelable
-////                builder.setCancelable(false);
-////
-////                // Set a title for alert dialog
-////                builder.setTitle("Select Category");
-////
-////                // Set the positive/yes button click listener
-////                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-////                    @Override
-////                    public void onClick(DialogInterface dialog, int which) {
-////                        // Do something when click positive button
-////                        for (int i = 0; i < isSelectedArray.length; i++) {
-////                            boolean checked = isSelectedArray[i];
-////                            if (checked) {
-////                                sb = sb.append("," + categoryarray[i]);
-////                            }
-////                        }
-////                        sb = sb.deleteCharAt(0);
-////                        spincat.setText(sb.toString());
-////                    }
-////                });
-////
-////                // Set the negative/no button click listener
-////                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-////                    @Override
-////                    public void onClick(DialogInterface dialog, int which) {
-////                        // Do something when click the negative button
-////                        dialog.dismiss();
-////                    }
-////                });
-////
-////
-////                AlertDialog dialog = builder.create();
-////                // Display the alert dialog on interface
-////                dialog.show();*/
-////                break;
-////            case R.id.btn_city_drop_down:
-////                Log.d(TAG, "Available cities count" + citySpinnerAdapter.getCount());
-////                AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-////                View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
-////                TextView header = (TextView) view.findViewById(R.id.gender_header);
-////                header.setText("Select City");
-////                builderSingle.setCustomTitle(view);
-////
-////                builderSingle.setAdapter(citySpinnerAdapter, new DialogInterface.OnClickListener() {
-////
-////                    @Override
-////                    public void onClick(DialogInterface dialog, int which) {
-////                        txtCityDropDown.setText(citySpinnerAdapter.getItem(which).toString());
-////                        txtCityDropDown.clearComposingText();
-////                        dialog.dismiss();
-////                    }
-////                }).create().show();
-////                break;
-////
-////        }
-////
-////    }
-//
-//    @Override
-//    public void onResponse(JSONObject response) {
-//
-//    }
-//
-//    @Override
-//    public void onError(String error) {
-//
-//    }
-//
-//    private class FetchCity extends AsyncTask<String, Void, String> {
-//        @Override
-//        protected String doInBackground(String... params) {
-//            final String url = HeylaAppConstants.GET_CITY_URL;
-//            Log.d(TAG, "fetch city list URL");
-//
-//            new Thread() {
-//                public void run() {
-//                    String in = null;
-//                    try {
-//                        in = openHttpConnection(url);
-//                        JSONArray jsonArray = new JSONArray(in);
-//
-//                        for (int i = 0; i < jsonArray.length(); i++) {
-//                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                            cityList.add(jsonObject.getString("city_name"));
-//                        }
-//                        Log.d(TAG, "Received city list" + jsonArray.length());
-//                    } catch (Exception e1) {
-//                        e1.printStackTrace();
-//                    }
-//
-//                }
-//            }.start();
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//            citySpinnerAdapter = new CitySpinnerAdapter(activity, android.R.layout.simple_spinner_dropdown_item, cityList);
-//        }
-//
-//        @Override
-//        protected void onPreExecute() {
-//        }
-//
-//        @Override
-//        protected void onProgressUpdate(Void... values) {
-//        }
-//    }
-//
-//    private String openHttpConnection(String urlStr) {
-//        InputStream in = null;
-//        StringBuilder sb = new StringBuilder();
-//        int resCode = -1;
-//
-//        try {
-//            URL url = new URL(urlStr);
-//            URLConnection urlConn = url.openConnection();
-//
-//            if (!(urlConn instanceof HttpURLConnection)) {
-//                throw new IOException("URL is not an Http URL");
-//            }
-//            HttpURLConnection httpConn = (HttpURLConnection) urlConn;
-//            httpConn.setAllowUserInteraction(false);
-//            httpConn.setInstanceFollowRedirects(true);
-//            httpConn.setRequestMethod("GET");
-//            httpConn.connect();
-//            resCode = httpConn.getResponseCode();
-//
-//            if (resCode == HttpURLConnection.HTTP_OK) {
-//                in = httpConn.getInputStream();
-//
-//                BufferedReader br = new BufferedReader(new InputStreamReader(in));
-//                String read;
-//
-//                while ((read = br.readLine()) != null) {
-//                    //System.out.println(read);
-//                    sb.append(read);
-//                }
-//            }
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return sb.toString();
-//    }
-
-//    private void showCityList() {
-//        Log.d(TAG, "Show city list");
-//        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-//        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
-//        TextView header = (TextView) view.findViewById(R.id.gender_header);
-//        header.setText("Select City");
-//        builderSingle.setCustomTitle(view);
-//
-//        builderSingle.setAdapter(mCityAdapter,
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        StoreCity cty = cityList.get(which);
-//                        selectCityList.setText(cty.getCityName());
-//                        cityId = cty.getCityId();
-//                    }
-//                });
-//        builderSingle.show();
-//    }
         }
+    }
+
+    private void GetPreferences() {
+        if (CommonUtils.isNetworkAvailable(this)) {
+            checkState = "preference";
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+                jsonObject.put(HeylaAppConstants.KEY_USER_TYPE, PreferenceStorage.getUserType(getApplicationContext()));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_PREFERENCES_LIST;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+        }
+    }
+
+    private void showPreferenceList() {
+
+        Log.d(TAG, "Show city list");
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
+        TextView header = (TextView) view.findViewById(R.id.gender_header);
+        header.setText("Select City");
+        builderSingle.setCustomTitle(view);
+
+        builderSingle.setAdapter(mPreferenceAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Category category = PreferenceList.get(which);
+                        eventPreferenceList.setText(category.getCategory());
+                        preferenceId = category.getId();
+                    }
+                });
+        builderSingle.show();
+    }
+
+    private void showCityList() {
+
+        Log.d(TAG, "Show city list");
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
+        TextView header = (TextView) view.findViewById(R.id.gender_header);
+        header.setText("Select City");
+        builderSingle.setCustomTitle(view);
+
+        builderSingle.setAdapter(mCityAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        StoreCity cty = cityList.get(which);
+                        txtCityDropDown.setText(cty.getCityName());
+                        cityId = cty.getCityId();
+                    }
+                });
+        builderSingle.show();
+    }
+
+    private void GetEventCities() {
+
+        checkState = "city";
+
+        if (CommonUtils.isNetworkAvailable(this)) {
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_CITY_LIST;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+        }
+    }
+
+    private boolean validateSignInResponse(JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(HeylaAppConstants.PARAM_MESSAGE);
+                Log.d(TAG, "status val" + status + "msg" + msg);
+
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        Log.d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                    } else {
+                        signInSuccess = true;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return signInSuccess;
     }
 
     @Override
     public void onResponse(JSONObject response) {
 
+        if (mProgressDialog != null) {
+            mProgressDialog.cancel();
+        }
+
+        try {
+            if (validateSignInResponse(response)) {
+
+                if (checkState.equalsIgnoreCase("preference")) {
+                    try {
+                        JSONArray getData = response.getJSONArray("Categories");
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<ArrayList<Category>>() {
+                        }.getType();
+                        PreferenceList = (ArrayList<Category>) gson.fromJson(getData.toString(), listType);
+                        mPreferenceAdapter = new ArrayAdapter<Category>(getApplicationContext(), R.layout.gender_layout, R.id.gender_name, PreferenceList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
+                            @Override
+                            public View getView(int position, View convertView, ViewGroup parent) {
+                                Log.d(TAG, "getview called" + position);
+                                View view = getLayoutInflater().inflate(R.layout.gender_layout, parent, false);
+                                TextView gendername = (TextView) view.findViewById(R.id.gender_name);
+                                gendername.setText(PreferenceList.get(position).getCategory());
+                                return view;
+                            }
+                        };
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (checkState.equalsIgnoreCase("city")) {
+
+                    JSONArray getData = response.getJSONArray("Cities");
+                    int getLength = getData.length();
+                    String cityId = "";
+                    String cityName = "";
+                    cityList = new ArrayList<>();
+
+                    for (int i = 0; i < getLength; i++) {
+
+                        cityId = getData.getJSONObject(i).getString("id");
+                        cityName = getData.getJSONObject(i).getString("city_name");
+
+                        cityList.add(new StoreCity(cityId, cityName));
+                    }
+
+                    //fill data in spinner
+                    mCityAdapter = new ArrayAdapter<StoreCity>(getApplicationContext(), R.layout.gender_layout, R.id.gender_name, cityList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
+                        @Override
+                        public View getView(int position, View convertView, ViewGroup parent) {
+                            Log.d(TAG, "getview called" + position);
+                            View view = getLayoutInflater().inflate(R.layout.gender_layout, parent, false);
+                            TextView gendername = (TextView) view.findViewById(R.id.gender_name);
+                            gendername.setText(cityList.get(position).getCityName());
+
+                            // ... Fill in other views ...
+                            return view;
+                        }
+                    };
+
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onError(String error) {
-
+        if (mProgressDialog != null) {
+            mProgressDialog.cancel();
+        }
+        progressDialogHelper.hideProgressDialog();
+        AlertDialogHelper.showSimpleAlertDialog(this, "Error saving your profile. Try again");
     }
 }
 
