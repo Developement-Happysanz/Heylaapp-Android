@@ -8,7 +8,7 @@ public class HeylaAppConstants {
 
     //    URLS
     //    BASE URL
-    public static final String BASE_URL = "http://heylaapp.com/heyla/";
+    public static final String BASE_URL = "http://heylaapp.com/";
 
     //    SignUp
     public static final String SIGN_UP = "apimain/signup/";
@@ -190,6 +190,9 @@ public class HeylaAppConstants {
     public static String ALERT_DIALOG_NEG_BUTTON = "alert_dialog_neg_button";
 
 
+    //Advanced Filter
+    public static final String ISFILTERAPPLY = "ISFILTERAPPLY";
+    public static final String SINGLEDATEFILTER = "SINGLEDATEFILTER";
     public static final String FROMDATE = "fromdate";
     public static final String TODATE = "todate";
     public static final String FILTERCITY = "filtercity";

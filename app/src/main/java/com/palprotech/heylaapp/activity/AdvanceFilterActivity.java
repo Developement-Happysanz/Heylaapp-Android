@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -38,6 +40,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * Created by Narendar on 16/11/17.
@@ -49,15 +52,21 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
     String cityId = "";
     String preferenceId = "";
-
+    Boolean firstTime = false;
 
     private String checkState = "";
     String singleDate = "";
     boolean todayPressed = false, tomorrowPressed = false, datePressed = false;
-    EditText eventTypeList, eventPreferenceList, eventCategoryList, txtCityDropDown; //spincity
+    EditText eventType, eventPreferenceList, eventCategory, txtCityDropDown; //spincity
 
     AlertDialog.Builder builder;
     StringBuilder sb;
+
+    private List<String> eventTypeList = new ArrayList<String>();
+    private ArrayAdapter<String> eventTypeAdapter = null;
+
+    private List<String> eventCategoryList = new ArrayList<String>();
+    private ArrayAdapter<String> eventCategoryAdapter = null;
 
     ArrayAdapter<Category> mPreferenceAdapter = null;
     ArrayList<Category> PreferenceList;
@@ -90,12 +99,12 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
 //        getSupportActionBar().hide();
-        eventTypeList = findViewById(R.id.eventTypeList);
-        eventTypeList.setOnClickListener(this);
-        eventTypeList.setFocusable(false);
-        eventCategoryList = findViewById(R.id.eventCategoryList);
-        eventCategoryList.setOnClickListener(this);
-        eventCategoryList.setFocusable(false);
+        eventType = findViewById(R.id.eventTypeList);
+        eventType.setOnClickListener(this);
+        eventType.setFocusable(false);
+        eventCategory = findViewById(R.id.eventCategoryList);
+        eventCategory.setOnClickListener(this);
+        eventCategory.setFocusable(false);
         eventPreferenceList = findViewById(R.id.eventPreferenceList);
         eventPreferenceList.setOnClickListener(this);
         eventPreferenceList.setFocusable(false);
@@ -113,6 +122,88 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         DatePickerSelection();
         findViewById(R.id.btnapply).setOnClickListener(this);
         findViewById(R.id.btncancel).setOnClickListener(this);
+
+
+        eventTypeList.add("Free");
+        eventTypeList.add("Paid");
+
+        eventTypeAdapter = new ArrayAdapter<String>(this, R.layout.gender_layout, R.id.gender_name, eventTypeList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                Log.d(TAG, "getview called" + position);
+                View view = getLayoutInflater().inflate(R.layout.gender_layout, parent, false);
+                TextView gendername = (TextView) view.findViewById(R.id.gender_name);
+                gendername.setText(eventTypeList.get(position));
+
+                // ... Fill in other views ...
+                return view;
+            }
+        };
+
+        String occupation = PreferenceStorage.getUserOccupation(this);
+        if (occupation != null) {
+            eventType.setText(occupation);
+        }
+
+        eventCategoryList.add("General");
+        eventCategoryList.add("Hotspot");
+
+        eventCategoryAdapter = new ArrayAdapter<String>(this, R.layout.gender_layout, R.id.gender_name, eventCategoryList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                Log.d(TAG, "getview called" + position);
+                View view = getLayoutInflater().inflate(R.layout.gender_layout, parent, false);
+                TextView gendername = (TextView) view.findViewById(R.id.gender_name);
+                gendername.setText(eventCategoryList.get(position));
+
+                // ... Fill in other views ...
+                return view;
+            }
+        };
+
+        String category = PreferenceStorage.getUserOccupation(this);
+        if (category != null) {
+            eventCategory.setText(occupation);
+        }
+
+    }
+
+    private void showeventTypeList() {
+        Log.d(TAG, "Show occupation list");
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
+        TextView header = (TextView) view.findViewById(R.id.gender_header);
+        header.setText("Select Occupation");
+        builderSingle.setCustomTitle(view);
+
+        builderSingle.setAdapter(eventTypeAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String strName = eventTypeList.get(which);
+                        eventType.setText(strName);
+                    }
+                });
+        builderSingle.show();
+    }
+
+    private void showeventCategoryList() {
+        Log.d(TAG, "Show occupation list");
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
+        TextView header = (TextView) view.findViewById(R.id.gender_header);
+        header.setText("Select Occupation");
+        builderSingle.setCustomTitle(view);
+
+        builderSingle.setAdapter(eventCategoryAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String strName = eventCategoryList.get(which);
+                        eventCategory.setText(strName);
+                    }
+                });
+        builderSingle.show();
     }
 
     private void DatePickerSelection() {
@@ -289,14 +380,14 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
     @Override
     public void onClick(View v) {
 
-        if (v == eventTypeList) {
-
+        if (v == eventType) {
+            showeventTypeList();
             checkState = "type";
 
         }
 
-        if (v == eventCategoryList) {
-
+        if (v == eventCategory) {
+            showeventCategoryList();
             checkState = "category";
 
         }
@@ -434,6 +525,80 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 break;
             case R.id.btnapply:
                 findViewById(R.id.btnapply).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                String eventTypeStr = eventType.getText().toString();
+                String eventPreferenceStr = eventPreferenceList.getText().toString();
+                String city = txtCityDropDown.getText().toString();
+//                String city = spincity.getSelectedItem().toString();
+                String eventTypeCategoryStr = eventCategory.getText().toString();
+                String fromdate = ((Button) findViewById(R.id.btnfrom)).getText().toString();
+                String todate = ((Button) findViewById(R.id.btnto)).getText().toString();
+                if (!singleDate.equalsIgnoreCase("") && singleDate != null) {
+                    PreferenceStorage.IsFilterApply(this, true);
+                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
+                    //  Toast.makeText(this, "Filter applied", Toast.LENGTH_SHORT).show();
+                    PreferenceStorage.saveFilterFromDate(this, "");
+                    PreferenceStorage.saveFilterToDate(this, "");
+                    if (!city.equalsIgnoreCase("Select Your City")) {
+                        PreferenceStorage.saveFilterCity(this, city);
+                    }
+                    //if (!eventType.equalsIgnoreCase("Select Your Event Type")) {
+                    PreferenceStorage.saveFilterEventType(this, eventTypeStr);
+                    PreferenceStorage.saveFilterEventTypeCategory(this, eventPreferenceStr);
+
+                    //}
+                    if (!eventTypeCategoryStr.equalsIgnoreCase("Select Category")) {
+                        PreferenceStorage.saveFilterCatgry(this, eventTypeCategoryStr);
+                    }
+
+                    startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
+                    //finish();
+                } else if (fromdate.trim().length() > 0 || todate.trim().length() > 0) {
+                    singleDate = "";
+                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
+                    PreferenceStorage.IsFilterApply(this, true);
+
+                    if (fromdate.equalsIgnoreCase("")) {
+                        Toast.makeText(this, "Select From Date", Toast.LENGTH_SHORT).show();
+                    } else if (todate.equalsIgnoreCase("")) {
+                        Toast.makeText(this, "Select To Date", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        PreferenceStorage.saveFilterFromDate(this, mFromDateVal);
+                        PreferenceStorage.saveFilterToDate(this, mTodateVal);
+                        if (!city.equalsIgnoreCase("Select Your City")) {
+                            PreferenceStorage.saveFilterCity(this, city);
+                        }
+                        PreferenceStorage.saveFilterEventType(this, eventTypeStr);
+                        PreferenceStorage.saveFilterEventTypeCategory(this, eventPreferenceStr);
+
+                        if (!eventTypeCategoryStr.equalsIgnoreCase("Select Category")) {
+                            PreferenceStorage.saveFilterCatgry(this, eventTypeCategoryStr);
+                        }
+                        startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
+                        //finish();
+                    }
+
+                } else if (!city.equalsIgnoreCase("Select Your City") || !eventTypeCategoryStr.equalsIgnoreCase("Select Category")) {
+                    PreferenceStorage.IsFilterApply(this, true);
+                    singleDate = "";
+                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
+                    if (!city.equalsIgnoreCase("Select Your City")) {
+                        PreferenceStorage.saveFilterCity(this, city);
+                    }
+
+                    PreferenceStorage.saveFilterEventType(this, eventTypeStr);
+                    PreferenceStorage.saveFilterEventTypeCategory(this, eventPreferenceStr);
+
+                    if (!eventTypeCategoryStr.equalsIgnoreCase("Select Category")) {
+                        PreferenceStorage.saveFilterCatgry(this, eventTypeCategoryStr);
+                    }
+                    startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
+                    //finish();
+                } else {
+                    Toast.makeText(AdvanceFilterActivity.this, "select any criteria", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
         }
     }
 
@@ -451,6 +616,30 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
 
             String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_PREFERENCES_LIST;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+        }
+    }
+
+    private void GetEventCities() {
+
+        checkState = "city";
+
+        if (CommonUtils.isNetworkAvailable(this)) {
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_CITY_LIST;
             serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
 
@@ -501,30 +690,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         builderSingle.show();
     }
 
-    private void GetEventCities() {
-
-        checkState = "city";
-
-        if (CommonUtils.isNetworkAvailable(this)) {
-
-            JSONObject jsonObject = new JSONObject();
-            try {
-                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_CITY_LIST;
-            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-
-
-        } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
-        }
-    }
-
     private boolean validateSignInResponse(JSONObject response) {
         boolean signInSuccess = false;
         if ((response != null)) {
@@ -558,31 +723,31 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
             mProgressDialog.cancel();
         }
 
-        try {
-            if (validateSignInResponse(response)) {
 
+        if (validateSignInResponse(response)) {
+            try {
                 if (checkState.equalsIgnoreCase("preference")) {
-                    try {
-                        JSONArray getData = response.getJSONArray("Categories");
-                        Gson gson = new Gson();
-                        Type listType = new TypeToken<ArrayList<Category>>() {
-                        }.getType();
-                        PreferenceList = (ArrayList<Category>) gson.fromJson(getData.toString(), listType);
-                        mPreferenceAdapter = new ArrayAdapter<Category>(getApplicationContext(), R.layout.gender_layout, R.id.gender_name, PreferenceList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
-                            @Override
-                            public View getView(int position, View convertView, ViewGroup parent) {
-                                Log.d(TAG, "getview called" + position);
-                                View view = getLayoutInflater().inflate(R.layout.gender_layout, parent, false);
-                                TextView gendername = (TextView) view.findViewById(R.id.gender_name);
-                                gendername.setText(PreferenceList.get(position).getCategory());
-                                return view;
-                            }
-                        };
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    JSONArray getData = response.getJSONArray("Categories");
+                    JSONObject getPreference = getData.getJSONObject(0);
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<ArrayList<Category>>() {
+                    }.getType();
+                    PreferenceList = gson.fromJson(getData.toString(), listType);
+                    mPreferenceAdapter = new ArrayAdapter<Category>(getApplicationContext(), R.layout.gender_layout, R.id.gender_name, PreferenceList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
+                        @Override
+                        public View getView(int position, View convertView, ViewGroup parent) {
+                            Log.d(TAG, "getview called" + position);
+                            View view = getLayoutInflater().inflate(R.layout.gender_layout, parent, false);
+                            TextView gendername = (TextView) view.findViewById(R.id.gender_name);
+                            gendername.setText(PreferenceList.get(position).getCategory());
+                            return view;
+                        }
+                    };
+                    if (!firstTime) {
+                        GetEventCities();
                     }
                 } else if (checkState.equalsIgnoreCase("city")) {
-
+                    firstTime = true;
                     JSONArray getData = response.getJSONArray("Cities");
                     int getLength = getData.length();
                     String cityId = "";
@@ -612,10 +777,13 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     };
 
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } else {
+            Log.d(TAG, "Error while sign In");
         }
+
     }
 
     @Override
