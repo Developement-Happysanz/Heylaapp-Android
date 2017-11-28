@@ -22,10 +22,7 @@ import com.palprotech.heylaapp.utils.HeylaAppValidator;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by zahid.r on 10/30/2015.
@@ -147,12 +144,12 @@ public class EventsListAdapter extends BaseAdapter {
             }
         }
 
-        //imageLoader.displayImage(events.get(position).getEventLogo(), holder.imageView, AppController.getInstance().getLogoDisplayOptions());
-        /*if(HeylaAppValidator.checkNullString(events.get(position).getEventBanner())) {
+//        imageLoader.displayImage(events.get(position).getEventBanner(), holder.imageView, AppController.getInstance().getLogoDisplayOptions());
+        if(HeylaAppValidator.checkNullString(events.get(position).getEventBanner())) {
             Picasso.with(this.context).load(events.get(position).getEventBanner()).fit().transform(this.transformation).placeholder(R.drawable.ic_heyla_logo).error(R.drawable.ic_heyla_logo).into(holder.imageView);
         } else {
             holder.imageView.setImageResource(R.drawable.ic_heyla_logo);
-        }*/
+        }
         String start = HeylaAppHelper.getDate(events.get(position).getStartDate());
         String end = HeylaAppHelper.getDate(events.get(position).getEndDate());
 

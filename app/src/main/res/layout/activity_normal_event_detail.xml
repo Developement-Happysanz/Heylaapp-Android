@@ -25,16 +25,17 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/eventimg"
+                        android:id="@+id/event_detail_img"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:foreground="@color/temp"
                         android:background="@drawable/event_img" />
 
                     <TextView
+                        android:id="@+id/event_detail_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/eventimg"
+                        android:layout_alignBottom="@+id/event_detail_img"
                         android:layout_marginStart="10dp"
                         android:paddingBottom="10dp"
                         android:text="CAKE POINT"
@@ -42,10 +43,11 @@
                         android:textSize="20dp" />
 
                     <ImageView
+                        android:id="@+id/share_event"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_below="@+id/eventimg"
+                        android:layout_below="@+id/event_detail_img"
                         android:layout_marginEnd="10dp"
                         android:layout_marginTop="-18dp"
                         android:background="@drawable/ic_round_full_color"
@@ -54,10 +56,11 @@
                         android:src="@drawable/ic_menu_share_app" />
 
                     <TextView
+                        android:id="@+id/event_qa"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_below="@+id/eventimg"
+                        android:layout_below="@+id/event_detail_img"
                         android:layout_marginEnd="60dp"
                         android:layout_marginTop="-18dp"
                         android:background="@drawable/ic_round_full_color"
@@ -110,12 +113,12 @@
                         android:id="@+id/addressimg"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignEnd="@+id/addresstxt"
-                        android:layout_alignStart="@+id/addresstxt"
+                        android:layout_alignEnd="@+id/addressimgtxt"
+                        android:layout_alignStart="@+id/addressimgtxt"
                         android:src="@drawable/ic_address" />
 
                     <TextView
-                        android:id="@+id/addresstxt"
+                        android:id="@+id/addressimgtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/addressimg"
@@ -124,6 +127,7 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/addresstxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/addresslayout"
@@ -149,12 +153,12 @@
                         android:id="@+id/timeimg"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignEnd="@+id/timetxt"
-                        android:layout_alignStart="@+id/timetxt"
+                        android:layout_alignEnd="@+id/timeimgtxt"
+                        android:layout_alignStart="@+id/timeimgtxt"
                         android:src="@drawable/ic_clock" />
 
                     <TextView
-                        android:id="@+id/timetxt"
+                        android:id="@+id/timeimgtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/timeimg"
@@ -163,6 +167,7 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/start_time_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/timelayout"
@@ -171,7 +176,31 @@
                     android:layout_marginStart="10dp"
                     android:layout_toRightOf="@+id/timelayout"
                     android:gravity="center"
-                    android:text="51, Mariamman Kovil Street Peelamedu"
+                    android:text="12-12-1212"
+                    android:textColor="@color/text_black" />
+
+                <TextView
+                    android:id="@+id/time_to"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/timelayout"
+                    android:layout_alignTop="@+id/timelayout"
+                    android:layout_toRightOf="@+id/start_time_txt"
+                    android:gravity="center"
+                    android:text="to"
+                    android:textColor="@color/text_black" />
+
+                <TextView
+                    android:id="@+id/end_time_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/timelayout"
+                    android:layout_alignTop="@+id/timelayout"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@+id/time_to"
+                    android:gravity="center"
+                    android:text="12-12-1212"
                     android:textColor="@color/text_black" />
 
                 <RelativeLayout
@@ -189,12 +218,12 @@
                         android:id="@+id/dateimg"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignEnd="@+id/datetxt"
-                        android:layout_alignStart="@+id/datetxt"
+                        android:layout_alignEnd="@+id/dateimgtxt"
+                        android:layout_alignStart="@+id/dateimgtxt"
                         android:src="@drawable/ic_calender" />
 
                     <TextView
-                        android:id="@+id/datetxt"
+                        android:id="@+id/dateimgtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/dateimg"
@@ -203,6 +232,7 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/start_date_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/datelayout"
@@ -211,7 +241,31 @@
                     android:layout_marginStart="10dp"
                     android:layout_toRightOf="@+id/datelayout"
                     android:gravity="center"
-                    android:text="51, Mariamman Kovil Street Peelamedu"
+                    android:text="12-12-1212"
+                    android:textColor="@color/text_black" />
+
+                <TextView
+                    android:id="@+id/date_to"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/datelayout"
+                    android:layout_alignTop="@+id/datelayout"
+                    android:layout_toRightOf="@+id/start_date_txt"
+                    android:gravity="center"
+                    android:text="to"
+                    android:textColor="@color/text_black" />
+
+                <TextView
+                    android:id="@+id/end_date_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/datelayout"
+                    android:layout_alignTop="@+id/datelayout"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@+id/date_to"
+                    android:gravity="center"
+                    android:text="12-12-1212"
                     android:textColor="@color/text_black" />
 
             </RelativeLayout>
@@ -238,6 +292,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/eventdetailtxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -341,6 +396,7 @@
                         android:textColor="@color/text_black"/>
 
                     <TextView
+                        android:id="@+id/organisermobiletxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="9999999999"
@@ -374,6 +430,7 @@
                         android:textColor="@color/text_black"/>
 
                     <TextView
+                        android:id="@+id/organisermailtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="9999999999"
@@ -407,6 +464,7 @@
                         android:textColor="@color/text_black"/>
 
                     <TextView
+                        android:id="@+id/organiserfacebooktxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="9999999999"
@@ -440,6 +498,7 @@
                         android:textColor="@color/text_black"/>
 
                     <TextView
+                        android:id="@+id/organiserwebsitetxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="9999999999"
