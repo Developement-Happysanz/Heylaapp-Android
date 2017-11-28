@@ -21,6 +21,7 @@ import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.CommonUtils;
+import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 import org.json.JSONObject;
@@ -48,7 +49,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advanced_search_result);
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
         loadMoreListView = findViewById(R.id.listView_events);
 //        loadMoreListView.setOnLoadMoreListener(this);
         loadMoreListView.setOnItemClickListener(this);
@@ -88,7 +89,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
     private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... urls) {
-//            serviceHelper.makeRawRequest(HeylaAppConstants.GET_ADVANCE_SINGLE_SEARCH);
+            serviceHelper.makeRawRequest(HeylaAppConstants.GET_ADVANCE_SINGLE_SEARCH);
             return null;
         }
 

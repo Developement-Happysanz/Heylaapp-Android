@@ -121,6 +121,8 @@ public class HeylaAppConstants {
     //    Preferences Update
     public static final String USER_PREFERENCES_UPDATE = "apimain/updatepreferrence/";
 
+    public static final String GET_ADVANCE_SINGLE_SEARCH = "apimain/advancesearch/";
+
     //    Event list
     public static final String EVENT_LIST = "apimain/viewevents/";
 //    public static final String EVENT_LIST = "apimain/viewevents_test/";
