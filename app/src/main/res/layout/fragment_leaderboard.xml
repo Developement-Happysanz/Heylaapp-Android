@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/leaderboard_gray"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -13,26 +14,9 @@
         <RelativeLayout
             android:id="@+id/userinfo"
             android:layout_width="match_parent"
-            android:layout_height="225dp"
-            android:background="@color/appColorBase">
-
-            <com.palprotech.heylaapp.customview.CircleImageView
-                android:id="@+id/profile_img"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_default_profile" />
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/profile_img"
-                android:layout_marginStart="-5dp"
-                android:layout_toRightOf="@+id/profile_img"
-                android:paddingBottom="10dp"
-                android:paddingEnd="10dp"
-                android:src="@drawable/ic_leaderboard_edit" />
+            android:layout_height="200dp"
+            android:background="@color/appColorBase"
+            android:gravity="">
 
             <Button
                 android:id="@+id/follow"
@@ -43,314 +27,458 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/ic_leaderboard_follow" />
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_img"
-                android:layout_centerInParent="true"
-                android:hint="Narendar"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textSize="19sp"
-                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/username"
+            <RelativeLayout
+                android:id="@+id/edit_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
                 android:layout_centerInParent="true"
-                android:drawablePadding="10dp"
-                android:hint="varvn"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textSize="15sp" />
+                android:gravity="center">
+
+                <com.palprotech.heylaapp.customview.CircleImageView
+                    android:id="@+id/profile_img"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_default_profile" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/username"
+                    android:layout_alignTop="@+id/username"
+                    android:layout_toEndOf="@+id/username"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:src="@drawable/ic_leaderboard_edit" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@id/profile_img"
+                    android:layout_alignStart="@id/profile_img"
+                    android:layout_below="@+id/profile_img"
+                    android:gravity="center"
+                    android:hint="Narendar"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="10dp"
+                    android:hint="varvn"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/levelpoints"
+        <RelativeLayout
+            android:id="@+id/user_point_info"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:layout_below="@+id/userinfo"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="-50dp"
-            android:background="@drawable/btn_round_nocolor">
+            android:background="@color/white"
+            android:gravity="">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="0.1"
-                android:gravity="center"
-                android:paddingBottom="10dp">
+                android:layout_centerVertical="true">
 
                 <ImageView
-                    android:id="@+id/starone"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_alignStart="@+id/starone_text"
-                    android:layout_alignEnd="@+id/starone_text"
-                    android:src="@drawable/ic_leaderboard_star" />
+                    android:id="@+id/trophy"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_alignEnd="@id/trophy_text"
+                    android:layout_alignStart="@+id/trophy_text"
+                    android:src="@drawable/ic_leaderboard_trophy" />
 
                 <TextView
-                    android:id="@+id/starone_text"
-                    android:layout_width="85dp"
+                    android:id="@+id/trophy_text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/starone"
-                    android:gravity="center"
-                    android:text="+50 points for next level"
-                    android:textColor="@color/text_black" />
-
+                    android:layout_below="@id/trophy"
+                    android:layout_marginStart="70dp"
+                    android:text="Total Points"
+                    android:textColor="@color/text_black"
+                    android:textSize="18dp" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center">
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true">
 
                 <ImageView
-                    android:id="@+id/startwo"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_alignStart="@+id/startwo_text"
-                    android:layout_alignEnd="@+id/startwo_text"
-                    android:src="@drawable/ic_leaderboard_star" />
+                    android:id="@+id/level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@id/level_text"
+                    android:layout_alignStart="@+id/level_text"
+                    android:src="@drawable/ic_rank" />
 
                 <TextView
-                    android:id="@+id/startwo_text"
-                    android:layout_width="85dp"
+                    android:id="@+id/level_text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/startwo"
-                    android:gravity="center"
-                    android:text="+50 points for next level"
-                    android:textColor="@color/text_black" />
-
+                    android:layout_below="@id/level"
+                    android:layout_marginEnd="70dp"
+                    android:text="Total Points"
+                    android:textColor="@color/text_black"
+                    android:textSize="18dp" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/starthree"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_alignStart="@+id/starthree_text"
-                    android:layout_alignEnd="@+id/starthree_text"
-                    android:src="@drawable/ic_leaderboard_star" />
-
-                <TextView
-                    android:id="@+id/starthree_text"
-                    android:layout_width="85dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/starthree"
-                    android:gravity="center"
-                    android:text="+50 points for next level"
-                    android:textColor="@color/text_black" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
+        </RelativeLayout>
 
         <RelativeLayout
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/levelpoints">
+            android:layout_below="@+id/user_point_info">
 
-            <LinearLayout
-                android:id="@+id/myboard"
+            <RelativeLayout
+                android:id="@+id/login_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:layout_height="65dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_square_google"
+                android:gravity="center">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/ic_leaderboard_ribbon" />
+                    android:id="@+id/login_img"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_leaderboard_login" />
 
                 <TextView
+                    android:id="@+id/login_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="My Board"
+                    android:layout_alignBottom="@+id/login_img"
+                    android:layout_alignTop="@+id/login_img"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@+id/login_img"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:text="Login"
                     android:textColor="@color/text_black"
-                    android:textSize="22sp" />
-            </LinearLayout>
+                    android:textSize="18sp" />
 
-            <ScrollView
+                <TextView
+                    android:id="@+id/login_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/login_text"
+                    android:layout_alignTop="@id/login_text"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@id/login_text"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/login_star"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignBottom="@id/login_text"
+                    android:layout_alignTop="@id/login_text"
+                    android:layout_toLeftOf="@id/login_star_count"
+                    android:src="@drawable/ic_leaderboard_star" />
+
+                <TextView
+                    android:id="@+id/login_star_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/login_star"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@id/login_star"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/sharing_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/myboard">
+                android:layout_height="65dp"
+                android:layout_below="@id/login_layout"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_square_google"
+                android:gravity="center">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/sharing_img"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_leaderboard_event_share" />
 
-                    <LinearLayout
-                        android:id="@+id/progress_one"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/sharing_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/sharing_img"
+                    android:layout_alignTop="@+id/sharing_img"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@+id/sharing_img"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:text="Event Sharing"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp" />
 
-                        <ImageView
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_marginStart="20dp"
-                            android:src="@drawable/ic_leaderboard_contact" />
+                <TextView
+                    android:id="@+id/sharing_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/sharing_text"
+                    android:layout_alignTop="@id/sharing_text"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@id/sharing_text"
+                    android:textSize="18sp" />
 
+                <ImageView
+                    android:id="@+id/share_star"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignBottom="@id/sharing_text"
+                    android:layout_alignTop="@id/sharing_text"
+                    android:layout_toLeftOf="@id/share_star_count"
+                    android:src="@drawable/ic_leaderboard_star" />
 
-                        <ProgressBar
-                            android:id="@+id/progress_sharing"
-                            style="@android:style/Widget.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="30dp"
-                            android:layout_marginStart="20dp"
-                            android:max="100"
-                            android:progress="50"
-                            android:progressDrawable="@drawable/progress_one_drawable" />
+                <TextView
+                    android:id="@+id/share_star_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/share_star"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@id/share_star"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
 
-                    </LinearLayout>
+            </RelativeLayout>
 
-                    <LinearLayout
-                        android:id="@+id/progress_two"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/progress_one"
-                        android:layout_marginTop="15dp">
+            <RelativeLayout
+                android:id="@+id/check_in_layout"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_below="@id/sharing_layout"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_square_google"
+                android:gravity="center">
 
-                        <ImageView
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_marginStart="20dp"
-                            android:src="@drawable/ic_leaderboard_message" />
+                <ImageView
+                    android:id="@+id/check_in_img"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_leaderboard_check_in" />
 
-                        <ProgressBar
-                            android:id="@+id/progress_engagement"
-                            style="@android:style/Widget.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="30dp"
-                            android:layout_marginStart="20dp"
-                            android:max="100"
-                            android:progress="25"
-                            android:progressDrawable="@drawable/progress_two_drawable" />
+                <TextView
+                    android:id="@+id/check_in_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/check_in_img"
+                    android:layout_alignTop="@+id/check_in_img"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@+id/check_in_img"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:text="Check-In"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp" />
 
-                    </LinearLayout>
+                <TextView
+                    android:id="@+id/check_in_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/check_in_text"
+                    android:layout_alignTop="@id/check_in_text"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@id/check_in_text"
+                    android:textSize="18sp" />
 
-                    <LinearLayout
-                        android:id="@+id/progress_three"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/progress_two"
-                        android:layout_marginTop="15dp">
+                <ImageView
+                    android:id="@+id/check_in_star"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignBottom="@id/check_in_text"
+                    android:layout_alignTop="@id/check_in_text"
+                    android:layout_toStartOf="@id/check_in_star_count"
+                    android:src="@drawable/ic_leaderboard_star" />
 
-                        <ImageView
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_marginStart="20dp"
-                            android:src="@drawable/ic_leaderboard_location" />
+                <TextView
+                    android:id="@+id/check_in_star_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/check_in_star"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@id/check_in_star"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
 
-                        <ProgressBar
-                            android:id="@+id/progress_checkin"
-                            style="@android:style/Widget.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="30dp"
-                            android:layout_marginStart="20dp"
-                            android:max="100"
-                            android:progress="50"
-                            android:progressDrawable="@drawable/progress_three_drawable" />
+            </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/review_layout"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_below="@id/check_in_layout"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_square_google"
+                android:gravity="center">
 
-                    </LinearLayout>
+                <ImageView
+                    android:id="@+id/review_img"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_leaderboard_review" />
 
-                    <LinearLayout
-                        android:id="@+id/progress_four"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/progress_three"
-                        android:layout_marginTop="15dp">
+                <TextView
+                    android:id="@+id/review_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/review_img"
+                    android:layout_alignTop="@+id/review_img"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@+id/review_img"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:text="Review"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp" />
 
-                        <ImageView
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_marginStart="20dp"
-                            android:src="@drawable/ic_leaderboard_ticket" />
+                <TextView
+                    android:id="@+id/review_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/review_text"
+                    android:layout_alignTop="@id/review_text"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@id/review_text"
+                    android:textSize="18sp" />
 
-                        <ProgressBar
-                            android:id="@+id/progress_booking"
-                            style="@android:style/Widget.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="30dp"
-                            android:layout_marginStart="20dp"
-                            android:max="100"
-                            android:progress="50"
-                            android:progressDrawable="@drawable/progress_four_drawable" />
+                <ImageView
+                    android:id="@+id/review_star"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignBottom="@id/review_text"
+                    android:layout_alignTop="@id/review_text"
+                    android:layout_toLeftOf="@id/review_star_count"
+                    android:src="@drawable/ic_leaderboard_star" />
 
-                    </LinearLayout>
+                <TextView
+                    android:id="@+id/review_star_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/review_star"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@id/review_star"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
 
-                    <LinearLayout
-                        android:id="@+id/progress_five"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/progress_four"
-                        android:layout_marginTop="15dp">
+            </RelativeLayout>
 
-                        <ImageView
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_marginStart="20dp"
-                            android:src="@drawable/ic_leaderboard_profile_friend" />
+            <RelativeLayout
+                android:id="@+id/booking_layout"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_below="@id/review_layout"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/btn_square_google"
+                android:gravity="center">
 
-                        <ProgressBar
-                            android:id="@+id/progress_friends"
-                            style="@android:style/Widget.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="30dp"
-                            android:layout_marginStart="20dp"
-                            android:max="100"
-                            android:progress="50"
-                            android:progressDrawable="@drawable/progress_five_drawable" />
+                <ImageView
+                    android:id="@+id/booking_img"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_leaderboard_booking" />
 
-                    </LinearLayout>
+                <TextView
+                    android:id="@+id/booking_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/booking_img"
+                    android:layout_alignTop="@+id/booking_img"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@+id/booking_img"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:text="Booking"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/view_statistics"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginTop="20dp"
-                        android:background="@color/appColorBase"
-                        android:gravity="center"
-                        android:text="View Full Statistics"
-                        android:textColor="@color/white"
-                        android:textSize="22sp" />
+                <TextView
+                    android:id="@+id/booking_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/booking_text"
+                    android:layout_alignTop="@id/booking_text"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@id/booking_text"
+                    android:textSize="18sp" />
 
-                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/booking_star"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignTop="@+id/booking_count"
+                    android:layout_toStartOf="@+id/booking_star_count"
+                    android:src="@drawable/ic_leaderboard_star" />
 
-            </ScrollView>
+                <TextView
+                    android:id="@+id/booking_star_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/booking_star"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@id/booking_star"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

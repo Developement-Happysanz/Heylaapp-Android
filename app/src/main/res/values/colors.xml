@@ -23,6 +23,9 @@
     <!--Login Module-->
     <color name="ticket_yellow">#fcb316</color>
 
+    <!--Leaderboard Module-->
+    <color name="leaderboard_gray">#f0f2f2</color>
+
     <!-- Screens background color-->
     <color name="bg_screen1">#468DCB</color>
 
