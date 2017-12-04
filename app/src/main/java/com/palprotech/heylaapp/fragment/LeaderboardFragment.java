@@ -9,7 +9,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
@@ -27,7 +27,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     CircleImageView profileImg;
     Button follow;
     TextView viewFullStatistics;
-    ProgressBar share, engagement, checkin, booking, friends;
+    RelativeLayout login, share, check_in, booking, reviews;
 
 
     @Override
@@ -42,23 +42,21 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     }
 
     protected void initializeViews() {
-        share = rootView.findViewById(R.id.progress_sharing);
-        share.setProgress(0);
-        engagement = rootView.findViewById(R.id.progress_engagement);
-        engagement.setProgress(0);
-        checkin = rootView.findViewById(R.id.progress_checkin);
-        checkin.setProgress(0);
-        booking = rootView.findViewById(R.id.progress_booking);
-        booking.setProgress(0);
-        friends = rootView.findViewById(R.id.progress_friends);
-        friends.setProgress(0);
-        profileImg = rootView.findViewById(R.id.profile_img);
-        profileImg.setOnClickListener(this);
-        follow = rootView.findViewById(R.id.follow);
-        follow.setOnClickListener(this);
-        viewFullStatistics = rootView.findViewById(R.id.view_statistics);
-        viewFullStatistics.setOnClickListener(this);
 
+        login = rootView.findViewById(R.id.login_layout);
+        login.setOnClickListener(this);
+
+        share = rootView.findViewById(R.id.sharing_layout);
+        share.setOnClickListener(this);
+
+        check_in = rootView.findViewById(R.id.check_in_layout);
+        check_in.setOnClickListener(this);
+
+        reviews = rootView.findViewById(R.id.review_layout);
+        reviews.setOnClickListener(this);
+
+        booking = rootView.findViewById(R.id.booking_layout);
+        booking.setOnClickListener(this);
     }
 
     @Override
@@ -68,8 +66,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
             getActivity().finish();
-        }
-        else if (view == profileImg) {
+        } else if (view == profileImg) {
             Intent homeIntent = new Intent(getActivity(), ProfileActivity.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);

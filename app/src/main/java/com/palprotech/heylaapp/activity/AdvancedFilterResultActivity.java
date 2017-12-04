@@ -78,7 +78,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
 
         if (CommonUtils.isNetworkAvailable(this)) {
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            //    eventServiceHelper.makeRawRequest(FindAFunConstants.GET_ADVANCE_SINGLE_SEARCH);
+            serviceHelper.makeRawRequest(HeylaAppConstants.GET_ADVANCE_SINGLE_SEARCH);
             new HttpAsyncTask().execute("");
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.no_connectivity));

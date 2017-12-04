@@ -107,7 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/trophy"
-                    android:layout_marginStart="70dp"
+                    android:layout_marginStart="50dp"
                     android:text="Total Points"
                     android:textColor="@color/text_black"
                     android:textSize="18dp" />
@@ -125,15 +125,15 @@
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@id/level_text"
                     android:layout_alignStart="@+id/level_text"
-                    android:src="@drawable/ic_rank" />
+                    android:src="@drawable/ic_leaderboard_rank" />
 
                 <TextView
                     android:id="@+id/level_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/level"
-                    android:layout_marginEnd="70dp"
-                    android:text="Total Points"
+                    android:layout_marginEnd="20dp"
+                    android:text=" points for next rank"
                     android:textColor="@color/text_black"
                     android:textSize="18dp" />
             </RelativeLayout>
