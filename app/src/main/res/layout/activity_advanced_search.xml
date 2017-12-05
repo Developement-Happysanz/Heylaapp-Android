@@ -16,8 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:minHeight="60dp"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
         android:layout_marginStart="10dp"
         android:src="@drawable/ic_back_button" />
 

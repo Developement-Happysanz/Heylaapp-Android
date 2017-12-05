@@ -19,20 +19,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:minHeight="60dp"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
         android:layout_marginStart="10dp"
         android:src="@drawable/ic_back_button" />
-
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_toRightOf="@id/back_res"
-        android:minHeight="60dp"
-        android:src="@drawable/heyla_logo_transparent"
-        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tvtitletext"
@@ -47,6 +37,17 @@
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="@dimen/actionbarTextSize" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_toRightOf="@id/back_res"
+        android:minHeight="60dp"
+        android:src="@drawable/heyla_logo_transparent"
+        android:visibility="gone"/>
+
 
     <ListView
         android:id="@+id/listView_events"
