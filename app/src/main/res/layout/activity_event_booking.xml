@@ -4,129 +4,87 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:background="@color/white"
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="vertical"
-        android:padding="2dp">
+        android:layout_height="190dp">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/img_logo"
             android:layout_width="match_parent"
-            android:layout_height="190dp">
+            android:layout_height="190dp"
+            android:background="@drawable/event_img"
+            android:layout_gravity="center_vertical" />
 
-            <ImageView
-                android:id="@+id/img_logo"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/login_bg_img" />
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:background="@color/temp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:orientation="horizontal">
-
-                <RelativeLayout
+                <TextView
+                    android:id="@+id/txt_event_name"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/temp">
-
-                    <TextView
-                        android:id="@+id/txt_event_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="5dp"
-                        android:layout_toLeftOf="@+id/event_paid_btn"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:text="Mini Marathon Championship"
-                        android:textColor="@color/white"
-                        android:textSize="18dp" />
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_toLeftOf="@+id/event_paid_btn"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="Mini Marathon Championship"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
 
 
-                    <TextView
-                        android:id="@+id/txt_event_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/txt_event_name"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="10dp"
-                        android:drawablePadding="5dp"
-                        android:drawableStart="@drawable/ic_time"
-                        android:ellipsize="end"
-                        android:fontFamily="sans-serif"
-                        android:gravity="center"
-                        android:singleLine="true"
-                        android:text="9:00 PM"
-                        android:textColor="@android:color/white"
-                        android:textSize="11dp" />
+                <TextView
+                    android:id="@+id/txt_event_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/txt_event_name"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="10dp"
+                    android:drawablePadding="5dp"
+                    android:drawableStart="@drawable/ic_time"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="9:00 PM"
+                    android:textColor="@android:color/white"
+                    android:textSize="11dp" />
 
-                    <TextView
-                        android:id="@+id/txt_event_location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_below="@+id/txt_event_name"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@id/txt_event_time"
-                        android:drawablePadding="5dp"
-                        android:drawableStart="@drawable/ic_location"
-                        android:ellipsize="end"
-                        android:fontFamily="sans-serif"
-                        android:gravity="center"
-                        android:singleLine="true"
-                        android:text="Peelamedu"
-                        android:textColor="@android:color/white"
-                        android:textSize="11dp" />
+                <TextView
+                    android:id="@+id/txt_event_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/txt_event_name"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@id/txt_event_time"
+                    android:drawablePadding="5dp"
+                    android:drawableStart="@drawable/ic_location"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="Peelamedu"
+                    android:textColor="@android:color/white"
+                    android:textSize="11dp" />
 
-                    <Button
-                        android:id="@+id/event_paid_btn"
-                        android:layout_width="54dp"
-                        android:layout_height="26dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="right"
-                        android:layout_marginRight="15dp"
-                        android:background="@color/appColorBase"
-                        android:fontFamily="sans-serif"
-                        android:gravity="center"
-                        android:text=""
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:textSize="15dp" />
+            </RelativeLayout>
 
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txt_event_date"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="center"
-                android:background="@color/appColorBase"
-                android:ellipsize="end"
-                android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="Sep 24th-30th Sun"
-                android:textColor="@android:color/white"
-                android:textSize="11dp" />
+        </LinearLayout>
 
 
-        </RelativeLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <com.palprotech.heylaapp.activity.DayScrollDatePicker
         android:id="@+id/day_date_picker"
