@@ -49,6 +49,13 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         btnSubmit = (Button) findViewById(R.id.signin);
         btnSubmit.setOnClickListener(this);
 
+        findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);

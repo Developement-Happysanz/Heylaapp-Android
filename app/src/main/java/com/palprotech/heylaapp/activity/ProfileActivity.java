@@ -196,6 +196,14 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 //        checkProfileState = extras.getString("profile_state");
         checkProfileState = PreferenceStorage.getCheckFirstTimeProfile(getApplicationContext());
 
+        findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
         String url = PreferenceStorage.getUserPicture(this);
 
 
