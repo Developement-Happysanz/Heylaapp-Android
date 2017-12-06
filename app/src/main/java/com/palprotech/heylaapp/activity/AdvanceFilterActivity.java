@@ -118,6 +118,12 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
         GetPreferences();
 
+        findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         DatePickerSelection();
         findViewById(R.id.btnapply).setOnClickListener(this);

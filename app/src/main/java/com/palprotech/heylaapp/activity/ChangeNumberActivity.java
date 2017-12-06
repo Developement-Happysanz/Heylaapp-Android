@@ -54,9 +54,17 @@ public class ChangeNumberActivity extends AppCompatActivity implements View.OnCl
 
         oldMobileNo = PreferenceStorage.getMobileNo(getApplicationContext());
 
+        findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
+
     }
 
     @Override
