@@ -3,8 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_grey"
-
     android:orientation="vertical">
+
+    <include
+        android:id="@+id/activity_toolbar"
+        layout="@layout/custom_toolbar" />
 
     <TextView
         android:id="@+id/text_select"
@@ -16,7 +19,15 @@
         android:padding="20dp"
         android:text="@string/select_preference"
         android:textColor="@android:color/white"
-        android:textSize="19sp" />
+        android:textSize="19sp"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listView_categories"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="1dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -36,13 +47,14 @@
             android:fontFamily="sans-serif-medium"
             android:text="Select All"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/text_getStarted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
             android:drawablePadding="10dp"
             android:fontFamily="sans-serif-medium"
             android:gravity="center_vertical|right"
@@ -52,13 +64,5 @@
             android:textSize="16sp" />
 
     </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/listView_categories"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="1dp" />
-
 
 </LinearLayout>

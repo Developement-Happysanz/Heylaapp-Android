@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.adapter.LoginAdapter;
+import com.palprotech.heylaapp.bean.database.SQLiteHelper;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
@@ -30,6 +31,7 @@ import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.CommonUtils;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
+import com.palprotech.heylaapp.utils.HeylaAppValidator;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 import org.json.JSONException;
@@ -50,6 +52,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
     private ProgressDialogHelper progressDialogHelper;
     TextView txtGuestLogin;
     private ServiceHelper serviceHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,56 +81,86 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
             IMEINo = telephonyManager.getDeviceId();
         }
 
-        serviceHelper = new ServiceHelper(this);
-        serviceHelper.setServiceListener(this);
-        progressDialogHelper = new ProgressDialogHelper(this);
-        txtGuestLogin = (TextView) findViewById(R.id.guestlogin);
-        txtGuestLogin.setOnClickListener(this);
+        if (PreferenceStorage.getUserId(getApplicationContext()) != null && HeylaAppValidator.checkNullString(PreferenceStorage.getUserId(getApplicationContext()))) {
+            String city = PreferenceStorage.getEventCityName(getApplicationContext());
+//            String isResetOver = PreferenceStorage.getForgotPasswordStatusEnable(getApplicationContext());
+            boolean haspreferences = PreferenceStorage.isPreferencesPresent(getApplicationContext());
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-
-        tabLayout.addTab(tabLayout.newTab().setText("SIGN IN"));
-        tabLayout.addTab(tabLayout.newTab().setText("SIGN UP"));
-
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-
-        final LoginAdapter adapter = new LoginAdapter
-                (getSupportFragmentManager());
-
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+            /*if (isResetOver.equalsIgnoreCase("no")) {
+                Intent intent = new Intent(getApplicationContext(), ResetPasswordActivity.class);
+                startActivity(intent);
+                this.finish();
+            } else */
+            if (HeylaAppValidator.checkNullString(city) && haspreferences) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                this.finish();
+            } else if (!HeylaAppValidator.checkNullString(city)) {
+                Log.d(TAG, "No city yet, show city activity");
+                Intent intent = new Intent(getApplicationContext(), SelectCityActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                this.finish();
+            } else if (!haspreferences) {
+                Log.d(TAG, "No preferences, so launch preferences activity");
+                Intent intent = new Intent(getApplicationContext(), SetUpPreferenceActivity.class);
+                intent.putExtra("selectedCity", city);
+                startActivity(intent);
+                this.overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                this.finish();
             }
+        } else {
+            serviceHelper = new ServiceHelper(this);
+            serviceHelper.setServiceListener(this);
+            progressDialogHelper = new ProgressDialogHelper(this);
+            txtGuestLogin = (TextView) findViewById(R.id.guestlogin);
+            txtGuestLogin.setOnClickListener(this);
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+
+            tabLayout.addTab(tabLayout.newTab().setText("SIGN IN"));
+            tabLayout.addTab(tabLayout.newTab().setText("SIGN UP"));
+
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+            final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+
+            final LoginAdapter adapter = new LoginAdapter
+                    (getSupportFragmentManager());
+
+            viewPager.setAdapter(adapter);
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    viewPager.setCurrentItem(tab.getPosition());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+
+            try {
+                PackageInfo info = getPackageManager().getPackageInfo(
+                        "com.palprotech.heylaapp",
+                        PackageManager.GET_SIGNATURES);
+                for (Signature signature : info.signatures) {
+                    MessageDigest md = MessageDigest.getInstance("SHA");
+                    md.update(signature.toByteArray());
+                    Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+
+            } catch (NoSuchAlgorithmException e) {
 
             }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.palprotech.heylaapp",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        } catch (NoSuchAlgorithmException e) {
-
         }
     }
 
@@ -194,6 +227,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
                 finish();
 
                 PreferenceStorage.saveUserType(getApplicationContext(), "1");
+
             } catch (JSONException ex) {
                 ex.printStackTrace();
             }

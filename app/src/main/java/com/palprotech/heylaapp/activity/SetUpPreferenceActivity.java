@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -62,11 +63,17 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
     private CheckBox txtSelectAll;
     HashSet<String> hashSet;
     private String responseActivity = "";
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_up_preference);
+
+        toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
+        setSupportActionBar(toolbar);
+        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        mTitle.setText("Select Category");
 
         txtGetStarted = (TextView) findViewById(R.id.text_getStarted);
         txtGetStarted.setOnClickListener(this);
@@ -99,11 +106,12 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
         GetPreferences();
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_select, menu);
-        menuSet = (MenuItem) menu.findItem(R.id.action_set);
+        getMenuInflater().inflate(R.menu.preference_select, menu);
+        menuSet = (MenuItem) menu.findItem(R.id.action_select);
         return true;
     }
 
@@ -115,14 +123,23 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_set) {
-            setPreferences();
+        if (id == R.id.action_select) {
+            selval = true;
+            for (pos = 0; pos < categoryArrayList.size(); pos++) {
+                Category tag = preferenceAdatper.getItem(pos);
+                selectedList.add(tag);
+                tag.setCategoryPreference("Y");
+                preferenceAdatper.notifyDataSetChanged();
+            }
             return true;
-        } else if (id == R.id.action_skip) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            this.finish();
+        } else if (id == R.id.action_deselect) {
+            selval = false;
+            for (pos = 0; pos < categoryArrayList.size(); pos++) {
+                Category tag = preferenceAdatper.getItem(pos);
+                tag.setCategoryPreference("N");
+                selectedList.removeAll(selectedList);
+                preferenceAdatper.notifyDataSetChanged();
+            }
             return true;
         }
 
@@ -244,6 +261,7 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
+            PreferenceStorage.savePreferencesSelected(this, true);
             if (responseActivity.equalsIgnoreCase("view")) {
                 try {
                     JSONArray getData = response.getJSONArray("Categories");

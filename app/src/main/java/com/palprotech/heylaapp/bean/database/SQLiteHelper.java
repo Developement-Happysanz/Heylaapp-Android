@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.palprotech.heylaapp.activity.BookingActivity;
+
 /**
  * Created by Admin on 24-10-2017.
  */
@@ -19,11 +21,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String TAG = "SQLiteHelper.java";
 
     private static final String DATABASE_NAME = "heyla.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 8;
 
     private static final String table_create_remember_me = "Create table IF NOT EXISTS rememberMe(_id integer primary key autoincrement,"
             + "username text," //1
-            + "password text);";//2
+            + "password text," //2
+            + "rememberMeCheck text);";//3
 
     private static final String table_create_welcome_screen_check = "Create table IF NOT EXISTS appInfoCheck(_id integer primary key autoincrement,"
             + "status text);";//1
@@ -58,11 +61,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     /*Remember me Data Store and Retrieve Functionality*/
 
-    public long remember_me_insert(String val1, String val2) {
+    public long remember_me_insert(String val1, String val2, String val3) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues initialValues = new ContentValues();
         initialValues.put("username", val1);
         initialValues.put("password", val2);
+        initialValues.put("rememberMeCheck", val3);
         long l = db.insert("rememberMe", null, initialValues);
         db.close();
         return l;
@@ -70,12 +74,31 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     public Cursor selectRememberMe() throws SQLException {
         SQLiteDatabase db = this.getWritableDatabase();
-        String fetch = "Select username,password from rememberMe limit 1;";
+        String fetch = "Select username,password,rememberMeCheck from rememberMe limit 1;";
         Cursor c = db.rawQuery(fetch, null);
         if (c != null) {
             c.moveToFirst();
         }
         return c;
+    }
+
+    public boolean checkRememberMe() {
+        boolean status = false;
+        SQLiteDatabase database = this.getReadableDatabase();
+        String selectQuery = "Select rememberMeCheck from rememberMe limit 1;";
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String value = cursor.getString(0);
+                if (value.equalsIgnoreCase("yes")) {
+                    status = true;
+                } else {
+                    status = false;
+                }
+
+            } while (cursor.moveToNext());
+        }
+        return status;
     }
 
     public void deleteRememberMe() {
@@ -96,27 +119,17 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return l;
     }
 
-    public Cursor selectAppInfoCheck() throws SQLException {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String fetch = "Select count(*) from appInfoCheck where status = 'Y';";
-        Cursor c = db.rawQuery(fetch, null);
-        if (c != null) {
-            c.moveToFirst();
-        }
-        return c;
-    }
-
     public int appInfoCheck() {
-        int Mail = 0;
+        int status = 0;
         SQLiteDatabase database = this.getReadableDatabase();
-        String selectQuery = "Select count(*) from appInfoCheck where status = 'Y';";
+        String selectQuery = "Select * from appInfoCheck where status = 'Y';";
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-                Mail = cursor.getCount();
+                status = cursor.getCount();
             } while (cursor.moveToNext());
         }
-        return Mail;
+        return status;
     }
 
     /*End*/

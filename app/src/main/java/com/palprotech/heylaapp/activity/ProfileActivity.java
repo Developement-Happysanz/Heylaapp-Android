@@ -149,43 +149,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         setUI();
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.
-                INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        return true;
-    }
-
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
-    }
-
-    public void setupUI(View view) {
-
-        // Set up touch listener for non-text box views to hide keyboard.
-        if (!(view instanceof EditText)) {
-            view.setOnTouchListener(new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    hideSoftKeyboard(ProfileActivity.this);
-                    return false;
-                }
-            });
-        }
-
-        //If a layout container, iterate over children and seed recursion.
-        if (view instanceof ViewGroup) {
-            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-                View innerView = ((ViewGroup) view).getChildAt(i);
-                setupUI(innerView);
-            }
-        }
-    }
-
     void setUI() {
 
         serviceHelper = new ServiceHelper(this);
@@ -324,27 +287,21 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         GetCountry();
     }
 
-    private void GetCountry() {
-
-        checkInternalState = "country";
-
-        if (CommonUtils.isNetworkAvailable(this)) {
-
-            JSONObject jsonObject = new JSONObject();
-            try {
-                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
-
-            } catch (JSONException e) {
-                e.printStackTrace();
+    @Override
+    public void onClick(View view) {
+        if (view == save) {
+            if (validateFields()) {
+                checkInternalState = "profile_update";
+                saveProfile();
             }
-
-            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.COUNTRY_LIST;
-            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-
-
-        } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+        } else if (view == mProfileImage) {
+            openImageIntent();
+        } else if (view == country) {
+            showCountryList();
+        } else if (view == state) {
+            showStateList();
+        } else if (view == city) {
+            showCityList();
         }
     }
 
@@ -549,147 +506,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         }
     }
 
-    private void showGenderList() {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-
-        builderSingle.setTitle("Select Gender");
-        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
-        TextView header = (TextView) view.findViewById(R.id.gender_header);
-        header.setText("Select Gender");
-        builderSingle.setCustomTitle(view);
-
-        builderSingle.setAdapter(mGenderAdapter
-                ,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String strName = mGenderList.get(which);
-                        mGender.setText(strName);
-                    }
-                });
-        builderSingle.show();
-    }
-
-    private void showOccupationList() {
-        Log.d(TAG, "Show occupation list");
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
-        TextView header = (TextView) view.findViewById(R.id.gender_header);
-        header.setText("Select Occupation");
-        builderSingle.setCustomTitle(view);
-
-        builderSingle.setAdapter(mOccupationAdapter,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String strName = mOccupationList.get(which);
-                        mOccupation.setText(strName);
-                    }
-                });
-        builderSingle.show();
-    }
-
-    private void showBirthdayDate() {
-        Log.d(TAG, "Show the birthday date");
-        Calendar newCalendar = Calendar.getInstance();
-        String currentdate = mBirthday.getText().toString();
-        Log.d(TAG, "current date is" + currentdate);
-        int month = newCalendar.get(Calendar.MONTH);
-        int day = newCalendar.get(Calendar.DAY_OF_MONTH);
-        int year = newCalendar.get(Calendar.YEAR);
-        if ((currentdate != null) && !(currentdate.isEmpty())) {
-            //extract the date/month and year
-            try {
-                Date startDate = mDateFormatter.parse(currentdate);
-                Calendar newDate = Calendar.getInstance();
-
-                newDate.setTime(startDate);
-                month = newDate.get(Calendar.MONTH);
-                day = newDate.get(Calendar.DAY_OF_MONTH);
-                year = newDate.get(Calendar.YEAR);
-                Log.d(TAG, "month" + month + "day" + day + "year" + year);
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } finally {
-                mDatePicker = new DatePickerDialog(this, R.style.datePickerTheme, this, year, month, day);
-                mDatePicker.show();
-            }
-        } else {
-            Log.d(TAG, "show default date");
-
-            mDatePicker = new DatePickerDialog(this, R.style.datePickerTheme, this, year, month, day);
-            mDatePicker.show();
-        }
-    }
-
-    private boolean validateFields() {
-        if (!HeylaAppValidator.checkNullString(this.name.getText().toString().trim())) {
-            inputName.setError(getString(R.string.err_name));
-            requestFocus(name);
-            return false;
-
-        } else if (!HeylaAppValidator.checkNullString(this.username.getText().toString().trim())) {
-            inputUsername.setError(getString(R.string.err_username));
-            requestFocus(username);
-            return false;
-        } else if (!HeylaAppValidator.checkStringMinLength(4, this.username.getText().toString().trim())) {
-            inputUsername.setError(getString(R.string.err_username));
-            requestFocus(username);
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private void requestFocus(View view) {
-        if (view.requestFocus()) {
-
-        }
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-    }
-
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        Calendar newDate = Calendar.getInstance();
-        newDate.set(year, monthOfYear, dayOfMonth);
-        mBirthday.setText(mDateFormatter.format(newDate.getTime()));
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view == save) {
-            if (validateFields()) {
-                checkInternalState = "profile_update";
-                saveProfile();
-                /*Intent homeIntent = new Intent(this.getApplicationContext(), MainActivity.class);
-                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(homeIntent);*/
-//                finish();
-            }
-        } else if (view == mProfileImage) {
-            openImageIntent();
-        } else if (view == country) {
-            showCountryList();
-        } else if (view == state) {
-            showStateList();
-        } else if (view == city) {
-            showCityList();
-        }
-    }
-
     private void openImageIntent() {
 
 // Determine Uri of camera image to save.
@@ -792,7 +608,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             String[] proj = {MediaStore.Images.Media.DATA};
             CursorLoader loader = new CursorLoader(context, contentUri, proj, null, null, null);
 
-
             Cursor cursor = loader.loadInBackground();
             if (cursor != null) {
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -809,7 +624,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         } finally {
             return result;
         }
-
     }
 
     private void setPic(Uri selectedImageUri) {
@@ -846,16 +660,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onAlertPositiveClicked(int tag) {
-
-    }
-
-    @Override
-    public void onAlertNegativeClicked(int tag) {
-
     }
 
     private boolean validateSignInResponse(JSONObject response) {
@@ -917,10 +721,8 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                     countryList = new ArrayList<>();
 
                     for (int i = 0; i < getLength; i++) {
-
                         countryId = getData.getJSONObject(i).getString("id");
                         countryName = getData.getJSONObject(i).getString("country_name");
-
                         countryList.add(new StoreCountry(countryId, countryName));
                     }
 
@@ -997,11 +799,137 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                             return view;
                         }
                     };
-
                 }
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        if (mProgressDialog != null) {
+            mProgressDialog.cancel();
+        }
+        progressDialogHelper.hideProgressDialog();
+        AlertDialogHelper.showSimpleAlertDialog(this, "Error saving your profile. Try again");
+    }
+
+    private void showBirthdayDate() {
+        Log.d(TAG, "Show the birthday date");
+        Calendar newCalendar = Calendar.getInstance();
+        String currentdate = mBirthday.getText().toString();
+        Log.d(TAG, "current date is" + currentdate);
+        int month = newCalendar.get(Calendar.MONTH);
+        int day = newCalendar.get(Calendar.DAY_OF_MONTH);
+        int year = newCalendar.get(Calendar.YEAR);
+        if ((currentdate != null) && !(currentdate.isEmpty())) {
+            //extract the date/month and year
+            try {
+                Date startDate = mDateFormatter.parse(currentdate);
+                Calendar newDate = Calendar.getInstance();
+
+                newDate.setTime(startDate);
+                month = newDate.get(Calendar.MONTH);
+                day = newDate.get(Calendar.DAY_OF_MONTH);
+                year = newDate.get(Calendar.YEAR);
+                Log.d(TAG, "month" + month + "day" + day + "year" + year);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            } finally {
+                mDatePicker = new DatePickerDialog(this, R.style.datePickerTheme, this, year, month, day);
+                mDatePicker.show();
+            }
+        } else {
+            Log.d(TAG, "show default date");
+
+            mDatePicker = new DatePickerDialog(this, R.style.datePickerTheme, this, year, month, day);
+            mDatePicker.show();
+        }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
+
+        // Showing selected spinner item
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        Calendar newDate = Calendar.getInstance();
+        newDate.set(year, monthOfYear, dayOfMonth);
+        mBirthday.setText(mDateFormatter.format(newDate.getTime()));
+    }
+
+    private void showOccupationList() {
+        Log.d(TAG, "Show occupation list");
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
+        TextView header = (TextView) view.findViewById(R.id.gender_header);
+        header.setText("Select Occupation");
+        builderSingle.setCustomTitle(view);
+
+        builderSingle.setAdapter(mOccupationAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String strName = mOccupationList.get(which);
+                        mOccupation.setText(strName);
+                    }
+                });
+        builderSingle.show();
+    }
+
+    private void showGenderList() {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+
+        builderSingle.setTitle("Select Gender");
+        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
+        TextView header = (TextView) view.findViewById(R.id.gender_header);
+        header.setText("Select Gender");
+        builderSingle.setCustomTitle(view);
+
+        builderSingle.setAdapter(mGenderAdapter
+                ,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String strName = mGenderList.get(which);
+                        mGender.setText(strName);
+                    }
+                });
+        builderSingle.show();
+    }
+
+    private void GetCountry() {
+
+        checkInternalState = "country";
+
+        if (CommonUtils.isNetworkAvailable(this)) {
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.COUNTRY_LIST;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
         }
     }
 
@@ -1020,6 +948,10 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         StoreCountry county = countryList.get(which);
                         country.setText(county.getCountryName());
                         countryId = county.getCountryId();
+                        state.setText("");
+                        stateId = "";
+                        city.setText("");
+                        cityId = "";
                         callStates(countryId);
                     }
                 });
@@ -1041,27 +973,9 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         StoreState stae = stateList.get(which);
                         state.setText(stae.getStateName());
                         stateId = stae.getStateId();
+                        city.setText("");
+                        cityId = "";
                         callCity(countryId, stateId);
-                    }
-                });
-        builderSingle.show();
-    }
-
-    private void showCityList() {
-        Log.d(TAG, "Show city list");
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
-        TextView header = (TextView) view.findViewById(R.id.gender_header);
-        header.setText("Select City");
-        builderSingle.setCustomTitle(view);
-
-        builderSingle.setAdapter(mCityAdapter,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        StoreCity cty = cityList.get(which);
-                        city.setText(cty.getCityName());
-                        cityId = cty.getCityId();
                     }
                 });
         builderSingle.show();
@@ -1090,6 +1004,26 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         }
     }
 
+    private void showCityList() {
+        Log.d(TAG, "Show city list");
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
+        TextView header = (TextView) view.findViewById(R.id.gender_header);
+        header.setText("Select City");
+        builderSingle.setCustomTitle(view);
+
+        builderSingle.setAdapter(mCityAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        StoreCity cty = cityList.get(which);
+                        city.setText(cty.getCityName());
+                        cityId = cty.getCityId();
+                    }
+                });
+        builderSingle.show();
+    }
+
     private void callCity(String CountryId, String StateId) {
         checkInternalState = "city";
 
@@ -1108,18 +1042,79 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.CITY_LIST;
             serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
-
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
         }
     }
 
-    @Override
-    public void onError(String error) {
-        if (mProgressDialog != null) {
-            mProgressDialog.cancel();
+    private boolean validateFields() {
+        if (!HeylaAppValidator.checkNullString(this.name.getText().toString().trim())) {
+            inputName.setError(getString(R.string.err_name));
+            requestFocus(name);
+            return false;
+        } else if (!HeylaAppValidator.checkNullString(this.username.getText().toString().trim())) {
+            inputUsername.setError(getString(R.string.err_username));
+            requestFocus(username);
+            return false;
+        } else if (!HeylaAppValidator.checkStringMinLength(4, this.username.getText().toString().trim())) {
+            inputUsername.setError(getString(R.string.err_username));
+            requestFocus(username);
+            return false;
+        } else {
+            return true;
         }
-        progressDialogHelper.hideProgressDialog();
-        AlertDialogHelper.showSimpleAlertDialog(this, "Error saving your profile. Try again");
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.
+                INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        return true;
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(ProfileActivity.this);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
+
+    @Override
+    public void onAlertPositiveClicked(int tag) {
+
+    }
+
+    @Override
+    public void onAlertNegativeClicked(int tag) {
+
     }
 }

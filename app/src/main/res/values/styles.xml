@@ -48,6 +48,12 @@
         <!--<item name="logo">@drawable/ab_hobbistan_logo</item>-->
     </style>
 
+    <style name="ThemeOverlay.MyApp.ActionBarSameColor" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- Parent theme sets colorControlNormal to textColorPrimary. -->
+        <item name="titleTextColor">@color/appColorBase</item>
+        <!--<item name="logo">@drawable/ab_hobbistan_logo</item>-->
+    </style>
+
     <style name="ToolBarStyle" parent="ToolBarStyle.Base"/>
 
     <style name="ToolBarStyle.Base" parent="">
@@ -57,6 +63,10 @@
 
     <style name="ToolBarStyle.Event" parent="ToolBarStyle">
         <item name="titleTextAppearance">@style/TextAppearance.Widget.Event.Toolbar.Title</item>
+    </style>
+
+    <style name="ToolBarStyle.EventWithOutTitle" parent="ToolBarStyle">
+        <!--<item name="titleTextAppearance">@style/TextAppearance.Widget.Event.Toolbar.Title</item>-->
     </style>
 
     <style name="TextAppearance.Widget.Event.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">

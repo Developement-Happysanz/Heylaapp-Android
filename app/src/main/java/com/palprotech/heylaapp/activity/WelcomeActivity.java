@@ -176,7 +176,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         PreferenceStorage.setFirstTimeLaunch(getApplicationContext(), false);
-//        database.app_info_check_insert("Y");
+        database.app_info_check_insert("Y");
         startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
         finish();
     }

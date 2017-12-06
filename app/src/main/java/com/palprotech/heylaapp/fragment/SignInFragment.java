@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -40,6 +41,7 @@ import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.ForgotPasswordActivity;
 import com.palprotech.heylaapp.activity.LoginActivity;
 import com.palprotech.heylaapp.activity.SelectCityActivity;
+import com.palprotech.heylaapp.bean.database.SQLiteHelper;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
@@ -71,6 +73,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
     private static final int RC_SIGN_IN = 9001;
     private int mSelectedLoginMode = 0;
     private GoogleApiClient mGoogleApiClient;
+    SQLiteHelper database;
 
     public static SignInFragment newInstance(int position) {
         SignInFragment frag = new SignInFragment();
@@ -91,6 +94,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
     }
 
     protected void initializeViews() {
+        database = new SQLiteHelper(getContext());
         edtUsername = rootView.findViewById(R.id.edtUsername);
         edtPassword = rootView.findViewById(R.id.edtPassword);
         signIn = rootView.findViewById(R.id.signin);
@@ -142,11 +146,25 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                 .build();
         // [END build_client]
 
-        Boolean saveLogin = PreferenceStorage.isRemembered(getContext());
+        /*Boolean saveLogin = PreferenceStorage.isRemembered(getContext());
         if (saveLogin) {
             edtUsername.setText(PreferenceStorage.getUsername(getContext()));
             edtPassword.setText(PreferenceStorage.getPassword(getContext()));
             saveLoginCheckBox.setChecked(true);
+        }*/
+
+        Boolean savedLogin = database.checkRememberMe();
+        if (savedLogin) {
+            Cursor c = database.selectRememberMe();
+            if (c.getCount() > 0) {
+                if (c.moveToFirst()) {
+                    do {
+                        edtUsername.setText(c.getString(0));
+                        edtPassword.setText(c.getString(1));
+                        saveLoginCheckBox.setChecked(true);
+                    } while (c.moveToNext());
+                }
+            }
         }
     }
 
@@ -255,7 +273,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                     String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.SIGN_IN;
                     serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
-                    if (saveLoginCheckBox.isChecked()) {
+                    /*if (saveLoginCheckBox.isChecked()) {
                         PreferenceStorage.saveUsername(getContext(), username);
                         PreferenceStorage.savePassword(getContext(), password);
                         PreferenceStorage.setRememberMe(getContext(), true);
@@ -263,7 +281,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                         PreferenceStorage.saveUsername(getContext(), "");
                         PreferenceStorage.savePassword(getContext(), "");
                         PreferenceStorage.setRememberMe(getContext(), false);
-                    }
+                    }*/
 
                     PreferenceStorage.saveLoginMode(getActivity(), HeylaAppConstants.NORMAL_SIGNUP);
                     mSelectedLoginMode = HeylaAppConstants.NORMAL_SIGNUP;
@@ -272,7 +290,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                 Intent homeIntent = new Intent(getActivity(), ForgotPasswordActivity.class);
                 homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(homeIntent);
-                getActivity().finish();
+//                getActivity().finish();
             } else if (v == btnGoogle) {
                 PreferenceStorage.saveLoginMode(getActivity(), HeylaAppConstants.GOOGLE_PLUS);
                 mSelectedLoginMode = HeylaAppConstants.GOOGLE_PLUS;
@@ -530,6 +548,14 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                 }
 
                 PreferenceStorage.saveUserType(getActivity(), "1");
+
+                if (saveLoginCheckBox.isChecked()) {
+                    database.deleteRememberMe();
+                    database.remember_me_insert(edtUsername.getText().toString().trim(), edtPassword.getText().toString().trim(), "yes");
+                } else {
+                    database.deleteRememberMe();
+                    database.remember_me_insert(edtUsername.getText().toString().trim(), edtPassword.getText().toString().trim(), "no");
+                }
 
             } catch (JSONException ex) {
                 ex.printStackTrace();
