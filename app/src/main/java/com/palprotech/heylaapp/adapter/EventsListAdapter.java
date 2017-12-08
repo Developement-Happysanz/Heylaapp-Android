@@ -22,7 +22,12 @@ import com.palprotech.heylaapp.utils.HeylaAppValidator;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by zahid.r on 10/30/2015.
@@ -35,7 +40,7 @@ public class EventsListAdapter extends BaseAdapter {
     private ArrayList<Event> events;
     private boolean mSearching = false;
     private boolean mAnimateSearch = false;
-    private ArrayList<Integer> mValidSearchIndices =new ArrayList<Integer>();
+    private ArrayList<Integer> mValidSearchIndices = new ArrayList<Integer>();
     private ImageLoader imageLoader = AppController.getInstance().getUniversalImageLoader();
 
     public EventsListAdapter(Context context, ArrayList<Event> events) {
@@ -51,14 +56,14 @@ public class EventsListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if(mSearching){
+        if (mSearching) {
             // Log.d("Event List Adapter","Search count"+mValidSearchIndices.size());
-            if(!mAnimateSearch){
+            if (!mAnimateSearch) {
                 mAnimateSearch = true;
             }
             return mValidSearchIndices.size();
 
-        }else{
+        } else {
             // Log.d(TAG,"Normal count size");
             return events.size();
         }
@@ -67,9 +72,9 @@ public class EventsListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        if(mSearching){
+        if (mSearching) {
             return events.get(mValidSearchIndices.get(position));
-        }else {
+        } else {
             return events.get(position);
         }
     }
@@ -91,6 +96,7 @@ public class EventsListAdapter extends BaseAdapter {
             holder.txtEventName = (TextView) convertView.findViewById(R.id.txt_event_name);
             holder.txtEventVenue = (TextView) convertView.findViewById(R.id.txt_event_location);
             holder.txtDate = (TextView) convertView.findViewById(R.id.txt_event_date);
+            holder.txtMonth = convertView.findViewById(R.id.txt_event_month);
             holder.txtTime = (TextView) convertView.findViewById(R.id.txt_event_time);
 //            holder.txtCategory = (TextView) convertView.findViewById(R.id.txt_event_category);
             holder.imageView = (ImageView) convertView.findViewById(R.id.img_logo);
@@ -102,13 +108,13 @@ public class EventsListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if(mSearching){
+        if (mSearching) {
             // Log.d("Event List Adapter","actual position"+ position);
             position = mValidSearchIndices.get(position);
             //Log.d("Event List Adapter", "position is"+ position);
 
-        }else{
-            Log.d("Event List Adapter","getview pos called"+ position);
+        } else {
+            Log.d("Event List Adapter", "getview pos called" + position);
         }
 
         Event event = events.get(position);
@@ -116,11 +122,10 @@ public class EventsListAdapter extends BaseAdapter {
         holder.txtEventName.setText(events.get(position).getEventName());
 //        holder.txtEventVenue.setText(events.get(position).getEventVenue());
         String[] aux = events.get(position).getEventVenue().toString().split(",\\s*");
-        String result="";
-        if(aux.length >2) {
+        String result = "";
+        if (aux.length > 2) {
             result = aux[aux.length - 2];
-        }
-        else {
+        } else {
             result = aux[aux.length - 1];
         }
         holder.txtEventVenue.setText(result);
@@ -133,19 +138,19 @@ public class EventsListAdapter extends BaseAdapter {
             holder.adImage.setVisibility(View.INVISIBLE);
         }*/
         String paidBtnVal = event.getEventType();
-        if( paidBtnVal!= null){
+        if (paidBtnVal != null) {
 //            holder.paidBtn.setText(event.getEvent_cost());
-            if(paidBtnVal.equalsIgnoreCase("invite")){
+            if (paidBtnVal.equalsIgnoreCase("invite")) {
                 holder.paidBtn.setTextColor(context.getResources().getColor(R.color.white)); //Blue
-            }else if(paidBtnVal.equalsIgnoreCase("free")){
+            } else if (paidBtnVal.equalsIgnoreCase("free")) {
                 holder.paidBtn.setTextColor(context.getResources().getColor(R.color.white)); //Green
-            }else if(paidBtnVal.equalsIgnoreCase("paid")){
+            } else if (paidBtnVal.equalsIgnoreCase("paid")) {
                 holder.paidBtn.setTextColor(context.getResources().getColor(R.color.white)); //rounder_button
             }
         }
 
 //        imageLoader.displayImage(events.get(position).getEventBanner(), holder.imageView, AppController.getInstance().getLogoDisplayOptions());
-        if(HeylaAppValidator.checkNullString(events.get(position).getEventBanner())) {
+        if (HeylaAppValidator.checkNullString(events.get(position).getEventBanner())) {
             Picasso.with(this.context).load(events.get(position).getEventBanner()).fit().transform(this.transformation).placeholder(R.drawable.ic_heyla_logo).error(R.drawable.ic_heyla_logo).into(holder.imageView);
         } else {
             holder.imageView.setImageResource(R.drawable.ic_heyla_logo);
@@ -153,15 +158,32 @@ public class EventsListAdapter extends BaseAdapter {
         String start = HeylaAppHelper.getDate(events.get(position).getStartDate());
         String end = HeylaAppHelper.getDate(events.get(position).getEndDate());
 
-        if( (start != null) && (end != null)) {
-            holder.txtDate.setText(start +"- "+ end);
-        }else{
-            holder.txtDate.setText("N/A");
+        try{
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
+            Date date = (Date)formatter.parse(start);
+            SimpleDateFormat month_date = new SimpleDateFormat("MMM");
+            String month_name = month_date.format(date.getTime());
+            SimpleDateFormat event_date = new SimpleDateFormat("dd");
+            String date_name = event_date.format(date.getTime());
+            if ((start != null) && (end != null)) {
+                holder.txtDate.setText(date_name);
+                holder.txtMonth.setText(month_name);
+            } else {
+                holder.txtDate.setText("N/A");
+            }
         }
+        catch (final ParseException e) {
+            e.printStackTrace();
+        }
+
         //fetch timer values
-        start = HeylaAppHelper.getTime(events.get(position).getStartDate());
-        end = HeylaAppHelper.getTime(events.get(position).getEndDate());
-        String startTime="", endTime="";
+        start = HeylaAppHelper.getTime(events.get(position).
+
+                getStartDate());
+        end = HeylaAppHelper.getTime(events.get(position).
+
+                getEndDate());
+        String startTime = "", endTime = "";
 //        try {
 //            final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 ////            final Date startDateObj = sdf.parse(start);
@@ -172,8 +194,10 @@ public class EventsListAdapter extends BaseAdapter {
 //        } catch (final ParseException e) {
 //            e.printStackTrace();
 //        }
-        if((startTime != null) && (end != null)){
-            holder.txtTime.setText(startTime +" - "+ endTime);
+        if ((startTime != null) && (end != null))
+
+        {
+            holder.txtTime.setText(startTime + " - " + endTime);
         }
 
 //        holder.txtCategory.setText("  "+events.get(position).getEventCategoryId()+"  ");
@@ -188,40 +212,40 @@ public class EventsListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void startSearch(String eventName){
+    public void startSearch(String eventName) {
         mSearching = true;
         mAnimateSearch = false;
-        Log.d("EventListAdapter","serach for event"+eventName);
+        Log.d("EventListAdapter", "serach for event" + eventName);
         mValidSearchIndices.clear();
-        for(int i =0; i< events.size(); i++){
+        for (int i = 0; i < events.size(); i++) {
             String eventname = events.get(i).getEventName();
-            if((eventname != null) && !(eventname.isEmpty())){
-                if( eventname.toLowerCase().contains(eventName.toLowerCase())){
+            if ((eventname != null) && !(eventname.isEmpty())) {
+                if (eventname.toLowerCase().contains(eventName.toLowerCase())) {
                     mValidSearchIndices.add(i);
                 }
 
             }
 
         }
-        Log.d("Event List Adapter","notify"+ mValidSearchIndices.size());
+        Log.d("Event List Adapter", "notify" + mValidSearchIndices.size());
         //notifyDataSetChanged();
 
     }
 
-    public void exitSearch(){
+    public void exitSearch() {
         mSearching = false;
         mValidSearchIndices.clear();
         mAnimateSearch = false;
         // notifyDataSetChanged();
     }
 
-    public void clearSearchFlag(){
+    public void clearSearchFlag() {
         mSearching = false;
     }
 
     public class ViewHolder {
-        public TextView txtEventName, txtEventVenue, txtDate, txtTime, txtCategory;
-        public ImageView imageView,adImage;
+        public TextView txtEventName, txtEventVenue, txtDate, txtMonth, txtTime, txtCategory;
+        public ImageView imageView, adImage;
         public Button paidBtn;
     }
 
@@ -229,10 +253,10 @@ public class EventsListAdapter extends BaseAdapter {
         return mSearching;
     }
 
-    public int getActualEventPos(int selectedSearchpos){
-        if(selectedSearchpos < mValidSearchIndices.size()) {
+    public int getActualEventPos(int selectedSearchpos) {
+        if (selectedSearchpos < mValidSearchIndices.size()) {
             return mValidSearchIndices.get(selectedSearchpos);
-        }else{
+        } else {
             return 0;
         }
     }
