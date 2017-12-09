@@ -145,7 +145,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
         } else {
             event = eventsArrayList.get(position);
         }
-        Intent intent = new Intent(this, NormalEventDetailActivity.class);
+        Intent intent = new Intent(this, EventDetailActivity.class);
         intent.putExtra("eventObj", event);
         // intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);

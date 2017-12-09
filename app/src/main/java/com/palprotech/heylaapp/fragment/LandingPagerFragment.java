@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
-import com.palprotech.heylaapp.activity.NormalEventDetailActivity;
+import com.palprotech.heylaapp.activity.EventDetailActivity;
 import com.palprotech.heylaapp.adapter.EventsListAdapter;
 import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.bean.support.EventList;
@@ -124,7 +124,7 @@ public class LandingPagerFragment extends Fragment implements IServiceListener, 
             event = eventsArrayList.get(i);
         }
 
-        Intent intent = new Intent(getActivity(), NormalEventDetailActivity.class);
+        Intent intent = new Intent(getActivity(), EventDetailActivity.class);
         intent.putExtra("eventObj", event);
         // intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);

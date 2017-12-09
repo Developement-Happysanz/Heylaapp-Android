@@ -10,12 +10,12 @@ import com.palprotech.heylaapp.R;
  * Created by Narendar on 03/11/17.
  */
 
-public class NormalEventDetailActivity extends AppCompatActivity {
+public class EventDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_normal_event_detail);
+        setContentView(R.layout.activity_event_detail);
 
         findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
             @Override

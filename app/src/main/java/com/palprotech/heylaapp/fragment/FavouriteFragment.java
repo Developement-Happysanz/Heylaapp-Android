@@ -23,10 +23,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -40,7 +38,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
-import com.palprotech.heylaapp.activity.NormalEventDetailActivity;
+import com.palprotech.heylaapp.activity.EventDetailActivity;
 import com.palprotech.heylaapp.adapter.EventsListAdapter;
 import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.bean.support.EventList;
@@ -570,7 +568,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             event = eventsArrayList.get(position);
         }
 
-        Intent intent = new Intent(getActivity(), NormalEventDetailActivity.class);
+        Intent intent = new Intent(getActivity(), EventDetailActivity.class);
         intent.putExtra("eventObj", event);
         // intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
@@ -797,7 +795,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
                     Event event = mDisplayedEvents.get(pos);
                     if (event != null) {
                         Log.d(TAG, "map info view clicked");
-                        Intent intent = new Intent(getActivity(), NormalEventDetailActivity.class);
+                        Intent intent = new Intent(getActivity(), EventDetailActivity.class);
                         intent.putExtra("eventObj", event);
                         startActivity(intent);
                     }
