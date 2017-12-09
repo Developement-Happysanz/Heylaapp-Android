@@ -126,20 +126,34 @@
             android:id="@+id/txt_event_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_gravity="center"
+            android:layout_gravity="center|bottom"
             android:layout_marginTop="2dp"
             android:layout_marginStart="1dp"
-            android:layout_marginLeft="1dp"
+            android:layout_alignStart="@id/txt_event_month"
+            android:layout_alignEnd="@id/txt_event_month"
             android:background="@color/appColorBase"
             android:ellipsize="end"
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:singleLine="true"
-            android:text="Sep 24th-30th Sun"
+            android:text=""
             android:textColor="@android:color/white"
-            android:textSize="11dp" />
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/txt_event_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:gravity="center|top"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:layout_marginStart="1dp"
+            android:background="@color/appColorBase"
+            android:textColor="@android:color/white"
+            android:textSize="15dp"
+            android:layout_below="@+id/txt_event_date"/>
 
 
     </RelativeLayout>

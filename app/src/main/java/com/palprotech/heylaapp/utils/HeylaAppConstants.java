@@ -125,10 +125,13 @@ public class HeylaAppConstants {
 
     //    Event list
     public static final String EVENT_LIST = "apimain/viewevents/";
-//    public static final String EVENT_LIST = "apimain/viewevents_test/";
 
     //    Event list params
     public static final String KEY_EVENT_TYPE = "event_type";
+
+    // Leaderboard
+    public static final String LEADERBOARD_USER_ACTIVITY = "apimain/useractivity/";
+    public static final String LEADERBOARD = "apimain/leaderboard/";
 
 
     //    SharedPref

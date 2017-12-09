@@ -1,6 +1,7 @@
 package com.palprotech.heylaapp.fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +17,13 @@ import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.LeaderboardStatistics;
 import com.palprotech.heylaapp.activity.ProfileActivity;
 import com.palprotech.heylaapp.customview.CircleImageView;
+import com.palprotech.heylaapp.helper.ProgressDialogHelper;
+import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
+import com.palprotech.heylaapp.utils.HeylaAppConstants;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Narendar on 28/10/17.
@@ -25,7 +33,10 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
     View rootView;
     CircleImageView profileImg;
+    Context context;
     Button follow;
+    private ServiceHelper serviceHelper;
+    private ProgressDialogHelper progressDialogHelper;
     TextView viewFullStatistics;
     RelativeLayout login, share, check_in, booking, reviews;
 
@@ -36,6 +47,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         rootView = inflater.inflate(R.layout.fragment_leaderboard, container, false);
 
         initializeViews();
+        makeEventListServiceCall();
         setHasOptionsMenu(true);
 
         return rootView;
@@ -57,6 +69,19 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
         booking = rootView.findViewById(R.id.booking_layout);
         booking.setOnClickListener(this);
+
+    }
+
+    private void makeEventListServiceCall() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getActivity()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.LEADERBOARD;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
     @Override
