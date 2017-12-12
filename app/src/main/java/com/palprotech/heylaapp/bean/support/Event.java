@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 public class Event implements Serializable {
 
-    @SerializedName("id")
+    @SerializedName("event_id")
     @Expose
     private String id;
 
