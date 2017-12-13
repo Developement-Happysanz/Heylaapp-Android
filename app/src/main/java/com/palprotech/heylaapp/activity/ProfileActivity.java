@@ -336,7 +336,9 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     private void saveProfileData() {
 
         fullName = name.getText().toString();
+        PreferenceStorage.saveFullName(this, fullName);
         userName = username.getText().toString();
+        PreferenceStorage.saveUsername(this, userName);
         birthDay = mBirthday.getText().toString();
         occupation = mOccupation.getText().toString();
         gender = mGender.getText().toString();
