@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,7 +48,9 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     private ProgressDialogHelper progressDialogHelper;
     TextView viewFullStatistics, loginCount, loginPoints, shareCount, sharePoints, checkinCount;
     TextView checkinPoints, bookingCount, bookingPoints, reviewCount, reviewPoints, totalPoints;
+    TextView name, username;
     RelativeLayout login, share, check_in, booking, reviews;
+    ImageView userPic;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,6 +64,17 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     }
 
     protected void initializeViews() {
+
+        name = rootView.findViewById(R.id.name);
+        name.setText(PreferenceStorage.getFullName(getApplicationContext()));
+        username = rootView.findViewById(R.id.username);
+        username.setText(PreferenceStorage.getUsername(getApplicationContext()));
+        userPic = rootView.findViewById(R.id.leaderboard_profile_img);
+        userPic.setOnClickListener(this);
+        String url = PreferenceStorage.getUserPicture(getApplicationContext());
+        if (((url != null) && !(url.isEmpty()))) {
+            Picasso.with(getApplicationContext()).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(userPic);
+        }
 
         login = rootView.findViewById(R.id.login_layout);
         login.setOnClickListener(this);

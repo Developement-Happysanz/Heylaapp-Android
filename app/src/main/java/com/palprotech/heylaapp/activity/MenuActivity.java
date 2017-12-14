@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
@@ -31,6 +32,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout vRateUs;
     private RelativeLayout vSignOut;
     private ImageView vUserImage;
+    private TextView profileName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         vRateUs.setOnClickListener(this);
         vSignOut = (RelativeLayout) findViewById(R.id.sign_out_img);
         vSignOut.setOnClickListener(this);
+        profileName = findViewById(R.id.profile_name);
+        profileName.setText(PreferenceStorage.getFullName(this));
         vUserImage = (ImageView) findViewById(R.id.profile_img);
         vUserImage.setOnClickListener(this);
         String url = PreferenceStorage.getUserPicture(this);
