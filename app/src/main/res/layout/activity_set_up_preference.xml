@@ -52,12 +52,12 @@
 
         <TextView
             android:id="@+id/text_getStarted"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:drawablePadding="10dp"
             android:fontFamily="sans-serif-medium"
-            android:gravity="center_vertical|right"
+            android:gravity="center"
             android:padding="15dp"
             android:text="@string/get_started"
             android:textColor="@android:color/white"
