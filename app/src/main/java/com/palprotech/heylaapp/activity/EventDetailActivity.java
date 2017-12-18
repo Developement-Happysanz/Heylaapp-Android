@@ -17,10 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.bean.support.Event;
-import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by Narendar on 03/11/17.
@@ -48,6 +45,12 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 
         event = (Event) getIntent().getSerializableExtra("eventObj");
         setUpUI();
+        findViewById(R.id.menu_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 
