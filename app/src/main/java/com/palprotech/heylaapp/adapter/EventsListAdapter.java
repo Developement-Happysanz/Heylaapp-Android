@@ -151,9 +151,9 @@ public class EventsListAdapter extends BaseAdapter {
 
 //        imageLoader.displayImage(events.get(position).getEventBanner(), holder.imageView, AppController.getInstance().getLogoDisplayOptions());
         if (HeylaAppValidator.checkNullString(events.get(position).getEventBanner())) {
-            Picasso.with(this.context).load(events.get(position).getEventBanner()).fit().transform(this.transformation).placeholder(R.drawable.ic_heyla_logo).error(R.drawable.ic_heyla_logo).into(holder.imageView);
+            Picasso.with(this.context).load(events.get(position).getEventBanner()).fit().transform(this.transformation).placeholder(R.drawable.heyla_logo_transparent).error(R.drawable.heyla_logo_transparent).into(holder.imageView);
         } else {
-            holder.imageView.setImageResource(R.drawable.ic_heyla_logo);
+            holder.imageView.setImageResource(R.drawable.heyla_logo_transparent);
         }
         String start = HeylaAppHelper.getDate(events.get(position).getStartDate());
         String end = HeylaAppHelper.getDate(events.get(position).getEndDate());

@@ -45,13 +45,6 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 
         event = (Event) getIntent().getSerializableExtra("eventObj");
         setUpUI();
-        findViewById(R.id.menu_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
     }
 
     @Override
@@ -128,6 +121,10 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 //        Event details
         TextView txtEventDetails = findViewById(R.id.eventdetailtxt);
         txtEventDetails.setText(event.getDescription());
+//        Event venue mapview
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 //        Event organiser follow
         imEventOrganiserRequest = findViewById(R.id.followrequest);
         imEventOrganiserRequest.setOnClickListener(this);
@@ -150,10 +147,10 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 //        Event booking
         txtBookEvent = findViewById(R.id.book_tickets);
         txtBookEvent.setOnClickListener(this);
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        String isBooking = event.getEventBookingStatus();
+        if (isBooking.equalsIgnoreCase("N")) {
+            txtBookEvent.setVisibility(View.GONE);
+        }
     }
 
     @Override
