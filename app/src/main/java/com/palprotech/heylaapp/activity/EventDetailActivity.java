@@ -43,6 +43,13 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
 
+        findViewById(R.id.detail_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         event = (Event) getIntent().getSerializableExtra("eventObj");
         setUpUI();
     }
