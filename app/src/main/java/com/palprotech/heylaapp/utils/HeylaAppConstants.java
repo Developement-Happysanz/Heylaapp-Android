@@ -135,6 +135,18 @@ public class HeylaAppConstants {
     //    Booking plan dates params
     public static final String KEY_EVENT_ID = "event_id";
 
+    //    Booking plan timings
+    public static final String BOOKING_SHOW_TIMES = "apimain/bookingplantimes/";
+
+    //    Booking plan show timings params
+    public static final String KEY_EVENT_SHOW_DATE = "show_date";
+
+    //    Booking plans
+    public static final String BOOKING_SHOW_PLANS = "apimain/bookingplans/";
+
+    //    Booking plans params
+    public static final String KEY_EVENT_SHOW_TIME = "show_time";
+
     // Leaderboard
     public static final String LEADERBOARD_USER_ACTIVITY = "apimain/useractivity/";
     public static final String LEADERBOARD = "apimain/leaderboard/";
