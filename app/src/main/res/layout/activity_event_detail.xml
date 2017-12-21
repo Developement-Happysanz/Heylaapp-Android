@@ -14,7 +14,7 @@
         android:minHeight="60dp" />
 
     <ImageView
-        android:id="@+id/back_res"
+        android:id="@+id/detail_back"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
