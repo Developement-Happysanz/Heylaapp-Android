@@ -240,4 +240,10 @@ public class HeylaAppConstants {
     public static final String FILTERCITYINDEX = "filtercityindex";
     public static final String FILTEREVENTTYPEINDEX = "filtereventtypeindex";
     public static final String FILTEREVENTTYPECATEGORYINDEX = "filtereventtypecategoryindex";
+
+    // Booking Status
+
+    public static final String KEY_PAYMENT_AMOUNT = "eventRate";
+    public static final String KEY_TRANSACTION_DATE = "eventDate";
+    public static final String KEY_TOTAL_NO_OF_TICKETS = "totalNoOfTickets";
 }

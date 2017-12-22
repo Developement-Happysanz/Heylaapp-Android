@@ -84,6 +84,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             Intent intent = new Intent(getApplicationContext(), BookingActivity.class);
             intent.putExtra("eventObj", event);
             startActivity(intent);
+            finish();
         }
     }
 

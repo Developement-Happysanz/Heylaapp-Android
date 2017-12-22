@@ -787,4 +787,66 @@ public class PreferenceStorage {
         return userId;
     }
 
+    // Booking Status check
+
+    public static void saveOrderId(Context context, String orderID) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.KEY_ORDER_ID, orderID);
+        editor.commit();
+    }
+
+    public static String getOrderId(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String orderId = sharedPreferences.getString(HeylaAppConstants.KEY_ORDER_ID, "");
+        return orderId;
+    }
+
+    public static void savePaymentAmount(Context context, String eventRate) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.KEY_PAYMENT_AMOUNT, eventRate);
+        editor.commit();
+    }
+
+    public static String getPaymentAmount(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String paymentAmount = sharedPreferences.getString(HeylaAppConstants.KEY_PAYMENT_AMOUNT, "");
+        return paymentAmount;
+    }
+
+    public static void saveTotalNoOfTickets(Context context, String totalNoOfTickets) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.KEY_TOTAL_NO_OF_TICKETS, totalNoOfTickets);
+        editor.commit();
+    }
+
+    public static String getTotalNoOfTickets(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String totalNoOfTickets = sharedPreferences.getString(HeylaAppConstants.KEY_TOTAL_NO_OF_TICKETS, "");
+        return totalNoOfTickets;
+    }
+
+    public static void saveTransactionDate(Context context, String eventDate) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.KEY_TRANSACTION_DATE, eventDate);
+        editor.commit();
+    }
+
+    public static String getTransactionDate(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String transactionDate = sharedPreferences.getString(HeylaAppConstants.KEY_TRANSACTION_DATE, "");
+        return transactionDate;
+    }
+
 }

@@ -41,14 +41,9 @@ public class StatusActivity extends Activity {
         PaymentAmount.setText(AvenuesParams.AMOUNT);
         PaymentDone = (Button) findViewById(R.id.pay_done);
 
-        /*String getOrderId = PreferenceStorage.getOrderId(getApplicationContext());
+        String getOrderId = PreferenceStorage.getOrderId(getApplicationContext());
         String getPaymentAmount = PreferenceStorage.getPaymentAmount(getApplicationContext());
-        String getTransactionDate = PreferenceStorage.getTransactionDate(getApplicationContext());*/
-
-        String getOrderId = "";
-        String getPaymentAmount = "";
-        String getTransactionDate = "";
-
+        String getTransactionDate = PreferenceStorage.getTransactionDate(getApplicationContext());
 
         tv4.setText(mainIntent.getStringExtra("transStatus"));
 

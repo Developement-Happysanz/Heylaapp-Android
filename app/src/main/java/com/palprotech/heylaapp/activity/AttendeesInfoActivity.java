@@ -46,9 +46,8 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
     private static final String TAG = AttendeesInfoActivity.class.getName();
     LinearLayout layout_all;
     private Event event;
-    private BookPlan bookPlan;
-    String eventName, eventVenue, eventTicketsRate, eventNoOfTicket, eventDate, eventTime, orderId;
-    int nooftickets;
+    String  eventNoOfTicket, orderId;
+    int noOfTickets;
     private Button btnProceed;
     protected ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
@@ -62,184 +61,14 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
+
         event = (Event) getIntent().getSerializableExtra("eventObj");
-//        bookPlan = (BookPlan) getIntent().getSerializableExtra("planObj");
-//        eventName = getIntent().getExtras().getString("eventName");
-//        eventVenue = getIntent().getExtras().getString("eventVenue");
-//        eventTicketsRate = getIntent().getExtras().getString("eventTicketsRate");
-        eventNoOfTicket = getIntent().getExtras().getString("eventNoOfTicket");
-        orderId = getIntent().getExtras().getString("orderId");
-//        eventDate = getIntent().getExtras().getString("eventDate");
-//        eventTime = getIntent().getExtras().getString("eventTime");
-        nooftickets = Integer.parseInt(eventNoOfTicket);
+        eventNoOfTicket = PreferenceStorage.getTotalNoOfTickets(getApplicationContext());
+        orderId = PreferenceStorage.getOrderId(getApplicationContext());
+
+        noOfTickets = Integer.parseInt(eventNoOfTicket);
+
         loadAttendeesView();
-    }
-
-    private void loadAttendeesView() {
-
-        try {
-
-//            layout_all.setScrollbarFadingEnabled(false);
-            layout_all = findViewById(R.id.layout_timetable);
-
-            TableLayout layout = new TableLayout(this);
-            layout.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT));
-            layout.setBackgroundColor(Color.BLACK);
-            layout.setPadding(1, 1, 1, 1);
-
-            TableLayout.LayoutParams rowLp = new TableLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT);
-            TableRow.LayoutParams cellLp = new TableRow.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT);
-
-            cellLp.setMargins(2, 2, 2, 2);
-
-
-            for (int f = 1; f <= 1; f++) {
-
-                LinearLayout sq = new LinearLayout(this);
-                sq.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                sq.setOrientation(LinearLayout.VERTICAL);
-                sq.setPadding(5, 5, 5, 0);
-                sq.setBackgroundColor(Color.BLACK);
-//                cell.setBackgroundColor(Color.parseColor("#FFFFFF"));
-
-
-                for (int c1 = 1; c1 <= nooftickets; c1++) {
-
-                    LinearLayout cell = new LinearLayout(this);
-                    cell.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    cell.setOrientation(LinearLayout.VERTICAL);
-                    cell.setPadding(0, 5, 0, 0);
-//                    cell.setBackgroundColor(Color.BLACK);
-                    cell.setBackgroundColor(Color.parseColor("#FFFFFF"));
-
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    params.setMargins(10, 0, 10, 0);
-
-                    LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    params1.setMargins(10, 0, 10, 20);
-
-                    LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    params2.setMargins(10, 10, 0, 20);
-
-                    TextView title = new TextView(this);
-                    title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
-                    title.setTextColor(Color.BLACK);
-                    title.setText("Attendee Details " + c1);
-                    title.setLayoutParams(params2);
-
-                    EditText line1 = new EditText(this);
-                    line1.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
-
-                    String name1 = "Line 1";
-
-                    if (c1 == 1) {
-                        line1.setText(PreferenceStorage.getFullName(getApplicationContext()));
-                    }
-//                    else{
-//                    line1.setText(name1);
-//                    }
-                    line1.setId(R.id.my_edit_text_1);
-                    line1.setHint("Full Name");
-                    line1.requestFocusFromTouch();
-                    line1.setTextSize(13.0f);
-                    line1.setTypeface(null, Typeface.BOLD);
-                    line1.setKeyListener(DigitsKeyListener.getInstance("0123456789AB"));
-                    line1.setInputType(InputType.TYPE_CLASS_TEXT);
-                    line1.setAllCaps(true);
-                    line1.setSingleLine(true);
-                    line1.setTextColor(Color.parseColor("#FF68358E"));
-                    line1.setPressed(true);
-                    line1.setHeight(100);
-                    line1.setPadding(5, 0, 5, 0);
-                    line1.setLayoutParams(params);
-
-                    EditText line2 = new EditText(this);
-                    line2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
-
-                    String name2 = "Line 2";
-
-                    if (c1 == 1) {
-                        line2.setText(PreferenceStorage.getEmailId(getApplicationContext()));
-                    }
-//                    else{
-//                    line2.setText(name2);
-//                    }
-                    line2.setId(R.id.my_edit_text_2);
-                    line2.setHint("Email ID");
-                    line2.requestFocusFromTouch();
-                    line2.setTextSize(13.0f);
-                    line2.setTypeface(null, Typeface.BOLD);
-                    line2.setKeyListener(DigitsKeyListener.getInstance("0123456789AB"));
-                    line2.setInputType(InputType.TYPE_CLASS_TEXT);
-                    line2.setAllCaps(true);
-                    line2.setSingleLine(true);
-                    line2.setTextColor(Color.parseColor("#FF68358E"));
-                    line2.setPressed(true);
-                    line2.setHeight(100);
-                    line2.setPadding(5, 0, 5, 0);
-                    line2.setLayoutParams(params);
-
-                    EditText line3 = new EditText(this);
-                    line3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
-
-//                    String name3 = "Line 3";
-
-                    if (c1 == 1) {
-                        line3.setText(PreferenceStorage.getMobileNo(getApplicationContext()));
-                    }
-//                    else{
-//                        line3.setText(name3);
-//                    }
-                    line3.setId(R.id.my_edit_text_3);
-                    line3.setHint("Mobile Number");
-                    line3.requestFocusFromTouch();
-                    line3.setTextSize(13.0f);
-                    line3.setTypeface(null, Typeface.BOLD);
-                    line3.setKeyListener(DigitsKeyListener.getInstance("0123456789AB"));
-                    line3.setInputType(InputType.TYPE_CLASS_TEXT);
-                    line3.setAllCaps(true);
-                    line3.setSingleLine(true);
-                    line3.setTextColor(Color.parseColor("#FF68358E"));
-                    line3.setPressed(true);
-                    line3.setHeight(100);
-                    line3.setPadding(5, 0, 5, 0);
-//                    line3.setLayoutParams(params);
-                    line3.setLayoutParams(params1);
-
-                    TextView border = new TextView(this);
-                    border.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
-                    border.setHeight(5);
-                    border.setBackgroundColor(Color.BLACK);
-
-                    cell.addView(title);
-                    cell.addView(line1);
-                    cell.addView(line2);
-                    cell.addView(line3);
-                    cell.addView(border);
-//                    cell.setLayoutParams(llp);//2px border on the right for the cell
-//                    tr.addView(cell);
-//                    sq.addView(cell, rowLp);
-//                    layout.addView(cell);
-                    layout_all.addView(cell);
-                }
-
-//                layout.addView(sq);
-            }
-//            layout_all.addView(layout);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     @Override
@@ -251,7 +80,6 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
 
     private void updateAttendees() {
 
-        TextView et, et1;
         EditText edtFullName, edtEmailId, edtMobileNo;
         try {
             if (validateFields()) {
@@ -276,11 +104,8 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
 
                 Intent intent = new Intent(getApplicationContext(), InitialScreenActivity.class);
                 intent.putExtra("eventObj", event);
-                intent.putExtra("orderId", orderId);
                 startActivity(intent);
-
-
-//                Toast.makeText(getApplicationContext(), "Updated...", Toast.LENGTH_LONG).show();
+                finish();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -304,10 +129,6 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
             edtFullName = view.findViewById(R.id.my_edit_text_1);
             edtEmailId = view.findViewById(R.id.my_edit_text_2);
             edtMobileNo = view.findViewById(R.id.my_edit_text_3);
-
-            String FullName = edtFullName.getText().toString().trim();
-            String EmailId = edtEmailId.getText().toString().trim();
-            String MobileNo = edtMobileNo.getText().toString().trim();
 
             if (!HeylaAppValidator.checkNullString(edtFullName.getText().toString().trim())) {
                 AlertDialogHelper.showSimpleAlertDialog(this, "Enter full name...");
@@ -341,6 +162,25 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
         String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.UPDATE_ATTENDEES;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
+        progressDialogHelper.hideProgressDialog();
+        if (validateSignInResponse(response)) {
+            try {
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        progressDialogHelper.hideProgressDialog();
+        AlertDialogHelper.showSimpleAlertDialog(this, error);
     }
 
     @Override
@@ -379,22 +219,125 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
         return signInSuccess;
     }
 
-    @Override
-    public void onResponse(JSONObject response) {
+    private void loadAttendeesView() {
 
-        progressDialogHelper.hideProgressDialog();
-        if (validateSignInResponse(response)) {
-            try {
+        try {
 
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            layout_all = findViewById(R.id.layout_timetable);
+
+            for (int f = 1; f <= 1; f++) {
+
+                for (int c1 = 1; c1 <= noOfTickets; c1++) {
+
+                    LinearLayout cell = new LinearLayout(this);
+                    cell.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    cell.setOrientation(LinearLayout.VERTICAL);
+                    cell.setPadding(0, 5, 0, 0);
+                    cell.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(10, 0, 10, 0);
+
+                    LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    params1.setMargins(10, 0, 10, 20);
+
+                    LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    params2.setMargins(10, 10, 0, 20);
+
+                    TextView title = new TextView(this);
+                    title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
+                    title.setTextColor(Color.BLACK);
+                    title.setText("Attendee Details " + c1);
+                    title.setLayoutParams(params2);
+
+                    EditText line1 = new EditText(this);
+                    line1.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
+
+                    if (c1 == 1) {
+                        line1.setText(PreferenceStorage.getFullName(getApplicationContext()));
+                    }
+
+                    line1.setId(R.id.my_edit_text_1);
+                    line1.setHint("Full Name");
+                    line1.requestFocusFromTouch();
+                    line1.setTextSize(13.0f);
+                    line1.setTypeface(null, Typeface.BOLD);
+                    line1.setKeyListener(DigitsKeyListener.getInstance("0123456789AB"));
+                    line1.setInputType(InputType.TYPE_CLASS_TEXT);
+                    line1.setAllCaps(true);
+                    line1.setSingleLine(true);
+                    line1.setTextColor(Color.parseColor("#FF68358E"));
+                    line1.setPressed(true);
+                    line1.setHeight(100);
+                    line1.setPadding(5, 0, 5, 0);
+                    line1.setLayoutParams(params);
+
+                    EditText line2 = new EditText(this);
+                    line2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
+
+                    if (c1 == 1) {
+                        line2.setText(PreferenceStorage.getEmailId(getApplicationContext()));
+                    }
+
+                    line2.setId(R.id.my_edit_text_2);
+                    line2.setHint("Email ID");
+                    line2.requestFocusFromTouch();
+                    line2.setTextSize(13.0f);
+                    line2.setTypeface(null, Typeface.BOLD);
+                    line2.setKeyListener(DigitsKeyListener.getInstance("0123456789AB"));
+                    line2.setInputType(InputType.TYPE_CLASS_TEXT);
+                    line2.setAllCaps(true);
+                    line2.setSingleLine(true);
+                    line2.setTextColor(Color.parseColor("#FF68358E"));
+                    line2.setPressed(true);
+                    line2.setHeight(100);
+                    line2.setPadding(5, 0, 5, 0);
+                    line2.setLayoutParams(params);
+
+                    EditText line3 = new EditText(this);
+                    line3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+
+                    if (c1 == 1) {
+                        line3.setText(PreferenceStorage.getMobileNo(getApplicationContext()));
+                    }
+
+                    line3.setId(R.id.my_edit_text_3);
+                    line3.setHint("Mobile Number");
+                    line3.requestFocusFromTouch();
+                    line3.setTextSize(13.0f);
+                    line3.setTypeface(null, Typeface.BOLD);
+                    line3.setKeyListener(DigitsKeyListener.getInstance("0123456789AB"));
+                    line3.setInputType(InputType.TYPE_CLASS_TEXT);
+                    line3.setAllCaps(true);
+                    line3.setSingleLine(true);
+                    line3.setTextColor(Color.parseColor("#FF68358E"));
+                    line3.setPressed(true);
+                    line3.setHeight(100);
+                    line3.setPadding(5, 0, 5, 0);
+                    line3.setLayoutParams(params1);
+
+                    TextView border = new TextView(this);
+                    border.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+                    border.setHeight(5);
+                    border.setBackgroundColor(Color.BLACK);
+
+                    cell.addView(title);
+                    cell.addView(line1);
+                    cell.addView(line2);
+                    cell.addView(line3);
+                    cell.addView(border);
+
+                    layout_all.addView(cell);
+                }
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
-    @Override
-    public void onError(String error) {
-        progressDialogHelper.hideProgressDialog();
-        AlertDialogHelper.showSimpleAlertDialog(this, error);
-    }
 }

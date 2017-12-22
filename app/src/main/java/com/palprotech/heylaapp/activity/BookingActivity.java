@@ -95,7 +95,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        boolean showText = false;
+
         if (v == back) {
             finish();
         }
@@ -130,7 +130,6 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
             if (setTicketCount == 0) {
                 flagTicket = "no";
-//                    numTicketcount.setText("0");
             } else {
                 flagTicket = "yes";
             }
@@ -240,8 +239,8 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                         }
                     }
                 }
-                if(checkPoint.equalsIgnoreCase("bookNow")){
-                    //                selectedTicket = totalCount;
+                if (checkPoint.equalsIgnoreCase("bookNow")) {
+
                     String totalTicketNo = result.getText().toString();
                     int noOfTicket = Integer.parseInt(totalTicketNo);
 
@@ -252,19 +251,11 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
                     Intent intent = new Intent(getApplicationContext(), AttendeesInfoActivity.class);
                     intent.putExtra("eventObj", event);
-//                    intent.putExtra("planObj", bookPlan);
-//                    intent.putExtra("eventName", event.getEventName());
-//                    intent.putExtra("eventVenue", event.getEventVenue());
-//                    intent.putExtra("eventTicketsRate", totalRate);
-                    intent.putExtra("eventNoOfTicket", totalTicketNo);
-//                    intent.putExtra("eventDate", showDate);
-//                    intent.putExtra("eventTime", showTime);
-                    intent.putExtra("orderId", orderId);
-                    String today = new SimpleDateFormat("dd/MM/yyyy", Locale.UK).format(Calendar.getInstance().getTime());
-//                PreferenceStorage.saveTransactionDate(getApplicationContext(), today);
-                    // intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); && (selectedTicket > 0
+                    PreferenceStorage.saveOrderId(getApplicationContext(), orderId);
+                    PreferenceStorage.savePaymentAmount(getApplicationContext(), "" + totalRate);
+                    PreferenceStorage.saveTotalNoOfTickets(getApplicationContext(),totalTicketNo);
                     startActivity(intent);
-//                    finish();
+                    finish();
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -307,7 +298,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         txtEventPlace.setText(event.getEventVenue());
         TextView txtEventAddress = findViewById(R.id.event_address);
         txtEventAddress.setText(event.getEventAddress());
-        plansListView = (ListView) findViewById(R.id.listView_plans);
+        plansListView = findViewById(R.id.listView_plans);
         plansListView.setOnItemClickListener(this);
 
         plansListView.setOnTouchListener(new ListView.OnTouchListener() {
@@ -723,4 +714,5 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.BOOKING_PROCESS;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
+
 }

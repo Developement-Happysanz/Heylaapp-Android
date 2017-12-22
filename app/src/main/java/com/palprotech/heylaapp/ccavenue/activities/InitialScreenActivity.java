@@ -5,48 +5,60 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.bean.support.BookPlan;
+import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.ccavenue.utilities.AvenuesParams;
 import com.palprotech.heylaapp.ccavenue.utilities.ServiceUtility;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
+import com.squareup.picasso.Picasso;
 
 
 public class InitialScreenActivity extends Activity {
 
     private EditText accessCode, merchantId, currency, amount, orderId, rsaKeyUrl, redirectUrl, cancelUrl;
-    private String eventName, eventVenue;
-    private Double eventRate;
-    private BookPlan bookPlan;
+    private Event event;
+    String eventNoOfTicket;
     Double tickets = 1.00;
 
     private void init() {
-        accessCode = (EditText) findViewById(R.id.accessCode);
-        merchantId = (EditText) findViewById(R.id.merchantId);
-        orderId = (EditText) findViewById(R.id.orderId);
-        currency = (EditText) findViewById(R.id.currency);
-        amount = (EditText) findViewById(R.id.amount);
-        rsaKeyUrl = (EditText) findViewById(R.id.rsaUrl);
-        redirectUrl = (EditText) findViewById(R.id.redirectUrl);
-        cancelUrl = (EditText) findViewById(R.id.cancelUrl);
-//        bookPlan = (BookPlan) getIntent().getSerializableExtra("planObj");
-//        eventName = getIntent().getStringExtra("eventName");
-//        eventVenue = getIntent().getStringExtra("eventVenue");
-        Bundle b = getIntent().getExtras();
-//        eventRate = b.getDouble("eventRate");
-//        tickets = getIntent().getDoubleExtra("ticketRate", 0.00);
-        String orderIdValue = getIntent().getStringExtra("orderId");
-        //eventRate = getIntent().getDoubleExtra("eventRate");
-        //amount.setText(""+eventRate);
-        amount.setText("" + tickets);
-        int i = 0;
+        accessCode = findViewById(R.id.accessCode);
+        merchantId = findViewById(R.id.merchantId);
+        orderId = findViewById(R.id.orderId);
+        currency = findViewById(R.id.currency);
+        amount = findViewById(R.id.amount);
+        rsaKeyUrl = findViewById(R.id.rsaUrl);
+        redirectUrl = findViewById(R.id.redirectUrl);
+        cancelUrl = findViewById(R.id.cancelUrl);
+        event = (Event) getIntent().getSerializableExtra("eventObj");
 
-        //generating order number
-//        Integer randomNum = ServiceUtility.randInt(0, 9999999);
+        ImageView imEventBanner = findViewById(R.id.img_logo);
+        String url = event.getEventBanner();
+        if (((url != null) && !(url.isEmpty()))) {
+            Picasso.with(this).load(url).placeholder(R.drawable.event_img).error(R.drawable.event_img).into(imEventBanner);
+        }
+        TextView txtEventName = findViewById(R.id.txt_event_name);
+        txtEventName.setText(event.getEventName());
+        TextView txtEventTime = findViewById(R.id.txt_event_time);
+        txtEventTime.setText(event.getStartTime());
+        TextView txtEventPlace = findViewById(R.id.txt_event_location);
+        txtEventPlace.setText(event.getEventVenue());
+        TextView txtTotalTickets = findViewById(R.id.txtTotalTickets);
+        txtTotalTickets.setText(PreferenceStorage.getTotalNoOfTickets(getApplicationContext()) + " Tickets");
+        TextView txtTicketPrice = findViewById(R.id.txtTicketPrice);
+        txtTicketPrice.setText("Rs."+PreferenceStorage.getPaymentAmount(getApplicationContext()));
+        TextView txtTotalPrice = findViewById(R.id.txtTotalPrice);
+        txtTotalPrice.setText("Rs."+PreferenceStorage.getPaymentAmount(getApplicationContext()));
+
+        String orderIdValue = PreferenceStorage.getOrderId(getApplicationContext());
+        amount.setText(PreferenceStorage.getPaymentAmount(getApplicationContext()));
         orderId.setText(orderIdValue);
 
-        callPayment();
+//        callPayment();
     }
 
     @Override
@@ -54,10 +66,6 @@ public class InitialScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_screen_ns);
         init();
-
-        //generating order number
-//        Integer randomNum = ServiceUtility.randInt(0, 9999999);
-//        orderId.setText(randomNum.toString() + PreferenceStorage.getUserId(getApplicationContext()));
     }
 
     public void onClick(View view) {
@@ -82,6 +90,7 @@ public class InitialScreenActivity extends Activity {
             intent.putExtra(AvenuesParams.RSA_KEY_URL, ServiceUtility.chkNull(rsaKeyUrl.getText()).toString().trim());
 
             startActivity(intent);
+            finish();
         } else {
             showToast("All parameters are mandatory.");
         }
