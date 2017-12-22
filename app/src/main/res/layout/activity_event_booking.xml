@@ -195,16 +195,25 @@
 
             </HorizontalScrollView>
 
-            <ListView
-                android:id="@+id/listView_plans"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginTop="10dp"
-                android:divider="@color/text_black"
-                android:dividerHeight="-1dp" />
+                android:layout_height="120dp"
+                android:baselineAligned="true">
+
+                <ListView
+                    android:id="@+id/listView_plans"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:divider="@color/text_black"
+                    android:dividerHeight="1dp"
+                    android:listSelector="@drawable/transparent_drawable" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layoutTickets"

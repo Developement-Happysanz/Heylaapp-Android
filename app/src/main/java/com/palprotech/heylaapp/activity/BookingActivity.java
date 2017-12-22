@@ -5,10 +5,12 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,6 +30,7 @@ import com.palprotech.heylaapp.adapter.BookingPlanAdapter;
 import com.palprotech.heylaapp.bean.support.BookPlan;
 import com.palprotech.heylaapp.bean.support.BookPlanList;
 import com.palprotech.heylaapp.bean.support.Event;
+import com.palprotech.heylaapp.ccavenue.utilities.ServiceUtility;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.HeylaAppHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
@@ -64,7 +67,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
     private String checkPoint;
     LinearLayout layout_date;
     LinearLayout layout_timing;
-    private String showDate = "", showTime = "";
+    private String showDate = "", showTime = "", showTimeId = "";
     ListView plansListView;
     BookingPlanAdapter bookingPlanAdapter;
     ArrayList<BookPlan> bookPlanArrayList;
@@ -77,6 +80,8 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
     ImageButton inc, dec;
     TextView result;
     Button totalPrice, bookNow;
+    String orderId;
+    Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -162,29 +167,9 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
             if ((flagPlan.equalsIgnoreCase("no")) || (flagTicket.equalsIgnoreCase("no")) || (flagBookingDate.equalsIgnoreCase("no"))) {
                 Toast.makeText(this, "Select ticket or plan or date", Toast.LENGTH_SHORT).show();
             } else {
-//                selectedTicket = totalCount;
-                String totalTicketNo = result.getText().toString();
-                int noOfTicket = Integer.parseInt(totalTicketNo);
 
-                double _rate = 0.0;
-                _rate = Double.parseDouble(rate);
+                updateBookingProcess();
 
-                Double totalRate = noOfTicket * _rate;
-
-                Intent intent = new Intent(getApplicationContext(), AttendeesInfoActivity.class);
-                intent.putExtra("eventObj", event);
-                intent.putExtra("planObj", bookPlan);
-                intent.putExtra("eventName", event.getEventName());
-                intent.putExtra("eventVenue", event.getEventVenue());
-                intent.putExtra("eventTicketsRate", totalRate);
-                intent.putExtra("eventNoOfTicket", totalTicketNo);
-                intent.putExtra("eventDate", showDate);
-                intent.putExtra("eventTime", showTime);
-                String today = new SimpleDateFormat("dd/MM/yyyy", Locale.UK).format(Calendar.getInstance().getTime());
-//                PreferenceStorage.saveTransactionDate(getApplicationContext(), today);
-                // intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); && (selectedTicket > 0
-                startActivity(intent);
-                finish();
             }
         }
     }
@@ -216,7 +201,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onResponse(JSONObject response) {
+    public void onResponse(final JSONObject response) {
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
             try {
@@ -224,24 +209,62 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
                     JSONArray getEventDates = response.getJSONArray("Eventdates");
                     loadDateUI(getEventDates);
-
                 }
                 if (checkPoint.equalsIgnoreCase("loadTime")) {
 
                     JSONArray getEventTimings = response.getJSONArray("Eventtiming");
                     loadTimingUI(getEventTimings);
-
                 }
                 if (checkPoint.equalsIgnoreCase("loadPlan")) {
 
-                    Gson gson = new Gson();
-                    BookPlanList planList = gson.fromJson(response.toString(), BookPlanList.class);
-                    if (planList.getPlans() != null && planList.getPlans().size() > 0) {
-                        totalCount = planList.getCount();
-                        isLoadingForFirstTime = false;
-                        updateListAdapter(planList.getPlans());
-                    }
+                    JSONArray getData = response.getJSONArray("Plandetails");
+                    if (getData != null && getData.length() > 0) {
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
 
+                                Gson gson = new Gson();
+                                BookPlanList planList = gson.fromJson(response.toString(), BookPlanList.class);
+                                if (planList.getPlans() != null && planList.getPlans().size() > 0) {
+                                    totalCount = planList.getCount();
+                                    isLoadingForFirstTime = false;
+                                    updateListAdapter(planList.getPlans());
+                                }
+                            }
+                        });
+                    } else {
+                        if (bookPlanArrayList != null) {
+                            bookPlanArrayList.clear();
+                            bookingPlanAdapter = new BookingPlanAdapter(this, this.bookPlanArrayList);
+                            plansListView.setAdapter(bookingPlanAdapter);
+                        }
+                    }
+                }
+                if(checkPoint.equalsIgnoreCase("bookNow")){
+                    //                selectedTicket = totalCount;
+                    String totalTicketNo = result.getText().toString();
+                    int noOfTicket = Integer.parseInt(totalTicketNo);
+
+                    double _rate = 0.0;
+                    _rate = Double.parseDouble(rate);
+
+                    Double totalRate = noOfTicket * _rate;
+
+                    Intent intent = new Intent(getApplicationContext(), AttendeesInfoActivity.class);
+                    intent.putExtra("eventObj", event);
+//                    intent.putExtra("planObj", bookPlan);
+//                    intent.putExtra("eventName", event.getEventName());
+//                    intent.putExtra("eventVenue", event.getEventVenue());
+//                    intent.putExtra("eventTicketsRate", totalRate);
+                    intent.putExtra("eventNoOfTicket", totalTicketNo);
+//                    intent.putExtra("eventDate", showDate);
+//                    intent.putExtra("eventTime", showTime);
+                    intent.putExtra("orderId", orderId);
+                    String today = new SimpleDateFormat("dd/MM/yyyy", Locale.UK).format(Calendar.getInstance().getTime());
+//                PreferenceStorage.saveTransactionDate(getApplicationContext(), today);
+                    // intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); && (selectedTicket > 0
+                    startActivity(intent);
+//                    finish();
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -286,6 +309,28 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         txtEventAddress.setText(event.getEventAddress());
         plansListView = (ListView) findViewById(R.id.listView_plans);
         plansListView.setOnItemClickListener(this);
+
+        plansListView.setOnTouchListener(new ListView.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
         bookPlanArrayList = new ArrayList<>();
         counter = 0;
         inc = findViewById(R.id.count_increase);
@@ -296,6 +341,10 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         totalPrice = findViewById(R.id.btnTotalPrice);
         bookNow = findViewById(R.id.btnBookNow);
         bookNow.setOnClickListener(this);
+
+        //generating order number
+        Integer randomNum = ServiceUtility.randInt(0, 9999999);
+        orderId = randomNum.toString() + "-" + PreferenceStorage.getUserId(getApplicationContext());
     }
 
     private void loadBookingDates() {
@@ -505,45 +554,64 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                     cell.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.MATCH_PARENT));
                     final TextView viewTimeFormat = new TextView(this);
-//                    final TextView functionalDateFormat = new TextView(this);
+                    final TextView storeTimeId = new TextView(this);
 
                     JSONObject jsonobj = getEventTimings.getJSONObject(i);
 
-                    String showTimes = "";
+                    String show_time_id, showTimes = "";
                     showTimes = jsonobj.getString("show_time");
+                    show_time_id = jsonobj.getString("id");
                     System.out.println("showTimes : " + i + " = " + showTimes);
 
                     viewTimeFormat.setText(showTimes);
+                    storeTimeId.setText("" + show_time_id);
 
                     cell.setBackgroundColor(Color.WHITE);//argb(255,104,53,142)
 
                     viewTimeFormat.setBackgroundColor(Color.parseColor("#468dcb"));
+                    storeTimeId.setBackgroundColor(Color.parseColor("#468dcb"));
                     viewTimeFormat.setTextColor(Color.parseColor("#FFFFFF"));
+                    storeTimeId.setTextColor(Color.parseColor("#FFFFFF"));
 
                     viewTimeFormat.setTextSize(13.0f);
+                    storeTimeId.setTextSize(13.0f);
 
                     viewTimeFormat.setTypeface(null, Typeface.BOLD);
+                    storeTimeId.setTypeface(null, Typeface.BOLD);
 
                     viewTimeFormat.setAllCaps(true);
+                    storeTimeId.setAllCaps(true);
 
                     viewTimeFormat.setGravity(Gravity.CENTER);
+                    storeTimeId.setGravity(Gravity.CENTER);
 
                     viewTimeFormat.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             // TODO Auto-generated method stub
 //                            viewDateFormat.setBackgroundColor(Color.parseColor("#708090"));
-                            Toast.makeText(getApplicationContext(), viewTimeFormat.getText(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), viewTimeFormat.getText() + "ID : " + storeTimeId.getText(), Toast.LENGTH_LONG).show();
                             showTime = viewTimeFormat.getText().toString();
+                            showTimeId = storeTimeId.getText().toString();
+                            if (bookPlanArrayList != null) {
+                                bookPlanArrayList.clear();
+                                plansListView.setAdapter(bookingPlanAdapter);
+                            }
                             loadBookingPlans();
                         }
                     });
 
                     viewTimeFormat.setPressed(true);
+//                    storeTimeId.setPressed(true);
                     viewTimeFormat.setHeight(100);
+                    storeTimeId.setHeight(0);
                     viewTimeFormat.setWidth(100);
+                    storeTimeId.setWidth(0);
                     viewTimeFormat.setPadding(1, 0, 2, 0);
+                    storeTimeId.setPadding(1, 0, 2, 0);
+                    storeTimeId.setVisibility(View.INVISIBLE);
                     cell.addView(viewTimeFormat);
+                    cell.addView(storeTimeId);
                     cell.setLayoutParams(llp);//2px border on the right for the cell
 
                     tr.addView(cell, cellLp);
@@ -583,25 +651,31 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
     protected void updateListAdapter(ArrayList<BookPlan> bookPlanArrayList) {
         this.bookPlanArrayList.addAll(bookPlanArrayList);
-        if (bookingPlanAdapter == null) {
-            bookingPlanAdapter = new BookingPlanAdapter(this, this.bookPlanArrayList);
-            plansListView.setAdapter(bookingPlanAdapter);
-        } else {
-            bookingPlanAdapter.notifyDataSetChanged();
-        }
+//        if (bookingPlanAdapter == null) {
+        bookingPlanAdapter = new BookingPlanAdapter(this, this.bookPlanArrayList);
+        plansListView.setAdapter(bookingPlanAdapter);
+//        } else {
+        bookingPlanAdapter.notifyDataSetChanged();
+//        }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
         Log.d(TAG, "onEvent list item clicked" + i);
-//        view.setSelected(true);
-        view.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+        view.setSelected(true);
+//        view.setBackgroundColor(getResources().getColor(R.color.appColorBase));
         TextView planName = view.findViewById(R.id.txt_plan_name);
-        planName.setTextColor(Color.WHITE);
+//        planName.setTextColor(Color.WHITE);
         TextView planRate = view.findViewById(R.id.txt_plan_rate);
-        planRate.setTextColor(Color.WHITE);
+//        planRate.setTextColor(Color.WHITE);
         LinearLayout ll = findViewById(R.id.layoutTickets);
         ll.setVisibility(View.VISIBLE);
+
+        for (int a = 0; a < parent.getChildCount(); a++) {
+            parent.getChildAt(a).setBackgroundColor(Color.WHITE);
+        }
+
+        view.setBackgroundColor(getResources().getColor(R.color.appColorBase));
 
         if ((bookingPlanAdapter != null) && (bookingPlanAdapter.ismSearching())) {
             Log.d(TAG, "while searching");
@@ -615,5 +689,38 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         rate = bookPlan.getSeatRate();
         Toast.makeText(this, "Select ticket plan" + rate, Toast.LENGTH_SHORT).show();
         flagPlan = "yes";
+    }
+
+    private void updateBookingProcess() {
+
+        checkPoint = "bookNow";
+
+        String totalTicketNo = result.getText().toString();
+        int noOfTicket = Integer.parseInt(totalTicketNo);
+
+        double _rate = 0.0;
+        _rate = Double.parseDouble(rate);
+
+        Double totalRate = noOfTicket * _rate;
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_ORDER_ID, orderId);
+            jsonObject.put(HeylaAppConstants.KEY_EVENT_ID, event.getId());
+            jsonObject.put(HeylaAppConstants.KEY_PLAN_ID, bookPlan.getPlanId());
+            jsonObject.put(HeylaAppConstants.KEY_PLAN_TIME_ID, showTimeId);
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+            jsonObject.put(HeylaAppConstants.KEY_NO_OF_SEATS, noOfTicket);
+            jsonObject.put(HeylaAppConstants.KEY_TOTAL_AMOUNT, "" + totalRate);
+            jsonObject.put(HeylaAppConstants.KEY_BOOKING_DATE, showDate);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.BOOKING_PROCESS;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 }

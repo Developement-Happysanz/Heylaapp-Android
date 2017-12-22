@@ -16,21 +16,23 @@
         android:fadeScrollbars="false"
         android:scrollbars="horizontal|vertical">
 
-        <HorizontalScrollView
-            android:id="@+id/horizon"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+        <!--<HorizontalScrollView
+        android:id="@+id/horizon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">-->
 
-            <LinearLayout
-                android:id="@+id/layout_timetable"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" />
+        <LinearLayout
+            android:id="@+id/layout_timetable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/text_black"
+            android:orientation="vertical" />
 
-        </HorizontalScrollView>
+        <!--</HorizontalScrollView>-->
     </ScrollView>
 
     <Button
+        android:id="@+id/btnproceed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
