@@ -253,7 +253,8 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                     intent.putExtra("eventObj", event);
                     PreferenceStorage.saveOrderId(getApplicationContext(), orderId);
                     PreferenceStorage.savePaymentAmount(getApplicationContext(), "" + totalRate);
-                    PreferenceStorage.saveTotalNoOfTickets(getApplicationContext(),totalTicketNo);
+                    PreferenceStorage.saveTotalNoOfTickets(getApplicationContext(), totalTicketNo);
+                    PreferenceStorage.saveTransactionDate(getApplicationContext(), showDate);
                     startActivity(intent);
                     finish();
                 }

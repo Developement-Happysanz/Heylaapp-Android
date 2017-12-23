@@ -13,6 +13,12 @@ import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.ccavenue.utilities.AvenuesParams;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class StatusActivity extends Activity {
 
@@ -44,6 +50,25 @@ public class StatusActivity extends Activity {
         String getOrderId = PreferenceStorage.getOrderId(getApplicationContext());
         String getPaymentAmount = PreferenceStorage.getPaymentAmount(getApplicationContext());
         String getTransactionDate = PreferenceStorage.getTransactionDate(getApplicationContext());
+        String showTransactionDate = "";
+
+        try {
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
+            Date date = (Date) formatter.parse(getTransactionDate);
+            SimpleDateFormat year_date = new SimpleDateFormat("yyyy");
+            String year = year_date.format(date.getTime());
+            SimpleDateFormat month_date = new SimpleDateFormat("MMM");
+            String month_name = month_date.format(date.getTime());
+            SimpleDateFormat event_date = new SimpleDateFormat("dd");
+            String date_name = event_date.format(date.getTime());
+            if ((getTransactionDate != null)) {
+                showTransactionDate = date_name + "-" + month_name + "-" + year;
+            } else {
+                showTransactionDate = "N/A";
+            }
+        } catch (final ParseException e) {
+            e.printStackTrace();
+        }
 
         tv4.setText(mainIntent.getStringExtra("transStatus"));
 
@@ -53,21 +78,21 @@ public class StatusActivity extends Activity {
                 PaymentStatus.setText("Failed");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);
-                TransactionDate.setText(getTransactionDate);
+                TransactionDate.setText(showTransactionDate);
                 break;
             case "Transaction Successful!":
                 Failure.setVisibility(View.INVISIBLE);
                 PaymentStatus.setText("Success");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);
-                TransactionDate.setText(getTransactionDate);
+                TransactionDate.setText(showTransactionDate);
                 break;
             case "Transaction Cancelled!":
                 Success.setVisibility(View.INVISIBLE);
                 PaymentStatus.setText("Canceled");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);
-                TransactionDate.setText(getTransactionDate);
+                TransactionDate.setText(showTransactionDate);
                 break;
             default:
                 break;
