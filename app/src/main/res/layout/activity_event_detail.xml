@@ -61,7 +61,7 @@
                     <ImageView
                         android:id="@+id/event_detail_img"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="225dp"
                         android:contentDescription="@string/app_name"
                         android:foreground="@color/temp" />
 

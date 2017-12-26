@@ -215,6 +215,9 @@ public class HeylaAppConstants {
 
     public static final String KEY_USER_HAS_PREFERENCES = "hasPreferences";
 
+    public static final String KEY_LAST_SHARED_TIME = "timeEventShared";
+    public static final String KEY_EVENT_SHARED_COUNT = "eventSharedCount";
+
     //Profile
     public static final String KEY_USER_EMAIL_ID = "email_id";
     public static final String KEY_USER_BIRTHDAY = "birthday";

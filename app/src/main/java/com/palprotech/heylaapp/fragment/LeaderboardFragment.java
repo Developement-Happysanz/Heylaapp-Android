@@ -66,9 +66,19 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     protected void initializeViews() {
 
         name = rootView.findViewById(R.id.name);
-        name.setText(PreferenceStorage.getFullName(getApplicationContext()));
+        if(PreferenceStorage.getFullName(getApplicationContext())== null){
+            name.setText("Name");
+        }
+        else {
+            name.setText(PreferenceStorage.getFullName(getApplicationContext()));
+        }
         username = rootView.findViewById(R.id.username);
-        username.setText(PreferenceStorage.getUsername(getApplicationContext()));
+        if(PreferenceStorage.getUsername(getApplicationContext())== null){
+            username.setText("Username");
+        }
+        else {
+            username.setText(PreferenceStorage.getUsername(getApplicationContext()));
+        }
         userPic = rootView.findViewById(R.id.leaderboard_profile_img);
         userPic.setOnClickListener(this);
         String url = PreferenceStorage.getUserPicture(getApplicationContext());

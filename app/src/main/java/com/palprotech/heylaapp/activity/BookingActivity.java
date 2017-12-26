@@ -1,7 +1,6 @@
 package com.palprotech.heylaapp.activity;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -32,7 +31,6 @@ import com.palprotech.heylaapp.bean.support.BookPlanList;
 import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.ccavenue.utilities.ServiceUtility;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
-import com.palprotech.heylaapp.helper.HeylaAppHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
@@ -49,7 +47,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -383,7 +380,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
                 tr.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT));
-                tr.setBackgroundColor(Color.BLACK);
+                tr.setBackgroundColor(Color.WHITE);
                 tr.setPadding(0, 0, 0, 1);
 
                 TableRow.LayoutParams llp = new
@@ -533,7 +530,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
                 tr.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT));
-                tr.setBackgroundColor(Color.BLACK);
+                tr.setBackgroundColor(Color.WHITE);
                 tr.setPadding(0, 0, 0, 1);
 
                 TableRow.LayoutParams llp = new
