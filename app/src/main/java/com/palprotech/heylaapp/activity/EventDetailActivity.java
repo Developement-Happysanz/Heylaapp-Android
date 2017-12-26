@@ -60,25 +60,25 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             finish();
         }
         if (v == imEventBanner) {
-            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == imEventShare) {
-            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == imEventQuestionAnswer) {
-            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == imEventFavourite) {
-            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == imEventOrganiserRequest) {
-            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == txtEventReview) {
-            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == txtCheckInEvent) {
-            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == txtBookEvent) {
             Intent intent = new Intent(getApplicationContext(), BookingActivity.class);
@@ -99,6 +99,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
         if (((url != null) && !(url.isEmpty()))) {
             Picasso.with(this).load(url).placeholder(R.drawable.event_img).error(R.drawable.event_img).into(imEventBanner);
         }
+        imEventBanner.setMaxWidth(500);
 //        Event title
         TextView txtEventName = findViewById(R.id.event_detail_name);
         txtEventName.setText(event.getEventName());

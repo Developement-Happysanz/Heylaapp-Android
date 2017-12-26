@@ -1,7 +1,6 @@
 package com.palprotech.heylaapp.activity;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,19 +9,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
-import com.palprotech.heylaapp.bean.support.BookPlan;
 import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.ccavenue.activities.InitialScreenActivity;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
@@ -46,6 +42,7 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
     private static final String TAG = AttendeesInfoActivity.class.getName();
     LinearLayout layout_all;
     private Event event;
+    private ImageView back;
     String  eventNoOfTicket, orderId;
     int noOfTickets;
     private Button btnProceed;
@@ -75,6 +72,9 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         if (v == btnProceed) {
             updateAttendees();
+        }
+        if (v == back) {
+            finish();
         }
     }
 
@@ -271,7 +271,7 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
                     line1.setTextColor(Color.parseColor("#FF68358E"));
                     line1.setPressed(true);
                     line1.setHeight(100);
-                    line1.setPadding(5, 0, 5, 0);
+                    line1.setPadding(15, 0, 15, 0);
                     line1.setLayoutParams(params);
 
                     EditText line2 = new EditText(this);
@@ -294,7 +294,7 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
                     line2.setTextColor(Color.parseColor("#FF68358E"));
                     line2.setPressed(true);
                     line2.setHeight(100);
-                    line2.setPadding(5, 0, 5, 0);
+                    line2.setPadding(15, 0, 15, 0);
                     line2.setLayoutParams(params);
 
                     EditText line3 = new EditText(this);
@@ -317,7 +317,7 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
                     line3.setTextColor(Color.parseColor("#FF68358E"));
                     line3.setPressed(true);
                     line3.setHeight(100);
-                    line3.setPadding(5, 0, 5, 0);
+                    line3.setPadding(15, 0, 15, 0);
                     line3.setLayoutParams(params1);
 
                     TextView border = new TextView(this);
