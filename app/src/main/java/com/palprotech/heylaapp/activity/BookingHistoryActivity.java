@@ -92,7 +92,7 @@ public class BookingHistoryActivity extends AppCompatActivity implements IServic
             bookingHistory = bookingHistoryArrayList.get(position);
         }
         Intent intent = new Intent(this, BookingHistoryDetailsActivity.class);
-        intent.putExtra("eventObj", bookingHistory);
+        intent.putExtra("bookingObj", bookingHistory);
         startActivity(intent);
     }
 
