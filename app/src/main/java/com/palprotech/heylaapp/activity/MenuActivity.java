@@ -73,8 +73,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v == vBooking) {
-            /*Intent homeIntent = new Intent(getApplicationContext(), BookingActivity.class);
-            startActivity(homeIntent);*/
+            Intent homeIntent = new Intent(getApplicationContext(), BookingHistoryActivity.class);
+            startActivity(homeIntent);
         }
         if (v == vCategory) {
             Intent homeIntent = new Intent(getApplicationContext(), SetUpPreferenceActivity.class);

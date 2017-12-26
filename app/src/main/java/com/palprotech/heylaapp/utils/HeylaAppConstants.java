@@ -159,7 +159,10 @@ public class HeylaAppConstants {
     public static final String KEY_BOOKING_DATE = "booking_date";
 
     //    Attendees
-    public static final String UPDATE_ATTENDEES = "/apimain/bookingattendees/";
+    public static final String UPDATE_ATTENDEES = "apimain/bookingattendees/";
+
+    //    Booking history
+    public static final String BOOKING_HISTORY = "apimain/bookinghistory/";
 
 
     // Leaderboard

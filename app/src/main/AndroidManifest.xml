@@ -192,6 +192,18 @@
             android:theme="@style/AppThemeNoActionBar" />
 
         <activity
+            android:name=".activity.BookingHistoryActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar" />
+
+        <activity
+            android:name=".activity.BookingHistoryDetailsActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar" />
+
+        <activity
             android:name=".activity.EventDetailActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
