@@ -164,6 +164,9 @@ public class HeylaAppConstants {
     //    Booking history
     public static final String BOOKING_HISTORY = "apimain/bookinghistory/";
 
+    //    Booking history
+    public static final String BOOKING_DETAILS = "apimain/bookingdetails/";
+
 
     // Leaderboard
     public static final String LEADERBOARD_USER_ACTIVITY = "apimain/useractivity/";

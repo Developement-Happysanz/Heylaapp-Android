@@ -73,6 +73,16 @@ public class BookingHistoryActivity extends AppCompatActivity implements IServic
         }
     }
 
+    protected void updateListAdapter(ArrayList<BookingHistory> bookingHistoryArrayList) {
+        this.bookingHistoryArrayList.addAll(bookingHistoryArrayList);
+        if (bookingHistoryListAdapter == null) {
+            bookingHistoryListAdapter = new BookingHistoryListAdapter(this, this.bookingHistoryArrayList);
+            listView.setAdapter(bookingHistoryListAdapter);
+        } else {
+            bookingHistoryListAdapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onError(String error) {
         progressDialogHelper.hideProgressDialog();
@@ -156,13 +166,5 @@ public class BookingHistoryActivity extends AppCompatActivity implements IServic
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
-    protected void updateListAdapter(ArrayList<BookingHistory> bookingHistoryArrayList) {
-        this.bookingHistoryArrayList.addAll(bookingHistoryArrayList);
-        if (bookingHistoryListAdapter == null) {
-            bookingHistoryListAdapter = new BookingHistoryListAdapter(this, this.bookingHistoryArrayList);
-            listView.setAdapter(bookingHistoryListAdapter);
-        } else {
-            bookingHistoryListAdapter.notifyDataSetChanged();
-        }
-    }
+
 }

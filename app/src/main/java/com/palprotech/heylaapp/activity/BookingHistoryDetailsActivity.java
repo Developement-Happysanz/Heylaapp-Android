@@ -3,16 +3,37 @@ package com.palprotech.heylaapp.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.adapter.AttendeesListAdapter;
+import com.palprotech.heylaapp.adapter.BookingHistoryListAdapter;
+import com.palprotech.heylaapp.bean.support.Attendees;
+import com.palprotech.heylaapp.bean.support.AttendeesList;
 import com.palprotech.heylaapp.bean.support.BookingHistory;
+import com.palprotech.heylaapp.bean.support.BookingHistoryList;
 import com.palprotech.heylaapp.bean.support.Event;
+import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.HeylaAppHelper;
+import com.palprotech.heylaapp.helper.ProgressDialogHelper;
+import com.palprotech.heylaapp.interfaces.DialogClickListener;
+import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
+import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
+import com.palprotech.heylaapp.utils.HeylaAppConstants;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -20,7 +41,7 @@ import java.util.Locale;
  * Created by Admin on 26-12-2017.
  */
 
-public class BookingHistoryDetailsActivity extends AppCompatActivity {
+public class BookingHistoryDetailsActivity extends AppCompatActivity implements IServiceListener, DialogClickListener,AdapterView.OnItemClickListener {
 
     private BookingHistory bookingHistory;
     private TextView txtEventName, txtEventDate, txtEventTime, txtEventAddress, txtEventAttendees, txtEventTicktClass;
@@ -33,6 +54,14 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity {
                     "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th",
                     //    30    31
                     "th", "st"};
+    private static final String TAG = BookingHistoryActivity.class.getName();
+    protected ProgressDialogHelper progressDialogHelper;
+    private ServiceHelper serviceHelper;
+    protected AttendeesListAdapter attendeesListAdapter;
+    protected ArrayList<Attendees> attendeesArrayList;
+    protected ListView listView;
+    int totalCount = 0;
+    protected boolean isLoadingForFirstTime = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,9 +69,17 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_booking_history_details);
         bookingHistory = (BookingHistory) getIntent().getSerializableExtra("bookingObj");
         loadUI();
+        loadAttendees();
     }
 
     private void loadUI() {
+        serviceHelper = new ServiceHelper(this);
+        serviceHelper.setServiceListener(this);
+        progressDialogHelper = new ProgressDialogHelper(this);
+        listView = findViewById(R.id.listView_attendees);
+        listView.setOnItemClickListener(this);
+        attendeesArrayList = new ArrayList<>();
+
         txtEventName = findViewById(R.id.txt_event_name);
         txtEventDate = findViewById(R.id.txt_event_booked_date);
         txtEventTime = findViewById(R.id.txt_event_booked_time);
@@ -84,6 +121,100 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity {
 
         txtEventAttendees.setText(bookingHistory.getNumberOfSeats());
         txtEventTicktClass.setText(bookingHistory.getPlanName() + " - " + bookingHistory.getNumberOfSeats() + " tickets");
+
+    }
+
+    private void loadAttendees() {
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_ORDER_ID, bookingHistory.getOrderId());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.BOOKING_DETAILS;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        progressDialogHelper.hideProgressDialog();
+        if (validateSignInResponse(response)) {
+            LoadListView(response);
+        }
+    }
+
+    private void LoadListView(JSONObject response) {
+
+        progressDialogHelper.hideProgressDialog();
+        Gson gson = new Gson();
+        AttendeesList attendeesList = gson.fromJson(response.toString(), AttendeesList.class);
+        if (attendeesList.getAttendees() != null && attendeesList.getAttendees().size() > 0) {
+            totalCount = attendeesList.getCount();
+            isLoadingForFirstTime = false;
+            updateListAdapter(attendeesList.getAttendees());
+        }
+    }
+
+    protected void updateListAdapter(ArrayList<Attendees> attendeesArrayList) {
+        this.attendeesArrayList.addAll(attendeesArrayList);
+        if (attendeesListAdapter == null) {
+            attendeesListAdapter = new AttendeesListAdapter(this, this.attendeesArrayList);
+            listView.setAdapter(attendeesListAdapter);
+        } else {
+            attendeesListAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private boolean validateSignInResponse(JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(HeylaAppConstants.PARAM_MESSAGE);
+                Log.d(TAG, "status val" + status + "msg" + msg);
+
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        Log.d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                    } else {
+                        signInSuccess = true;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return signInSuccess;
+    }
+
+    @Override
+    public void onError(String error) {
+        progressDialogHelper.hideProgressDialog();
+        AlertDialogHelper.showSimpleAlertDialog(this, error);
+    }
+
+    @Override
+    public void onAlertPositiveClicked(int tag) {
+
+    }
+
+    @Override
+    public void onAlertNegativeClicked(int tag) {
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
     }
 }

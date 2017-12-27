@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_attendees_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="Attendees Details"
+        android:textColor="@color/text_black"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/txt_attendees_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="Attendees Details"
+        android:textColor="@color/text_black"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/txt_attendees_mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="Attendees Details"
+        android:textColor="@color/text_black"
+        android:textSize="20dp" />
+
+
+</LinearLayout>
