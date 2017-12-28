@@ -10,76 +10,74 @@ public class HeylaAppConstants {
     //    BASE URL
     public static final String BASE_URL = "http://heylaapp.com/";
 
-    //    SignUp
-    public static final String SIGN_UP = "apimain/signup/";
-
-    //    SignUp Params
-    public static final String PARAMS_EMAIL_ID = "email_id";
-    public static final String PARAMS_MOBILE_NUMBER = "mobile_no";
-    public static final String PARAMS_PASSWORD = "password";
-    public static final String PARAMS_GCM_KEY = "gcm_key";
-//    public static final String PARAMS_PLATFORM_TYPE = "platform_type";
-//    public static final String PARAMS_SIGNUP_TYPE = "signup_type";
-
-    //    Mobile Number Verification
-    public static final String MOBILE_NUMBER_VERIFY = "apimain/mobileverify/";
-
-    //    Mobile Number Verification Params
-    public static final String PARAMS_OTP = "OTP";
-    public static final String PARAMS_REQUEST_MODE = "request_mode";
-
     //    SignIn
-    public static final String SIGN_IN = "apimain/login";
+    public static final String SIGN_IN = "apimain/login/";
 
-    //    SignIn Params
+    //    SignIn params
     public static final String PARAMS_USERNAME = "username";
     public static final String PARAMS_NAME = "name";
     public static final String PARAMS_LOGIN_TYPE = "login_type";
     public static final String PARAMS_MOBILE_TYPE = "mobile_type";
 
-    //    Forgot Password
-    public static final String FORGOT_PASSWORD = "apimain/forgotpassword/";
+    //    Facebook gMail login
+    public static final String FB_GPLUS_LOGIN = "apimain/socialLogin/";
 
-    //    Forgot Password OTP
-    public static final String FORGOT_PASSWORD_OTP_REQUEST = "apimain/fgpasswordotp/";
-
-    //    Resend OTP
-    public static final String RESEND_OTP_REQUEST = "apimain/resendOTP/";
-
-    //    Update Password
-    public static final String UPDATE_PASSWORD = "apimain/resetpassword/";
-
-    //    Update Password Params
-    public static final String PARAMS_USER_ID = "user_id";
-
-    //    Change Mobile Number
-    public static final String CHANGE_MOBILE_NUMBER = "apimain/updatemobile/";
-
-    //    Change Mobile Number Params
-    public static final String PARMAS_OLD_MOBILE_NUMBER = "old_mobile_no";
-    public static final String PARMAS_NEW_MOBILE_NUMBER = "new_mobile_no";
-
-    //    Facebook Gmail login
-    public static final String FB_GPLUS_LOGIN = "apimain/fbgmlogin/";
-
-    //    Guest Login
-    public static final String GUEST_LOGIN = "apimain/guestlogin/";
-
-    //    Guest Login Params
-    public static final String PARAMS_UNIQUE_ID = "unique_id";
-
-    //    Loginmode constants
+    //    Login mode constants
     public static final int FACEBOOK = 1;
     public static final int NORMAL_SIGNUP = 2;
     public static final int GOOGLE_PLUS = 3;
 
-    //    Profile Image Upload
-    public static final String PROFILE_IMAGE = "apimain/profile_picupload/";
+    //    Guest login
+    public static final String GUEST_LOGIN = "apimain/guestLogin/";
 
-    //    Profile Info Update
-    public static final String PROFILE_DATA = "apimain/profileupdate/";
+    //    Guest login params
+    public static final String PARAMS_UNIQUE_ID = "unique_id";
 
-    //    Profile Params
+    //    SignUp
+    public static final String SIGN_UP = "apimain/signUp/";
+
+    //    SignUp params
+    public static final String PARAMS_EMAIL_ID = "email_id";
+    public static final String PARAMS_MOBILE_NUMBER = "mobile_no";
+    public static final String PARAMS_PASSWORD = "password";
+    public static final String PARAMS_GCM_KEY = "gcm_key";
+
+    //    Mobile number verification
+    public static final String MOBILE_NUMBER_VERIFY = "apimain/mobileVerify/";
+
+    //    Mobile number verification params
+    public static final String PARAMS_OTP = "OTP";
+    public static final String PARAMS_REQUEST_MODE = "request_mode";
+
+    //    Resend OTP
+    public static final String RESEND_OTP_REQUEST = "apimain/resendOTP/";
+
+    //    Change mobile number
+    public static final String CHANGE_MOBILE_NUMBER = "apimain/updateMobile/";
+
+    //    Change mobile number params
+    public static final String PARMAS_OLD_MOBILE_NUMBER = "old_mobile_no";
+    public static final String PARMAS_NEW_MOBILE_NUMBER = "new_mobile_no";
+
+    //    Forgot password
+    public static final String FORGOT_PASSWORD = "apimain/forgotPassword/";
+
+    //    Forgot password OTP
+    public static final String FORGOT_PASSWORD_OTP_REQUEST = "apimain/forgotPasswordOTP/";
+
+    //    Update password
+    public static final String UPDATE_PASSWORD = "apimain/resetPassword/";
+
+    //    Update password params
+    public static final String PARAMS_USER_ID = "user_id";
+
+    //    Profile image upload
+    public static final String PROFILE_IMAGE = "apimain/profilePictureUpload/";
+
+    //    Profile info update
+    public static final String PROFILE_DATA = "apimain/profileUpdate/";
+
+    //    Profile params
     public static final String PARAMS_FULL_NAME = "full_name";
     public static final String PARAMS_DATE_OF_BIRTH = "date_of_birth";
     public static final String PARAMS_GENDER = "gender";
@@ -101,54 +99,101 @@ public class HeylaAppConstants {
     public static final String PARAMS_USER_REFERRAL_CODE = "user_referral_code";
 
     //    Country list
-    public static final String COUNTRY_LIST = "apimain/selectcountry/";
+    public static final String COUNTRY_LIST = "apimain/selectCountry/";
 
     //    State list
-    public static final String STATE_LIST = "apimain/selectstate/";
+    public static final String STATE_LIST = "apimain/selectState/";
 
     //    City list
-    public static final String CITY_LIST = "apimain/selectcity/";
+    public static final String CITY_LIST = "apimain/selectCity/";
 
-    //    Event City list
-    public static final String EVENT_CITY_LIST = "apimain/selectallcity/";
+    //    Change email id
+    public static final String CHANGE_EMAIL_ID = "/apimain/updateEmail";
+
+    //    Change email id params
+    public static final String CHANGE_EMAIL_ID1 = "full_name";
+
+    //    Change username
+    public static final String CHANGE_USERNAME = "apimain/updateUsername";
+
+    //    Change username params
+    public static final String CHANGE_USERNAME1 = "full_name";
+
+    //    Event city list
+    public static final String EVENT_CITY_LIST = "apimain/selectAllCity/";
 
     //    Preferences list
-    public static final String PREFERENCES_LIST = "apimain/userpreferrence/";
+    public static final String USER_PREFERENCES_LIST = "apimain/userPreference/";
 
-    //    Preferences list
-    public static final String USER_PREFERENCES_LIST = "apimain/userpreferrence/";
+    //    Preferences update
+    public static final String USER_PREFERENCES_UPDATE = "apimain/updatePreference/";
 
-    //    Preferences Update
-    public static final String USER_PREFERENCES_UPDATE = "apimain/updatepreferrence/";
+    //    User activity
+    public static final String USER_ACTIVITY = "apimain/userActivity/";
 
-    public static final String GET_ADVANCE_SINGLE_SEARCH = "apimain/advancesearch/";
+    //    User activity params
+    public static final String PARAMS_FULL_NAME1 = "full_name";
 
     //    Event list
-    public static final String EVENT_LIST = "apimain/viewevents/";
+    public static final String EVENT_LIST = "apimain/viewEvents/";
 
     //    Event list params
     public static final String KEY_EVENT_TYPE = "event_type";
 
+    //    Event images list
+    public static final String EVENT_IMAGES = "apimain/eventImages";
+
+    //    Event popularity
+    public static final String EVENT_POPULARITY = "apimain/eventPopularity";
+
+    //    Advanced filter search
+    public static final String GET_ADVANCE_SINGLE_SEARCH = "apimain/advanceSearch/";
+
+    //Advanced filter search params
+    public static final String ISFILTERAPPLY = "ISFILTERAPPLY";
+    public static final String SINGLEDATEFILTER = "SINGLEDATEFILTER";
+    public static final String FROMDATE = "fromdate";
+    public static final String TODATE = "todate";
+    public static final String FILTERCITY = "filtercity";
+    public static final String FILTEREVENTTYPE = "filtereventtype";
+    public static final String FILTEREVENTTYPECATEGORY = "filtereventtypecategory";
+    public static final String FILTERCAT = "filtercat";
+    public static final String FILTERCITYINDEX = "filtercityindex";
+    public static final String FILTEREVENTTYPEINDEX = "filtereventtypeindex";
+    public static final String FILTEREVENTTYPECATEGORYINDEX = "filtereventtypecategoryindex";
+
+    //    Event review list
+    public static final String EVENT_REVIEW_LIST = "apimain/listEventReview";
+
+    //    Event review check
+    public static final String EVENT_REVIEW_CHECK = "apimain/checkReview";
+
+    //    Event review add
+    public static final String EVENT_REVIEW_ADD = "apimain/addReview";
+
+    //    Event review update
+    public static final String EVENT_REVIEW_UPDATE = "apimain/updateReview";
+
     //    Booking plan dates
-    public static final String BOOKING_DATES = "apimain/bookingplandates/";
+    public static final String BOOKING_DATES = "apimain/bookingPlanDates/";
 
     //    Booking plan dates params
     public static final String KEY_EVENT_ID = "event_id";
 
     //    Booking plan timings
-    public static final String BOOKING_SHOW_TIMES = "apimain/bookingplantimes/";
+    public static final String BOOKING_SHOW_TIMES = "apimain/bookingPlanTimes/";
 
     //    Booking plan show timings params
     public static final String KEY_EVENT_SHOW_DATE = "show_date";
 
     //    Booking plans
-    public static final String BOOKING_SHOW_PLANS = "apimain/bookingplans/";
+    public static final String BOOKING_SHOW_PLANS = "apimain/bookingPlans/";
 
     //    Booking plans params
     public static final String KEY_EVENT_SHOW_TIME = "show_time";
 
     //    Booking process
-    public static final String BOOKING_PROCESS = "apimain/bookingprocess/";
+    public static final String BOOKING_PROCESS = "apimain/bookingProcess/";
 
     //    Booking process params
     public static final String KEY_ORDER_ID = "order_id";
@@ -159,23 +204,19 @@ public class HeylaAppConstants {
     public static final String KEY_BOOKING_DATE = "booking_date";
 
     //    Attendees
-    public static final String UPDATE_ATTENDEES = "apimain/bookingattendees/";
+    public static final String UPDATE_ATTENDEES = "apimain/bookingAttendees/";
 
     //    Booking history
-    public static final String BOOKING_HISTORY = "apimain/bookinghistory/";
+    public static final String BOOKING_HISTORY = "apimain/bookingHistory/";
 
-    //    Booking history
-    public static final String BOOKING_DETAILS = "apimain/bookingdetails/";
+    //    Booking history attendees details
+    public static final String BOOKING_DETAILS = "apimain/bookingAttendeesDetails/";
 
-
-    // Leaderboard
-    public static final String LEADERBOARD_USER_ACTIVITY = "apimain/useractivity/";
-    public static final String LEADERBOARD = "apimain/leaderboard/";
+    // LeaderBoard
+    public static final String LEADER_BOARD = "apimain/leaderBoard/";
 
 
     //    SharedPref
-    private static final String FCM_SHARED_PREF_NAME = "FCMSharedPref";
-    private static final String TAG_TOKEN = "tagtoken";
     public static final String KEY_LOGIN_MODE = "loginMode";
     public static final String KEY_MOBILE_NUMBER = "mobile_number";
     public static final String KEY_USER_TYPE = "user_type";
@@ -218,9 +259,6 @@ public class HeylaAppConstants {
 
     public static final String KEY_USER_HAS_PREFERENCES = "hasPreferences";
 
-    public static final String KEY_LAST_SHARED_TIME = "timeEventShared";
-    public static final String KEY_EVENT_SHARED_COUNT = "eventSharedCount";
-
     //Profile
     public static final String KEY_USER_EMAIL_ID = "email_id";
     public static final String KEY_USER_BIRTHDAY = "birthday";
@@ -232,26 +270,10 @@ public class HeylaAppConstants {
     public static String ALERT_DIALOG_TITLE = "alertDialogTitle";
     public static String ALERT_DIALOG_MESSAGE = "alertDialogMessage";
     public static String ALERT_DIALOG_TAG = "alertDialogTag";
-    public static String ALERT_DIALOG_INPUT_HINT = "alert_dialog_input_hint";
     public static String ALERT_DIALOG_POS_BUTTON = "alert_dialog_pos_button";
     public static String ALERT_DIALOG_NEG_BUTTON = "alert_dialog_neg_button";
 
-
-    //Advanced Filter
-    public static final String ISFILTERAPPLY = "ISFILTERAPPLY";
-    public static final String SINGLEDATEFILTER = "SINGLEDATEFILTER";
-    public static final String FROMDATE = "fromdate";
-    public static final String TODATE = "todate";
-    public static final String FILTERCITY = "filtercity";
-    public static final String FILTEREVENTTYPE = "filtereventtype";
-    public static final String FILTEREVENTTYPECATEGORY = "filtereventtypecategory";
-    public static final String FILTERCAT = "filtercat";
-    public static final String FILTERCITYINDEX = "filtercityindex";
-    public static final String FILTEREVENTTYPEINDEX = "filtereventtypeindex";
-    public static final String FILTEREVENTTYPECATEGORYINDEX = "filtereventtypecategoryindex";
-
     // Booking Status
-
     public static final String KEY_PAYMENT_AMOUNT = "eventRate";
     public static final String KEY_TRANSACTION_DATE = "eventDate";
     public static final String KEY_TOTAL_NO_OF_TICKETS = "totalNoOfTickets";

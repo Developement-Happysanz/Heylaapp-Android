@@ -131,7 +131,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
             e.printStackTrace();
         }
 
-        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.LEADERBOARD;
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.LEADER_BOARD;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
