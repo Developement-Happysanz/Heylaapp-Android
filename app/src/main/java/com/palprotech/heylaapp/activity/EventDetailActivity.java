@@ -1,8 +1,12 @@
 package com.palprotech.heylaapp.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,13 +21,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.bean.support.Event;
+import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
+import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
+import com.palprotech.heylaapp.utils.HeylaAppConstants;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 /**
  * Created by Narendar on 03/11/17.
  */
 
-public class EventDetailActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
+public class EventDetailActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, IServiceListener {
 
     private Event event;
     private ImageView imBack;
@@ -33,6 +43,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
     private TextView imEventsView;
     private ImageView imEventFavourite;
     MapView mMapView = null;
+    private static final String TAG = EventDetailActivity.class.getName();
     private ImageView imEventOrganiserRequest;
     private TextView txtEventReview;
     private TextView txtCheckInEvent;
@@ -63,7 +74,18 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == imEventShare) {
-            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
+            SpannableString content = new SpannableString("http://www.heylaapp.com/");
+            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+            String text = event.getEventName() + "\n" + event.getDescription() + "\n" + content;
+
+
+            Intent i = new Intent(android.content.Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share with");
+            i.putExtra(android.content.Intent.EXTRA_TEXT, text);
+            startActivity(Intent.createChooser(i, "Share via"));
+
+            sendShareStatus();
         }
         if (v == imEventQuestionAnswer) {
             Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
@@ -78,7 +100,8 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == txtCheckInEvent) {
-            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString() + "\nGet ready for the fun! ", Toast.LENGTH_LONG).show();
+            sendShareStatusUserActivity(2);
         }
         if (v == txtBookEvent) {
             Intent intent = new Intent(getApplicationContext(), BookingActivity.class);
@@ -162,11 +185,104 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    private void sendShareStatus() {
+
+        //A user can only get points 3 times a day for photo sharing. So restrict beyond that
+        long currentTime = System.currentTimeMillis();
+        long lastsharedTime = PreferenceStorage.getEventSharedTime(this);
+        int sharedCount = PreferenceStorage.getEventSharedcount(this);
+
+        if ((currentTime - lastsharedTime) > HeylaAppConstants.TWENTY4HOURS) {
+            Log.d(TAG, "event time elapsed more than 24hrs");
+            PreferenceStorage.saveEventSharedtime(this, currentTime);
+            PreferenceStorage.saveEventSharedcount(this, 1);
+
+            //testing
+            int ruleid = 2;
+            int ticketcount = 0;
+            String activitydetail = "You have shared event" + event.getEventName();
+            int eventId = Integer.parseInt(event.getId());
+            ServiceHelper serviceHelper = new ServiceHelper(this);
+            serviceHelper.postShareDetails(String.format(HeylaAppConstants.SHARE_EVENT_URL, eventId, Integer.parseInt(PreferenceStorage.getUserId(this)),
+                    ruleid, Uri.encode(activitydetail), event.getEventBanner(), ticketcount),this);
+            //testing
+
+            sendShareStatustoServer();
+        } else {
+            if (sharedCount < 3) {
+                Log.d(TAG, "event shared cout is" + sharedCount);
+                sharedCount++;
+                PreferenceStorage.saveEventSharedcount(this, sharedCount);
+                sendShareStatustoServer();
+            }
+        }
+    }
+
+    private void sendShareStatustoServer() {
+        ServiceHelper serviceHelper = new ServiceHelper(this);
+        int eventId = Integer.parseInt(event.getId());
+        int ruleid = 2;
+        int ticketcount = 0;
+        String activitydetail = "You have shared photo" + event.getEventName();
+        serviceHelper.postShareDetails(String.format(HeylaAppConstants.USER_ACTIVITY, eventId, Integer.parseInt(PreferenceStorage.getUserId(this)),
+                ruleid, Uri.encode(activitydetail), event.getEventBanner(), ticketcount), (IServiceListener) this);
+
+    }
+
+    private void sendShareStatusUserActivity(int RuleId) {
+
+        //testing
+        int ruleid = RuleId;
+        int ticketcount = 0;
+        String statusCheckins = "";
+        if (RuleId == 1) {
+            statusCheckins = "You have shared photo ";
+        }
+        if (RuleId == 2) {
+            statusCheckins = "You have checked in for the ";
+        }
+        if (RuleId == 3) {
+            statusCheckins = "You have engaged for the ";
+        }
+        if (RuleId == 3) {
+            statusCheckins = "You have engaged for the ";
+        }
+
+        String activitydetail = "You have shared photo" + event.getEventName();
+        int eventId = Integer.parseInt(event.getId());
+        ServiceHelper serviceHelper = new ServiceHelper(this);
+        serviceHelper.postShareDetails(String.format(HeylaAppConstants.SHARE_EVENT_URL, eventId, Integer.parseInt(PreferenceStorage.getUserId(this)),
+                ruleid, Uri.encode(activitydetail), event.getEventBanner(), ticketcount), this);
+        //testing
+        sendShareStatustoServerUserActivity(RuleId);
+    }
+
+    private void sendShareStatustoServerUserActivity(int RuleId) {
+        ServiceHelper serviceHelper = new ServiceHelper(this);
+        int eventId = Integer.parseInt(event.getId());
+        int ruleid = RuleId;
+        int ticketcount = 0;
+        String activitydetail = "You have shared photo" + event.getEventName();
+        serviceHelper.postShareDetails(String.format(HeylaAppConstants.SHARE_EVENT_URL, eventId, Integer.parseInt(PreferenceStorage.getUserId(this)),
+                ruleid, Uri.encode(activitydetail), event.getEventBanner(), ticketcount), this);
+
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(Double.parseDouble(event.getEventLatitude()), Double.parseDouble(event.getEventLongitude())))
                 .title(event.getEventName()));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(event.getEventLatitude()), Double.parseDouble(event.getEventLongitude())), 14.0f));
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
+    }
+
+    @Override
+    public void onError(String error) {
+
     }
 }

@@ -772,6 +772,40 @@ public class PreferenceStorage {
         return userId;
     }
 
+    public static void saveEventSharedtime(Context context, long millisecs) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(HeylaAppConstants.KEY_LAST_SHARED_TIME, millisecs);
+        editor.commit();
+
+    }
+
+    public static long getEventSharedTime(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        Long mode = sharedPreferences.getLong(HeylaAppConstants.KEY_LAST_SHARED_TIME, 0);
+        return mode;
+
+    }
+
+    public static void saveEventSharedcount(Context context, int count) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(HeylaAppConstants.KEY_EVENT_SHARED_COUNT, count);
+        editor.commit();
+
+    }
+
+    public static int getEventSharedcount(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        Integer mode = sharedPreferences.getInt(HeylaAppConstants.KEY_EVENT_SHARED_COUNT, 0);
+        return mode;
+
+    }
+
     public static void saveFilterCatgry(Context context, String singledate) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);

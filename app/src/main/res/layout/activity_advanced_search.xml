@@ -11,7 +11,7 @@
         android:minHeight="?attr/actionBarSize" />
 
     <ImageView
-        android:id="@+id/back_res"
+        android:id="@+id/back_tic_his"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

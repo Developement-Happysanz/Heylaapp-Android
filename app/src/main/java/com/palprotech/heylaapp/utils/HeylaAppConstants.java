@@ -131,6 +131,9 @@ public class HeylaAppConstants {
     //    User activity
     public static final String USER_ACTIVITY = "apimain/userActivity/";
 
+    //    User activity
+    public static final String SHARE_EVENT_URL = BASE_URL + "apimain/userActivity/";
+
     //    User activity params
     public static final String PARAMS_FULL_NAME1 = "full_name";
 
@@ -220,6 +223,8 @@ public class HeylaAppConstants {
     public static final String KEY_LOGIN_MODE = "loginMode";
     public static final String KEY_MOBILE_NUMBER = "mobile_number";
     public static final String KEY_USER_TYPE = "user_type";
+    public static final String KEY_LAST_SHARED_TIME = "timeEventShared";
+    public static final String KEY_EVENT_SHARED_COUNT = "eventSharedCount";
 
     //    Service Params
     public static String PARAM_MESSAGE = "msg";
@@ -277,4 +282,6 @@ public class HeylaAppConstants {
     public static final String KEY_PAYMENT_AMOUNT = "eventRate";
     public static final String KEY_TRANSACTION_DATE = "eventDate";
     public static final String KEY_TOTAL_NO_OF_TICKETS = "totalNoOfTickets";
+
+    public static final long TWENTY4HOURS = 24 * 60 * 60 * 1000;//24 hours in milli seconds format
 }
