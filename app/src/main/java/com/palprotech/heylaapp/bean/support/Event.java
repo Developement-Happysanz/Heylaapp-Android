@@ -15,6 +15,10 @@ public class Event implements Serializable {
     @Expose
     private String id;
 
+    @SerializedName("popularity")
+    @Expose
+    private String popularity;
+
     @SerializedName("category_id")
     @Expose
     private String CategoryId;
@@ -180,6 +184,20 @@ public class Event implements Serializable {
      */
     public void setId(String id) {
         this.id = id;
+    }
+
+    /**
+     * @return The popularity
+     */
+    public String getPopularity() {
+        return popularity;
+    }
+
+    /**
+     * @param popularity The popularity
+     */
+    public void setPopularity(String popularity) {
+        this.popularity = popularity;
     }
 
     /**

@@ -21,20 +21,27 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.bean.support.Event;
+import com.palprotech.heylaapp.helper.AlertDialogHelper;
+import com.palprotech.heylaapp.helper.ProgressDialogHelper;
+import com.palprotech.heylaapp.interfaces.DialogClickListener;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * Created by Narendar on 03/11/17.
  */
 
-public class EventDetailActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, IServiceListener {
+public class EventDetailActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, IServiceListener, DialogClickListener {
 
+    private static final String TAG = EventDetailActivity.class.getName();
+    private ProgressDialogHelper progressDialogHelper;
+    private ServiceHelper serviceHelper;
     private Event event;
     private ImageView imBack;
     private ImageView imEventBanner;
@@ -43,7 +50,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
     private TextView imEventsView;
     private ImageView imEventFavourite;
     MapView mMapView = null;
-    private static final String TAG = EventDetailActivity.class.getName();
+
     private ImageView imEventOrganiserRequest;
     private TextView txtEventReview;
     private TextView txtCheckInEvent;
@@ -97,7 +104,10 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == txtEventReview) {
-            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), EventReviewActivity.class);
+            intent.putExtra("eventObj", event);
+            startActivity(intent);
+//            finish();
         }
         if (v == txtCheckInEvent) {
             Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString() + "\nGet ready for the fun! ", Toast.LENGTH_LONG).show();
@@ -113,6 +123,9 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 
     //    Setup UI page
     void setUpUI() {
+        serviceHelper = new ServiceHelper(this);
+        serviceHelper.setServiceListener(this);
+        progressDialogHelper = new ProgressDialogHelper(this);
 //        Back button
         imBack = findViewById(R.id.back_res);
 //        Event banner
@@ -132,6 +145,9 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 //        Chat live with event organiser
         imEventQuestionAnswer = findViewById(R.id.event_qa);
         imEventQuestionAnswer.setOnClickListener(this);
+//        Event popularity views
+        imEventsView = findViewById(R.id.event_views);
+        imEventsView.setText("" + event.getPopularity());
 //        Mark as favourite event
         imEventFavourite = findViewById(R.id.addfav);
         imEventFavourite.setOnClickListener(this);
@@ -183,6 +199,23 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
         if (isBooking.equalsIgnoreCase("N")) {
             txtBookEvent.setVisibility(View.GONE);
         }
+        updateEventViews();
+    }
+
+    private void updateEventViews() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_EVENT_ID, event.getId());
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_POPULARITY;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
     private void sendShareStatus() {
@@ -204,7 +237,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             int eventId = Integer.parseInt(event.getId());
             ServiceHelper serviceHelper = new ServiceHelper(this);
             serviceHelper.postShareDetails(String.format(HeylaAppConstants.SHARE_EVENT_URL, eventId, Integer.parseInt(PreferenceStorage.getUserId(this)),
-                    ruleid, Uri.encode(activitydetail), event.getEventBanner(), ticketcount),this);
+                    ruleid, Uri.encode(activitydetail), event.getEventBanner(), ticketcount), this);
             //testing
 
             sendShareStatustoServer();
@@ -276,13 +309,53 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(event.getEventLatitude()), Double.parseDouble(event.getEventLongitude())), 14.0f));
     }
 
+    private boolean validateSignInResponse(JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(HeylaAppConstants.PARAM_MESSAGE);
+                Log.d(TAG, "status val" + status + "msg" + msg);
+
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        Log.d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                    } else {
+                        signInSuccess = true;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return signInSuccess;
+    }
+
     @Override
     public void onResponse(JSONObject response) {
+        progressDialogHelper.hideProgressDialog();
+        if (validateSignInResponse(response)) {
 
+        }
     }
 
     @Override
     public void onError(String error) {
+        progressDialogHelper.hideProgressDialog();
+        AlertDialogHelper.showSimpleAlertDialog(this, error);
+    }
+
+    @Override
+    public void onAlertPositiveClicked(int tag) {
+
+    }
+
+    @Override
+    public void onAlertNegativeClicked(int tag) {
 
     }
 }

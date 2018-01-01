@@ -108,13 +108,13 @@ public class HeylaAppConstants {
     public static final String CITY_LIST = "apimain/selectCity/";
 
     //    Change email id
-    public static final String CHANGE_EMAIL_ID = "/apimain/updateEmail";
+    public static final String CHANGE_EMAIL_ID = "/apimain/updateEmail/";
 
     //    Change email id params
     public static final String CHANGE_EMAIL_ID1 = "full_name";
 
     //    Change username
-    public static final String CHANGE_USERNAME = "apimain/updateUsername";
+    public static final String CHANGE_USERNAME = "apimain/updateUsername/";
 
     //    Change username params
     public static final String CHANGE_USERNAME1 = "full_name";
@@ -144,10 +144,10 @@ public class HeylaAppConstants {
     public static final String KEY_EVENT_TYPE = "event_type";
 
     //    Event images list
-    public static final String EVENT_IMAGES = "apimain/eventImages";
+    public static final String EVENT_IMAGES = "apimain/eventImages/";
 
     //    Event popularity
-    public static final String EVENT_POPULARITY = "apimain/eventPopularity";
+    public static final String EVENT_POPULARITY = "apimain/eventPopularity/";
 
     //    Advanced filter search
     public static final String GET_ADVANCE_SINGLE_SEARCH = "apimain/advanceSearch/";
@@ -166,16 +166,23 @@ public class HeylaAppConstants {
     public static final String FILTEREVENTTYPECATEGORYINDEX = "filtereventtypecategoryindex";
 
     //    Event review list
-    public static final String EVENT_REVIEW_LIST = "apimain/listEventReview";
+    public static final String EVENT_REVIEW_LIST = "apimain/listEventReview/";
 
     //    Event review check
-    public static final String EVENT_REVIEW_CHECK = "apimain/checkReview";
+    public static final String EVENT_REVIEW_CHECK = "apimain/checkReview/";
 
     //    Event review add
-    public static final String EVENT_REVIEW_ADD = "apimain/addReview";
+    public static final String EVENT_REVIEW_ADD = "apimain/addReview/";
+
+    //    Event review add params
+    public static final String KEY_RATINGS = "rating";
+    public static final String KEY_COMMENTS = "comments";
 
     //    Event review update
-    public static final String EVENT_REVIEW_UPDATE = "apimain/updateReview";
+    public static final String EVENT_REVIEW_UPDATE = "apimain/updateReview/";
+
+    //    Event review update params
+    public static final String KEY_REVIEW_ID = "review_id";
 
     //    Booking plan dates
     public static final String BOOKING_DATES = "apimain/bookingPlanDates/";
