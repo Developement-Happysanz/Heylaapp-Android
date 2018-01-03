@@ -66,24 +66,24 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     protected void initializeViews() {
 
         name = rootView.findViewById(R.id.name);
-        if(PreferenceStorage.getFullName(getApplicationContext())== null){
+        if(PreferenceStorage.getFullName(getActivity()) == null){
             name.setText("Name");
         }
         else {
-            name.setText(PreferenceStorage.getFullName(getApplicationContext()));
+            name.setText(PreferenceStorage.getFullName(getActivity()));
         }
         username = rootView.findViewById(R.id.username);
-        if(PreferenceStorage.getUsername(getApplicationContext())== null){
+        if(PreferenceStorage.getUsername(getActivity())== null){
             username.setText("Username");
         }
         else {
-            username.setText(PreferenceStorage.getUsername(getApplicationContext()));
+            username.setText(PreferenceStorage.getUsername(getActivity()));
         }
         userPic = rootView.findViewById(R.id.leaderboard_profile_img);
         userPic.setOnClickListener(this);
-        String url = PreferenceStorage.getUserPicture(getApplicationContext());
+        String url = PreferenceStorage.getUserPicture(getActivity());
         if (((url != null) && !(url.isEmpty()))) {
-            Picasso.with(getApplicationContext()).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(userPic);
+            Picasso.with(getActivity()).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(userPic);
         }
 
         login = rootView.findViewById(R.id.login_layout);

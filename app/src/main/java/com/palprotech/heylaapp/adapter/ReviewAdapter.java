@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -15,8 +14,8 @@ import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.app.AppController;
-import com.palprotech.heylaapp.bean.support.BookPlan;
 import com.palprotech.heylaapp.bean.support.Review;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
@@ -89,6 +88,7 @@ public class ReviewAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.txtComments = convertView.findViewById(R.id.txtComments);
             holder.rtbRating = convertView.findViewById(R.id.ratingBar);
+            holder.txtUsernameDisp = convertView.findViewById(R.id.username_disp);
 
             convertView.setTag(holder);
         } else {
@@ -98,13 +98,14 @@ public class ReviewAdapter extends BaseAdapter {
         Review review = reviews.get(position);
 
         holder.txtComments.setText(reviews.get(position).getEventComments());
+        holder.txtUsernameDisp.setText(PreferenceStorage.getUsername(context));
         holder.rtbRating.setRating(Integer.parseInt(reviews.get(position).getEventRating()));
 
         return convertView;
     }
 
     public class ViewHolder {
-        public TextView txtComments;
+        public TextView txtComments, txtUsernameDisp;
         public RatingBar rtbRating;
     }
 

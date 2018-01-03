@@ -155,7 +155,9 @@ public class PreferenceStorage {
     public static String getUsername(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        return sharedPreferences.getString(HeylaAppConstants.KEY_USERNAME, "");
+        String username;
+        username = sharedPreferences.getString(HeylaAppConstants.KEY_USERNAME, "");
+        return username;
     }
     /*End*/
 

@@ -220,7 +220,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 
     private void sendShareStatus() {
 
-        //A user can only get points 3 times a day for photo sharing. So restrict beyond that
+        //A user can only get points 3 times a day for event detail sharing. So restrict beyond that
         long currentTime = System.currentTimeMillis();
         long lastsharedTime = PreferenceStorage.getEventSharedTime(this);
         int sharedCount = PreferenceStorage.getEventSharedcount(this);
@@ -269,7 +269,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
         int ticketcount = 0;
         String statusCheckins = "";
         if (RuleId == 1) {
-            statusCheckins = "You have shared photo ";
+            statusCheckins = "You have shared event detail ";
         }
         if (RuleId == 2) {
             statusCheckins = "You have checked in for the ";
@@ -281,7 +281,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             statusCheckins = "You have engaged for the ";
         }
 
-        String activitydetail = "You have shared photo" + event.getEventName();
+        String activitydetail = "You have shared event detail" + event.getEventName();
         int eventId = Integer.parseInt(event.getId());
         ServiceHelper serviceHelper = new ServiceHelper(this);
         serviceHelper.postShareDetails(String.format(HeylaAppConstants.SHARE_EVENT_URL, eventId, Integer.parseInt(PreferenceStorage.getUserId(this)),
@@ -295,7 +295,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
         int eventId = Integer.parseInt(event.getId());
         int ruleid = RuleId;
         int ticketcount = 0;
-        String activitydetail = "You have shared photo" + event.getEventName();
+        String activitydetail = "You have shared event detail" + event.getEventName();
         serviceHelper.postShareDetails(String.format(HeylaAppConstants.SHARE_EVENT_URL, eventId, Integer.parseInt(PreferenceStorage.getUserId(this)),
                 ruleid, Uri.encode(activitydetail), event.getEventBanner(), ticketcount), this);
 
