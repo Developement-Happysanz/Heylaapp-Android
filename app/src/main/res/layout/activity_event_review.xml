@@ -23,7 +23,13 @@
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
         android:layout_marginTop="10dp"
-        android:divider="@color/text_black"
-        android:dividerHeight="1dp" />
+        android:divider="@color/bordergray"
+        android:dividerHeight="2dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/bordergray"
+        android:layout_below="@id/listView_reviews"/>
 
 </RelativeLayout>
