@@ -62,7 +62,7 @@
                             android:layout_alignEnd="@id/profile_img"
                             android:layout_alignStart="@+id/profile_img"
                             android:layout_below="@+id/profile_img"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:gravity="center"
                             android:hint="Kamal"
                             android:textColor="@color/white"
@@ -108,7 +108,7 @@
                             android:layout_below="@+id/booking_history"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="5dp"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:text="Booking"
                             android:textColor="@color/white" />
 
@@ -140,7 +140,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/category"
                             android:layout_marginTop="5dp"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:text="Preference"
                             android:textColor="@color/white" />
 
@@ -172,7 +172,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/change_city"
                             android:layout_marginTop="5dp"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:text="Change city"
                             android:textColor="@color/white" />
 
@@ -206,7 +206,7 @@
                             android:layout_below="@+id/wishlist"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="5dp"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:gravity="center"
                             android:text="Wishlist"
                             android:textColor="@color/white" />
@@ -239,7 +239,7 @@
                             android:layout_below="@+id/share"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="5dp"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:text="Share App"
                             android:textColor="@color/white" />
 
@@ -273,7 +273,7 @@
                             android:layout_below="@+id/about_us"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="5dp"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:text="About Us"
                             android:textColor="@color/white" />
 
@@ -308,7 +308,7 @@
                             android:layout_below="@+id/rate_us"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="5dp"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:gravity="center"
                             android:text="Rate App"
                             android:textColor="@color/white" />
@@ -342,7 +342,7 @@
                             android:layout_below="@+id/settings"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="5dp"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:text="Settings"
                             android:textColor="@color/white" />
 
@@ -378,7 +378,7 @@
                             android:layout_below="@+id/sign_out"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="5dp"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:text="Sign Out"
                             android:textColor="@color/white" />
 

@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:fontFamily="@font/Muli"
+        android:fontFamily="@font/muli"
         android:textStyle="bold"
         android:text="Select Category" />
 

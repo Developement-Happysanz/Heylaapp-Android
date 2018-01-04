@@ -15,7 +15,7 @@
         android:gravity="center"
         android:maxLength="1"
         android:maxLines="1"
-        android:fontFamily="@font/Muli"
+        android:fontFamily="@font/muli"
         android:nextFocusLeft="@+id/otp_one_edit_text"
         android:nextFocusRight="@+id/otp_two_edit_text" />
 
@@ -27,7 +27,7 @@
         android:gravity="center"
         android:maxLength="1"
         android:maxLines="1"
-        android:fontFamily="@font/Muli"
+        android:fontFamily="@font/muli"
         android:nextFocusLeft="@+id/otp_one_edit_text"
         android:nextFocusRight="@+id/otp_three_edit_text" />
 
@@ -39,7 +39,7 @@
         android:gravity="center"
         android:maxLength="1"
         android:maxLines="1"
-        android:fontFamily="@font/Muli"
+        android:fontFamily="@font/muli"
         android:nextFocusLeft="@+id/otp_two_edit_text"
         android:nextFocusRight="@+id/otp_four_edit_text" />
 
@@ -50,7 +50,7 @@
         android:gravity="center"
         android:maxLength="1"
         android:maxLines="1"
-        android:fontFamily="@font/Muli"
+        android:fontFamily="@font/muli"
         android:nextFocusLeft="@+id/otp_three_edit_text"
         android:nextFocusRight="@+id/otp_four_edit_text" />
 </LinearLayout>

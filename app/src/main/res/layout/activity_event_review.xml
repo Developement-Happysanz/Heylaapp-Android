@@ -23,7 +23,7 @@
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/Muli"
+        android:fontFamily="@font/muli"
         android:divider="@color/bordergray"
         android:dividerHeight="2dp" />
 

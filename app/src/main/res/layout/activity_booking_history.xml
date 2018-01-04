@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/Muli"
+        android:fontFamily="@font/muli"
         android:background="@color/trans"
         android:divider="@color/white"
         android:dividerHeight="5dp" />

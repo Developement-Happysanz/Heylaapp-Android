@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:fontFamily="@font/Muli"
+            android:fontFamily="@font/muli"
             android:gravity="center"
             android:minHeight="60dp"
             android:padding="5dp"
@@ -72,7 +72,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_toLeftOf="@+id/event_paid_btn"
                     android:ellipsize="end"
-                    android:fontFamily="@font/Muli"
+                    android:fontFamily="@font/muli"
                     android:singleLine="true"
                     android:text="Mini Marathon Championship"
                     android:textColor="@color/white"
@@ -91,7 +91,7 @@
                     android:drawablePadding="5dp"
                     android:drawableStart="@drawable/ic_time"
                     android:ellipsize="end"
-                    android:fontFamily="@font/Muli"
+                    android:fontFamily="@font/muli"
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="9:00 PM"
@@ -110,7 +110,7 @@
                     android:drawablePadding="5dp"
                     android:drawableStart="@drawable/ic_location"
                     android:ellipsize="end"
-                    android:fontFamily="@font/Muli"
+                    android:fontFamily="@font/muli"
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="Peelamedu"
@@ -141,7 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@color/white"
-                android:fontFamily="@font/Muli"
+                android:fontFamily="@font/muli"
                 android:gravity="center_vertical"
                 android:text="DATE"
                 android:textColor="@color/text_black" />
@@ -154,13 +154,13 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/Muli">
+                android:fontFamily="@font/muli">
 
                 <LinearLayout
                     android:id="@+id/layout_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/Muli"
+                    android:fontFamily="@font/muli"
                     android:orientation="horizontal" />
 
             </HorizontalScrollView>
@@ -169,7 +169,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@color/white"
-                android:fontFamily="@font/Muli"
+                android:fontFamily="@font/muli"
                 android:gravity="center_vertical"
                 android:text="VENUE"
                 android:textColor="@color/text_black" />
@@ -178,13 +178,13 @@
                 android:id="@+id/event_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/Muli" />
+                android:fontFamily="@font/muli" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@color/white"
-                android:fontFamily="@font/Muli"
+                android:fontFamily="@font/muli"
                 android:gravity="center_vertical"
                 android:text="TIME"
                 android:textColor="@color/text_black" />
@@ -197,13 +197,13 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/Muli">
+                android:fontFamily="@font/muli">
 
                 <LinearLayout
                     android:id="@+id/layout_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/Muli"
+                    android:fontFamily="@font/muli"
                     android:orientation="horizontal" />
 
             </HorizontalScrollView>
@@ -224,7 +224,7 @@
                     android:layout_weight="1"
                     android:divider="@color/text_black"
                     android:dividerHeight="1dp"
-                    android:fontFamily="@font/Muli"
+                    android:fontFamily="@font/muli"
                     android:listSelector="@drawable/transparent_drawable" />
 
             </LinearLayout>
@@ -252,7 +252,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@drawable/btn_square_white"
-                    android:fontFamily="@font/Muli"
+                    android:fontFamily="@font/muli"
                     android:gravity="center"
                     android:text="0"
                     android:textColor="@color/text_black"
@@ -264,7 +264,7 @@
                     android:layout_height="30dp"
                     android:layout_marginLeft="20dp"
                     android:background="@drawable/ic_add_circle_outline_black_24dp"
-                    android:fontFamily="@font/Muli" />
+                    android:fontFamily="@font/muli" />
 
             </LinearLayout>
 
@@ -279,7 +279,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.50"
                     android:background="@color/temp"
-                    android:fontFamily="@font/Muli"
+                    android:fontFamily="@font/muli"
                     android:text="Total"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
@@ -290,7 +290,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.50"
                     android:background="@color/appColorBase"
-                    android:fontFamily="@font/Muli"
+                    android:fontFamily="@font/muli"
                     android:text="Book Now"
                     android:textColor="@color/white"
                     android:textSize="14sp" />

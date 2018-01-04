@@ -35,7 +35,7 @@
         android:minHeight="60dp"
         android:padding="5dp"
         android:text="Profile"
-        android:fontFamily="@font/Muli"
+        android:fontFamily="@font/muli"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="@dimen/actionbarTextSize" />
@@ -102,7 +102,7 @@
                             android:maxLength="30"
                             android:hint="@string/name"
                             android:inputType="text"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:singleLine="true"
                             android:textSize="14sp" />
 
@@ -118,7 +118,7 @@
                         <EditText
                             android:id="@+id/edtUsername"
                             android:layout_width="match_parent"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:layout_height="50dp"
                             android:maxLength="15"
                             android:hint="@string/username"
@@ -150,7 +150,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:hint="@string/birthday"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:inputType="text"
                             android:singleLine="true"
                             android:textSize="14sp" />
@@ -174,7 +174,7 @@
                                 style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
-                                android:fontFamily="@font/Muli"
+                                android:fontFamily="@font/muli"
                                 android:hint="@string/occupation"
                                 android:textSize="14sp" />
 
@@ -193,7 +193,7 @@
                                 style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
-                                android:fontFamily="@font/Muli"
+                                android:fontFamily="@font/muli"
                                 android:layout_weight="0.5"
                                 android:hint="@string/gender"
                                 android:textSize="14sp" />
@@ -225,7 +225,7 @@
                             android:hint="@string/address1"
                             android:inputType="text"
                             android:singleLine="true"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:textSize="14sp" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -243,7 +243,7 @@
                             android:layout_height="50dp"
                             android:maxLength="50"
                             android:hint="@string/address2"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:inputType="text"
                             android:singleLine="true"
                             android:textSize="14sp" />
@@ -262,7 +262,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:maxLength="50"
-                            android:fontFamily="@font/Muli"
+                            android:fontFamily="@font/muli"
                             android:hint="@string/address3"
                             android:inputType="text"
                             android:singleLine="true"
@@ -298,7 +298,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_weight="0.5"
-                                android:fontFamily="@font/Muli"
+                                android:fontFamily="@font/muli"
                                 android:hint="@string/selectcountry"
                                 android:spinnerMode="dropdown"
                                 android:textSize="14sp" />
@@ -315,7 +315,7 @@
 
                             <EditText
                                 android:id="@+id/stateList"
-                                android:fontFamily="@font/Muli"
+                                android:fontFamily="@font/muli"
                                 style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
@@ -346,7 +346,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_weight="0.5"
-                                android:fontFamily="@font/Muli"
+                                android:fontFamily="@font/muli"
                                 android:hint="@string/selectcity"
                                 android:spinnerMode="dropdown"
                                 android:textSize="14sp" />
@@ -366,7 +366,7 @@
                                 android:layout_height="50dp"
                                 android:digits="0123456789"
                                 android:maxLength="10"
-                                android:fontFamily="@font/Muli"
+                                android:fontFamily="@font/muli"
                                 android:hint="@string/pincode"
                                 android:inputType="number"
                                 android:singleLine="true"
@@ -382,7 +382,7 @@
                     android:id="@+id/subscription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/Muli"
+                    android:fontFamily="@font/muli"
                     android:layout_below="@+id/location"
                     android:layout_marginStart="10dp"
                     android:buttonTint="@color/appColorBase"
@@ -392,7 +392,7 @@
                     android:id="@+id/saveprofile"
                     android:layout_width="120dp"
                     android:layout_height="40dp"
-                    android:fontFamily="@font/Muli"
+                    android:fontFamily="@font/muli"
                     android:layout_below="@+id/subscription"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"

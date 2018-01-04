@@ -8,11 +8,11 @@
         android:title="event name"
         android:icon="@drawable/ic_search"
         app:showAsAction="ifRoom"
-        android:fontFamily="@font/Muli"
+        android:fontFamily="@font/muli"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
     <item
         android:id="@+id/action_filter"
-        android:fontFamily="@font/Muli"
+        android:fontFamily="@font/muli"
         android:icon="@drawable/ic_advance_filter"
         android:title="event name"
         app:showAsAction="ifRoom" />
