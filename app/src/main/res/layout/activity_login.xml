@@ -49,6 +49,7 @@
             android:padding="2dp"
             android:layout_toLeftOf="@+id/strip"
             android:gravity="center"
+            android:fontFamily="@font/Muli"
             android:text="@string/guest"
             android:textColor="@color/white"
             android:textSize="15sp" />

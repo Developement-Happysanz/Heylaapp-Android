@@ -26,6 +26,7 @@
             android:layout_marginStart="10dp"
             android:layout_height="wrap_content"
             android:text="Username"
+            android:fontFamily="@font/Muli"
             android:textColor="@color/text_black"
             android:textSize="22sp"/>
 
@@ -36,6 +37,7 @@
             android:layout_alignStart="@id/username_disp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
+            android:fontFamily="@font/Muli"
             android:layout_below="@id/username_disp"
             android:textColor="@color/text_black"
             android:text="Review"

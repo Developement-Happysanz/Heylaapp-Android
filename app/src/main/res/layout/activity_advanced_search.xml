@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/appColorBase"
-        android:minHeight="?attr/actionBarSize" />
+        android:minHeight="60dp" />
 
     <ImageView
         android:id="@+id/back_tic_his"
@@ -27,8 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:minHeight="?attr/actionBarSize"
+        android:minHeight="60dp"
         android:padding="5dp"
+        android:fontFamily="@font/Muli"
         android:text="Advance Search"
         android:textAllCaps="true"
         android:textColor="@color/white"
@@ -63,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginBottom="@dimen/mainmargin"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/Muli"
                 android:gravity="center"
                 android:text="Select day"
                 android:textColor="@color/appColorBase"
@@ -85,7 +86,7 @@
                     android:layout_marginRight="4dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_advanced_filter_properties"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/Muli"
                     android:text="Today"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
@@ -98,7 +99,7 @@
                     android:layout_marginRight="4dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_advanced_filter_properties"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/Muli"
                     android:text="Tomorrow"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
@@ -111,7 +112,7 @@
                     android:layout_marginRight="4dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_advanced_filter_properties"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/Muli"
                     android:text="DD-MM-YYYY"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
@@ -155,6 +156,7 @@
                     style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:fontFamily="@font/Muli"
                     android:hint="Event Type"
                     android:textSize="14sp" />
 
@@ -171,6 +173,7 @@
                     style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:fontFamily="@font/Muli"
                     android:hint="Event Category"
                     android:textSize="14sp" />
 
@@ -187,6 +190,7 @@
                     style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:fontFamily="@font/Muli"
                     android:hint="Preference"
                     android:textSize="14sp" />
 
@@ -203,6 +207,7 @@
                     style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:fontFamily="@font/Muli"
                     android:hint="City"
                     android:textSize="14sp" />
 
@@ -217,6 +222,7 @@
                 android:layout_marginTop="@dimen/mainmargin"
                 android:gravity="center"
                 android:text="Select Date"
+                android:fontFamily="@font/Muli"
                 android:textColor="@color/appColorBase"
                 android:textSize="@dimen/actionbarTextSize"
                 android:textStyle="bold" />
@@ -229,7 +235,7 @@
                 android:layout_below="@id/tvdaterange"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="10dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/Muli"
                 android:gravity="center"
                 android:text="From"
                 android:textColor="@color/appColorBase" />
@@ -240,6 +246,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvfrom"
                 android:layout_marginBottom="@dimen/mainmargin"
+                android:fontFamily="@font/Muli"
                 android:background="@color/transparent"
                 android:gravity="left|center_vertical"
                 android:text="DD-MM-YYYY"
@@ -252,6 +259,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/btnfrom"
                 android:layout_marginBottom="4dp"
+                android:fontFamily="@font/Muli"
                 android:background="@color/transparent"
                 android:gravity="center"
 
@@ -264,6 +272,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvto"
                 android:layout_marginBottom="16dp"
+                android:fontFamily="@font/Muli"
                 android:background="@color/transparent"
                 android:gravity="left|center_vertical"
                 android:text="DD-MM-YYYY"
@@ -282,6 +291,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="4dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/Muli"
                     android:background="@drawable/button_sign_in"
                     android:text="Cancel"
                     android:textAllCaps="false"
@@ -293,6 +303,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="4dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/Muli"
                     android:background="@drawable/button_sign_in"
                     android:text="Search"
                     android:textAllCaps="false"
