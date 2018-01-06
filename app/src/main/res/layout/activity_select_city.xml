@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/muli"
             android:gravity="center"
             android:minHeight="?attr/actionBarSize"
             android:paddingLeft="10dp"
@@ -46,7 +46,8 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="75dp" />
+            android:layout_height="75dp"
+            android:fontFamily="@font/muli"/>
 
     </RelativeLayout>
 
@@ -54,6 +55,7 @@
         android:id="@+id/listView_events"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/muli"
         android:divider="@color/background_grey"
         android:dividerHeight="2dp"
         android:paddingEnd="10dp"

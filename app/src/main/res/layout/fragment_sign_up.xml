@@ -22,10 +22,11 @@
                 android:id="@+id/edtMail"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:fontFamily="@font/muli"
                 android:hint="@string/email"
-                android:text=""
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
+                android:text=""
                 android:textSize="14sp" />
 
         </android.support.design.widget.TextInputLayout>
@@ -44,10 +45,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:digits="0123456789+"
+                android:fontFamily="@font/muli"
                 android:hint="@string/mobileno"
                 android:inputType="number"
-                android:text=""
                 android:singleLine="true"
+                android:text=""
                 android:textSize="14sp" />
 
         </android.support.design.widget.TextInputLayout>
@@ -66,26 +68,28 @@
                 android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:fontFamily="@font/muli"
                 android:hint="@string/password"
                 android:inputType="textPassword"
-                android:text=""
                 android:maxLines="1"
+                android:text=""
                 android:textSize="14sp" />
 
         </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btnSignup"
-            android:layout_below="@id/ti_password"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:text="@string/signup"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_below="@id/ti_password"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
-            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             android:background="@drawable/btn_square_login"
+            android:fontFamily="@font/muli"
+            android:text="@string/signup"
             android:textColor="@color/colour_pick"
             android:textSize="18dp" />
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +25,8 @@ public class StatusActivity extends Activity {
 
     private TextView tv4, OrderNum, PaymentId, TransactionDate, PaymentAmount, PaymentStatus;
     private Button PaymentDone;
-    private ImageView Success, Failure;
+    private ImageView Success, Failure, Cancel;
+    private RelativeLayout payment;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -41,11 +43,13 @@ public class StatusActivity extends Activity {
         PaymentStatus = (TextView) findViewById(R.id.txt_paystatus);
         Success = (ImageView) findViewById(R.id.img_success);
         Failure = (ImageView) findViewById(R.id.img_fail);
+        Cancel = findViewById(R.id.img_cancel);
 //        OrderNum.setText(AvenuesParams.MERCHANT_ID);
         PaymentId.setText(AvenuesParams.ORDER_ID);
         TransactionDate.setText(AvenuesParams.ORDER_ID);
         PaymentAmount.setText(AvenuesParams.AMOUNT);
         PaymentDone = (Button) findViewById(R.id.pay_done);
+        payment = findViewById(R.id.pay_frame);
 
         String getOrderId = PreferenceStorage.getOrderId(getApplicationContext());
         String getPaymentAmount = PreferenceStorage.getPaymentAmount(getApplicationContext());
@@ -75,24 +79,33 @@ public class StatusActivity extends Activity {
         switch (tv4.getText().toString()) {
             case "Transaction Declined!":
                 Success.setVisibility(View.INVISIBLE);
+                Cancel.setVisibility(View.INVISIBLE);
                 PaymentStatus.setText("Failed");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);
                 TransactionDate.setText(showTransactionDate);
+                PaymentDone.setText("Try Again");
+                payment.setBackground(getResources().getDrawable(R.drawable.payment_status_failure));
                 break;
             case "Transaction Successful!":
                 Failure.setVisibility(View.INVISIBLE);
+                Cancel.setVisibility(View.INVISIBLE);
                 PaymentStatus.setText("Success");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);
                 TransactionDate.setText(showTransactionDate);
+                PaymentDone.setText("Done");
+                payment.setBackground(getResources().getDrawable(R.drawable.payment_status_success));
                 break;
             case "Transaction Cancelled!":
                 Success.setVisibility(View.INVISIBLE);
+                Failure.setVisibility(View.INVISIBLE);
                 PaymentStatus.setText("Canceled");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);
                 TransactionDate.setText(showTransactionDate);
+                PaymentDone.setText("Ok");
+                payment.setBackground(getResources().getDrawable(R.drawable.payment_status_cancel));
                 break;
             default:
                 break;

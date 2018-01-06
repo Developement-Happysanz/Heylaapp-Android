@@ -6,10 +6,12 @@
     <item
         android:id="@+id/action_select"
         android:orderInCategory="100"
+        android:fontFamily="@font/muli"
         android:title="Select all" />
     <item
         android:id="@+id/action_deselect"
         android:orderInCategory="100"
-        android:title="Deselect all" />
+        android:title="Deselect all"
+        android:fontFamily="@font/muli"/>
 
 </menu>

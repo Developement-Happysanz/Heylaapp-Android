@@ -7,10 +7,12 @@
         android:id="@+id/action_skip"
         android:orderInCategory="100"
         android:title="skip"
+        android:fontFamily="@font/muli"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_set"
         android:orderInCategory="100"
         android:title="Set"
+        android:fontFamily="@font/muli"
         app:showAsAction="always" />
 </menu>

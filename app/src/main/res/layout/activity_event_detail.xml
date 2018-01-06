@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/muli"
         android:gravity="center"
         android:minHeight="60dp"
         android:padding="5dp"
@@ -71,6 +71,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/event_detail_img"
                         android:layout_marginStart="10dp"
+                        android:fontFamily="@font/muli"
                         android:paddingBottom="10dp"
                         android:text="CAKE POINT"
                         android:textColor="@color/white"
@@ -98,6 +99,7 @@
                         android:layout_marginEnd="60dp"
                         android:layout_marginTop="-18dp"
                         android:background="@drawable/ic_round_full_color"
+                        android:fontFamily="@font/muli"
                         android:gravity="center"
                         android:text="QA"
                         android:textColor="@color/white" />
@@ -107,6 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_toLeftOf="@id/eventviews"
+                        android:fontFamily="@font/muli"
                         android:gravity="center"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
@@ -168,6 +171,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/addressimg"
+                        android:fontFamily="@font/muli"
                         android:text="Address"
                         android:textColor="@color/appColorBase" />
                 </RelativeLayout>
@@ -181,6 +185,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_toRightOf="@+id/addresslayout"
+                    android:fontFamily="@font/muli"
                     android:gravity="center"
                     android:text="51, Mariamman Kovil Street Peelamedu"
                     android:textColor="@color/text_black" />
@@ -208,6 +213,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/timeimg"
+                        android:fontFamily="@font/muli"
                         android:text="Time"
                         android:textColor="@color/appColorBase" />
                 </RelativeLayout>
@@ -221,6 +227,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_toRightOf="@+id/timelayout"
+                    android:fontFamily="@font/muli"
                     android:gravity="center"
                     android:text="12-12-1212"
                     android:textColor="@color/text_black" />
@@ -232,6 +239,7 @@
                     android:layout_alignBottom="@+id/timelayout"
                     android:layout_alignTop="@+id/timelayout"
                     android:layout_toRightOf="@+id/start_time_txt"
+                    android:fontFamily="@font/muli"
                     android:gravity="center"
                     android:text="to"
                     android:textColor="@color/text_black" />
@@ -245,6 +253,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_toRightOf="@+id/time_to"
+                    android:fontFamily="@font/muli"
                     android:gravity="center"
                     android:text="12-12-1212"
                     android:textColor="@color/text_black" />
@@ -273,6 +282,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/dateimg"
+                        android:fontFamily="@font/muli"
                         android:text="Date"
                         android:textColor="@color/appColorBase" />
                 </RelativeLayout>
@@ -286,6 +296,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_toRightOf="@+id/datelayout"
+                    android:fontFamily="@font/muli"
                     android:gravity="center"
                     android:text="12-12-1212"
                     android:textColor="@color/text_black" />
@@ -297,6 +308,7 @@
                     android:layout_alignBottom="@+id/datelayout"
                     android:layout_alignTop="@+id/datelayout"
                     android:layout_toRightOf="@+id/start_date_txt"
+                    android:fontFamily="@font/muli"
                     android:gravity="center"
                     android:text="to"
                     android:textColor="@color/text_black" />
@@ -310,6 +322,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_toRightOf="@+id/date_to"
+                    android:fontFamily="@font/muli"
                     android:gravity="center"
                     android:text="12-12-1212"
                     android:textColor="@color/text_black" />
@@ -332,6 +345,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/muli"
                     android:text="Event Details"
                     android:textColor="@color/text_black"
                     android:textSize="20dp"
@@ -345,6 +359,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/muli"
                     android:text="abcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsd"
                     android:textColor="@color/text_black" />
 
@@ -366,6 +381,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/muli"
                     android:text="Venue"
                     android:textColor="@color/text_black"
                     android:textSize="20dp"
@@ -404,6 +420,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/muli"
                     android:text="Organiser Details"
                     android:textColor="@color/text_black"
                     android:textSize="20dp"
@@ -428,6 +445,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/muli"
                     android:text="BaBaga, Head of cake point"
                     android:textColor="@color/text_black" />
 
@@ -444,6 +462,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:fontFamily="@font/muli"
                         android:text="Mobile"
                         android:textColor="@color/text_black" />
 
@@ -451,6 +470,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="125dp"
+                        android:fontFamily="@font/muli"
                         android:text=":"
                         android:textColor="@color/text_black" />
 
@@ -459,6 +479,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="135dp"
+                        android:fontFamily="@font/muli"
                         android:text="9999999999"
                         android:textColor="@color/text_black" />
 
@@ -478,6 +499,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:fontFamily="@font/muli"
                         android:text="Email"
                         android:textColor="@color/text_black" />
 
@@ -485,6 +507,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="125dp"
+                        android:fontFamily="@font/muli"
                         android:text=":"
                         android:textColor="@color/text_black" />
 
@@ -493,6 +516,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="135dp"
+                        android:fontFamily="@font/muli"
                         android:text="9999999999"
                         android:textColor="@color/text_black" />
 
@@ -517,6 +541,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
+            android:fontFamily="@font/muli"
             android:paddingEnd="5dp"
             android:paddingStart="5dp"
             android:text="Review"
@@ -530,6 +555,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
+            android:fontFamily="@font/muli"
             android:paddingEnd="5dp"
             android:paddingStart="5dp"
             android:text="Check-In"
@@ -544,6 +570,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
+            android:fontFamily="@font/muli"
             android:paddingEnd="5dp"
             android:paddingStart="5dp"
             android:text="Book"

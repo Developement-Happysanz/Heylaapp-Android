@@ -7,11 +7,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="230dp"
         android:layout_marginBottom="30dp"
-        android:gravity="center"
         android:background="@drawable/ic_ticket_booking"
         android:descendantFocusability="blocksDescendants"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="2dp">
 
@@ -19,10 +19,11 @@
             android:id="@+id/txt_event_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+
             android:ellipsize="end"
+            android:fontFamily="@font/muli"
+            android:gravity="center"
             android:singleLine="true"
-            android:layout_marginTop="10dp"
             android:text="Mini Marathon Championship"
             android:textColor="@color/text_black"
             android:textSize="20dp" />
@@ -30,10 +31,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="35dp"
             android:layout_marginEnd="35dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="10dp"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -48,6 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:ellipsize="end"
+                    android:fontFamily="@font/muli"
                     android:singleLine="true"
                     android:text="Date"
                     android:textColor="@color/text_black"
@@ -59,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:ellipsize="end"
+                    android:fontFamily="@font/muli"
                     android:singleLine="true"
                     android:text="20/12/2017"
                     android:textColor="@color/text_black"
@@ -78,10 +81,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:ellipsize="end"
+                    android:fontFamily="@font/muli"
                     android:singleLine="true"
                     android:text="Time"
                     android:textColor="@color/text_black"
-                    android:textSize="18dp"/>
+                    android:textSize="18dp" />
 
                 <TextView
                     android:id="@+id/txt_event_booked_time"
@@ -89,10 +93,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:ellipsize="end"
+                    android:fontFamily="@font/muli"
                     android:singleLine="true"
                     android:text="12:00 PM"
                     android:textColor="@color/text_black"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp" />
 
             </LinearLayout>
 
@@ -103,8 +108,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:ellipsize="end"
             android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/muli"
             android:singleLine="true"
             android:text="Location"
             android:textColor="@color/text_black"
@@ -116,6 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:ellipsize="end"
+            android:fontFamily="@font/muli"
             android:singleLine="true"
             android:text="12, Mini Marathon Championship, Marathon"
             android:textColor="@color/text_black"
@@ -125,11 +132,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:layout_marginEnd="30dp"
             android:layout_marginStart="5dp"
             android:ellipsize="end"
+            android:fontFamily="@font/muli"
             android:singleLine="true"
             android:text="More >>>"
-            android:layout_marginEnd="30dp"
             android:textColor="@color/text_black"
             android:textSize="18dp" />
 

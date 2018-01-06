@@ -15,6 +15,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="Edit Profile"
+            android:fontFamily="@font/muli"
             android:textColor="@color/text_black"
             android:textSize="20dp" />
 
@@ -26,6 +27,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="Change Number"
+            android:fontFamily="@font/muli"
             android:textColor="@color/text_black"
             android:textSize="20dp" />
 
@@ -36,6 +38,7 @@
             android:layout_below="@id/change_number_settings"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/muli"
             android:text="Change Password"
             android:textColor="@color/text_black"
             android:textSize="20dp" />
@@ -48,6 +51,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="Verify Mail"
+            android:fontFamily="@font/muli"
             android:textColor="@color/text_black"
             android:textSize="20dp" />
 

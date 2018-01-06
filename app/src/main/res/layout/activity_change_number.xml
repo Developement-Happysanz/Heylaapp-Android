@@ -35,7 +35,7 @@
             android:minHeight="60dp"
             android:padding="5dp"
             android:text="Change Number"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/muli"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/actionbarTextSize" />
@@ -61,6 +61,7 @@
             android:layout_below="@+id/img_verification"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/muli"
             android:text="@string/mobile_number"
             android:textColor="@color/appColorBase"
             android:textSize="22dp"
@@ -74,6 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:paddingLeft="10dp"
+        android:fontFamily="@font/muli"
         android:paddingRight="10dp">
 
         <EditText
@@ -83,6 +85,7 @@
             android:digits="0123456789"
             android:hint="@string/new_mobile_number"
             android:inputType="number"
+            android:fontFamily="@font/muli"
             android:singleLine="true"
             android:text="9865301967"
             android:maxLength="10"
@@ -98,6 +101,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:gravity="center"
+        android:fontFamily="@font/muli"
         android:paddingBottom="5dp"
         android:paddingTop="5dp">
 
@@ -108,6 +112,7 @@
             android:layout_gravity="center"
             android:background="@drawable/button_sign_in"
             android:text="@string/confirm"
+            android:fontFamily="@font/muli"
             android:textColor="@color/colour_pick" />
 
     </LinearLayout>

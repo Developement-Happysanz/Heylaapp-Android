@@ -56,7 +56,11 @@
     <color name="default_selected_text">#FFFFFF</color>
     <color name="default_base">#FFFFFF</color>
     <color name="default_base_text">#000000</color>
-
     <color name="button_bg_green">#40C491</color>
+
+    <!-- dots active colors -->
+    <color name="success">#93c757</color>
+    <color name="failure">#e11f26</color>
+    <color name="cancel">#f15528</color>
 
 </resources>
