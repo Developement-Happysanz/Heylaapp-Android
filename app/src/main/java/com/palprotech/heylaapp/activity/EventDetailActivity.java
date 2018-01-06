@@ -1,7 +1,6 @@
 package com.palprotech.heylaapp.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
@@ -32,6 +31,10 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Narendar on 03/11/17.
@@ -111,7 +114,7 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
         }
         if (v == txtCheckInEvent) {
             Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString() + "\nGet ready for the fun! ", Toast.LENGTH_LONG).show();
-            sendShareStatusUserActivity(2);
+            checkdistance();
         }
         if (v == txtBookEvent) {
             Intent intent = new Intent(getApplicationContext(), BookingActivity.class);
@@ -230,75 +233,64 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
             PreferenceStorage.saveEventSharedtime(this, currentTime);
             PreferenceStorage.saveEventSharedcount(this, 1);
 
-            //testing
-            int ruleid = 2;
-            int ticketcount = 0;
-            String activitydetail = "You have shared event" + event.getEventName();
-            int eventId = Integer.parseInt(event.getId());
-            ServiceHelper serviceHelper = new ServiceHelper(this);
-            serviceHelper.postShareDetails(String.format(HeylaAppConstants.SHARE_EVENT_URL, eventId, Integer.parseInt(PreferenceStorage.getUserId(this)),
-                    ruleid, Uri.encode(activitydetail), event.getEventBanner(), ticketcount), this);
-            //testing
+            shareStatus();
 
-            sendShareStatustoServer();
         } else {
-            if (sharedCount < 3) {
-                Log.d(TAG, "event shared cout is" + sharedCount);
+            if (sharedCount < 5) {
+                Log.d(TAG, "event shared count is" + sharedCount);
                 sharedCount++;
                 PreferenceStorage.saveEventSharedcount(this, sharedCount);
-                sendShareStatustoServer();
+                shareStatus();
             }
         }
     }
 
-    private void sendShareStatustoServer() {
-        ServiceHelper serviceHelper = new ServiceHelper(this);
-        int eventId = Integer.parseInt(event.getId());
-        int ruleid = 2;
-        int ticketcount = 0;
-        String activitydetail = "You have shared photo" + event.getEventName();
-        serviceHelper.postShareDetails(String.format(HeylaAppConstants.USER_ACTIVITY, eventId, Integer.parseInt(PreferenceStorage.getUserId(this)),
-                ruleid, Uri.encode(activitydetail), event.getEventBanner(), ticketcount), (IServiceListener) this);
+    private void shareStatus() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        System.out.println(dateFormat.format(date));
+        String date_activity = (dateFormat.format(date)).toString();
+        JSONObject jsonObject = new JSONObject();
+        try {
 
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
+            jsonObject.put(HeylaAppConstants.KEY_RULE_ID, "2");
+            jsonObject.put(HeylaAppConstants.KEY_EVENT_ID, event.getId());
+            jsonObject.put(HeylaAppConstants.PARAMS_DATE, date_activity);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_ACTIVITY;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
-    private void sendShareStatusUserActivity(int RuleId) {
-
-        //testing
-        int ruleid = RuleId;
-        int ticketcount = 0;
-        String statusCheckins = "";
-        if (RuleId == 1) {
-            statusCheckins = "You have shared event detail ";
-        }
-        if (RuleId == 2) {
-            statusCheckins = "You have checked in for the ";
-        }
-        if (RuleId == 3) {
-            statusCheckins = "You have engaged for the ";
-        }
-        if (RuleId == 3) {
-            statusCheckins = "You have engaged for the ";
-        }
-
-        String activitydetail = "You have shared event detail" + event.getEventName();
-        int eventId = Integer.parseInt(event.getId());
-        ServiceHelper serviceHelper = new ServiceHelper(this);
-        serviceHelper.postShareDetails(String.format(HeylaAppConstants.SHARE_EVENT_URL, eventId, Integer.parseInt(PreferenceStorage.getUserId(this)),
-                ruleid, Uri.encode(activitydetail), event.getEventBanner(), ticketcount), this);
-        //testing
-        sendShareStatustoServerUserActivity(RuleId);
+    private void checkdistance(){
+        double lat1, long1;
     }
 
-    private void sendShareStatustoServerUserActivity(int RuleId) {
-        ServiceHelper serviceHelper = new ServiceHelper(this);
-        int eventId = Integer.parseInt(event.getId());
-        int ruleid = RuleId;
-        int ticketcount = 0;
-        String activitydetail = "You have shared event detail" + event.getEventName();
-        serviceHelper.postShareDetails(String.format(HeylaAppConstants.SHARE_EVENT_URL, eventId, Integer.parseInt(PreferenceStorage.getUserId(this)),
-                ruleid, Uri.encode(activitydetail), event.getEventBanner(), ticketcount), this);
+    private void sendCheckinStatus(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        System.out.println(dateFormat.format(date));
+        String date_activity = (dateFormat.format(date)).toString();
+        JSONObject jsonObject = new JSONObject();
+        try {
 
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
+            jsonObject.put(HeylaAppConstants.KEY_RULE_ID, "3");
+            jsonObject.put(HeylaAppConstants.KEY_EVENT_ID, event.getId());
+            jsonObject.put(HeylaAppConstants.PARAMS_DATE, date_activity);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_ACTIVITY;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
     @Override

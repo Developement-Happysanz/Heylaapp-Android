@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,12 +25,20 @@ import com.palprotech.heylaapp.fragment.FavouriteFragment;
 import com.palprotech.heylaapp.fragment.HotspotFragment;
 import com.palprotech.heylaapp.fragment.LeaderboardFragment;
 import com.palprotech.heylaapp.fragment.PopularFragment;
+import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
+import com.palprotech.heylaapp.utils.HeylaAppConstants;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, DialogClickListener, IServiceListener {
@@ -96,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         return true;
                     }
                 });
+
+        sendLoginStatus();
 
     }
 
@@ -304,13 +315,80 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private boolean validateSignInResponse(JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(HeylaAppConstants.PARAM_MESSAGE);
+                Log.d(TAG, "status val" + status + "msg" + msg);
+
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        Log.d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                    } else {
+                        signInSuccess = true;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return signInSuccess;
+    }
+
     @Override
     public void onResponse(JSONObject response) {
+        progressDialogHelper.hideProgressDialog();
+        if (validateSignInResponse(response)) {
 
+        }
     }
 
     @Override
     public void onError(String error) {
-
+        progressDialogHelper.hideProgressDialog();
+        AlertDialogHelper.showSimpleAlertDialog(this, error);
     }
+
+
+    private void sendLoginStatus() {
+
+        //A user can only get points 1 time a day for login. So restrict beyond that
+        long currentTime = System.currentTimeMillis();
+        long lastsharedTime = PreferenceStorage.getDailyLoginTime(this);
+
+        if ((currentTime - lastsharedTime) > HeylaAppConstants.TWENTY4HOURS) {
+            Log.d(TAG, "event time elapsed more than 24hrs");
+            dailyLoginActivity();
+            PreferenceStorage.saveDailyLogintime(this, currentTime);
+        }
+    }
+
+    private void dailyLoginActivity() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        System.out.println(dateFormat.format(date));
+        String date_activity = (dateFormat.format(date)).toString();
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
+            jsonObject.put(HeylaAppConstants.KEY_RULE_ID, "1");
+            jsonObject.put(HeylaAppConstants.KEY_EVENT_ID, "");
+            jsonObject.put(HeylaAppConstants.PARAMS_DATE, date_activity);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_ACTIVITY;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
 }

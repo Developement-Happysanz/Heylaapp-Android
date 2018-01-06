@@ -131,6 +131,10 @@ public class HeylaAppConstants {
     //    User activity
     public static final String USER_ACTIVITY = "apimain/userActivity/";
 
+    //    User activity Parms
+    public static final String PARAMS_DATE = "date";
+    public static final String KEY_RULE_ID = "rule_id";
+
     //    User activity
     public static final String SHARE_EVENT_URL = BASE_URL + "apimain/userActivity/";
 
@@ -232,6 +236,7 @@ public class HeylaAppConstants {
     public static final String KEY_USER_TYPE = "user_type";
     public static final String KEY_LAST_SHARED_TIME = "timeEventShared";
     public static final String KEY_EVENT_SHARED_COUNT = "eventSharedCount";
+    public static final String KEY_LAST_LOGIN_TIME = "timeDailyLogin";
 
     //    Service Params
     public static String PARAM_MESSAGE = "msg";

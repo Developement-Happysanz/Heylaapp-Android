@@ -791,6 +791,23 @@ public class PreferenceStorage {
 
     }
 
+    public static void saveDailyLogintime(Context context, long millisecs) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(HeylaAppConstants.KEY_LAST_LOGIN_TIME, millisecs);
+        editor.commit();
+
+    }
+
+    public static long getDailyLoginTime(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        Long mode = sharedPreferences.getLong(HeylaAppConstants.KEY_LAST_LOGIN_TIME, 0);
+        return mode;
+
+    }
+
     public static void saveEventSharedcount(Context context, int count) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
