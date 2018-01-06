@@ -1,7 +1,11 @@
 package com.palprotech.heylaapp.activity;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -32,6 +36,11 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,7 +49,7 @@ import java.util.Date;
  * Created by Narendar on 03/11/17.
  */
 
-public class EventDetailActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, IServiceListener, DialogClickListener {
+public class EventDetailActivity extends AppCompatActivity implements LocationListener, View.OnClickListener, OnMapReadyCallback, IServiceListener, DialogClickListener {
 
     private static final String TAG = EventDetailActivity.class.getName();
     private ProgressDialogHelper progressDialogHelper;
@@ -58,6 +67,15 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
     private TextView txtEventReview;
     private TextView txtCheckInEvent;
     private TextView txtBookEvent;
+
+    protected LocationManager locationManager;
+    protected LocationListener locationListener;
+    protected Context context;
+    TextView txtLat;
+    String lat;
+    String provider;
+    protected Double latitude, longitude, latitude1,longitude1;
+    protected boolean gps_enabled, network_enabled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -267,8 +285,47 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
-    private void checkdistance(){
-        double lat1, long1;
+    private void checkdistance() {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        longitude = location.getLongitude();
+        latitude = location.getLatitude();
+        longitude1 = Double.parseDouble(event.getEventLongitude());
+        latitude1 = Double.parseDouble(event.getEventLatitude());
+        if (distance(latitude,longitude,latitude1,longitude1)<0.1){
+            sendCheckinStatus();
+        }
+    }
+
+    private double distance(double lat1, double lng1, double lat2, double lng2) {
+
+        double earthRadius = 6371; // in miles, change to 6371 for kilometer output
+
+        double dLat = Math.toRadians(lat2-lat1);
+        double dLng = Math.toRadians(lng2-lng1);
+
+        double sindLat = Math.sin(dLat / 2);
+        double sindLng = Math.sin(dLng / 2);
+
+        double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
+                * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+        double dist = earthRadius * c;
+
+        return dist; // output distance, in MILES
     }
 
     private void sendCheckinStatus(){
@@ -348,6 +405,33 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onAlertNegativeClicked(int tag) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+
+    }
+
+    public void getlatlong(Location location){
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
 
     }
 }
