@@ -637,23 +637,6 @@ public class PreferenceStorage {
         return userId;
     }
 
-    public static void IsFilterApply(Context context, boolean IsFilterApply) {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(HeylaAppConstants.ISFILTERAPPLY, IsFilterApply);
-        editor.commit();
-
-    }
-
-    public static boolean getFilterApply(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        boolean logged = sharedPreferences.getBoolean(HeylaAppConstants.ISFILTERAPPLY, false);
-        return logged;
-
-    }
-
     public static void saveFilterFromDate(Context context, String singledate) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
@@ -703,15 +686,23 @@ public class PreferenceStorage {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(HeylaAppConstants.FILTEREVENTTYPECATEGORY, singledate);
+        editor.putString(HeylaAppConstants.FILTEREVENTCATEGORY, singledate);
         editor.commit();
     }
 
     public static String getFilterEventTypeCategory(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        String userId = sharedPreferences.getString(HeylaAppConstants.FILTEREVENTTYPECATEGORY, "");
+        String userId = sharedPreferences.getString(HeylaAppConstants.FILTEREVENTCATEGORY, "");
         return userId;
+    }
+
+    public static void saveFilterCitySelection(Context context, int index) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(HeylaAppConstants.FILTERCITYINDEX, index);
+        editor.commit();
     }
 
     public static void saveFilterCity(Context context, String singledate) {
@@ -726,51 +717,6 @@ public class PreferenceStorage {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         String userId = sharedPreferences.getString(HeylaAppConstants.FILTERCITY, "");
-        return userId;
-    }
-
-    public static void saveFilterCitySelection(Context context, int index) {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(HeylaAppConstants.FILTERCITYINDEX, index);
-        editor.commit();
-    }
-
-    public static void saveFilterEventTypeSelection(Context context, int index) {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(HeylaAppConstants.FILTEREVENTTYPEINDEX, index);
-        editor.commit();
-    }
-
-    public static void saveFilterEventTypeCategorySelection(Context context, int index) {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(HeylaAppConstants.FILTEREVENTTYPECATEGORYINDEX, index);
-        editor.commit();
-    }
-
-    public static int getFilterCityIndex(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        int userId = sharedPreferences.getInt(HeylaAppConstants.FILTERCITYINDEX, -1);
-        return userId;
-    }
-
-    public static int getFilterEventTypeIndex(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        int userId = sharedPreferences.getInt(HeylaAppConstants.FILTEREVENTTYPEINDEX, -1);
-        return userId;
-    }
-
-    public static int getFilterEventTypeCategoryIndex(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        int userId = sharedPreferences.getInt(HeylaAppConstants.FILTEREVENTTYPECATEGORYINDEX, -1);
         return userId;
     }
 
@@ -829,14 +775,14 @@ public class PreferenceStorage {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(HeylaAppConstants.FILTERCAT, singledate);
+        editor.putString(HeylaAppConstants.FILTERPREF, singledate);
         editor.commit();
     }
 
     public static String getFilterCatgry(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        String userId = sharedPreferences.getString(HeylaAppConstants.FILTERCAT, "");
+        String userId = sharedPreferences.getString(HeylaAppConstants.FILTERPREF, "");
         return userId;
     }
 

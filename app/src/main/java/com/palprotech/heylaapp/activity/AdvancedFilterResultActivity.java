@@ -18,12 +18,14 @@ import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.bean.support.EventList;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
+import com.palprotech.heylaapp.interfaces.DialogClickListener;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.CommonUtils;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ import java.util.ArrayList;
  * Created by Narendar on 27/11/17.
  */
 
-public class AdvancedFilterResultActivity extends AppCompatActivity implements IServiceListener, AdapterView.OnItemClickListener {
+public class AdvancedFilterResultActivity extends AppCompatActivity implements IServiceListener, AdapterView.OnItemClickListener, DialogClickListener {
     private static final String TAG = "AdvaSearchResAct";
     protected ListView loadMoreListView;
     View view;
@@ -63,10 +65,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
                 finish();
             }
         });
-        if (PreferenceStorage.getFilterApply(this)) {
-            PreferenceStorage.IsFilterApply(this, false);
-            callGetFilterService();
-        }
+        callGetFilterService();
     }
 
     public void callGetFilterService() {
@@ -77,27 +76,28 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
             eventsArrayList.clear();
 
         if (CommonUtils.isNetworkAvailable(this)) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+
+                jsonObject.put(HeylaAppConstants.SINGLEDATEFILTER, PreferenceStorage.getFilterSingleDate(this));
+                jsonObject.put(HeylaAppConstants.FROMDATE, PreferenceStorage.getFilterFromDate(this));
+                jsonObject.put(HeylaAppConstants.TODATE, PreferenceStorage.getFilterToDate(this));
+                jsonObject.put(HeylaAppConstants.FILTERCITY, PreferenceStorage.getFilterCity(this));
+                jsonObject.put(HeylaAppConstants.FILTEREVENTTYPE, PreferenceStorage.getFilterEventType(this));
+                jsonObject.put(HeylaAppConstants.FILTEREVENTCATEGORY, PreferenceStorage.getFilterEventTypeCategory(this));
+                jsonObject.put(HeylaAppConstants.FILTERPREF, PreferenceStorage.getFilterCatgry(this));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            serviceHelper.makeRawRequest(HeylaAppConstants.GET_ADVANCE_SINGLE_SEARCH);
-            new HttpAsyncTask().execute("");
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.GET_ADVANCE_SINGLE_SEARCH;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.no_connectivity));
         }
 
-    }
-
-    private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
-        @Override
-        protected Void doInBackground(String... urls) {
-            serviceHelper.makeRawRequest(HeylaAppConstants.GET_ADVANCE_SINGLE_SEARCH);
-            return null;
-        }
-
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(Void result) {
-            progressDialogHelper.cancelProgressDialog();
-        }
     }
 
     @Override
@@ -176,6 +176,16 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
             eventsListAdapter.exitSearch();
             eventsListAdapter.notifyDataSetChanged();
         }
+
+    }
+
+    @Override
+    public void onAlertPositiveClicked(int tag) {
+
+    }
+
+    @Override
+    public void onAlertNegativeClicked(int tag) {
 
     }
 }

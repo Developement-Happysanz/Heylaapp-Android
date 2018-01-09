@@ -14,8 +14,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,8 +71,11 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
     private List<String> eventCategoryList = new ArrayList<String>();
     private ArrayAdapter<String> eventCategoryAdapter = null;
 
-    ArrayAdapter<Category> mPreferenceAdapter = null;
-    ArrayList<Category> PreferenceList;
+//    ArrayAdapter<Category> mPreferenceAdapter = null;
+//    ArrayList<Category> PreferenceList;
+
+    ArrayAdapter<String> mPreferenceAdapter = null;
+    private ArrayList<String> PreferenceList = new ArrayList<String>();
 
     ArrayAdapter<StoreCity> mCityAdapter = null;
     ArrayList<StoreCity> cityList;
@@ -171,6 +177,42 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         if (category != null) {
             eventCategory.setText(occupation);
         }
+
+        mPreferenceAdapter = new ArrayAdapter<String>(this, R.layout.category_list_item, R.id.category_list_name, PreferenceList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                Log.d(TAG, "getview called" + position);
+                View view = getLayoutInflater().inflate(R.layout.category_list_item, parent, false);
+                TextView name = (TextView) view.findViewById(R.id.category_list_name);
+                name.setText(PreferenceList.get(position));
+
+                CheckBox checkbox = (CheckBox) view.findViewById(R.id.item_selection);
+                checkbox.setTag(Integer.toString(position));
+                if (mSelectedCategoryList.contains(position)) {
+                    checkbox.setChecked(true);
+                } else {
+                    checkbox.setChecked(false);
+                }
+                checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        String tag = (String) buttonView.getTag();
+                        if (tag != null) {
+                            int index = Integer.parseInt(tag);
+                            if (mSelectedCategoryList.contains(index)) {
+                                mSelectedCategoryList.remove(index);
+                            } else {
+                                mSelectedCategoryList.add(index);
+                            }
+
+                        }
+                    }
+                });
+
+                // ... Fill in other views ...
+                return view;
+            }
+        };
 
     }
 
@@ -413,8 +455,8 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
         switch (v.getId()) {
             case R.id.btnselectdate:
-                ((Button) findViewById(R.id.btnfrom)).setText("");
-                ((Button) findViewById(R.id.btnto)).setText("");
+                ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
+                ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
                 if (!datePressed) {
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advance_filter_orange);
                     findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
@@ -472,8 +514,8 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
                 break;
             case R.id.btntomorrow:
-                ((Button) findViewById(R.id.btnfrom)).setText("");
-                ((Button) findViewById(R.id.btnto)).setText("");
+                ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
+                ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
                 if (!tomorrowPressed) {
 
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
@@ -503,8 +545,8 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
                 break;
             case R.id.btntoday:
-                ((Button) findViewById(R.id.btnfrom)).setText("");
-                ((Button) findViewById(R.id.btnto)).setText("");
+                ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
+                ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
                 ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
                 if (!todayPressed) {
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
@@ -530,7 +572,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 }
                 break;
             case R.id.btnapply:
-                findViewById(R.id.btnapply).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                findViewById(R.id.btnapply).setBackgroundResource(R.drawable.button_sign_in);
                 String eventTypeStr = eventType.getText().toString();
                 String eventPreferenceStr = eventPreferenceList.getText().toString();
                 String city = txtCityDropDown.getText().toString();
@@ -539,7 +581,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 String fromdate = ((Button) findViewById(R.id.btnfrom)).getText().toString();
                 String todate = ((Button) findViewById(R.id.btnto)).getText().toString();
                 if (!singleDate.equalsIgnoreCase("") && singleDate != null) {
-                    PreferenceStorage.IsFilterApply(this, true);
                     PreferenceStorage.saveFilterSingleDate(this, singleDate);
                     //  Toast.makeText(this, "Filter applied", Toast.LENGTH_SHORT).show();
                     PreferenceStorage.saveFilterFromDate(this, "");
@@ -561,7 +602,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 } else if (fromdate.trim().length() > 0 || todate.trim().length() > 0) {
                     singleDate = "";
                     PreferenceStorage.saveFilterSingleDate(this, singleDate);
-                    PreferenceStorage.IsFilterApply(this, true);
 
                     if (fromdate.equalsIgnoreCase("")) {
                         Toast.makeText(this, "Select From Date", Toast.LENGTH_SHORT).show();
@@ -585,7 +625,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     }
 
                 } else if (!city.equalsIgnoreCase("Select Your City") || !eventTypeCategoryStr.equalsIgnoreCase("Select Category")) {
-                    PreferenceStorage.IsFilterApply(this, true);
                     singleDate = "";
                     PreferenceStorage.saveFilterSingleDate(this, singleDate);
                     if (!city.equalsIgnoreCase("Select Your City")) {
@@ -656,23 +695,45 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
     private void showPreferenceList() {
 
-        Log.d(TAG, "Show city list");
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
-        TextView header = (TextView) view.findViewById(R.id.gender_header);
-        header.setText("Select City");
-        builderSingle.setCustomTitle(view);
+        AlertDialog.Builder builder = new AlertDialog.Builder(AdvanceFilterActivity.this);
+        sb = new StringBuilder();
+        // String array for alert dialog multi choice items
 
-        builderSingle.setAdapter(mPreferenceAdapter,
-                new DialogInterface.OnClickListener() {
+        final AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Select Preference")
+                .setAdapter(mPreferenceAdapter, null)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Category category = PreferenceList.get(which);
-                        eventPreferenceList.setText(category.getCategory());
-                        preferenceId = category.getId();
+                        //fetch all the selected category'
+                        int ival = 0;
+                        for (Integer i : mSelectedCategoryList) {
+                            String name = PreferenceList.get(i);
+                            if (ival == 0) {
+                                sb = sb.append(name);
+                            } else {
+                                sb = sb.append("," + name);
+                            }
+                            ival++;
+                        }
+                        eventPreferenceList.setText(sb.toString());
                     }
-                });
-        builderSingle.show();
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+
+        dialog.getListView().setItemsCanFocus(false);
+        dialog.getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        dialog.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Log.d(TAG, "Item clicked");
+
+            }
+        });
+
+        dialog.show();
     }
 
     private void showCityList() {
@@ -734,23 +795,17 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
             try {
                 if (checkState.equalsIgnoreCase("preference")) {
                     JSONArray getData = response.getJSONArray("Categories");
-                    JSONObject getPreference = getData.getJSONObject(0);
+//                    JSONObject getPreference = getData.getJSONObject(0);
                     Gson gson = new Gson();
                     Type listType = new TypeToken<ArrayList<Category>>() {
                     }.getType();
-                    PreferenceList = gson.fromJson(getData.toString(), listType);
-                    mPreferenceAdapter = new ArrayAdapter<Category>(getApplicationContext(), R.layout.gender_layout, R.id.gender_name, PreferenceList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
-                        @Override
-                        public View getView(int position, View convertView, ViewGroup parent) {
-                            Log.d(TAG, "getview called" + position);
-                            View view = getLayoutInflater().inflate(R.layout.gender_layout, parent, false);
-                            TextView gendername = (TextView) view.findViewById(R.id.gender_name);
-                            gendername.setText(PreferenceList.get(position).getCategory());
-                            return view;
-                        }
-                    };
-                    if (!firstTime) {
-                        GetEventCities();
+                    ArrayList<Category> arrayList = gson.fromJson(getData.toString(), listType);
+                    PreferenceList.clear();
+                    mSelectedCategoryList.clear();
+                    // isSelectedArray.clear();
+                    for (Category category : arrayList) {
+                        PreferenceList.add(category.getCategory());
+                        //isSelectedArray.add(false);
                     }
                 } else if (checkState.equalsIgnoreCase("city")) {
                     firstTime = true;

@@ -157,17 +157,14 @@ public class HeylaAppConstants {
     public static final String GET_ADVANCE_SINGLE_SEARCH = "apimain/advanceSearch/";
 
     //Advanced filter search params
-    public static final String ISFILTERAPPLY = "ISFILTERAPPLY";
-    public static final String SINGLEDATEFILTER = "SINGLEDATEFILTER";
-    public static final String FROMDATE = "fromdate";
-    public static final String TODATE = "todate";
-    public static final String FILTERCITY = "filtercity";
-    public static final String FILTEREVENTTYPE = "filtereventtype";
-    public static final String FILTEREVENTTYPECATEGORY = "filtereventtypecategory";
-    public static final String FILTERCAT = "filtercat";
-    public static final String FILTERCITYINDEX = "filtercityindex";
-    public static final String FILTEREVENTTYPEINDEX = "filtereventtypeindex";
-    public static final String FILTEREVENTTYPECATEGORYINDEX = "filtereventtypecategoryindex";
+    public static final String SINGLEDATEFILTER = "single_date";
+    public static final String FROMDATE = "from_date";
+    public static final String TODATE = "to_date";
+    public static final String FILTERCITYINDEX = "filter_city_index";
+    public static final String FILTERCITY = "selected_city";
+    public static final String FILTEREVENTTYPE = "event_type";
+    public static final String FILTEREVENTCATEGORY = "event_category";
+    public static final String FILTERPREF = "selected_preference";
 
     //    Event review list
     public static final String EVENT_REVIEW_LIST = "apimain/listEventReview/";
