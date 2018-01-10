@@ -682,7 +682,7 @@ public class PreferenceStorage {
         return userId;
     }
 
-    public static void saveFilterEventTypeCategory(Context context, String singledate) {
+    public static void saveFilterEventCategory(Context context, String singledate) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -690,7 +690,7 @@ public class PreferenceStorage {
         editor.commit();
     }
 
-    public static String getFilterEventTypeCategory(Context context) {
+    public static String getFilterEventCategory(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         String userId = sharedPreferences.getString(HeylaAppConstants.FILTEREVENTCATEGORY, "");
@@ -771,7 +771,7 @@ public class PreferenceStorage {
 
     }
 
-    public static void saveFilterCatgry(Context context, String singledate) {
+    public static void saveFilterPreference(Context context, String singledate) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -779,7 +779,7 @@ public class PreferenceStorage {
         editor.commit();
     }
 
-    public static String getFilterCatgry(Context context) {
+    public static String getFilterPreference(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         String userId = sharedPreferences.getString(HeylaAppConstants.FILTERPREF, "");

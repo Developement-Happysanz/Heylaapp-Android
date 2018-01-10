@@ -577,7 +577,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 String eventPreferenceStr = eventPreferenceList.getText().toString();
                 String city = txtCityDropDown.getText().toString();
 //                String city = spincity.getSelectedItem().toString();
-                String eventTypeCategoryStr = eventCategory.getText().toString();
+                String eventCategoryStr = eventCategory.getText().toString();
                 String fromdate = ((Button) findViewById(R.id.btnfrom)).getText().toString();
                 String todate = ((Button) findViewById(R.id.btnto)).getText().toString();
                 if (!singleDate.equalsIgnoreCase("") && singleDate != null) {
@@ -590,11 +590,11 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     }
                     //if (!eventType.equalsIgnoreCase("Select Your Event Type")) {
                     PreferenceStorage.saveFilterEventType(this, eventTypeStr);
-                    PreferenceStorage.saveFilterEventTypeCategory(this, eventPreferenceStr);
+                    PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
 
                     //}
-                    if (!eventTypeCategoryStr.equalsIgnoreCase("Select Category")) {
-                        PreferenceStorage.saveFilterCatgry(this, eventTypeCategoryStr);
+                    if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
+                        PreferenceStorage.saveFilterPreference(this, eventPreferenceStr);
                     }
 
                     startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
@@ -615,16 +615,16 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                             PreferenceStorage.saveFilterCity(this, city);
                         }
                         PreferenceStorage.saveFilterEventType(this, eventTypeStr);
-                        PreferenceStorage.saveFilterEventTypeCategory(this, eventPreferenceStr);
+                        PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
 
-                        if (!eventTypeCategoryStr.equalsIgnoreCase("Select Category")) {
-                            PreferenceStorage.saveFilterCatgry(this, eventTypeCategoryStr);
+                        if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
+                            PreferenceStorage.saveFilterPreference(this, eventPreferenceStr);
                         }
                         startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
                         //finish();
                     }
 
-                } else if (!city.equalsIgnoreCase("Select Your City") || !eventTypeCategoryStr.equalsIgnoreCase("Select Category")) {
+                } else if (!city.equalsIgnoreCase("Select Your City") || !eventCategoryStr.equalsIgnoreCase("Select Category")) {
                     singleDate = "";
                     PreferenceStorage.saveFilterSingleDate(this, singleDate);
                     if (!city.equalsIgnoreCase("Select Your City")) {
@@ -632,10 +632,10 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     }
 
                     PreferenceStorage.saveFilterEventType(this, eventTypeStr);
-                    PreferenceStorage.saveFilterEventTypeCategory(this, eventPreferenceStr);
+                    PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
 
-                    if (!eventTypeCategoryStr.equalsIgnoreCase("Select Category")) {
-                        PreferenceStorage.saveFilterCatgry(this, eventTypeCategoryStr);
+                    if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
+                        PreferenceStorage.saveFilterPreference(this, eventPreferenceStr);
                     }
                     startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
                     //finish();

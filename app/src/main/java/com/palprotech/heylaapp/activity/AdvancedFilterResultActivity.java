@@ -1,7 +1,6 @@
 package com.palprotech.heylaapp.activity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -84,8 +83,8 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
                 jsonObject.put(HeylaAppConstants.TODATE, PreferenceStorage.getFilterToDate(this));
                 jsonObject.put(HeylaAppConstants.FILTERCITY, PreferenceStorage.getFilterCity(this));
                 jsonObject.put(HeylaAppConstants.FILTEREVENTTYPE, PreferenceStorage.getFilterEventType(this));
-                jsonObject.put(HeylaAppConstants.FILTEREVENTCATEGORY, PreferenceStorage.getFilterEventTypeCategory(this));
-                jsonObject.put(HeylaAppConstants.FILTERPREF, PreferenceStorage.getFilterCatgry(this));
+                jsonObject.put(HeylaAppConstants.FILTEREVENTCATEGORY, PreferenceStorage.getFilterEventCategory(this));
+                jsonObject.put(HeylaAppConstants.FILTERPREF, PreferenceStorage.getFilterPreference(this));
 
             } catch (JSONException e) {
                 e.printStackTrace();
