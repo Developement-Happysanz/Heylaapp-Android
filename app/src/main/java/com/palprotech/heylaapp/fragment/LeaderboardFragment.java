@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.activity.EventSharingPointActivity;
 import com.palprotech.heylaapp.activity.LeaderboardStatistics;
 import com.palprotech.heylaapp.activity.LoginPointsActivity;
 import com.palprotech.heylaapp.activity.ProfileActivity;
@@ -148,6 +149,11 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
             getActivity().finish();
         } else if (view == login) {
             Intent homeIntent = new Intent(getActivity(), LoginPointsActivity.class);
+//            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+//            getActivity().finish();
+        } else if (view==share){
+            Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
 //            getActivity().finish();
