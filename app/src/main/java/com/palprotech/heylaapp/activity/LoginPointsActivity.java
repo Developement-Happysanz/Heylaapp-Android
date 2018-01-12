@@ -92,40 +92,10 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
             try {
-                String dayCount = "";
-                int consDays = 0;
-                final JSONArray getData = response.getJSONArray("Data");
-                dayCount= getData.getJSONObject(0).getString("cons_login_days");
-                consDays = Integer.parseInt(dayCount);
-                switch (consDays) {
-                    case 1 :
-                        day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        break;
-                    case 2 :
-                        day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        break;
-                    case 3 :
-                        day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        day3.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        break;
-                    case 4 :
-                        day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        day3.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        day4.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        break;
-                    case 5 :
-                        day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        day3.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        day4.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        day5.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                        break;
-                    default :
-                        break;
-                }
+
+                JSONArray getData = response.getJSONArray("Data");
+                generatePointsUI(getData);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -154,5 +124,53 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
         progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.ACTIVITY_HISTORY;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void generatePointsUI(JSONArray dailyLogin) {
+        String dayCount = "";
+        int consDays = 0;
+        try {
+
+
+//            for (int i = 0; i < dailyLogin.length(); i++) {
+                JSONObject jsonobj = dailyLogin.getJSONObject(0);
+
+                dayCount = jsonobj.getString("cons_login_days ");
+                consDays = Integer.parseInt(dayCount);
+//            }
+
+            switch (consDays) {
+                case 1:
+                    day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    break;
+                case 2:
+                    day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    break;
+                case 3:
+                    day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day3.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    break;
+                case 4:
+                    day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day3.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day4.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    break;
+                case 5:
+                    day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day3.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day4.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day5.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
     }
 }
