@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<RelativeLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -43,17 +43,277 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="175dp"
-        android:background="@color/appColorBase">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_daily_point_semicircle">
+
+        <TextView
+            android:id="@+id/daily_point_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_round_nocolor"
+            android:fontFamily="@font/muli"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:text="DAILY POINTS"
+            android:textColor="@color/text_black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/daily_point_text"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginEnd="100dp"
-            android:background=""/>
+            android:layout_below="@+id/daily_point_title_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/muli"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:text="Total Login Points"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
 
-    </RelativeLayout>-->
+        <TextView
+            android:id="@+id/daily_point"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/daily_point_text"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginStart="100dp"
+            android:fontFamily="@font/muli"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:text="20"
+            android:textColor="@color/white"
+            android:textSize="30dp" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/first_set"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
+                <RelativeLayout
+                    android:id="@+id/day_one"
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/ic_hide_calender"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="Day 1"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/day_one_points"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/muli"
+                        android:paddingTop="20dp"
+                        android:text="00"
+                        android:textColor="@color/text_black"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/day_one_points"
+                        android:layout_toStartOf="@+id/day_one_points"
+                        android:src="@drawable/ic_leaderboard_star" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/day_two"
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:background="@drawable/ic_hide_calender"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="Day 2"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/day_two_points"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/muli"
+                        android:paddingTop="20dp"
+                        android:text="00"
+                        android:textColor="@color/text_black"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/day_two_points"
+                        android:layout_toStartOf="@+id/day_two_points"
+                        android:src="@drawable/ic_leaderboard_star" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/first_set"
+                android:id="@+id/second_set">
+
+                <RelativeLayout
+                    android:id="@+id/day_three"
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/ic_hide_calender"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="Day 3"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/day_three_points"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/muli"
+                        android:paddingTop="20dp"
+                        android:text="00"
+                        android:textColor="@color/text_black"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/day_three_points"
+                        android:layout_toStartOf="@+id/day_three_points"
+                        android:src="@drawable/ic_leaderboard_star" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/day_four"
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:background="@drawable/ic_hide_calender"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="Day 4"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/day_four_points"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/muli"
+                        android:paddingTop="20dp"
+                        android:text="00"
+                        android:textColor="@color/text_black"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/day_four_points"
+                        android:layout_toStartOf="@+id/day_four_points"
+                        android:src="@drawable/ic_leaderboard_star" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_below="@+id/second_set"
+                android:layout_alignStart="@+id/second_set"
+                android:layout_alignEnd="@+id/second_set"
+                android:id="@+id/third_set">
+
+                <RelativeLayout
+                    android:id="@+id/day_five"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+
+                    android:background="@drawable/ic_hide_calender"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="Day 5"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/day_five_points"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/muli"
+                        android:paddingTop="20dp"
+                        android:text="00"
+                        android:textColor="@color/text_black"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/day_five_points"
+                        android:layout_toStartOf="@+id/day_five_points"
+                        android:src="@drawable/ic_leaderboard_star" />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
 </LinearLayout>

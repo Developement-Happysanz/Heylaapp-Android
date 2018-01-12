@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
@@ -15,6 +16,7 @@ import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,7 +29,7 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
     protected ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
     private static final String TAG = LoginPointsActivity.class.getName();
-
+    RelativeLayout day1, day2, day3, day4, day5;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +38,11 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
+        day1 = findViewById(R.id.day_one);
+        day2 = findViewById(R.id.day_two);
+        day3 = findViewById(R.id.day_three);
+        day4 = findViewById(R.id.day_four);
+        day5 = findViewById(R.id.day_five);
         loadLoginPoints();
     }
 
@@ -84,7 +91,44 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
-
+            try {
+                String dayCount = "";
+                int consDays = 0;
+                final JSONArray getData = response.getJSONArray("Data");
+                dayCount= getData.getJSONObject(0).getString("cons_login_days");
+                consDays = Integer.parseInt(dayCount);
+                switch (consDays) {
+                    case 1 :
+                        day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        break;
+                    case 2 :
+                        day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        break;
+                    case 3 :
+                        day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        day3.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        break;
+                    case 4 :
+                        day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        day3.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        day4.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        break;
+                    case 5 :
+                        day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        day3.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        day4.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        day5.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                        break;
+                    default :
+                        break;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
