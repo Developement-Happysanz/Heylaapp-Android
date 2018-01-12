@@ -63,7 +63,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
     EditText eventType, eventPreferenceList, eventCategory, txtCityDropDown; //spincity
 
     AlertDialog.Builder builder;
-    StringBuilder sb;
+    StringBuilder sb,sb1;
 
     private List<String> eventTypeList = new ArrayList<String>();
     private ArrayAdapter<String> eventTypeAdapter = null;
@@ -76,6 +76,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
     ArrayAdapter<String> mPreferenceAdapter = null;
     private ArrayList<String> PreferenceList = new ArrayList<String>();
+    private ArrayList<String> PreferenceIdList = new ArrayList<String>();
 
     ArrayAdapter<StoreCity> mCityAdapter = null;
     ArrayList<StoreCity> cityList;
@@ -184,8 +185,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 Log.d(TAG, "getview called" + position);
                 View view = getLayoutInflater().inflate(R.layout.category_list_item, parent, false);
                 TextView name = (TextView) view.findViewById(R.id.category_list_name);
+                String prefid = "";
                 name.setText(PreferenceList.get(position));
-
+                prefid = (PreferenceList.get(position));
                 CheckBox checkbox = (CheckBox) view.findViewById(R.id.item_selection);
                 checkbox.setTag(Integer.toString(position));
                 if (mSelectedCategoryList.contains(position)) {
@@ -274,9 +276,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     ((Button) findViewById(R.id.btnfrom)).setText(formatDate(year, month, day));
                     mFromDateVal = formatDateServer(year, month, day);
                 } else {
-                    Log.e("Clear", "Clear");
-                    ((Button) findViewById(R.id.btnfrom)).setText("");
-                    mFromDateVal = "";
+                    Log.e("Close", "Close");
+                    ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
+                    mFromDateVal = "DD-MM-YYYY";
                 }
             }
 
@@ -308,11 +310,11 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                         mFromDatePickerDialog.dismiss();
                     }
                 });
-                mFromDatePickerDialog.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Clear", new DialogInterface.OnClickListener() {
+                mFromDatePickerDialog.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Close", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         isdoneclick = false;
-                        ((Button) findViewById(R.id.btnfrom)).setText("");
+                        ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
                         mFromDatePickerDialog.dismiss();
                     }
                 });
@@ -329,9 +331,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     mTodateVal = formatDateServer(year, month, day);
 
                 } else {
-                    // Log.e("Clear", "Clear");
-                    ((Button) findViewById(R.id.btnto)).setText("");
-                    mTodateVal = "";
+                    Log.e("Clear", "Clear");
+                    ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
+                    mTodateVal = "DD-MM-YYYY";
                 }
 
             }
@@ -359,11 +361,11 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                         dpd.dismiss();
                     }
                 });
-                dpd.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Clear", new DialogInterface.OnClickListener() {
+                dpd.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Close", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         isdoneclick = false;
-                        ((Button) findViewById(R.id.btnto)).setText("");
+                        ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
                         dpd.dismiss();
                     }
                 });
@@ -469,7 +471,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                                 ((Button) findViewById(R.id.btnselectdate)).setText(formatDate(year, month, day));
                                 singleDate = formatDateServer(year, month, day);
                             } else {
-                                Log.e("Clear", "Clear");
+                                Log.e("Close", "Close");
                                 ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
                             }
 
@@ -491,7 +493,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                             dpd.dismiss();
                         }
                     });
-                    dpd.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Clear", new DialogInterface.OnClickListener() {
+                    dpd.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Close", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             isdoneclick = false;
@@ -575,6 +577,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 findViewById(R.id.btnapply).setBackgroundResource(R.drawable.button_sign_in);
                 String eventTypeStr = eventType.getText().toString();
                 String eventPreferenceStr = eventPreferenceList.getText().toString();
+                String eventPreferenceIdStr = sb1.toString();
                 String city = txtCityDropDown.getText().toString();
 //                String city = spincity.getSelectedItem().toString();
                 String eventCategoryStr = eventCategory.getText().toString();
@@ -594,7 +597,10 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
                     //}
                     if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
-                        PreferenceStorage.saveFilterPreference(this, eventPreferenceStr);
+                        PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
+                    }
+                    else {
+                        PreferenceStorage.saveFilterPreference(this, "");
                     }
 
                     startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
@@ -618,7 +624,10 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                         PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
 
                         if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
-                            PreferenceStorage.saveFilterPreference(this, eventPreferenceStr);
+                            PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
+                        }
+                        else {
+                            PreferenceStorage.saveFilterPreference(this, "");
                         }
                         startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
                         //finish();
@@ -635,7 +644,10 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
 
                     if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
-                        PreferenceStorage.saveFilterPreference(this, eventPreferenceStr);
+                        PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
+                    }
+                    else {
+                        PreferenceStorage.saveFilterPreference(this, "");
                     }
                     startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
                     //finish();
@@ -697,6 +709,8 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
         AlertDialog.Builder builder = new AlertDialog.Builder(AdvanceFilterActivity.this);
         sb = new StringBuilder();
+        sb1 = new StringBuilder();
+        sb1.append("");
         // String array for alert dialog multi choice items
 
         final AlertDialog dialog = new AlertDialog.Builder(this)
@@ -709,14 +723,20 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                         int ival = 0;
                         for (Integer i : mSelectedCategoryList) {
                             String name = PreferenceList.get(i);
+                            String id = PreferenceIdList.get(i);
                             if (ival == 0) {
                                 sb = sb.append(name);
+                                sb1 = sb1.append(id);
                             } else {
                                 sb = sb.append("," + name);
+                                sb1 = sb1.append(id+",");
+
                             }
                             ival++;
                         }
+                        sb1.setLength(sb1.length() - 1);
                         eventPreferenceList.setText(sb.toString());
+                        preferenceId = sb1.toString();
                     }
                 })
                 .setNegativeButton("Cancel", null)
@@ -800,10 +820,12 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     }.getType();
                     ArrayList<Category> arrayList = gson.fromJson(getData.toString(), listType);
                     PreferenceList.clear();
+                    PreferenceIdList.clear();
                     mSelectedCategoryList.clear();
                     // isSelectedArray.clear();
                     for (Category category : arrayList) {
                         PreferenceList.add(category.getCategory());
+                        PreferenceIdList.add(category.getId());
                         //isSelectedArray.add(false);
                     }
                 } else if (checkState.equalsIgnoreCase("city")) {
