@@ -275,7 +275,7 @@
 
                 <Button
                     android:id="@+id/btnTotalPrice"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.50"
                     android:background="@color/temp"

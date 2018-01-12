@@ -6,8 +6,11 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.bean.database.SQLiteHelper;
+import com.palprotech.heylaapp.fcm.MyFirebaseInstanceIDService;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 /**
  * Created by Admin on 06-10-2017.
@@ -25,6 +28,11 @@ public class SplashScreenActivity extends AppCompatActivity {
         database = new SQLiteHelper(getApplicationContext());
 
         final int getStatus = database.appInfoCheck();
+        String GCMKey = PreferenceStorage.getGCM(getApplicationContext());
+        if (GCMKey.equalsIgnoreCase("")) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            PreferenceStorage.saveGCM(getApplicationContext(), refreshedToken);
+        }
 
         new Handler().postDelayed(new Runnable() {
             @Override

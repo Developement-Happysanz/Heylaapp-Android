@@ -250,7 +250,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
                 try {
                     jsonObject.put(HeylaAppConstants.PARAMS_UNIQUE_ID, IMEINo);
                     jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
-                    jsonObject.put(HeylaAppConstants.PARAMS_LOGIN_TYPE, "1");
+                    jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -263,6 +263,5 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection available");
         }
-
     }
 }

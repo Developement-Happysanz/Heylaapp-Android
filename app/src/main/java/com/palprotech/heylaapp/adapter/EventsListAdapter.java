@@ -139,7 +139,7 @@ public class EventsListAdapter extends BaseAdapter {
         }*/
         String paidBtnVal = event.getEventType();
         if (paidBtnVal != null) {
-//            holder.paidBtn.setText(event.getEvent_cost());
+            holder.paidBtn.setText(paidBtnVal);
             if (paidBtnVal.equalsIgnoreCase("invite")) {
                 holder.paidBtn.setTextColor(context.getResources().getColor(R.color.white)); //Blue
             } else if (paidBtnVal.equalsIgnoreCase("free")) {
@@ -158,9 +158,9 @@ public class EventsListAdapter extends BaseAdapter {
         String start = HeylaAppHelper.getDate(events.get(position).getStartDate());
         String end = HeylaAppHelper.getDate(events.get(position).getEndDate());
 
-        try{
+        try {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
-            Date date = (Date)formatter.parse(start);
+            Date date = (Date) formatter.parse(start);
             SimpleDateFormat month_date = new SimpleDateFormat("MMM");
             String month_name = month_date.format(date.getTime());
             SimpleDateFormat event_date = new SimpleDateFormat("dd");
@@ -171,34 +171,31 @@ public class EventsListAdapter extends BaseAdapter {
             } else {
                 holder.txtDate.setText("N/A");
             }
-        }
-        catch (final ParseException e) {
+        } catch (final ParseException e) {
             e.printStackTrace();
         }
 
         //fetch timer values
-        start = HeylaAppHelper.getTime(events.get(position).
-
-                getStartDate());
-        end = HeylaAppHelper.getTime(events.get(position).
-
-                getEndDate());
-        String startTime = "", endTime = "";
-//        try {
-//            final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-////            final Date startDateObj = sdf.parse(start);
-////            final Date endDateObj = sdf.parse(end);
-////            System.out.println(startDateObj);
-////            startTime = (new SimpleDateFormat("hh:mm a").format(startDateObj));
-////            endTime = (new SimpleDateFormat("hh:mm a").format(endDateObj));
-//        } catch (final ParseException e) {
-//            e.printStackTrace();
-//        }
+//        start = HeylaAppHelper.getTime(events.get(position).getStartTime());
+//        end = HeylaAppHelper.getTime(events.get(position).getEndTime());
+        start = events.get(position).getStartTime();
+        end = events.get(position).getEndTime();
+        /*String startTime = "", endTime = "";
+        try {
+            final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            final Date startDateObj = sdf.parse(start);
+            final Date endDateObj = sdf.parse(end);
+            System.out.println(startDateObj);
+            startTime = (new SimpleDateFormat("hh:mm a").format(startDateObj));
+            endTime = (new SimpleDateFormat("hh:mm a").format(endDateObj));
+        } catch (final ParseException e) {
+            e.printStackTrace();
+        }
         if ((startTime != null) && (end != null))
 
-        {
-            holder.txtTime.setText(startTime + " - " + endTime);
-        }
+        {*/
+        holder.txtTime.setText(start + " - " + end);
+//        }
 
 //        holder.txtCategory.setText("  "+events.get(position).getEventCategoryId()+"  ");
 

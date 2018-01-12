@@ -79,6 +79,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
     Button totalPrice, bookNow;
     String orderId;
     Handler mHandler = new Handler();
+    String noOfTickets = "0";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -160,12 +161,15 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
         if (v == bookNow) {
+
+            String getTickets = result.getText().toString();
+
             if ((flagPlan.equalsIgnoreCase("no")) || (flagTicket.equalsIgnoreCase("no")) || (flagBookingDate.equalsIgnoreCase("no"))) {
                 Toast.makeText(this, "Select ticket or plan or date", Toast.LENGTH_SHORT).show();
+            } else if (Integer.parseInt(getTickets) > Integer.parseInt(noOfTickets)) {
+                Toast.makeText(this, "Only " + noOfTickets + " tickets available", Toast.LENGTH_SHORT).show();
             } else {
-
                 updateBookingProcess();
-
             }
         }
     }
@@ -326,6 +330,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         inc.setOnClickListener(this);
         dec = findViewById(R.id.count_decrease);
         dec.setOnClickListener(this);
+        dec.setEnabled(false);
         result = findViewById(R.id.tcktcount);
         totalPrice = findViewById(R.id.btnTotalPrice);
         bookNow = findViewById(R.id.btnBookNow);
@@ -675,8 +680,9 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
             bookPlan = bookPlanArrayList.get(i);
         }
 
+        noOfTickets = bookPlan.getSeatAvailable();
         rate = bookPlan.getSeatRate();
-        Toast.makeText(this, "Select ticket plan" + rate, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Select ticket plan" + rate, Toast.LENGTH_SHORT).show();
         flagPlan = "yes";
     }
 
