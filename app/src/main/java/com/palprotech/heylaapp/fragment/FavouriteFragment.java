@@ -184,9 +184,6 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
 
                 mMapView.setVisibility(View.VISIBLE);
                 performSlideLeftAnimation();
-
-
-//                mTotalEventCount.setText(Integer.toString(eventsArrayList.size()) + " Favorite Events");
             }
         });
 
@@ -194,46 +191,8 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             @Override
             public void onClick(View v) {
 
-                //mMapView.setVisibility(View.GONE);
                 listFlag = "Full";
                 performSlideRightAnimation();
-                //LoadListView(response);
-               /* mLocationBtn.setBackgroundDrawable(mLocationUnselected);
-                listAppearence.setBackgroundDrawable(mListSelected);
-                listAppearenceNearBy.setBackgroundDrawable(mNearbyTabUnselected);
-                mLocationBtn.setImageDrawable(munselectedlocationicon);
-                listAppearence.setImageDrawable(mselectedlisticon);
-                listAppearenceNearBy.setImageDrawable(munselectednearbyicon);
-
-                mTotalEventCount.setText(Integer.toString(eventsArrayList.size()) + " Favorite Events");*/
-
-          /*      final Dialog dialog = new Dialog(getContext(),android.R.style.Theme_Translucent);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.getWindow().setLayout(ViewPager.LayoutParams.MATCH_PARENT, ViewPager.LayoutParams.MATCH_PARENT);
-                dialog.setContentView(R.layout.transparent_favourite);
-                dialog.show();
-
-                if (isFirstRunList) {
-
-                    final TextView txtList = (TextView) dialog.findViewById(R.id.trans_evntlist);
-
-                    txtList.setVisibility(View.VISIBLE);
-                    txtList.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-
-                        }
-                    });
-
-                    isFirstRunList=false;
-                    TransPrefs.edit().putBoolean("isFirstRunList", isFirstRunList).commit();
-
-
-                } else {
-                    dialog.dismiss();
-
-                } */
 
                 loadMoreListView.setVisibility(View.VISIBLE);
                 if (eventsListAdapter != null) {
@@ -248,10 +207,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
     protected void initializeViews() {
         Log.d(TAG, "initialize pull to refresh view");
         loadMoreListView = (ListView) rootView.findViewById(R.id.listView_events);
-       /* mNoEventsFound = (TextView) view.findViewById(R.id.no_home_events);
-        if (mNoEventsFound != null)
-            mNoEventsFound.setVisibility(View.GONE);
-        loadMoreListView.setOnLoadMoreListener(this); */
+
         loadMoreListView.setOnItemClickListener(this);
         eventsArrayList = new ArrayList<>();
     }
@@ -270,44 +226,6 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
         mMapView.getMapAsync(this);
         mAddedMarkers.clear();
         mDisplayedEvents.clear();
-       /* if(mGoogleMap != null){
-            mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-                @Override
-                public View getInfoWindow(Marker marker) {
-                    Log.d(TAG,"Getting the info view contents");
-
-                    View infowindow = getActivity().getLayoutInflater().inflate(R.layout.map_info_window_layout, null);
-                    LatLng pos = marker.getPosition();
-                    if(pos != null) {
-                        Event event = mDisplayedEvents.get(pos);
-                        if(event != null) {
-                            TextView title = (TextView) infowindow.findViewById(R.id.info_window_Title);
-                            TextView subTitle = (TextView) infowindow.findViewById(R.id.info_window_subtext);
-                            String eventname = event.getEventName();
-                            if((eventname != null) && !eventname.isEmpty()){
-                                if(eventname.length() > 15){
-                                    Log.d(TAG,"length more that 15");
-                                    String substr = eventname.substring(0,14);
-                                    Log.d(TAG,"title is"+ substr);
-                                    title.setText(substr + "..");
-                                }else{
-                                    Log.d(TAG,"title less that 15 is"+ eventname);
-                                    title.setText(eventname);
-                                }
-                            }
-                           // title.setText(event.getEventName());
-                            subTitle.setText(event.getCategoryName());
-                        }
-                    }
-                    return infowindow;
-                }
-
-                @Override
-                public View getInfoContents(Marker marker) {
-                   return null;
-                }
-            });
-        }*/
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         try {
@@ -315,10 +233,6 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        // Updates the location and zoom of the MapView
-        /*CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.1, -87.9), 10);
-        mGoogleMap.animateCamera(cameraUpdate);*/
     }
 
     protected void buildGoogleApiClient() {
@@ -332,9 +246,6 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
 
     public void callGetEventService(int position) {
         Log.d(TAG, "fetch event list" + position);
-        /*if(eventsListAdapter != null){
-            eventsListAdapter.clearSearchFlag();
-        }*/
 
         if (isLoadingForFirstTime) {
             Log.d(TAG, "Loading for the first time");
@@ -416,13 +327,6 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
         mMapView.onLowMemory();
     }
 
-//    @Override
-//    public void onWindowFocusChanged() {
-//        Log.d(TAG, "List view coordinates" + loadMoreListView.getX() + "yval" + loadMoreListView.getLeft() + "width" + loadMoreListView.getRight());
-//        mStartX = loadMoreListView.getLeft();
-//        mEndX = loadMoreListView.getRight();
-//    }
-
     private void performSlideLeftAnimation() {
         PropertyValuesHolder transX = PropertyValuesHolder.ofFloat("x", mEndX, mStartX);
         PropertyValuesHolder alphaV = PropertyValuesHolder.ofFloat("alpha", 1, 0);
@@ -458,7 +362,6 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             }
         });
         anim.start();
-        //alphaAnim.start();
     }
 
     private void performSlideRightAnimation() {
@@ -496,7 +399,6 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             }
         });
         anim.start();
-        //alphaAnim.start();
     }
 
     @Override
@@ -524,7 +426,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
                         LatLng pos = new LatLng(lat, longitude);
                         if ((pos != null) && (mGoogleMap != null)) {
                             Log.d(TAG, "has lat lon" + "lat:" + event.getEventLatitude() + "long:" + event.getEventLongitude());
-                            //mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 14), 1000, null);
+
                             Marker marker = null;
                             if (mMapIcon != null) {
                                 Log.d(TAG, "Valid bitmap icon");
@@ -547,7 +449,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             //zoom the camera to current location
             if (mLastLocation != null) {
                 LatLng pos = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-               /* mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos,10));*/
+
                 mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 14), 1000, null);
             }
 
@@ -570,9 +472,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
 
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
         intent.putExtra("eventObj", event);
-        // intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
-//        // getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_right);
     }
 
     @Override
@@ -582,13 +482,13 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
 
     private void LoadListView(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
-//        loadMoreListView.onLoadMoreComplete();
+
         Gson gson = new Gson();
         EventList eventsList = gson.fromJson(response.toString(), EventList.class);
         if (eventsList != null) {
             Log.d(TAG, "fetched all event list count" + eventsList.getCount());
         }
-//        updateListAdapter(eventsList.getEvents());
+
         int totalNearbyCount = 0;
         if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
             if (mLastLocation != null) {
@@ -650,29 +550,10 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
         }
         // Updates the location and zoom of the MapView
 
-        if (totalCount > 0) {
-//            mLocationBtn.setEnabled(true);
-        } else {
-//            mAddddLocations = true;
-        }
-
-//        mTotalEventCount.setText(Integer.toString(eventsArrayList.size()) + " Favorite Events");
-
-       /* progressDialogHelper.hideProgressDialog();
-        loadMoreListView.onLoadMoreComplete();
-        Gson gson = new Gson();
-        EventList eventsList = gson.fromJson(response.toString(), EventList.class);
-        if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
-            totalCount = eventsList.getCount();
-            isLoadingForFirstTime = false;
-            updateListAdapter(eventsList.getEvents());
-        }*/
     }
 
     protected void updateListAdapter(ArrayList<Event> eventsArrayList) {
         this.eventsArrayList.addAll(eventsArrayList);
-       /* if (mNoEventsFound != null)
-            mNoEventsFound.setVisibility(View.GONE);*/
 
         if (eventsListAdapter == null) {
             eventsListAdapter = new EventsListAdapter(getActivity(), this.eventsArrayList);
@@ -685,9 +566,9 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
     @Override
     public void onError(String error) {
         if (totalCount > 0) {
-//            mLocationBtn.setEnabled(true);
+
         }
-//        mAddddLocations = true;
+
     }
 
     private void fetchCurrentLocation() {
@@ -697,16 +578,15 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
                 mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                         mGoogleApiClient);
             } catch (SecurityException e) {
-//                dialogGPS(this.getContext()); // lets the user know there is a problem with the gps
+
             }
-            // Log.e(TAG, "Current location is" + "Lat" + String.valueOf(mLastLocation.getLatitude()) + "Long" + String.valueOf(mLastLocation.getLongitude()));
             if (mLocationProgress != null) {
                 mLocationProgress.cancel();
             }
             if (mNearbySelected && (mLastLocation != null)) {
                 mTotalReceivedEvents = 0;
                 callGetEventService(1);
-                // getNearbyLIst(2);
+
             }
             if (mLastLocation == null) {
                 Log.e(TAG, "Received location is null");
@@ -736,7 +616,6 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
         }
         if (mNearbySelected) {
             callGetEventService(1);
-            //getNearbyLIst(2);
         }
     }
 
@@ -773,7 +652,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
                                         title.setText(eventname);
                                     }
                                 }
-                                // title.setText(event.getEventName());
+
                                 subTitle.setText(event.getEventName());
                             }
                         }
@@ -807,16 +686,10 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
                     // mMapLoaded = true;
                     Log.d(TAG, "Map loaded");
 
-                /*if ( mGoogleApiClient.isConnected() &&(mLastLocation != null) && (!mDisplayCurrentLocation)) {
-                    showMyLocation();
-                    // mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
-                    //mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
-                }*/
-
                 }
             });
         } catch (SecurityException e) {
-//            dialogGPS(this.getContext()); // lets the user know there is a problem with the gps
+
         }
     }
 }

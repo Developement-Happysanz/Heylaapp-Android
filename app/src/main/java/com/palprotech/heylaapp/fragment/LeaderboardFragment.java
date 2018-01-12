@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.LeaderboardStatistics;
+import com.palprotech.heylaapp.activity.LoginPointsActivity;
 import com.palprotech.heylaapp.activity.ProfileActivity;
 import com.palprotech.heylaapp.customview.CircleImageView;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
@@ -66,17 +67,15 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     protected void initializeViews() {
 
         name = rootView.findViewById(R.id.name);
-        if(PreferenceStorage.getFullName(getActivity()) == null){
+        if (PreferenceStorage.getFullName(getActivity()) == null) {
             name.setText("Name");
-        }
-        else {
+        } else {
             name.setText(PreferenceStorage.getFullName(getActivity()));
         }
         username = rootView.findViewById(R.id.username);
-        if(PreferenceStorage.getUsername(getActivity())== null){
+        if (PreferenceStorage.getUsername(getActivity()) == null) {
             username.setText("Username");
-        }
-        else {
+        } else {
             username.setText(PreferenceStorage.getUsername(getActivity()));
         }
         userPic = rootView.findViewById(R.id.leaderboard_profile_img);
@@ -113,7 +112,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         bookingCount = rootView.findViewById(R.id.booking_count);
         bookingPoints = rootView.findViewById(R.id.booking_star_count);
 
-        totalPoints =rootView.findViewById(R.id.total_points);
+        totalPoints = rootView.findViewById(R.id.total_points);
     }
 
     protected void initializeHelpers() {
@@ -147,6 +146,11 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
             getActivity().finish();
+        } else if (view == login) {
+            Intent homeIntent = new Intent(getActivity(), LoginPointsActivity.class);
+//            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+//            getActivity().finish();
         }
     }
 
@@ -182,17 +186,17 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
             rCount = getData.getJSONObject(0).getString("review_count");
             rPoint = getData.getJSONObject(0).getString("review_points");
 
-            loginCount.setText("("+lCount+")");
+            loginCount.setText("(" + lCount + ")");
             loginPoints.setText(lPoint);
-            shareCount.setText("("+sCount+")");
+            shareCount.setText("(" + sCount + ")");
             sharePoints.setText(sPoint);
-            checkinCount.setText("("+cCount+")");
+            checkinCount.setText("(" + cCount + ")");
             checkinPoints.setText(cPoint);
-            reviewCount.setText("("+rCount+")");
+            reviewCount.setText("(" + rCount + ")");
             reviewPoints.setText(rPoint);
-            bookingCount.setText("("+bCount+")");
+            bookingCount.setText("(" + bCount + ")");
             bookingPoints.setText(bPoint);
-            totalPoints.setText("("+tPoint+")");
+            totalPoints.setText("(" + tPoint + ")");
 
         } catch (JSONException e) {
             e.printStackTrace();

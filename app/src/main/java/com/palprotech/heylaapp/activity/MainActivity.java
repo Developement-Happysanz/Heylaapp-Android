@@ -1,6 +1,7 @@
 package com.palprotech.heylaapp.activity;
 
 import android.app.Fragment;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.fragment.FavouriteFragment;
 import com.palprotech.heylaapp.fragment.HotspotFragment;
+import com.palprotech.heylaapp.fragment.LandingPagerFragment;
 import com.palprotech.heylaapp.fragment.LeaderboardFragment;
 import com.palprotech.heylaapp.fragment.PopularFragment;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
@@ -36,6 +39,7 @@ import com.palprotech.heylaapp.utils.PreferenceStorage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -160,10 +164,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             menu.findItem(R.id.action_filter).setVisible(false);
             menu.findItem(R.id.action_search_view).setVisible(false);
         }*/
-       /* SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+  /*      SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
-        mSearchView =
-                (SearchView) menu.findItem(R.id.action_search_view).getActionView();
+        mSearchView = (SearchView) menu.findItem(R.id.action_search_view).getActionView();
         mSearchView.setIconifiedByDefault(true);
         mSearchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
@@ -189,23 +192,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public boolean onQueryTextSubmit(String s) {
 
                 Log.d(TAG, "Query submitted with String:" + s);
-                int currentpage = viewPager.getCurrentItem();
-                Log.d(TAG, "current item is" + currentpage);
+//                int currentpage = viewPager.getCurrentItem();
+//                Log.d(TAG, "current item is" + currentpage);
 
-              *//*  LandingPagerFragment landingPagerFragment = (LandingPagerFragment)
+                *//*LandingPagerFragment landingPagerFragment = (LandingPagerFragment)
                         landingPagerAdapter.getRegisteredFragment(currentpage);
                 if (landingPagerFragment != null) {
                     landingPagerFragment.searchForEvent(s);
-                }   *//*
+                }*//*
 
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                int currentpage = viewPager.getCurrentItem();
-                Log.d(TAG, "current item is" + currentpage);
-              *//*  LandingPagerFragment landingPagerFragment = (LandingPagerFragment)
+//                int currentpage = viewPager.getCurrentItem();
+//                Log.d(TAG, "current item is" + currentpage);
+                *//*LandingPagerFragment landingPagerFragment = (LandingPagerFragment)
                         landingPagerAdapter.getRegisteredFragment(currentpage);
 
                 if ((s != null) && (!s.isEmpty())) {
@@ -228,8 +231,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public boolean onClose() {
                 Log.d(TAG, "searchView closed");
 
-                int currentpage = viewPager.getCurrentItem();
-                Log.d(TAG, "current item is" + currentpage);
+//                int currentpage = viewPager.getCurrentItem();
+//                Log.d(TAG, "current item is" + currentpage);
                 *//*LandingPagerFragment landingPagerFragment = (LandingPagerFragment)
                         landingPagerAdapter.getRegisteredFragment(currentpage);
                 if (landingPagerFragment != null) {
@@ -390,5 +393,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_ACTIVITY;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
-
 }

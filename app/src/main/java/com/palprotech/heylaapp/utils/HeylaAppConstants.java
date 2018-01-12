@@ -226,6 +226,9 @@ public class HeylaAppConstants {
     // LeaderBoard
     public static final String LEADER_BOARD = "apimain/leaderBoard/";
 
+    // LeaderBoard
+    public static final String ACTIVITY_HISTORY = "apimain/activityHistory";
+
 
     //    SharedPref
     public static final String KEY_LOGIN_MODE = "loginMode";

@@ -790,7 +790,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
             mProgressDialog.cancel();
         }
 
-
         if (validateSignInResponse(response)) {
             try {
                 if (checkState.equalsIgnoreCase("preference")) {
