@@ -99,7 +99,10 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
             finish();
         }
         if (v == imEventBanner) {
-//            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show(); EventImagesActivity
+            Intent intent = new Intent(getApplicationContext(), EventImagesActivity.class);
+            intent.putExtra("eventObj", event);
+            startActivity(intent);
         }
         if (v == imEventShare) {
             SpannableString content = new SpannableString("http://www.heylaapp.com/");

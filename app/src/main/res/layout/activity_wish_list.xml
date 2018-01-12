@@ -29,7 +29,7 @@
         android:gravity="center"
         android:minHeight="60dp"
         android:padding="5dp"
-        android:text="WishList"
+        android:text="Event Images"
         android:fontFamily="@font/muli"
         android:textAllCaps="true"
         android:textColor="@color/white"
