@@ -226,8 +226,14 @@ public class HeylaAppConstants {
     // LeaderBoard
     public static final String LEADER_BOARD = "apimain/leaderBoard/";
 
-    // LeaderBoard
-    public static final String ACTIVITY_HISTORY = "apimain/activityHistory";
+    // LeaderBoard daily login
+    public static final String ACTIVITY_HISTORY = "apimain/activityHistory/";
+
+    // Wish list add
+    public static final String WISH_LIST_ADD = "apimain/addWishList/";
+
+    // Wish list params
+    public static final String PARAMS_WISH_LIST_MASTER_ID = "wishlist_master_id";
 
 
     //    SharedPref
