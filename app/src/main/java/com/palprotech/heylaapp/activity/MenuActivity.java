@@ -85,8 +85,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(homeIntent);
         }
         if (v == vWishList) {
-//            Intent homeIntent = new Intent(getApplicationContext(), BookingActivity.class);
-//            startActivity(homeIntent);
+            Intent homeIntent = new Intent(getApplicationContext(), WishListActivity.class);
+            startActivity(homeIntent);
         }
         if (v == vShare) {
             Intent i = new Intent(android.content.Intent.ACTION_SEND);

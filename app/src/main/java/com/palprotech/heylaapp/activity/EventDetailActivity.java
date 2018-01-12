@@ -99,7 +99,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
             finish();
         }
         if (v == imEventBanner) {
-            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == imEventShare) {
             SpannableString content = new SpannableString("http://www.heylaapp.com/");
@@ -116,13 +116,14 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
             sendShareStatus();
         }
         if (v == imEventQuestionAnswer) {
-            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == imEventFavourite) {
-            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
+            addToFavourite();
         }
         if (v == imEventOrganiserRequest) {
-            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == txtEventReview) {
             Intent intent = new Intent(getApplicationContext(), EventReviewActivity.class);
@@ -131,7 +132,6 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 //            finish();
         }
         if (v == txtCheckInEvent) {
-            Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString() + "\nGet ready for the fun! ", Toast.LENGTH_LONG).show();
             checkdistance();
         }
         if (v == txtBookEvent) {
@@ -304,7 +304,10 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         longitude1 = Double.parseDouble(event.getEventLongitude());
         latitude1 = Double.parseDouble(event.getEventLatitude());
         if (distance(latitude,longitude,latitude1,longitude1)<0.1){
+            Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString() + "\nGet ready for the fun! ", Toast.LENGTH_LONG).show();
             sendCheckinStatus();
+        } else {
+            Toast.makeText(getApplicationContext(), "Try again at - " + event.getEventName().toString() + "\nOnce you reached! ", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -347,6 +350,23 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 
         progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_ACTIVITY;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void addToFavourite(){
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
+            jsonObject.put(HeylaAppConstants.PARAMS_WISH_LIST_MASTER_ID, "1");
+            jsonObject.put(HeylaAppConstants.KEY_EVENT_ID, event.getId());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.WISH_LIST_ADD;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 

@@ -235,6 +235,14 @@ public class HeylaAppConstants {
     // Wish list params
     public static final String PARAMS_WISH_LIST_MASTER_ID = "wishlist_master_id";
 
+    // Wish list view
+    public static final String WISH_LIST = "apimain/viewWishList/";
+
+    // Wish list delete
+    public static final String WISH_LIST_DELETE = "apimain/deleteWishList/";
+
+    // Wish list delete params
+    public static final String PARAMS_WISH_LIST_ID = "wishlist_id";
 
     //    SharedPref
     public static final String KEY_LOGIN_MODE = "loginMode";
