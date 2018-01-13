@@ -1,12 +1,18 @@
 package com.palprotech.heylaapp.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 
+import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.adapter.EventShareHistoryListAdapter;
+import com.palprotech.heylaapp.bean.support.EventShareHistory;
+import com.palprotech.heylaapp.bean.support.EventShareHistoryList;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
@@ -15,8 +21,11 @@ import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Admin on 12-01-2018.
@@ -27,6 +36,12 @@ public class EventSharingPointActivity extends AppCompatActivity implements View
     protected ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
     private static final String TAG = EventSharingPointActivity.class.getName();
+    int pageNumber = 0, totalCount = 0;
+    Handler mHandler = new Handler();
+    protected EventShareHistoryListAdapter eventShareHistoryListAdapter;
+    protected ArrayList<EventShareHistory> eventShareHistoryArrayList;
+    protected boolean isLoadingForFirstTime = true;
+    protected ListView loadMoreListView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +50,8 @@ public class EventSharingPointActivity extends AppCompatActivity implements View
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
+        eventShareHistoryArrayList = new ArrayList<>();
+
         loadEventSharingPoints();
     }
 
@@ -80,10 +97,36 @@ public class EventSharingPointActivity extends AppCompatActivity implements View
     }
 
     @Override
-    public void onResponse(JSONObject response) {
+    public void onResponse(final JSONObject response) {
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
+            try {
 
+                final JSONArray getData = response.getJSONArray("Data");
+                if (getData != null && getData.length() > 0) {
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Gson gson = new Gson();
+                            EventShareHistoryList eventShareHistoryList = gson.fromJson(response.toString(), EventShareHistoryList.class);
+                            if (eventShareHistoryList.getEventShareHistory() != null && eventShareHistoryList.getEventShareHistory().size() > 0) {
+                                totalCount = eventShareHistoryList.getCount();
+                                isLoadingForFirstTime = false;
+                                updateListAdapter(eventShareHistoryList.getEventShareHistory());
+                            }
+                        }
+                    });
+                } else {
+                    if (eventShareHistoryArrayList != null) {
+                        eventShareHistoryArrayList.clear();
+                        eventShareHistoryListAdapter = new EventShareHistoryListAdapter(this, this.eventShareHistoryArrayList);
+                        loadMoreListView.setAdapter(eventShareHistoryListAdapter);
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -110,4 +153,16 @@ public class EventSharingPointActivity extends AppCompatActivity implements View
         String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.ACTIVITY_HISTORY;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
+
+    protected void updateListAdapter(ArrayList<EventShareHistory> eventShareHistoryArrayList) {
+        this.eventShareHistoryArrayList.addAll(eventShareHistoryArrayList);
+
+        if (eventShareHistoryListAdapter == null) {
+            eventShareHistoryListAdapter = new EventShareHistoryListAdapter(this, this.eventShareHistoryArrayList);
+            loadMoreListView.setAdapter(eventShareHistoryListAdapter);
+        } else {
+            eventShareHistoryListAdapter.notifyDataSetChanged();
+        }
+    }
+
 }

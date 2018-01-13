@@ -2,5 +2,56 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appColorBase"
+        android:minHeight="60dp"/>
 
+    <ImageView
+        android:id="@+id/back_res"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:minHeight="60dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/ic_back_button" />
+
+    <TextView
+        android:id="@+id/tvtitletext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:minHeight="60dp"
+        android:padding="5dp"
+        android:text="Share History"
+        android:fontFamily="@font/muli"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/actionbarTextSize" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_toRightOf="@id/back_res"
+        android:minHeight="60dp"
+        android:src="@drawable/heyla_logo_transparent"
+        android:visibility="gone"/>
+
+
+    <ListView
+        android:id="@+id/listView_events"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_result"
+        android:divider="@color/background_grey"
+        android:dividerHeight="4dp">
+
+    </ListView>
 </RelativeLayout>

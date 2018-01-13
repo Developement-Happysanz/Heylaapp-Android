@@ -1,11 +1,13 @@
 package com.palprotech.heylaapp.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
@@ -30,6 +32,8 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
     private ServiceHelper serviceHelper;
     private static final String TAG = LoginPointsActivity.class.getName();
     RelativeLayout day1, day2, day3, day4, day5;
+    TextView dayTwoPoint, dayOnePoint, dayThreePoint, dayFourPoint, dayFivePoint, totalDailyPoint;
+    String one, two, three, four, five;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +47,12 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
         day3 = findViewById(R.id.day_three);
         day4 = findViewById(R.id.day_four);
         day5 = findViewById(R.id.day_five);
+        dayOnePoint = findViewById(R.id.day_one_points);
+        dayTwoPoint = findViewById(R.id.day_two_points);
+        dayThreePoint = findViewById(R.id.day_three_points);
+        dayFourPoint = findViewById(R.id.day_four_points);
+        dayFivePoint = findViewById(R.id.day_five_points);
+        totalDailyPoint = findViewById(R.id.daily_point);
         loadLoginPoints();
     }
 
@@ -135,35 +145,36 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
 //            for (int i = 0; i < dailyLogin.length(); i++) {
                 JSONObject jsonobj = dailyLogin.getJSONObject(0);
 
-                dayCount = jsonobj.getString("cons_login_days ");
+                dayCount = jsonobj.getString("cons_login_days");
                 consDays = Integer.parseInt(dayCount);
 //            }
+            Drawable dr = getResources().getDrawable(R.drawable.ic_unhide_calender);
 
             switch (consDays) {
                 case 1:
-                    day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day1.setBackground(dr);
                     break;
                 case 2:
-                    day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                    day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day1.setBackground(dr);
+                    day2.setBackground(dr);
                     break;
                 case 3:
-                    day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                    day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                    day3.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day1.setBackground(dr);
+                    day2.setBackground(dr);
+                    day3.setBackground(dr);
                     break;
                 case 4:
-                    day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                    day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                    day3.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                    day4.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day1.setBackground(dr);
+                    day2.setBackground(dr);
+                    day3.setBackground(dr);
+                    day4.setBackground(dr);
                     break;
                 case 5:
-                    day1.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                    day2.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                    day3.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                    day4.getResources().getDrawable(R.drawable.ic_unhide_calender);
-                    day5.getResources().getDrawable(R.drawable.ic_unhide_calender);
+                    day1.setBackground(dr);
+                    day2.setBackground(dr);
+                    day3.setBackground(dr);
+                    day4.setBackground(dr);
+                    day5.setBackground(dr);
                     break;
                 default:
                     break;
