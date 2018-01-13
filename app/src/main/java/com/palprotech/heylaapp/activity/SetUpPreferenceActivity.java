@@ -327,13 +327,13 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
     @Override
     public void onClick(View v) {
         if (v == txtGetStarted) {
-            if (selectedList.size() >= 4) {
+            if (selectedList.size() >= 1) {
 
                 setPreferences();
             } else {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle("Not enough categories selected");
-                alertDialogBuilder.setMessage("Please select atleast four categories");
+                alertDialogBuilder.setMessage("Please select atleast one categories");
                 alertDialogBuilder.setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
 
