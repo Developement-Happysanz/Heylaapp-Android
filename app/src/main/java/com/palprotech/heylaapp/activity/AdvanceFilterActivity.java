@@ -29,6 +29,7 @@ import com.palprotech.heylaapp.bean.support.Category;
 import com.palprotech.heylaapp.bean.support.StoreCity;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
+import com.palprotech.heylaapp.interfaces.DialogClickListener;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.CommonUtils;
@@ -49,7 +50,7 @@ import java.util.List;
  * Created by Narendar on 16/11/17.
  */
 
-public class AdvanceFilterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, IServiceListener {
+public class AdvanceFilterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, IServiceListener,DialogClickListener {
     private static final String TAG = AdvanceFilterActivity.class.getName();
 
 
@@ -109,12 +110,15 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         eventType = findViewById(R.id.eventTypeList);
         eventType.setOnClickListener(this);
         eventType.setFocusable(false);
+
         eventCategory = findViewById(R.id.eventCategoryList);
         eventCategory.setOnClickListener(this);
         eventCategory.setFocusable(false);
+
         eventPreferenceList = findViewById(R.id.eventPreferenceList);
         eventPreferenceList.setOnClickListener(this);
         eventPreferenceList.setFocusable(false);
+
         txtCityDropDown = findViewById(R.id.selectCityList);
         txtCityDropDown.setOnClickListener(this);
         txtCityDropDown.setFocusable(false);
@@ -206,7 +210,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                             } else {
                                 mSelectedCategoryList.add(index);
                             }
-
                         }
                     }
                 });
@@ -875,6 +878,16 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         }
         progressDialogHelper.hideProgressDialog();
         AlertDialogHelper.showSimpleAlertDialog(this, "Error saving your profile. Try again");
+    }
+
+    @Override
+    public void onAlertPositiveClicked(int tag) {
+
+    }
+
+    @Override
+    public void onAlertNegativeClicked(int tag) {
+
     }
 }
 

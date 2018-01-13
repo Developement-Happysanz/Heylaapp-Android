@@ -2,10 +2,13 @@ package com.palprotech.heylaapp.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -74,7 +77,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     TextView txtLat;
     String lat;
     String provider;
-    protected Double latitude, longitude, latitude1,longitude1;
+    protected Double latitude, longitude, latitude1, longitude1;
     protected boolean gps_enabled, network_enabled;
 
     @Override
@@ -302,15 +305,21 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        longitude = location.getLongitude();
-        latitude = location.getLatitude();
-        longitude1 = Double.parseDouble(event.getEventLongitude());
-        latitude1 = Double.parseDouble(event.getEventLatitude());
-        if (distance(latitude,longitude,latitude1,longitude1)<0.1){
-            Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString() + "\nGet ready for the fun! ", Toast.LENGTH_LONG).show();
-            sendCheckinStatus();
+
+        if (location != null) {
+
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+            longitude1 = Double.parseDouble(event.getEventLongitude());
+            latitude1 = Double.parseDouble(event.getEventLatitude());
+            if (distance(latitude, longitude, latitude1, longitude1) < 0.1) {
+                Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString() + "\nGet ready for the fun! ", Toast.LENGTH_LONG).show();
+                sendCheckinStatus();
+            } else {
+                Toast.makeText(getApplicationContext(), "Try again at - " + event.getEventName().toString() + "\nOnce you reached! ", Toast.LENGTH_LONG).show();
+            }
         } else {
-            Toast.makeText(getApplicationContext(), "Try again at - " + event.getEventName().toString() + "\nOnce you reached! ", Toast.LENGTH_LONG).show();
+            showSettingsAlert();
         }
     }
 
@@ -318,8 +327,8 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 
         double earthRadius = 6371; // in miles, change to 6371 for kilometer output
 
-        double dLat = Math.toRadians(lat2-lat1);
-        double dLng = Math.toRadians(lng2-lng1);
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLng = Math.toRadians(lng2 - lng1);
 
         double sindLat = Math.sin(dLat / 2);
         double sindLng = Math.sin(dLng / 2);
@@ -327,14 +336,14 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
                 * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
 
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         double dist = earthRadius * c;
 
         return dist; // output distance, in MILES
     }
 
-    private void sendCheckinStatus(){
+    private void sendCheckinStatus() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         System.out.println(dateFormat.format(date));
@@ -356,7 +365,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
-    private void addToFavourite(){
+    private void addToFavourite() {
         JSONObject jsonObject = new JSONObject();
         try {
 
@@ -438,7 +447,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 
     }
 
-    public void getlatlong(Location location){
+    public void getlatlong(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
     }
@@ -456,5 +465,33 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    public void showSettingsAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        // Setting Dialog Title
+        alertDialog.setTitle("GPS is settings");
+
+        // Setting Dialog Message
+        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
+
+        // On pressing the Settings button.
+        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        });
+
+        // On pressing the cancel button
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
     }
 }

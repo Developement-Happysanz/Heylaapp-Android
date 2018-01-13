@@ -155,14 +155,18 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
 //            getActivity().finish();
-        } else if (view==share) {
+        } else if (view == share) {
             Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
 //            getActivity().finish();
         } else if (view == check_in) {
-            Intent homeIntent = new Intent(getActivity(), EventCheckInPointActivity.class);
+/*            Intent homeIntent = new Intent(getActivity(), EventCheckInPointActivity.class);
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+//            getActivity().finish();*/
+            Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
+            homeIntent.putExtra("rule_id", "2");
             startActivity(homeIntent);
 //            getActivity().finish();
         } else if (view == reviews) {
@@ -170,7 +174,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
 //            getActivity().finish();
-        } else if (view==booking) {
+        } else if (view == booking) {
             Intent homeIntent = new Intent(getActivity(), BookingPointActivity.class);
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
