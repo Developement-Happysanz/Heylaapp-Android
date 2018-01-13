@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +51,7 @@ import java.util.List;
  * Created by Narendar on 16/11/17.
  */
 
-public class AdvanceFilterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, IServiceListener,DialogClickListener {
+public class AdvanceFilterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, IServiceListener, DialogClickListener {
     private static final String TAG = AdvanceFilterActivity.class.getName();
 
 
@@ -61,19 +62,15 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
     private String checkState = "";
     String singleDate = "";
     boolean todayPressed = false, tomorrowPressed = false, datePressed = false;
-    EditText eventType, eventPreferenceList, eventCategory, txtCityDropDown; //spincity
 
     AlertDialog.Builder builder;
-    StringBuilder sb,sb1;
+    StringBuilder sb = null, sb1 = null;
 
     private List<String> eventTypeList = new ArrayList<String>();
     private ArrayAdapter<String> eventTypeAdapter = null;
 
     private List<String> eventCategoryList = new ArrayList<String>();
     private ArrayAdapter<String> eventCategoryAdapter = null;
-
-//    ArrayAdapter<Category> mPreferenceAdapter = null;
-//    ArrayList<Category> PreferenceList;
 
     ArrayAdapter<String> mPreferenceAdapter = null;
     private ArrayList<String> PreferenceList = new ArrayList<String>();
@@ -94,11 +91,16 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
     private String mFromDateVal = null;
     private String mTodateVal = null;
 
+    private ImageView ivBack;
+    private Button btnToday, btnTomorrow, btnSelectedDate;
+    private EditText etEventTypeList, etEventCategoryList, etPreferenceList, etCityList;
+    private Button btnFromDate, btnToDate;
+    private Button btnCancel, btnSubmit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advanced_search);
-//        fetchCategoryValues();
         iniView();
     }
 
@@ -106,40 +108,50 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
-//        getSupportActionBar().hide();
-        eventType = findViewById(R.id.eventTypeList);
-        eventType.setOnClickListener(this);
-        eventType.setFocusable(false);
 
-        eventCategory = findViewById(R.id.eventCategoryList);
-        eventCategory.setOnClickListener(this);
-        eventCategory.setFocusable(false);
+        ivBack = findViewById(R.id.back_tic_his);
+        ivBack.setOnClickListener(this);
 
-        eventPreferenceList = findViewById(R.id.eventPreferenceList);
-        eventPreferenceList.setOnClickListener(this);
-        eventPreferenceList.setFocusable(false);
+        btnToday = findViewById(R.id.btntoday);
+        btnToday.setOnClickListener(this);
 
-        txtCityDropDown = findViewById(R.id.selectCityList);
-        txtCityDropDown.setOnClickListener(this);
-        txtCityDropDown.setFocusable(false);
+        btnTomorrow = findViewById(R.id.btntomorrow);
+        btnTomorrow.setOnClickListener(this);
 
-        findViewById(R.id.btnselectdate).setOnClickListener(this);
-        findViewById(R.id.btntomorrow).setOnClickListener(this);
-        findViewById(R.id.btntoday).setOnClickListener(this);
+        btnSelectedDate = findViewById(R.id.btnselectdate);
+        btnSelectedDate.setOnClickListener(this);
+
+        etEventTypeList = findViewById(R.id.eventTypeList);
+        etEventTypeList.setOnClickListener(this);
+        etEventTypeList.setFocusable(false);
+
+        etEventCategoryList = findViewById(R.id.eventCategoryList);
+        etEventCategoryList.setOnClickListener(this);
+        etEventCategoryList.setFocusable(false);
+
+        etPreferenceList = findViewById(R.id.eventPreferenceList);
+        etPreferenceList.setOnClickListener(this);
+        etPreferenceList.setFocusable(false);
+
+        etCityList = findViewById(R.id.selectCityList);
+        etCityList.setOnClickListener(this);
+        etCityList.setFocusable(false);
+
+        btnFromDate = findViewById(R.id.btnfrom);
+        btnFromDate.setOnClickListener(this);
+
+        btnToDate = findViewById(R.id.btnto);
+        btnToDate.setOnClickListener(this);
+
+        btnCancel = findViewById(R.id.btncancel);
+        btnCancel.setOnClickListener(this);
+
+        btnSubmit = findViewById(R.id.btnapply);
+        btnSubmit.setOnClickListener(this);
 
         GetPreferences();
 
-        findViewById(R.id.back_tic_his).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         DatePickerSelection();
-        findViewById(R.id.btnapply).setOnClickListener(this);
-        findViewById(R.id.btncancel).setOnClickListener(this);
-
 
         eventTypeList.add("Free");
         eventTypeList.add("Paid");
@@ -157,10 +169,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
             }
         };
 
-        String occupation = PreferenceStorage.getUserOccupation(this);
-        if (occupation != null) {
-            eventType.setText(occupation);
-        }
 
         eventCategoryList.add("General");
         eventCategoryList.add("Hotspot");
@@ -177,11 +185,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 return view;
             }
         };
-
-        String category = PreferenceStorage.getUserOccupation(this);
-        if (category != null) {
-            eventCategory.setText(occupation);
-        }
 
         mPreferenceAdapter = new ArrayAdapter<String>(this, R.layout.category_list_item, R.id.category_list_name, PreferenceList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
             @Override
@@ -218,15 +221,236 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 return view;
             }
         };
-
     }
 
-    private void showeventTypeList() {
-        Log.d(TAG, "Show occupation list");
+    @Override
+    public void onClick(View v) {
+
+        if (v == ivBack) {
+            finish();
+        }
+        if (v == etEventTypeList) {
+//            checkState = "eventType";
+            showEventTypeList();
+        }
+        if (v == etEventCategoryList) {
+//            checkState = "category";
+            showEventCategoryList();
+        }
+        if (v == etPreferenceList) {
+//            checkState = "preference";
+            showPreferenceList();
+        }
+        if (v == etCityList) {
+//            checkState = "city";
+            showCityList();
+        }
+        switch (v.getId()) {
+            case R.id.btnselectdate:
+
+                ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
+                ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
+                if (!datePressed) {
+                    findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advance_filter_orange);
+                    findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    final DatePickerDialog.OnDateSetListener singledate = new DatePickerDialog.OnDateSetListener() {
+
+                        public void onDateSet(DatePicker view, int year, int month, int day) {
+                            //Log.e("Singledate", "singleDate : " + singleDate);
+                            if (isdoneclick) {
+                                ((Button) findViewById(R.id.btnselectdate)).setText(formatDate(year, month, day));
+                                singleDate = formatDateServer(year, month, day);
+                            } else {
+                                Log.e("Close", "Close");
+                                ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
+                            }
+                        }
+
+                    };
+                    final Calendar c2 = Calendar.getInstance();
+                    final int currentYear2 = c2.get(Calendar.YEAR);
+                    final int currentMonth2 = c2.get(Calendar.MONTH);
+                    final int currentDay2 = (c2.get(Calendar.DAY_OF_MONTH));
+                    final DatePickerDialog dpd = new DatePickerDialog(AdvanceFilterActivity.this, R.style.datePickerTheme, singledate, currentYear2,
+                            currentMonth2, currentDay2);
+                    dpd.setButton(DatePickerDialog.BUTTON_POSITIVE, "Done", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            isdoneclick = true;
+                            DatePicker datePicker = dpd.getDatePicker();
+                            singledate.onDateSet(datePicker, datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+                            dpd.dismiss();
+                        }
+                    });
+                    dpd.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Close", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            isdoneclick = false;
+                            dpd.dismiss();
+                        }
+                    });
+                    dpd.show();
+
+                    datePressed = true;
+
+                } else {
+
+                    findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    singleDate = "";
+                    datePressed = false;
+                    todayPressed = false;
+                    tomorrowPressed = false;
+                }
+                break;
+
+            case R.id.btntomorrow:
+
+                ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
+                ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
+                if (!tomorrowPressed) {
+
+                    findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advance_filter_orange);
+                    findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+
+                    final Calendar c = Calendar.getInstance();
+                    final int currentYear = c.get(Calendar.YEAR);
+                    final int currentMonth = c.get(Calendar.MONTH);
+                    final int currentDay = (c.get(Calendar.DAY_OF_MONTH));
+                    singleDate = formatDateServer(currentYear, currentMonth, currentDay);
+
+                    Log.e("Singledate", "singleDate : " + singleDate);
+                    tomorrowPressed = true;
+                } else {
+
+                    findViewById(R.id.btnselectdate).setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                    findViewById(R.id.btntomorrow).setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                    findViewById(R.id.btntoday).setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                    singleDate = "";
+                    tomorrowPressed = false;
+                    datePressed = false;
+                    todayPressed = false;
+                }
+                ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
+                break;
+
+            case R.id.btntoday:
+
+                ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
+                ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
+                ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
+                if (!todayPressed) {
+                    findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advance_filter_orange);
+                    final Calendar c1 = Calendar.getInstance();
+                    final int currentYear1 = c1.get(Calendar.YEAR);
+                    final int currentMonth1 = c1.get(Calendar.MONTH);
+                    final int currentDay1 = (c1.get(Calendar.DAY_OF_MONTH));
+                    singleDate = formatDateServer(currentYear1, currentMonth1, currentDay1);
+
+                    Log.e("Singledate", "singleDate : " + singleDate);
+                    todayPressed = true;
+                } else {
+                    findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    singleDate = "";
+                    todayPressed = false;
+                    datePressed = false;
+                    tomorrowPressed = false;
+                }
+                break;
+
+            case R.id.btnapply:
+
+                findViewById(R.id.btnapply).setBackgroundResource(R.drawable.button_sign_in);
+                String eventTypeStr = etEventTypeList.getText().toString();
+                String eventPreferenceStr = etPreferenceList.getText().toString();
+                String eventPreferenceIdStr = "";
+                if (eventPreferenceStr.equalsIgnoreCase("")) {
+                    eventPreferenceIdStr = "";
+                } else {
+                    eventPreferenceIdStr = sb1.toString();
+                }
+                String city = etCityList.getText().toString();
+//                String city = spincity.getSelectedItem().toString();
+                String eventCategoryStr = etEventCategoryList.getText().toString();
+                String fromdate = ((Button) findViewById(R.id.btnfrom)).getText().toString();
+                String todate = ((Button) findViewById(R.id.btnto)).getText().toString();
+                if (!singleDate.equalsIgnoreCase("") && singleDate != null) {
+                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
+                    PreferenceStorage.saveFilterFromDate(this, "");
+                    PreferenceStorage.saveFilterToDate(this, "");
+                    if (!city.equalsIgnoreCase("Select Your City")) {
+                        PreferenceStorage.saveFilterCity(this, city);
+                    }
+                    PreferenceStorage.saveFilterEventType(this, eventTypeStr);
+                    PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
+                    if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
+                        PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
+                    } else {
+                        PreferenceStorage.saveFilterPreference(this, "");
+                    }
+                    startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
+                } else if (fromdate.trim().length() > 0 || todate.trim().length() > 0) {
+                    singleDate = "";
+                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
+
+                    if (fromdate.equalsIgnoreCase("")) {
+                        Toast.makeText(this, "Select From Date", Toast.LENGTH_SHORT).show();
+                    } else if (todate.equalsIgnoreCase("")) {
+                        Toast.makeText(this, "Select To Date", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        PreferenceStorage.saveFilterFromDate(this, mFromDateVal);
+                        PreferenceStorage.saveFilterToDate(this, mTodateVal);
+                        if (!city.equalsIgnoreCase("Select Your City")) {
+                            PreferenceStorage.saveFilterCity(this, city);
+                        }
+                        PreferenceStorage.saveFilterEventType(this, eventTypeStr);
+                        PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
+
+                        if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
+                            PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
+                        } else {
+                            PreferenceStorage.saveFilterPreference(this, "");
+                        }
+                        startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
+                    }
+
+                } else if (!city.equalsIgnoreCase("Select Your City") || !eventCategoryStr.equalsIgnoreCase("Select Category")) {
+                    singleDate = "";
+                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
+                    if (!city.equalsIgnoreCase("Select Your City")) {
+                        PreferenceStorage.saveFilterCity(this, city);
+                    }
+                    PreferenceStorage.saveFilterEventType(this, eventTypeStr);
+                    PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
+
+                    if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
+                        PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
+                    } else {
+                        PreferenceStorage.saveFilterPreference(this, "");
+                    }
+                    startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
+                } else {
+                    Toast.makeText(AdvanceFilterActivity.this, "select any criteria", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+        }
+    }
+
+    private void showEventTypeList() {
+        Log.d(TAG, "Show event type list");
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
         TextView header = (TextView) view.findViewById(R.id.gender_header);
-        header.setText("Select Occupation");
+        header.setText("Select Event Type");
         builderSingle.setCustomTitle(view);
 
         builderSingle.setAdapter(eventTypeAdapter,
@@ -234,18 +458,18 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String strName = eventTypeList.get(which);
-                        eventType.setText(strName);
+                        etEventTypeList.setText(strName);
                     }
                 });
         builderSingle.show();
     }
 
-    private void showeventCategoryList() {
-        Log.d(TAG, "Show occupation list");
+    private void showEventCategoryList() {
+        Log.d(TAG, "Show event category list");
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
         TextView header = (TextView) view.findViewById(R.id.gender_header);
-        header.setText("Select Occupation");
+        header.setText("Select Event Category");
         builderSingle.setCustomTitle(view);
 
         builderSingle.setAdapter(eventCategoryAdapter,
@@ -253,7 +477,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String strName = eventCategoryList.get(which);
-                        eventCategory.setText(strName);
+                        etEventCategoryList.setText(strName);
                     }
                 });
         builderSingle.show();
@@ -265,16 +489,10 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         final int currentMonth = c.get(Calendar.MONTH);
         final int currentDay = c.get(Calendar.DAY_OF_MONTH);
 
-       /* String singleDateVal = PreferenceStorage.getFilterSingleDate(this);
-        if( (singleDateVal != null) && !(singleDateVal.isEmpty())){
-            ((Button)findViewById(R.id.btnselectdate)).setText(singleDateVal);
-        }*/
-
         final DatePickerDialog.OnDateSetListener fromdate = new DatePickerDialog.OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 Log.d(TAG, "From selected");
-                // isdoneclick = true;
                 if (isdoneclick) {
                     ((Button) findViewById(R.id.btnfrom)).setText(formatDate(year, month, day));
                     mFromDateVal = formatDateServer(year, month, day);
@@ -324,24 +542,21 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 mFromDatePickerDialog.show();
             }
         });
+
         final DatePickerDialog.OnDateSetListener todate = new DatePickerDialog.OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                // isdoneclick = true;
-
                 if (isdoneclick) {
                     ((Button) findViewById(R.id.btnto)).setText(formatDate(year, month, day));
                     mTodateVal = formatDateServer(year, month, day);
-
                 } else {
                     Log.e("Clear", "Clear");
                     ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
                     mTodateVal = "DD-MM-YYYY";
                 }
-
             }
-
         };
+
         findViewById(R.id.btnto).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -375,16 +590,13 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 dpd.show();
             }
         });
-
     }
 
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String item = parent.getItemAtPosition(position).toString();
-        PreferenceStorage.saveFilterCitySelection(this, position);
-        //Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-
+//        PreferenceStorage.saveFilterCitySelection(this, position);
     }
 
     @Override
@@ -430,238 +642,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         return formattedDay + "-" + formattedMonth + "-" + year;
     }
 
-    @Override
-    public void onClick(View v) {
-
-        if (v == eventType) {
-            showeventTypeList();
-            checkState = "type";
-
-        }
-
-        if (v == eventCategory) {
-            showeventCategoryList();
-            checkState = "category";
-
-        }
-
-        if (v == eventPreferenceList) {
-            showPreferenceList();
-            checkState = "preference";
-
-        }
-
-        if (v == txtCityDropDown) {
-            GetEventCities();
-            showCityList();
-            checkState = "city";
-
-        }
-
-        switch (v.getId()) {
-            case R.id.btnselectdate:
-                ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
-                ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
-                if (!datePressed) {
-                    findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advance_filter_orange);
-                    findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    final DatePickerDialog.OnDateSetListener singledate = new DatePickerDialog.OnDateSetListener() {
-
-                        public void onDateSet(DatePicker view, int year, int month, int day) {
-                            //Log.e("Singledate", "singleDate : " + singleDate);
-                            if (isdoneclick) {
-                                ((Button) findViewById(R.id.btnselectdate)).setText(formatDate(year, month, day));
-                                singleDate = formatDateServer(year, month, day);
-                            } else {
-                                Log.e("Close", "Close");
-                                ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
-                            }
-
-                        }
-
-                    };
-                    final Calendar c2 = Calendar.getInstance();
-                    final int currentYear2 = c2.get(Calendar.YEAR);
-                    final int currentMonth2 = c2.get(Calendar.MONTH);
-                    final int currentDay2 = (c2.get(Calendar.DAY_OF_MONTH));
-                    final DatePickerDialog dpd = new DatePickerDialog(AdvanceFilterActivity.this, R.style.datePickerTheme, singledate, currentYear2,
-                            currentMonth2, currentDay2);
-                    dpd.setButton(DatePickerDialog.BUTTON_POSITIVE, "Done", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            isdoneclick = true;
-                            DatePicker datePicker = dpd.getDatePicker();
-                            singledate.onDateSet(datePicker, datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-                            dpd.dismiss();
-                        }
-                    });
-                    dpd.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Close", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            isdoneclick = false;
-                            dpd.dismiss();
-                        }
-                    });
-                    dpd.show();
-
-                    datePressed = true;
-
-                } else {
-                    findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    singleDate = "";
-                    datePressed = false;
-                    todayPressed = false;
-                    tomorrowPressed = false;
-                }
-
-                break;
-            case R.id.btntomorrow:
-                ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
-                ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
-                if (!tomorrowPressed) {
-
-                    findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advance_filter_orange);
-                    findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    // singleDate=((Button)findViewById(R.id.btntomorrow)).getText().toString();
-
-                    final Calendar c = Calendar.getInstance();
-                    final int currentYear = c.get(Calendar.YEAR);
-                    final int currentMonth = c.get(Calendar.MONTH);
-                    final int currentDay = (c.get(Calendar.DAY_OF_MONTH));
-                    singleDate = formatDateServer(currentYear, currentMonth, currentDay);
-
-                    //  ((Button) findViewById(R.id.btnselectdate)).setText(singleDate);
-                    Log.e("Singledate", "singleDate : " + singleDate);
-                    tomorrowPressed = true;
-                } else {
-
-                    findViewById(R.id.btnselectdate).setBackgroundColor(getResources().getColor(R.color.appColorBase));
-                    findViewById(R.id.btntomorrow).setBackgroundColor(getResources().getColor(R.color.appColorBase));
-                    findViewById(R.id.btntoday).setBackgroundColor(getResources().getColor(R.color.appColorBase));
-                    singleDate = "";
-                    tomorrowPressed = false;
-                    datePressed = false;
-                    todayPressed = false;
-                }
-                ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
-                break;
-            case R.id.btntoday:
-                ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
-                ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
-                ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
-                if (!todayPressed) {
-                    findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advance_filter_orange);
-                    final Calendar c1 = Calendar.getInstance();
-                    final int currentYear1 = c1.get(Calendar.YEAR);
-                    final int currentMonth1 = c1.get(Calendar.MONTH);
-                    final int currentDay1 = (c1.get(Calendar.DAY_OF_MONTH));
-                    singleDate = formatDateServer(currentYear1, currentMonth1, currentDay1);
-                    // ((Button) findViewById(R.id.btnselectdate)).setText(singleDate);
-
-                    Log.e("Singledate", "singleDate : " + singleDate);
-                    todayPressed = true;
-                } else {
-                    findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    singleDate = "";
-                    todayPressed = false;
-                    datePressed = false;
-                    tomorrowPressed = false;
-                }
-                break;
-            case R.id.btnapply:
-                findViewById(R.id.btnapply).setBackgroundResource(R.drawable.button_sign_in);
-                String eventTypeStr = eventType.getText().toString();
-                String eventPreferenceStr = eventPreferenceList.getText().toString();
-                String eventPreferenceIdStr = sb1.toString();
-                String city = txtCityDropDown.getText().toString();
-//                String city = spincity.getSelectedItem().toString();
-                String eventCategoryStr = eventCategory.getText().toString();
-                String fromdate = ((Button) findViewById(R.id.btnfrom)).getText().toString();
-                String todate = ((Button) findViewById(R.id.btnto)).getText().toString();
-                if (!singleDate.equalsIgnoreCase("") && singleDate != null) {
-                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
-                    //  Toast.makeText(this, "Filter applied", Toast.LENGTH_SHORT).show();
-                    PreferenceStorage.saveFilterFromDate(this, "");
-                    PreferenceStorage.saveFilterToDate(this, "");
-                    if (!city.equalsIgnoreCase("Select Your City")) {
-                        PreferenceStorage.saveFilterCity(this, city);
-                    }
-                    //if (!eventType.equalsIgnoreCase("Select Your Event Type")) {
-                    PreferenceStorage.saveFilterEventType(this, eventTypeStr);
-                    PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
-
-                    //}
-                    if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
-                        PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
-                    }
-                    else {
-                        PreferenceStorage.saveFilterPreference(this, "");
-                    }
-
-                    startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
-                    //finish();
-                } else if (fromdate.trim().length() > 0 || todate.trim().length() > 0) {
-                    singleDate = "";
-                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
-
-                    if (fromdate.equalsIgnoreCase("")) {
-                        Toast.makeText(this, "Select From Date", Toast.LENGTH_SHORT).show();
-                    } else if (todate.equalsIgnoreCase("")) {
-                        Toast.makeText(this, "Select To Date", Toast.LENGTH_SHORT).show();
-                    } else {
-
-                        PreferenceStorage.saveFilterFromDate(this, mFromDateVal);
-                        PreferenceStorage.saveFilterToDate(this, mTodateVal);
-                        if (!city.equalsIgnoreCase("Select Your City")) {
-                            PreferenceStorage.saveFilterCity(this, city);
-                        }
-                        PreferenceStorage.saveFilterEventType(this, eventTypeStr);
-                        PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
-
-                        if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
-                            PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
-                        }
-                        else {
-                            PreferenceStorage.saveFilterPreference(this, "");
-                        }
-                        startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
-                        //finish();
-                    }
-
-                } else if (!city.equalsIgnoreCase("Select Your City") || !eventCategoryStr.equalsIgnoreCase("Select Category")) {
-                    singleDate = "";
-                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
-                    if (!city.equalsIgnoreCase("Select Your City")) {
-                        PreferenceStorage.saveFilterCity(this, city);
-                    }
-
-                    PreferenceStorage.saveFilterEventType(this, eventTypeStr);
-                    PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
-
-                    if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
-                        PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
-                    }
-                    else {
-                        PreferenceStorage.saveFilterPreference(this, "");
-                    }
-                    startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
-                    //finish();
-                } else {
-                    Toast.makeText(AdvanceFilterActivity.this, "select any criteria", Toast.LENGTH_SHORT).show();
-                }
-
-                break;
-        }
-    }
-
     private void GetPreferences() {
         if (CommonUtils.isNetworkAvailable(this)) {
             checkState = "preference";
@@ -674,34 +654,8 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 e.printStackTrace();
             }
 
-
             String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_PREFERENCES_LIST;
             serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-
-
-        } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
-        }
-    }
-
-    private void GetEventCities() {
-
-        checkState = "city";
-
-        if (CommonUtils.isNetworkAvailable(this)) {
-
-            JSONObject jsonObject = new JSONObject();
-            try {
-                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_CITY_LIST;
-            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-
 
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
@@ -724,21 +678,21 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     public void onClick(DialogInterface dialog, int which) {
                         //fetch all the selected category'
                         int ival = 0;
+//                        boolean checkFirst = true;
                         for (Integer i : mSelectedCategoryList) {
                             String name = PreferenceList.get(i);
                             String id = PreferenceIdList.get(i);
                             if (ival == 0) {
                                 sb = sb.append(name);
-                                sb1 = sb1.append(id);
+                                sb1 = sb1.append(id+",");
                             } else {
                                 sb = sb.append("," + name);
-                                sb1 = sb1.append(id+",");
-
+                                sb1 = sb1.append(id + ",");
                             }
                             ival++;
                         }
                         sb1.setLength(sb1.length() - 1);
-                        eventPreferenceList.setText(sb.toString());
+                        etPreferenceList.setText(sb.toString());
                         preferenceId = sb1.toString();
                     }
                 })
@@ -759,6 +713,29 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         dialog.show();
     }
 
+    private void GetEventCities() {
+
+        checkState = "city";
+
+        if (CommonUtils.isNetworkAvailable(this)) {
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_CITY_LIST;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+        }
+    }
+
     private void showCityList() {
 
         Log.d(TAG, "Show city list");
@@ -773,7 +750,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         StoreCity cty = cityList.get(which);
-                        txtCityDropDown.setText(cty.getCityName());
+                        etCityList.setText(cty.getCityName());
                         cityId = cty.getCityId();
                     }
                 });
@@ -816,8 +793,8 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         if (validateSignInResponse(response)) {
             try {
                 if (checkState.equalsIgnoreCase("preference")) {
+
                     JSONArray getData = response.getJSONArray("Categories");
-//                    JSONObject getPreference = getData.getJSONObject(0);
                     Gson gson = new Gson();
                     Type listType = new TypeToken<ArrayList<Category>>() {
                     }.getType();
@@ -825,13 +802,14 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     PreferenceList.clear();
                     PreferenceIdList.clear();
                     mSelectedCategoryList.clear();
-                    // isSelectedArray.clear();
                     for (Category category : arrayList) {
                         PreferenceList.add(category.getCategory());
                         PreferenceIdList.add(category.getId());
-                        //isSelectedArray.add(false);
                     }
+                    GetEventCities();
+
                 } else if (checkState.equalsIgnoreCase("city")) {
+
                     firstTime = true;
                     JSONArray getData = response.getJSONArray("Cities");
                     int getLength = getData.length();
@@ -843,7 +821,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
                         cityId = getData.getJSONObject(i).getString("id");
                         cityName = getData.getJSONObject(i).getString("city_name");
-
                         cityList.add(new StoreCity(cityId, cityName));
                     }
 
@@ -860,7 +837,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                             return view;
                         }
                     };
-
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -868,7 +844,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         } else {
             Log.d(TAG, "Error while sign In");
         }
-
     }
 
     @Override
