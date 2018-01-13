@@ -51,6 +51,7 @@ public class EventSharingPointActivity extends AppCompatActivity implements View
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
         eventShareHistoryArrayList = new ArrayList<>();
+        loadMoreListView = (ListView) findViewById(R.id.listView_events);
 
         loadEventSharingPoints();
     }

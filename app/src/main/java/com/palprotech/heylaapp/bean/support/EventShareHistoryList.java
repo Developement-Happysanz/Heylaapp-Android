@@ -14,7 +14,7 @@ public class EventShareHistoryList {
     @SerializedName("count")
     @Expose
     private int count;
-    @SerializedName("Eventgallery")
+    @SerializedName("Data")
     @Expose
     private ArrayList<EventShareHistory> data = new ArrayList<EventShareHistory>();
 

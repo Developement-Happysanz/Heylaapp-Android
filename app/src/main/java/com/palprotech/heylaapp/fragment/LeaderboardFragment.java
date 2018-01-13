@@ -152,7 +152,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
 //            getActivity().finish();
-        } else if (view==share){
+        } else if (view==share) {
             Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);

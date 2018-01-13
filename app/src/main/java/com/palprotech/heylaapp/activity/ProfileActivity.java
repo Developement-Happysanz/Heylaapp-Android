@@ -305,8 +305,15 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         } else if (view == mProfileImage) {
             openImageIntent();
         } else if (view == country) {
+            if (stateList != null)
+                stateList.clear();
+            if (cityList != null)
+                cityList.clear();
             showCountryList();
+
         } else if (view == state) {
+            if (cityList != null)
+                cityList.clear();
             showStateList();
         } else if (view == city) {
             showCityList();
