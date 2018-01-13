@@ -33,7 +33,7 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
     private static final String TAG = LoginPointsActivity.class.getName();
     RelativeLayout day1, day2, day3, day4, day5;
     TextView dayTwoPoint, dayOnePoint, dayThreePoint, dayFourPoint, dayFivePoint, totalDailyPoint;
-    String one, two, three, four, five;
+    int one, two, three, four, five, total;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,12 +47,28 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
         day3 = findViewById(R.id.day_three);
         day4 = findViewById(R.id.day_four);
         day5 = findViewById(R.id.day_five);
+
         dayOnePoint = findViewById(R.id.day_one_points);
         dayTwoPoint = findViewById(R.id.day_two_points);
         dayThreePoint = findViewById(R.id.day_three_points);
         dayFourPoint = findViewById(R.id.day_four_points);
         dayFivePoint = findViewById(R.id.day_five_points);
         totalDailyPoint = findViewById(R.id.daily_point);
+
+        one = Integer.parseInt(dayOnePoint.getText().toString());
+        two = Integer.parseInt(dayTwoPoint.getText().toString());
+        three = Integer.parseInt(dayThreePoint.getText().toString());
+        four = Integer.parseInt(dayFourPoint.getText().toString());
+        five = Integer.parseInt(dayFivePoint.getText().toString());
+        total = Integer.parseInt(totalDailyPoint.getText().toString());
+
+        findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         loadLoginPoints();
     }
 
@@ -153,21 +169,29 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
             switch (consDays) {
                 case 1:
                     day1.setBackground(dr);
+                    total=total + one;
+                    totalDailyPoint.setText(String.valueOf(total));
                     break;
                 case 2:
                     day1.setBackground(dr);
                     day2.setBackground(dr);
+                    total = total + one + two;
+                    totalDailyPoint.setText(String.valueOf(total));
                     break;
                 case 3:
                     day1.setBackground(dr);
                     day2.setBackground(dr);
                     day3.setBackground(dr);
+                    total = total + one + two + three;
+                    totalDailyPoint.setText(String.valueOf(total));
                     break;
                 case 4:
                     day1.setBackground(dr);
                     day2.setBackground(dr);
                     day3.setBackground(dr);
                     day4.setBackground(dr);
+                    total = total + one + two + three + four;
+                    totalDailyPoint.setText(String.valueOf(total));
                     break;
                 case 5:
                     day1.setBackground(dr);
@@ -175,6 +199,8 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
                     day3.setBackground(dr);
                     day4.setBackground(dr);
                     day5.setBackground(dr);
+                    total = total + one + two + three + four + five;
+                    totalDailyPoint.setText(String.valueOf(total));
                     break;
                 default:
                     break;

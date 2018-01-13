@@ -102,6 +102,8 @@ public class EventsListAdapter extends BaseAdapter {
             holder.imageView = (ImageView) convertView.findViewById(R.id.img_logo);
 //            holder.adImage = (ImageView) convertView.findViewById(R.id.event_ad_image);
             holder.paidBtn = (Button) convertView.findViewById(R.id.event_paid_btn);
+            holder.txtPrice = convertView.findViewById(R.id.txt_event_price);
+
 
             convertView.setTag(holder);
         } else {
@@ -139,7 +141,7 @@ public class EventsListAdapter extends BaseAdapter {
         }*/
         String paidBtnVal = event.getEventType();
         if (paidBtnVal != null) {
-            holder.paidBtn.setText(paidBtnVal);
+            holder.txtPrice.setText(paidBtnVal);
             if (paidBtnVal.equalsIgnoreCase("invite")) {
                 holder.paidBtn.setTextColor(context.getResources().getColor(R.color.white)); //Blue
             } else if (paidBtnVal.equalsIgnoreCase("free")) {
@@ -241,7 +243,7 @@ public class EventsListAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        public TextView txtEventName, txtEventVenue, txtDate, txtMonth, txtTime, txtCategory;
+        public TextView txtEventName, txtEventVenue, txtDate, txtMonth, txtTime, txtCategory , txtPrice;
         public ImageView imageView, adImage;
         public Button paidBtn;
     }

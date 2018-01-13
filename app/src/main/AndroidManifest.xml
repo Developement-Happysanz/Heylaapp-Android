@@ -263,6 +263,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar" />
+        <activity android:name=".activity.EventCheckInPointActivity" />
 
         <service android:name=".fcm.MyFirebaseInstanceIDService">
             <intent-filter>

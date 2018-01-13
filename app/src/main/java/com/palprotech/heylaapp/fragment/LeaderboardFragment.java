@@ -16,10 +16,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.activity.BookingPointActivity;
+import com.palprotech.heylaapp.activity.EventCheckInPointActivity;
 import com.palprotech.heylaapp.activity.EventSharingPointActivity;
 import com.palprotech.heylaapp.activity.LeaderboardStatistics;
 import com.palprotech.heylaapp.activity.LoginPointsActivity;
 import com.palprotech.heylaapp.activity.ProfileActivity;
+import com.palprotech.heylaapp.activity.ReviewPointActivity;
 import com.palprotech.heylaapp.customview.CircleImageView;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
@@ -154,6 +157,21 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 //            getActivity().finish();
         } else if (view==share) {
             Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
+//            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+//            getActivity().finish();
+        } else if (view == check_in) {
+            Intent homeIntent = new Intent(getActivity(), EventCheckInPointActivity.class);
+//            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+//            getActivity().finish();
+        } else if (view == reviews) {
+            Intent homeIntent = new Intent(getActivity(), ReviewPointActivity.class);
+//            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+//            getActivity().finish();
+        } else if (view==booking) {
+            Intent homeIntent = new Intent(getActivity(), BookingPointActivity.class);
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
 //            getActivity().finish();

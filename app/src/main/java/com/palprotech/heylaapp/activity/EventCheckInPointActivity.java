@@ -10,9 +10,9 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
-import com.palprotech.heylaapp.adapter.EventShareHistoryListAdapter;
-import com.palprotech.heylaapp.bean.support.EventShareHistory;
-import com.palprotech.heylaapp.bean.support.EventShareHistoryList;
+import com.palprotech.heylaapp.adapter.EventCheckInHistoryListAdapter;
+import com.palprotech.heylaapp.bean.support.EventCheckInHistory;
+import com.palprotech.heylaapp.bean.support.EventCheckInHistoryList;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
@@ -28,18 +28,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Created by Admin on 12-01-2018.
+ * Created by Narendar on 13/01/18.
  */
 
-public class EventSharingPointActivity extends AppCompatActivity implements View.OnClickListener, IServiceListener, DialogClickListener {
+public class EventCheckInPointActivity extends AppCompatActivity implements View.OnClickListener, IServiceListener, DialogClickListener {
 
     protected ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
-    private static final String TAG = EventSharingPointActivity.class.getName();
+    private static final String TAG = EventCheckInPointActivity.class.getName();
     int pageNumber = 0, totalCount = 0;
     Handler mHandler = new Handler();
-    protected EventShareHistoryListAdapter eventShareHistoryListAdapter;
-    protected ArrayList<EventShareHistory> eventShareHistoryArrayList;
+    protected EventCheckInHistoryListAdapter eventCheckInHistoryListAdapter;
+    protected ArrayList<EventCheckInHistory> eventCheckInHistoryArrayList;
     protected boolean isLoadingForFirstTime = true;
     protected ListView loadMoreListView;
 
@@ -50,7 +50,7 @@ public class EventSharingPointActivity extends AppCompatActivity implements View
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
-        eventShareHistoryArrayList = new ArrayList<>();
+        eventCheckInHistoryArrayList = new ArrayList<>();
         loadMoreListView = (ListView) findViewById(R.id.listView_events);
 
         findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
@@ -117,19 +117,19 @@ public class EventSharingPointActivity extends AppCompatActivity implements View
                         public void run() {
 
                             Gson gson = new Gson();
-                            EventShareHistoryList eventShareHistoryList = gson.fromJson(response.toString(), EventShareHistoryList.class);
-                            if (eventShareHistoryList.getEventShareHistory() != null && eventShareHistoryList.getEventShareHistory().size() > 0) {
-                                totalCount = eventShareHistoryList.getCount();
+                            EventCheckInHistoryList EventCheckInHistoryList = gson.fromJson(response.toString(), EventCheckInHistoryList.class);
+                            if (EventCheckInHistoryList.getCheckInHistory() != null && EventCheckInHistoryList.getCheckInHistory().size() > 0) {
+                                totalCount = EventCheckInHistoryList.getCount();
                                 isLoadingForFirstTime = false;
-                                updateListAdapter(eventShareHistoryList.getEventShareHistory());
+                                updateListAdapter(EventCheckInHistoryList.getCheckInHistory());
                             }
                         }
                     });
                 } else {
-                    if (eventShareHistoryArrayList != null) {
-                        eventShareHistoryArrayList.clear();
-                        eventShareHistoryListAdapter = new EventShareHistoryListAdapter(this, this.eventShareHistoryArrayList);
-                        loadMoreListView.setAdapter(eventShareHistoryListAdapter);
+                    if (eventCheckInHistoryArrayList != null) {
+                        eventCheckInHistoryArrayList.clear();
+                        eventCheckInHistoryListAdapter = new EventCheckInHistoryListAdapter(this, this.eventCheckInHistoryArrayList);
+                        loadMoreListView.setAdapter(eventCheckInHistoryListAdapter);
                     }
                 }
             } catch (Exception ex) {
@@ -162,14 +162,14 @@ public class EventSharingPointActivity extends AppCompatActivity implements View
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
-    protected void updateListAdapter(ArrayList<EventShareHistory> eventShareHistoryArrayList) {
-        this.eventShareHistoryArrayList.addAll(eventShareHistoryArrayList);
+    protected void updateListAdapter(ArrayList<EventCheckInHistory> eventCheckInHistoryArrayList) {
+        this.eventCheckInHistoryArrayList.addAll(eventCheckInHistoryArrayList);
 
-        if (eventShareHistoryListAdapter == null) {
-            eventShareHistoryListAdapter = new EventShareHistoryListAdapter(this, this.eventShareHistoryArrayList);
-            loadMoreListView.setAdapter(eventShareHistoryListAdapter);
+        if (eventCheckInHistoryListAdapter == null) {
+            eventCheckInHistoryListAdapter = new EventCheckInHistoryListAdapter(this, this.eventCheckInHistoryArrayList);
+            loadMoreListView.setAdapter(eventCheckInHistoryListAdapter);
         } else {
-            eventShareHistoryListAdapter.notifyDataSetChanged();
+            eventCheckInHistoryListAdapter.notifyDataSetChanged();
         }
     }
 
