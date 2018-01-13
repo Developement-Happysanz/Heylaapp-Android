@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -44,6 +45,7 @@ public class BookingHistoryActivity extends AppCompatActivity implements IServic
     protected ListView listView;
     int totalCount = 0;
     protected boolean isLoadingForFirstTime = true;
+    private ImageView ivBack;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -146,9 +148,17 @@ public class BookingHistoryActivity extends AppCompatActivity implements IServic
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
+        ivBack = findViewById(R.id.back_res);
         listView = findViewById(R.id.listView_booked);
         listView.setOnItemClickListener(this);
         bookingHistoryArrayList = new ArrayList<>();
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void loadBookingHistory() {

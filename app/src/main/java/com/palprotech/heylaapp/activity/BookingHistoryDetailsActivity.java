@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ import java.util.Locale;
  * Created by Admin on 26-12-2017.
  */
 
-public class BookingHistoryDetailsActivity extends AppCompatActivity implements IServiceListener, DialogClickListener,AdapterView.OnItemClickListener {
+public class BookingHistoryDetailsActivity extends AppCompatActivity implements IServiceListener, DialogClickListener, AdapterView.OnItemClickListener {
 
     private BookingHistory bookingHistory;
     private TextView txtEventName, txtEventDate, txtEventTime, txtEventAddress, txtEventAttendees, txtEventTicktClass;
@@ -58,6 +59,7 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
     protected ListView listView;
     int totalCount = 0;
     protected boolean isLoadingForFirstTime = true;
+    private ImageView ivBack;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
+        ivBack = findViewById(R.id.back_res);
         listView = findViewById(R.id.listView_attendees);
         listView.setOnItemClickListener(this);
         attendeesArrayList = new ArrayList<>();
@@ -124,6 +127,13 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
 
         txtEventAttendees.setText(bookingHistory.getNumberOfSeats());
         txtEventTicktClass.setText(bookingHistory.getPlanName() + " - " + bookingHistory.getNumberOfSeats() + " tickets");
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 

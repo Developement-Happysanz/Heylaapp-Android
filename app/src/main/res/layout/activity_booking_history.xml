@@ -1,16 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appColorBase"
+        android:minHeight="60dp" />
+
+    <ImageView
+        android:id="@+id/back_res"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="10dp"
+        android:minHeight="60dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        android:src="@drawable/ic_back_button" />
+
+    <TextView
+        android:id="@+id/tvtitletext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/muli"
+        android:gravity="center"
+        android:minHeight="60dp"
+        android:padding="5dp"
+        android:text="Ticket detail"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/actionbarTextSize" />
 
     <ListView
         android:id="@+id/listView_booked"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_result"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/muli"
         android:background="@color/trans"
         android:divider="@color/white"
-        android:dividerHeight="5dp" />
+        android:dividerHeight="5dp"
+        android:fontFamily="@font/muli" />
 
-</LinearLayout>
+</RelativeLayout>
