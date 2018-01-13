@@ -214,7 +214,8 @@
                     android:layout_height="30dp"
                     android:layout_alignBottom="@id/login_text"
                     android:layout_alignTop="@id/login_text"
-                    android:layout_toLeftOf="@id/login_star_count"
+                    android:layout_marginEnd="50dp"
+                    android:layout_alignParentEnd="true"
                     android:src="@drawable/ic_leaderboard_star" />
 
                 <TextView
@@ -224,11 +225,11 @@
                     android:layout_alignBottom="@id/login_star"
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/login_star"
-                    android:layout_marginEnd="40dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="000"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
-                    android:text="0"
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
 
@@ -284,9 +285,10 @@
                     android:id="@+id/share_star"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignBottom="@id/sharing_text"
                     android:layout_alignTop="@id/sharing_text"
-                    android:layout_toLeftOf="@id/share_star_count"
                     android:src="@drawable/ic_leaderboard_star" />
 
                 <TextView
@@ -296,11 +298,11 @@
                     android:layout_alignBottom="@id/share_star"
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/share_star"
-                    android:layout_marginEnd="40dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="000"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
-                    android:text="0"
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
 
@@ -358,7 +360,8 @@
                     android:layout_height="30dp"
                     android:layout_alignBottom="@id/check_in_text"
                     android:layout_alignTop="@id/check_in_text"
-                    android:layout_toStartOf="@id/check_in_star_count"
+                    android:layout_marginEnd="50dp"
+                    android:layout_alignParentEnd="true"
                     android:src="@drawable/ic_leaderboard_star" />
 
                 <TextView
@@ -368,11 +371,11 @@
                     android:layout_alignBottom="@id/check_in_star"
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/check_in_star"
-                    android:layout_marginEnd="40dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="000"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
-                    android:text="0"
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
 
@@ -430,7 +433,8 @@
                     android:layout_height="30dp"
                     android:layout_alignBottom="@id/review_text"
                     android:layout_alignTop="@id/review_text"
-                    android:layout_toLeftOf="@id/review_star_count"
+                    android:layout_marginEnd="50dp"
+                    android:layout_alignParentEnd="true"
                     android:src="@drawable/ic_leaderboard_star" />
 
                 <TextView
@@ -440,11 +444,11 @@
                     android:layout_alignBottom="@id/review_star"
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/review_star"
-                    android:layout_marginEnd="40dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="000"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
-                    android:text="0"
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
 
@@ -502,7 +506,8 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignTop="@+id/booking_count"
-                    android:layout_toStartOf="@+id/booking_star_count"
+                    android:layout_marginEnd="50dp"
+                    android:layout_alignParentEnd="true"
                     android:src="@drawable/ic_leaderboard_star" />
 
                 <TextView
@@ -512,11 +517,11 @@
                     android:layout_alignBottom="@id/booking_star"
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/booking_star"
-                    android:layout_marginEnd="40dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="000"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
-                    android:text="0"
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
 
