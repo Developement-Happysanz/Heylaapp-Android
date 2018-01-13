@@ -149,7 +149,7 @@ public class EventCheckInPointActivity extends AppCompatActivity implements View
         JSONObject jsonObject = new JSONObject();
         try {
 
-            jsonObject.put(HeylaAppConstants.KEY_RULE_ID, "2");
+            jsonObject.put(HeylaAppConstants.KEY_RULE_ID, "3");
             jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
 
 
