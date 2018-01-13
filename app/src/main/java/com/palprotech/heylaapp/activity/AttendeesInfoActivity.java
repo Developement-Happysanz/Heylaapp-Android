@@ -64,6 +64,12 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
         orderId = PreferenceStorage.getOrderId(getApplicationContext());
 
         noOfTickets = Integer.parseInt(eventNoOfTicket);
+        findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         loadAttendeesView();
     }

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
@@ -42,6 +43,8 @@ public class EventSharingPointActivity extends AppCompatActivity implements View
     protected ArrayList<EventShareHistory> eventShareHistoryArrayList;
     protected boolean isLoadingForFirstTime = true;
     protected ListView loadMoreListView;
+    TextView strip, titleView;
+    String ruleId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +55,8 @@ public class EventSharingPointActivity extends AppCompatActivity implements View
         progressDialogHelper = new ProgressDialogHelper(this);
         eventShareHistoryArrayList = new ArrayList<>();
         loadMoreListView = (ListView) findViewById(R.id.listView_events);
+        strip = findViewById(R.id.color_strip);
+        titleView = findViewById(R.id.tvtitletext);
 
         findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +64,42 @@ public class EventSharingPointActivity extends AppCompatActivity implements View
                 finish();
             }
         });
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                ruleId = null;
+            } else {
+                ruleId = extras.getString("rule_id");
+            }
+        } else {
+            ruleId = (String) savedInstanceState.getSerializable("rule_id");
+        }
+        switch (Integer.parseInt(ruleId)) {
+            case 1:
+                strip.setBackgroundColor(getResources().getColor(R.color.leaderboard_login));
+                titleView.setText("Daily Login");
+                break;
+            case 2:
+                strip.setBackgroundColor(getResources().getColor(R.color.leaderboard_share));
+                titleView.setText("Share");
+                break;
+            case 3:
+                strip.setBackgroundColor(getResources().getColor(R.color.leaderboard_checkin));
+                titleView.setText("Check-In");
+                break;
+            case 4:
+                strip.setBackgroundColor(getResources().getColor(R.color.leaderboard_review));
+                titleView.setText("Review");
+                break;
+            case 5:
+                strip.setBackgroundColor(getResources().getColor(R.color.leaderboard_booking));
+                titleView.setText("Booking");
+                break;
+            default:
+                break;
+
+        }
+
 
         loadEventSharingPoints();
     }
@@ -149,7 +190,7 @@ public class EventSharingPointActivity extends AppCompatActivity implements View
         JSONObject jsonObject = new JSONObject();
         try {
 
-            jsonObject.put(HeylaAppConstants.KEY_RULE_ID, "2");
+            jsonObject.put(HeylaAppConstants.KEY_RULE_ID, ruleId);
             jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
 
 

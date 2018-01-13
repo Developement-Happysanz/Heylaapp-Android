@@ -63,4 +63,11 @@
     <color name="failure">#e11f26</color>
     <color name="cancel">#f15528</color>
 
+    <color name="leaderboard_login">#8dc63f</color>
+    <color name="leaderboard_share">#444da1</color>
+    <color name="leaderboard_checkin">#ed1c24</color>
+    <color name="leaderboard_review">#029b8c</color>
+    <color name="leaderboard_booking">#ee7f22</color>
+
+
 </resources>

@@ -91,7 +91,7 @@ public class EventShareHistoryListAdapter extends BaseAdapter {
         EventShareHistory eventShareHistory = eventShareHistories.get(position);
 
         holder.eventName.setText(eventShareHistories.get(position).getEventName());
-        holder.eventName.setText(eventShareHistories.get(position).getEventVenue());
+        holder.eventLocation.setText(eventShareHistories.get(position).getEventVenue());
 
         return convertView;
     }

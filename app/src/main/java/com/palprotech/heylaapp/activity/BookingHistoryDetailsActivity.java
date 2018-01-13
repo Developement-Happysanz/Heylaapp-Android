@@ -12,12 +12,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.adapter.AttendeesListAdapter;
-import com.palprotech.heylaapp.adapter.BookingHistoryListAdapter;
 import com.palprotech.heylaapp.bean.support.Attendees;
 import com.palprotech.heylaapp.bean.support.AttendeesList;
 import com.palprotech.heylaapp.bean.support.BookingHistory;
-import com.palprotech.heylaapp.bean.support.BookingHistoryList;
-import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.HeylaAppHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
@@ -25,7 +22,6 @@ import com.palprotech.heylaapp.interfaces.DialogClickListener;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
-import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,6 +64,12 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_history_details);
         bookingHistory = (BookingHistory) getIntent().getSerializableExtra("bookingObj");
+        findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         loadUI();
         loadAttendees();
     }
@@ -88,6 +90,7 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
         txtEventTicktClass = findViewById(R.id.txt_event_booking_plan);
 
         txtEventName.setText(bookingHistory.getEventName());
+        txtEventTime.setText(bookingHistory.getPlanTime());
 
         String bookingDate = HeylaAppHelper.getDate(bookingHistory.getBookingDate());
 

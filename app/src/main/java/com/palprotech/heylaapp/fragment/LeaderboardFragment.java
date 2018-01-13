@@ -150,11 +150,13 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         } else if (view == login) {
             Intent homeIntent = new Intent(getActivity(), LoginPointsActivity.class);
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            homeIntent.putExtra("rule_id", "1");
             startActivity(homeIntent);
 //            getActivity().finish();
         } else if (view == share) {
             Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            homeIntent.putExtra("rule_id", "2");
             startActivity(homeIntent);
 //            getActivity().finish();
         } else if (view == check_in) {
@@ -169,13 +171,13 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         } else if (view == reviews) {
             Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            homeIntent.putExtra("rule_id", "5");
+            homeIntent.putExtra("rule_id", "4");
             startActivity(homeIntent);
 //            getActivity().finish();
         } else if (view == booking) {
             Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            homeIntent.putExtra("rule_id", "4");
+            homeIntent.putExtra("rule_id", "5");
             startActivity(homeIntent);
 //            getActivity().finish();
         }
