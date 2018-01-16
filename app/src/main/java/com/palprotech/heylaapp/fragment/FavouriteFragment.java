@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,6 +124,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
     private ServiceHelper serviceHelper;
     protected boolean isLoadingForFirstTime = true;
     int pageNumber = 0, totalCount = 0;
+
 
     public static FavouriteFragment newInstance(int position) {
         FavouriteFragment frag = new FavouriteFragment();
@@ -692,4 +694,5 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
 
         }
     }
+
 }

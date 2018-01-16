@@ -50,9 +50,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = MainActivity.class.getName();
     private static final int TAG_LOGOUT = 100;
     Toolbar toolbar;
+
     private ViewPager viewPager;
-    boolean doubleBackToExitPressedOnce = false;
     private SearchView mSearchView = null;
+
+    boolean doubleBackToExitPressedOnce = false;
     Context context;
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;

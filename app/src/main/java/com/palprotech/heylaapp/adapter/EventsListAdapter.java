@@ -57,17 +57,16 @@ public class EventsListAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         if (mSearching) {
-            // Log.d("Event List Adapter","Search count"+mValidSearchIndices.size());
+
             if (!mAnimateSearch) {
                 mAnimateSearch = true;
             }
             return mValidSearchIndices.size();
 
         } else {
-            // Log.d(TAG,"Normal count size");
+
             return events.size();
         }
-
     }
 
     @Override
@@ -98,12 +97,9 @@ public class EventsListAdapter extends BaseAdapter {
             holder.txtDate = (TextView) convertView.findViewById(R.id.txt_event_date);
             holder.txtMonth = convertView.findViewById(R.id.txt_event_month);
             holder.txtTime = (TextView) convertView.findViewById(R.id.txt_event_time);
-//            holder.txtCategory = (TextView) convertView.findViewById(R.id.txt_event_category);
             holder.imageView = (ImageView) convertView.findViewById(R.id.img_logo);
-//            holder.adImage = (ImageView) convertView.findViewById(R.id.event_ad_image);
             holder.paidBtn = (Button) convertView.findViewById(R.id.event_paid_btn);
             holder.txtPrice = convertView.findViewById(R.id.txt_event_price);
-
 
             convertView.setTag(holder);
         } else {
@@ -111,9 +107,8 @@ public class EventsListAdapter extends BaseAdapter {
         }
 
         if (mSearching) {
-            // Log.d("Event List Adapter","actual position"+ position);
+
             position = mValidSearchIndices.get(position);
-            //Log.d("Event List Adapter", "position is"+ position);
 
         } else {
             Log.d("Event List Adapter", "getview pos called" + position);
@@ -122,7 +117,7 @@ public class EventsListAdapter extends BaseAdapter {
         Event event = events.get(position);
 
         holder.txtEventName.setText(events.get(position).getEventName());
-//        holder.txtEventVenue.setText(events.get(position).getEventVenue());
+
         String[] aux = events.get(position).getEventVenue().toString().split(",\\s*");
         String result = "";
         if (aux.length > 2) {
@@ -131,14 +126,7 @@ public class EventsListAdapter extends BaseAdapter {
             result = aux[aux.length - 1];
         }
         holder.txtEventVenue.setText(result);
-        // Log.d("Event Adapter","event isAd "+ event.getIsAd());
-//        String isAd = event.getIsAd();
-       /* if( (isAd != null) && (isAd.equalsIgnoreCase("1"))){
-            // Log.d("EventAdapter", "setting the ad image to visible");
-            holder.adImage.setVisibility(View.VISIBLE);
-        }else{
-            holder.adImage.setVisibility(View.INVISIBLE);
-        }*/
+
         String paidBtnVal = event.getEventType();
         if (paidBtnVal != null) {
             holder.txtPrice.setText(paidBtnVal);
@@ -151,7 +139,6 @@ public class EventsListAdapter extends BaseAdapter {
             }
         }
 
-//        imageLoader.displayImage(events.get(position).getEventBanner(), holder.imageView, AppController.getInstance().getLogoDisplayOptions());
         if (HeylaAppValidator.checkNullString(events.get(position).getEventBanner())) {
             Picasso.with(this.context).load(events.get(position).getEventBanner()).fit().transform(this.transformation).placeholder(R.drawable.heyla_logo_transparent).error(R.drawable.heyla_logo_transparent).into(holder.imageView);
         } else {
@@ -177,37 +164,11 @@ public class EventsListAdapter extends BaseAdapter {
             e.printStackTrace();
         }
 
-        //fetch timer values
-//        start = HeylaAppHelper.getTime(events.get(position).getStartTime());
-//        end = HeylaAppHelper.getTime(events.get(position).getEndTime());
         start = events.get(position).getStartTime();
         end = events.get(position).getEndTime();
-        /*String startTime = "", endTime = "";
-        try {
-            final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            final Date startDateObj = sdf.parse(start);
-            final Date endDateObj = sdf.parse(end);
-            System.out.println(startDateObj);
-            startTime = (new SimpleDateFormat("hh:mm a").format(startDateObj));
-            endTime = (new SimpleDateFormat("hh:mm a").format(endDateObj));
-        } catch (final ParseException e) {
-            e.printStackTrace();
-        }
-        if ((startTime != null) && (end != null))
 
-        {*/
         holder.txtTime.setText(start + " - " + end);
-//        }
 
-//        holder.txtCategory.setText("  "+events.get(position).getEventCategoryId()+"  ");
-
-        //Add animation if searching
-       /* if(mSearching) {
-            ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(convertView, "rotationX", 90, 0);
-            // alphaAnim.setInterpolator(mInterpolator);
-            alphaAnim.setDuration(300);
-            alphaAnim.start();
-        }*/
         return convertView;
     }
 
@@ -222,13 +183,9 @@ public class EventsListAdapter extends BaseAdapter {
                 if (eventname.toLowerCase().contains(eventName.toLowerCase())) {
                     mValidSearchIndices.add(i);
                 }
-
             }
-
         }
         Log.d("Event List Adapter", "notify" + mValidSearchIndices.size());
-        //notifyDataSetChanged();
-
     }
 
     public void exitSearch() {
@@ -243,8 +200,8 @@ public class EventsListAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        public TextView txtEventName, txtEventVenue, txtDate, txtMonth, txtTime, txtCategory , txtPrice;
-        public ImageView imageView, adImage;
+        public TextView txtEventName, txtEventVenue, txtDate, txtMonth, txtTime , txtPrice;
+        public ImageView imageView;
         public Button paidBtn;
     }
 
