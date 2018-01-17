@@ -82,8 +82,11 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         userPic = rootView.findViewById(R.id.leaderboard_profile_img);
         userPic.setOnClickListener(this);
         String url = PreferenceStorage.getUserPicture(getActivity());
+        String getSocialUrl = PreferenceStorage.getSocialNetworkProfileUrl(getActivity());
         if (((url != null) && !(url.isEmpty()))) {
             Picasso.with(getActivity()).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(userPic);
+        }else if (((getSocialUrl != null) && !(getSocialUrl.isEmpty()))) {
+            Picasso.with(getActivity()).load(getSocialUrl).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(userPic);
         }
 
         login = rootView.findViewById(R.id.login_layout);

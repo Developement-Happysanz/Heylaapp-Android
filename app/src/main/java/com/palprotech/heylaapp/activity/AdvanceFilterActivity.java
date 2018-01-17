@@ -52,8 +52,8 @@ import java.util.List;
  */
 
 public class AdvanceFilterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, IServiceListener, DialogClickListener {
-    private static final String TAG = AdvanceFilterActivity.class.getName();
 
+    private static final String TAG = AdvanceFilterActivity.class.getName();
 
     String cityId = "";
     String preferenceId = "";
@@ -667,7 +667,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         AlertDialog.Builder builder = new AlertDialog.Builder(AdvanceFilterActivity.this);
         sb = new StringBuilder();
         sb1 = new StringBuilder();
-        sb1.append("");
+        sb1.append(" ");
         // String array for alert dialog multi choice items
 
         final AlertDialog dialog = new AlertDialog.Builder(this)
@@ -684,14 +684,16 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                             String id = PreferenceIdList.get(i);
                             if (ival == 0) {
                                 sb = sb.append(name);
-                                sb1 = sb1.append(id+",");
+                                sb1 = sb1.append(id + ",");
                             } else {
                                 sb = sb.append("," + name);
                                 sb1 = sb1.append(id + ",");
                             }
                             ival++;
                         }
-                        sb1.setLength(sb1.length() - 1);
+                        if (!sb1.toString().equalsIgnoreCase("") || sb1.toString() != null) {
+                            sb1.setLength(sb1.length() - 1);
+                        }
                         etPreferenceList.setText(sb.toString());
                         preferenceId = sb1.toString();
                     }

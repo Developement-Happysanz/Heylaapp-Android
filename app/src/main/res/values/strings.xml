@@ -8,8 +8,8 @@
     <string name="app_logo">App logo</string>
 
     <!--Login Screen-->
-    <string name="fb_login_protocol_scheme">fb279152195822147</string>
-    <string name="facebook_app_id">279152195822147</string>
+    <string name="fb_login_protocol_scheme">fb276047162921002</string>
+    <string name="facebook_app_id">276047162921002</string>
     <string name="guest">GUEST LOGIN</string>
     <string name="signup">Sign Up</string>
     <string name="login">Login</string>
