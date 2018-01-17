@@ -213,6 +213,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                         "\n Given Name :" + acct.getGivenName() +
                         "\n ID :" + acct.getId() + "\n Image URL :" + acct.getPhotoUrl();
                 String newOk = okSet;
+                String photoUrl = "" + acct.getPhotoUrl();
+                PreferenceStorage.saveSocialNetworkProfilePic(getActivity(), photoUrl);
 
                 String GCMKey = PreferenceStorage.getGCM(getContext());
                 JSONObject jsonObject = new JSONObject();
@@ -335,7 +337,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
 //                                            PreferenceStorage.saveUserName(getActivity(), name);
                                             String url = "https://graph.facebook.com/" + id + "/picture?type=large";
                                             Log.d(TAG, "facebook birthday" + birthday);
-//                                            PreferenceStorage.saveSocialNetworkProfilePic(getActivity(), url);
+                                            PreferenceStorage.saveSocialNetworkProfilePic(getActivity(), url);
                                             if (gender != null) {
 //                                                PreferenceStorage.saveUserGender(getActivity(), gender);
                                             }

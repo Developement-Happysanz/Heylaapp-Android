@@ -92,6 +92,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
                 this.finish();
             } else */
             if (HeylaAppValidator.checkNullString(city) && haspreferences) {
+//                Intent intent = new Intent(getApplicationContext(), MainNewActivity.class);
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 this.finish();

@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.bean.support.Preference;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.squareup.picasso.Picasso;
 
@@ -59,8 +60,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         vUserImage = (ImageView) findViewById(R.id.profile_img);
         vUserImage.setOnClickListener(this);
         String url = PreferenceStorage.getUserPicture(this);
+        String getSocialUrl = PreferenceStorage.getSocialNetworkProfileUrl(this);
         if (((url != null) && !(url.isEmpty()))) {
             Picasso.with(this).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(vUserImage);
+        } else if (((getSocialUrl != null) && !(getSocialUrl.isEmpty()))) {
+            Picasso.with(this).load(getSocialUrl).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(vUserImage);
         }
         findViewById(R.id.menu_back).setOnClickListener(new View.OnClickListener() {
             @Override

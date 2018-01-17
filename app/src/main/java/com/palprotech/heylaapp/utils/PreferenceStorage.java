@@ -848,4 +848,38 @@ public class PreferenceStorage {
         return transactionDate;
     }
 
+    public static void IsFilterApply(Context context, boolean IsFilterApply) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(HeylaAppConstants.ISFILTERAPPLY, IsFilterApply);
+        editor.commit();
+
+    }
+
+    public static boolean getFilterApply(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        boolean logged = sharedPreferences.getBoolean(HeylaAppConstants.ISFILTERAPPLY, false);
+        return logged;
+
+    }
+
+    public static void saveSocialNetworkProfilePic(Context context, String url) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.KEY_SOCIAL_NETWORK_URL, url);
+        editor.commit();
+
+    }
+
+    public static String getSocialNetworkProfileUrl(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String url = sharedPreferences.getString(HeylaAppConstants.KEY_SOCIAL_NETWORK_URL, "");
+        return url;
+
+    }
+
 }

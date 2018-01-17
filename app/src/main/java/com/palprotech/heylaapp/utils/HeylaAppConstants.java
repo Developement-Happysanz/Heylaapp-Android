@@ -310,4 +310,7 @@ public class HeylaAppConstants {
     public static final String KEY_TOTAL_NO_OF_TICKETS = "totalNoOfTickets";
 
     public static final long TWENTY4HOURS = 24 * 60 * 60 * 1000;//24 hours in milli seconds format
+
+    public static final String ISFILTERAPPLY = "ISFILTERAPPLY";
+    public static final String KEY_SOCIAL_NETWORK_URL = "socialNetworkPicUrl";
 }

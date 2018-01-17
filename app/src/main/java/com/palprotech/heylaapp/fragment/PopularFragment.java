@@ -680,6 +680,23 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
         }
     }
 
+    public void searchForEvent(String eventname) {
+        Log.d(TAG, "searchevent called");
+        if (eventsListAdapter != null) {
+            eventsListAdapter.startSearch(eventname);
+            eventsListAdapter.notifyDataSetChanged();
+            loadMoreListView.invalidateViews();
+        }
+    }
+
+    public void exitSearch() {
+        Log.d(TAG, "exit event called");
+        if (eventsListAdapter != null) {
+            eventsListAdapter.exitSearch();
+            eventsListAdapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onError(String error) {
         if (totalCount > 0) {

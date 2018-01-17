@@ -1,10 +1,12 @@
 package com.palprotech.heylaapp.fragment;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,9 +38,12 @@ import java.util.ArrayList;
  * Created by Admin on 08-11-2017.
  */
 
-public class LandingPagerFragment extends Fragment implements IServiceListener, AdapterView.OnItemClickListener{
+public class LandingPagerFragment extends Fragment
+//        implements IServiceListener, AdapterView.OnItemClickListener
+{
 
-    private static final String TAG = LandingPagerFragment.class.getName();
+    /*private static final String TAG = LandingPagerFragment.class.getName();
+
     private boolean isFirstRun = true;
     private SharedPreferences TransPrefs;
     private ListView loadMoreListView;
@@ -75,10 +80,10 @@ public class LandingPagerFragment extends Fragment implements IServiceListener, 
     protected void initializeViews() {
         Log.d(TAG, "initialize pull to refresh view");
         loadMoreListView = (ListView) view.findViewById(R.id.listView_events);
-       /* mNoEventsFound = (TextView) view.findViewById(R.id.no_home_events);
+       *//* mNoEventsFound = (TextView) view.findViewById(R.id.no_home_events);
         if (mNoEventsFound != null)
             mNoEventsFound.setVisibility(View.GONE);
-        loadMoreListView.setOnLoadMoreListener(this); */
+        loadMoreListView.setOnLoadMoreListener(this); *//*
         loadMoreListView.setOnItemClickListener(this);
         eventsArrayList = new ArrayList<>();
     }
@@ -91,9 +96,9 @@ public class LandingPagerFragment extends Fragment implements IServiceListener, 
 
     public void callGetEventService(int position) {
         Log.d(TAG, "fetch event list" + position);
-        /*if(eventsListAdapter != null){
+        *//*if(eventsListAdapter != null){
             eventsListAdapter.clearSearchFlag();
-        }*/
+        }*//*
 
         if (isLoadingForFirstTime) {
             Log.d(TAG, "Loading for the first time");
@@ -102,7 +107,7 @@ public class LandingPagerFragment extends Fragment implements IServiceListener, 
 
             if (CommonUtils.isNetworkAvailable(getActivity())) {
                 progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-//                makeEventListServiceCall(1);
+                makeEventListServiceCall(1);
             } else {
                 AlertDialogHelper.showSimpleAlertDialog(getActivity(), getString(R.string.no_connectivity));
             }
@@ -111,24 +116,128 @@ public class LandingPagerFragment extends Fragment implements IServiceListener, 
         }
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.d(TAG, "onEvent list item clicked" + i);
-        Event event = null;
-        if ((eventsListAdapter != null) && (eventsListAdapter.ismSearching())) {
-            Log.d(TAG, "while searching");
-            int actualindex = eventsListAdapter.getActualEventPos(i);
-            Log.d(TAG, "actual index" + actualindex);
-            event = eventsArrayList.get(actualindex);
+    public void callGetFilterService() {
+        *//*if(eventsListAdapter != null){
+            eventsListAdapter.clearSearchFlag();
+        }*//*
+
+        if (eventsArrayList != null)
+            eventsArrayList.clear();
+
+        if (CommonUtils.isNetworkAvailable(getActivity())) {
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            //    eventServiceHelper.makeRawRequest(FindAFunConstants.GET_ADVANCE_SINGLE_SEARCH);
+            new HttpAsyncTask().execute("");
         } else {
-            event = eventsArrayList.get(i);
+            AlertDialogHelper.showSimpleAlertDialog(getActivity(), getString(R.string.no_connectivity));
         }
 
-        Intent intent = new Intent(getActivity(), EventDetailActivity.class);
-        intent.putExtra("eventObj", event);
-        // intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
-//        // getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_right);
+    }
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... urls) {
+//            serviceHelper.makeRawRequest(FindAFunConstants.GET_ADVANCE_SINGLE_SEARCH);
+            return null;
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(Void result) {
+            progressDialogHelper.cancelProgressDialog();
+        }
+    }
+
+    protected void updateListAdapter(ArrayList<Event> eventsArrayList) {
+        this.eventsArrayList.addAll(eventsArrayList);
+       *//* if (mNoEventsFound != null)
+            mNoEventsFound.setVisibility(View.GONE);*//*
+
+        if (eventsListAdapter == null) {
+            eventsListAdapter = new EventsListAdapter(getActivity(), this.eventsArrayList);
+            loadMoreListView.setAdapter(eventsListAdapter);
+        } else {
+            eventsListAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void searchForEvent(String eventname) {
+        Log.d(TAG, "searchevent called");
+        if (eventsListAdapter != null) {
+            eventsListAdapter.startSearch(eventname);
+            eventsListAdapter.notifyDataSetChanged();
+            //loadMoreListView.invalidateViews();
+        }
+
+    }
+
+    public void exitSearch() {
+        Log.d(TAG, "exit event called");
+        if (eventsListAdapter != null) {
+            eventsListAdapter.exitSearch();
+            eventsListAdapter.notifyDataSetChanged();
+        }
+    }
+
+   *//* @Override
+    public void onLoadMore() {
+
+        int pageNumber = -1;
+        int size = eventsArrayList.size();
+        Log.d(TAG, "onLoad more called" + size + "totalcount" + totalCount);
+        if (size < totalCount) {
+            pageNumber = (size / 10) + 1;
+        }
+        Log.d(TAG, "Page number" + pageNumber);
+        makeEventListServiceCall(pageNumber);
+    }*//*
+
+    public void makeEventListServiceCall(int pageNumber) {
+        if ((pageNumber != -1) && (pageNumber >= 0 && pageNumber <= 6)) {
+            switch (getArguments().getInt("position")) {
+                case 0:
+                    Log.d(TAG, "fetch favourites");
+//                    eventServiceHelper.makeGetEventServiceCall(String.format(FindAFunConstants.GET_EVENTS_FAVOURITES, Integer.parseInt(PreferenceStorage.getUserId(getActivity())), pageNumber, PreferenceStorage.getUserCity(getActivity()), Integer.parseInt(PreferenceStorage.getUserType(getActivity()))));
+//                    eventServiceHelper.makeGetEventServiceCall(String.format(FindAFunConstants.GET_EVENTS_FAVOURITES, pageNumber));
+
+//                    TransPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//                    isFirstRun = TransPrefs.getBoolean("isFirstRun", true);
+
+                 *//*  if(isFirstRun){
+                        getTransparentFavour();
+                 }
+
+*//*
+                    FavouriteFragment.newInstance(0);
+                    isFirstRun = false;
+
+//                    TransPrefs.edit().putBoolean("isFirstRun", isFirstRun).commit();
+
+                    break;
+                case 1:
+                    Log.d(TAG, "fetch ALL events");
+//                    serviceHelper.makeGetEventServiceCall(String.format(FindAFunConstants.GET_EVENTS_FEATURED, pageNumber, PreferenceStorage.getUserCity(getActivity())));
+                    //eventServiceHelper.makeGetEventServiceCall(String.format(FindAFunConstants.GET_EVENTS_FEATURED, pageNumber, PreferenceStorage.getUserCity(getActivity())));
+                    PopularFragment.newInstance(1);
+                    break;
+                case 2:
+                    Log.d(TAG, "fetch Hotspot events");
+//                    eventServiceHelper.makeGetEventServiceCall(String.format(FindAFunConstants.GET_STATIC_EVENTS, Integer.parseInt(PreferenceStorage.getUserId(getActivity())), pageNumber, PreferenceStorage.getUserCity(getActivity())));
+//                    //eventServiceHelper.makeGetEventServiceCall(String.format(FindAFunConstants.GET_EVENTS_NEARBY_URL, pageNumber));
+                    HotspotFragment.newInstance(2);
+                    break;
+
+                case 3:
+                    Log.d(TAG, "fetch Filter events");
+//                    eventServiceHelper.makeGetEventServiceCall(String.format(FindAFunConstants.GET_ADVANCE_SINGLE_SEARCH, PreferenceStorage.getFilterSingleDate(getActivity())));
+                    LeaderboardFragment.newInstance(3);
+                    break;
+            }
+        } else {
+            Log.d(TAG, "ignoring this page");
+            //  loadMoreListView.onLoadMoreComplete();
+            progressDialogHelper.hideProgressDialog();
+        }
     }
 
     @Override
@@ -187,19 +296,6 @@ public class LandingPagerFragment extends Fragment implements IServiceListener, 
         return signInsuccess;
     }
 
-    protected void updateListAdapter(ArrayList<Event> eventsArrayList) {
-        this.eventsArrayList.addAll(eventsArrayList);
-       /* if (mNoEventsFound != null)
-            mNoEventsFound.setVisibility(View.GONE);*/
-
-        if (eventsListAdapter == null) {
-            eventsListAdapter = new EventsListAdapter(getActivity(), this.eventsArrayList);
-            loadMoreListView.setAdapter(eventsListAdapter);
-        } else {
-            eventsListAdapter.notifyDataSetChanged();
-        }
-    }
-
     @Override
     public void onError(final String error) {
         mHandler.post(new Runnable() {
@@ -214,4 +310,28 @@ public class LandingPagerFragment extends Fragment implements IServiceListener, 
             }
         });
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Log.d(TAG, "onEvent list item clicked" + i);
+        Event event = null;
+        if ((eventsListAdapter != null) && (eventsListAdapter.ismSearching())) {
+            Log.d(TAG, "while searching");
+            int actualindex = eventsListAdapter.getActualEventPos(i);
+            Log.d(TAG, "actual index" + actualindex);
+            event = eventsArrayList.get(actualindex);
+        } else {
+            event = eventsArrayList.get(i);
+        }
+
+        Intent intent = new Intent(getActivity(), EventDetailActivity.class);
+        intent.putExtra("eventObj", event);
+        // intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+//        // getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_right);
+    }
+
+    public void onWindowFocusChanged() {
+
+    }*/
 }

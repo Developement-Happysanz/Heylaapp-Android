@@ -103,7 +103,6 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
                     .tilt(25)
                     .build();
 
-
     HashMap<Integer, String> latitude = new HashMap<Integer, String>();
     HashMap<Integer, String> longitude = new HashMap<Integer, String>();
 
@@ -561,6 +560,23 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             eventsListAdapter = new EventsListAdapter(getActivity(), this.eventsArrayList);
             loadMoreListView.setAdapter(eventsListAdapter);
         } else {
+            eventsListAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void searchForEvent(String eventname) {
+        Log.d(TAG, "searchevent called");
+        if (eventsListAdapter != null) {
+            eventsListAdapter.startSearch(eventname);
+            eventsListAdapter.notifyDataSetChanged();
+            loadMoreListView.invalidateViews();
+        }
+    }
+
+    public void exitSearch() {
+        Log.d(TAG, "exit event called");
+        if (eventsListAdapter != null) {
+            eventsListAdapter.exitSearch();
             eventsListAdapter.notifyDataSetChanged();
         }
     }

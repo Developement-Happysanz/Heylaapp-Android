@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView sample;
 
+    int checkPointSearch = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,10 +144,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Fragment newFragment = null;
 
         if (position == 0) {
+            checkPointSearch = 0;
             newFragment = new FavouriteFragment();
         } else if (position == 1) {
+            checkPointSearch = 1;
             newFragment = new PopularFragment();
         } else if (position == 2) {
+            checkPointSearch = 2;
             newFragment = new HotspotFragment();
         } else if (position == 3) {
             newFragment = new LeaderboardFragment();
@@ -159,16 +164,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        // getMenuInflater().inflate(R.menu.menu_landi/*ng, menu);
         MenuInflater inflater = getMenuInflater();
+        // Inflate menu to add items to action bar if it is present.
         inflater.inflate(R.menu.menu_landing, menu);
-
-        /*if (isMenuEnable.equalsIgnoreCase("no")) {
-            menu.findItem(R.id.action_filter).setVisible(false);
-            menu.findItem(R.id.action_search_view).setVisible(false);
-        }*/
-  /*      SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        mSearchView = (SearchView) menu.findItem(R.id.action_search_view).getActionView();
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        mSearchView =
+                (SearchView) menu.findItem(R.id.action_search_view).getActionView();
         mSearchView.setIconifiedByDefault(true);
         mSearchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
@@ -196,12 +201,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG, "Query submitted with String:" + s);
 //                int currentpage = viewPager.getCurrentItem();
 //                Log.d(TAG, "current item is" + currentpage);
-
-                *//*LandingPagerFragment landingPagerFragment = (LandingPagerFragment)
-                        landingPagerAdapter.getRegisteredFragment(currentpage);
-                if (landingPagerFragment != null) {
-                    landingPagerFragment.searchForEvent(s);
-                }*//*
+                if (checkPointSearch == 0) {
+                    FavouriteFragment favouriteFragment = new FavouriteFragment();
+                    if (favouriteFragment != null) {
+                        favouriteFragment.searchForEvent(s);
+                    }
+                } else if (checkPointSearch == 1) {
+                    PopularFragment popularFragment = new PopularFragment();
+                    if (popularFragment != null) {
+                        popularFragment.searchForEvent(s);
+                    }
+                } else if (checkPointSearch ==2){
+                    HotspotFragment hotspotFragment = new HotspotFragment();
+                    if (hotspotFragment != null) {
+                        hotspotFragment.searchForEvent(s);
+                    }
+                }
 
                 return false;
             }
@@ -210,43 +225,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public boolean onQueryTextChange(String s) {
 //                int currentpage = viewPager.getCurrentItem();
 //                Log.d(TAG, "current item is" + currentpage);
-                *//*LandingPagerFragment landingPagerFragment = (LandingPagerFragment)
-                        landingPagerAdapter.getRegisteredFragment(currentpage);
 
-                if ((s != null) && (!s.isEmpty())) {
-                    if (landingPagerFragment != null) {
-                        landingPagerFragment.searchForEvent(s);
+                if (checkPointSearch == 0) {
+                    FavouriteFragment favouriteFragment = new FavouriteFragment();
+                    if ((s != null) && (!s.isEmpty())) {
+                        if (favouriteFragment != null) {
+                            favouriteFragment.searchForEvent(s);
+                        }
+                    } else {
+                        if (favouriteFragment != null) {
+                            Log.d(TAG, "call exit search");
+                            favouriteFragment.exitSearch();
+                        }
                     }
-                } else {
-                    if (landingPagerFragment != null) {
-                        Log.d(TAG, "call exit search");
-                        landingPagerFragment.exitSearch();
+                } else if (checkPointSearch == 1) {
+                    PopularFragment popularFragment = new PopularFragment();
+                    if ((s != null) && (!s.isEmpty())) {
+                        if (popularFragment != null) {
+                            popularFragment.searchForEvent(s);
+                        }
+                    } else {
+                        if (popularFragment != null) {
+                            Log.d(TAG, "call exit search");
+                            popularFragment.exitSearch();
+                        }
                     }
-                }*//*
+                } else if (checkPointSearch ==2){
+                    HotspotFragment hotspotFragment = new HotspotFragment();
+                    if ((s != null) && (!s.isEmpty())) {
+                        if (hotspotFragment != null) {
+                            hotspotFragment.searchForEvent(s);
+                        }
+                    } else {
+                        if (hotspotFragment != null) {
+                            Log.d(TAG, "call exit search");
+                            hotspotFragment.exitSearch();
+                        }
+                    }
+                }
 
                 return false;
             }
         });
-        mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
-
-            @Override
-            public boolean onClose() {
-                Log.d(TAG, "searchView closed");
-
-//                int currentpage = viewPager.getCurrentItem();
-//                Log.d(TAG, "current item is" + currentpage);
-                *//*LandingPagerFragment landingPagerFragment = (LandingPagerFragment)
-                        landingPagerAdapter.getRegisteredFragment(currentpage);
-                if (landingPagerFragment != null) {
-                    Log.d(TAG, "call exit search");
-                    landingPagerFragment.exitSearch();
-                }*//*
-
-                return false;
-            }
-        });
-
-        mSearchView.setQueryHint("Search Event name");*/
 
         return true;
     }
