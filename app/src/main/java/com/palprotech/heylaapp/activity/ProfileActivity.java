@@ -179,37 +179,73 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         setupUI(findViewById(R.id.scrollID));
         inputName = (TextInputLayout) findViewById(R.id.ti_name);
         name = (EditText) findViewById(R.id.edtName);
+        if (PreferenceStorage.getFullName(this) != null) {
+            name.setText(PreferenceStorage.getFullName(this));
+        }
         inputUsername = (TextInputLayout) findViewById(R.id.ti_username);
         username = (EditText) findViewById(R.id.edtUsername);
+        if (PreferenceStorage.getUsername(this) != null) {
+            username.setText(PreferenceStorage.getUsername(this));
+        }
         inputBirthday = (TextInputLayout) findViewById(R.id.ti_birthday);
         mBirthday = (EditText) findViewById(R.id.edtBirthday);
+        if (PreferenceStorage.getUserBirthday(this) != null) {
+            mBirthday.setText(PreferenceStorage.getUserBirthday(this));
+        }
         mBirthday.setFocusable(false);
         inputOccupation = (TextInputLayout) findViewById(R.id.ti_occupation);
         mOccupation = (EditText) findViewById(R.id.occupationlist);
+        if (PreferenceStorage.getUserOccupation(this) != null) {
+            mOccupation.setText(PreferenceStorage.getUserOccupation(this));
+        }
         mOccupation.setFocusable(false);
         inputGender = (TextInputLayout) findViewById(R.id.ti_gender);
         mGender = (EditText) findViewById(R.id.genderList);
+        if (PreferenceStorage.getUserGender(this) != null) {
+            mGender.setText(PreferenceStorage.getUserGender(this));
+        }
         mGender.setFocusable(false);
         inputAddress1 = (TextInputLayout) findViewById(R.id.ti_address_line_one);
         address1 = (EditText) findViewById(R.id.edtAddressLineOne);
+        if (PreferenceStorage.getUserAddressLine1(this) != null) {
+            address1.setText(PreferenceStorage.getUserAddressLine1(this));
+        }
         inputAddress2 = (TextInputLayout) findViewById(R.id.ti_address_line_two);
         address2 = (EditText) findViewById(R.id.edtAddressLinetwo);
+        if (PreferenceStorage.getUserAddressLine2(this) != null) {
+            address2.setText(PreferenceStorage.getUserAddressLine2(this));
+        }
         inputAddress3 = (TextInputLayout) findViewById(R.id.ti_address_line_three);
         address3 = (EditText) findViewById(R.id.edtAddressLinethree);
+        if (PreferenceStorage.getUserAddressLine3(this) != null) {
+            address3.setText(PreferenceStorage.getUserAddressLine3(this));
+        }
         inputCountry = (TextInputLayout) findViewById(R.id.ti_country);
         country = (EditText) findViewById(R.id.countryList);
+        if (PreferenceStorage.getUserCountryName(this) != null) {
+            country.setText(PreferenceStorage.getUserCountryName(this));
+        }
         country.setOnClickListener(this);
         country.setFocusable(false);
         inputState = (TextInputLayout) findViewById(R.id.ti_state);
         state = (EditText) findViewById(R.id.stateList);
+        if (PreferenceStorage.getUserStateName(this) != null) {
+            state.setText(PreferenceStorage.getUserStateName(this));
+        }
         state.setOnClickListener(this);
         state.setFocusable(false);
         inputCity = (TextInputLayout) findViewById(R.id.ti_city);
         city = (EditText) findViewById(R.id.cityList);
+        if (PreferenceStorage.getEventCityName(this) != null) {
+            city.setText(PreferenceStorage.getEventCityName(this));
+        }
         city.setOnClickListener(this);
         city.setFocusable(false);
         inputPincode = (TextInputLayout) findViewById(R.id.ti_pincode);
         pincode = (EditText) findViewById(R.id.edtPincode);
+        if (PreferenceStorage.getUserZipcode(this) != null) {
+            pincode.setText(PreferenceStorage.getUserZipcode(this));
+        }
         cbSubscription = (CheckBox) findViewById(R.id.subscription);
         save = (Button) findViewById(R.id.saveprofile);
         save.setOnClickListener(this);
@@ -347,15 +383,25 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         userName = username.getText().toString();
         PreferenceStorage.saveUsername(this, userName);
         birthDay = mBirthday.getText().toString();
+        PreferenceStorage.saveUserBirthday(this, birthDay);
         occupation = mOccupation.getText().toString();
+        PreferenceStorage.saveUserOccupation(this, occupation);
         gender = mGender.getText().toString();
+        PreferenceStorage.saveUserGender(this, gender);
         addressLineOne = address1.getText().toString();
+        PreferenceStorage.saveUserAddressLine1(this, addressLineOne);
         addressLineTwo = address2.getText().toString();
+        PreferenceStorage.saveUserAddressLine2(this, addressLineTwo);
         landMark = address3.getText().toString();
+        PreferenceStorage.saveUserAddressLine3(this, landMark);
         countryName = country.getText().toString();
+        PreferenceStorage.saveUserCountryName(this, countryName);
         stateName = state.getText().toString();
+        PreferenceStorage.saveUserStateName(this, stateName);
         cityName = city.getText().toString();
+        PreferenceStorage.saveEventCityName(this, cityName);
         pinCode = pincode.getText().toString();
+        PreferenceStorage.saveUserZipCode(this, userName);
         newsLetter = cbSubscription.isChecked();
         if (newsLetter) {
             newsLetterStatus = "Y";
@@ -694,8 +740,10 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         Log.d(TAG, "Show error dialog");
                         AlertDialogHelper.showSimpleAlertDialog(this, msg);
 
-                    } else {
+                    } else if (msg.equalsIgnoreCase("Profile Updated")){
                         signInSuccess = true;
+                        Log.d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
                     }
                 }
             } catch (JSONException e) {
@@ -1127,7 +1175,8 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onAlertPositiveClicked(int tag) {
-
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override

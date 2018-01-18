@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
-import com.palprotech.heylaapp.bean.support.Preference;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.squareup.picasso.Picasso;
 
@@ -112,8 +111,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             doLogout();
         }
         if (v == vUserImage) {
-            Intent homeIntent = new Intent(getApplicationContext(), ProfileActivity.class);
-            startActivity(homeIntent);
+            startPersonDetailsActivity(-1);
         }
     }
 
@@ -127,5 +125,26 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(homeIntent);
         this.finish();
+    }
+
+    public void startPersonDetailsActivity(long id) {
+        Intent homeIntent = new Intent(getApplicationContext(), ProfileActivity.class);
+        startActivityForResult(homeIntent, 0);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            profileName.setText(PreferenceStorage.getFullName(this));
+            String url = PreferenceStorage.getUserPicture(this);
+            String getSocialUrl = PreferenceStorage.getSocialNetworkProfileUrl(this);
+            if (((url != null) && !(url.isEmpty()))) {
+                Picasso.with(this).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(vUserImage);
+            } else if (((getSocialUrl != null) && !(getSocialUrl.isEmpty()))) {
+                Picasso.with(this).load(getSocialUrl).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(vUserImage);
+            }
+        }
     }
 }
