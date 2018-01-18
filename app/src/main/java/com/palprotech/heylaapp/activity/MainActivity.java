@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                                fabView.setVisibility(View.VISIBLE);
                                 break;
                             case R.id.action_leaderboard:
-                                if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("2")) {
+                                if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
                                     changeFragment(3);
                                 } else {
                                     AlertDialogHelper.showCompoundAlertDialog(MainActivity.this, "Login", "Login to access", "OK", "CANCEL", 1);

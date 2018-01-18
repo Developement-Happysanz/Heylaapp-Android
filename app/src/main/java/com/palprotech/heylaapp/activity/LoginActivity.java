@@ -227,7 +227,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
                 startActivity(homeIntent);
                 finish();
 
-                PreferenceStorage.saveUserType(getApplicationContext(), "1");
+                PreferenceStorage.saveUserType(getApplicationContext(), "2");
 
             } catch (JSONException ex) {
                 ex.printStackTrace();
