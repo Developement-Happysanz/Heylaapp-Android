@@ -3,9 +3,12 @@ package com.palprotech.heylaapp.activity;
 import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
@@ -106,7 +109,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
                                     changeFragment(3);
                                 } else {
-                                    AlertDialogHelper.showCompoundAlertDialog(MainActivity.this, "Login", "Login to access", "OK", "CANCEL", 1);
+                                    android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MainActivity.this);
+                                    alertDialogBuilder.setTitle("Login");
+                                    alertDialogBuilder.setMessage("Log in to Access");
+                                    alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface arg0, int arg1) {
+                                            doLogout();
+                                        }
+                                    });
+                                    alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    alertDialogBuilder.show();
                                 }
 //                                fabView.setVisibility(View.INVISIBLE);
 //                                closeSubMenusFab();
@@ -119,6 +137,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         sendLoginStatus();
 
+    }
+
+    public void doLogout() {
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.edit().clear().commit();
+//        TwitterUtil.getInstance().resetTwitterRequestToken();
+
+        Intent homeIntent = new Intent(this, SplashScreenActivity.class);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
+        this.finish();
     }
 
     @Override
