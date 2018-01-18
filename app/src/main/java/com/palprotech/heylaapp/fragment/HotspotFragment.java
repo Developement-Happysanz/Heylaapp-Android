@@ -5,6 +5,8 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -13,11 +15,15 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -54,6 +60,7 @@ import com.palprotech.heylaapp.utils.PreferenceStorage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -124,12 +131,20 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
     protected boolean isLoadingForFirstTime = true;
     int pageNumber = 0, totalCount = 0;
 
+    private SearchView mSearchView = null;
+
     public static HotspotFragment newInstance(int position) {
         HotspotFragment frag = new HotspotFragment();
         Bundle b = new Bundle();
         b.putInt("position", position);
         frag.setArguments(b);
         return frag;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -241,6 +256,89 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+
+
+        inflater.inflate(R.menu.menu_landing, menu);
+        SearchManager searchManager =
+                (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
+        mSearchView =
+                (SearchView) menu.findItem(R.id.action_search_view).getActionView();
+        mSearchView.setIconifiedByDefault(true);
+        mSearchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+        AutoCompleteTextView searchTextView = (AutoCompleteTextView) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        try {
+            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            mCursorDrawableRes.setAccessible(true);
+            mCursorDrawableRes.set(searchTextView, R.drawable.cursor); //This sets the cursor resource ID to 0 or @null which will make it visible on white background
+        } catch (Exception e) {
+        }
+
+        mSearchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Search button clicked");
+            }
+        });
+
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                Log.d(TAG, "Query submitted with String:" + s);
+//                int currentpage = viewPager.getCurrentItem();
+//                Log.d(TAG, "current item is" + currentpage);
+
+                if (s != null) {
+                    searchForEvent(s);
+                }
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+//                int currentpage = viewPager.getCurrentItem();
+//                Log.d(TAG, "current item is" + currentpage);
+
+                if ((s != null) && (!s.isEmpty())) {
+                    if (s != null) {
+                        searchForEvent(s);
+                    }
+                } else {
+                    if (s != null) {
+                        Log.d(TAG, "call exit search");
+                        exitSearch();
+                    }
+                }
+
+                return false;
+            }
+        });
+
+        mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+
+            @Override
+            public boolean onClose() {
+                Log.d(TAG, "searchView closed");
+
+                exitSearch();
+
+                return false;
+            }
+        });
+
+        mSearchView.setQueryHint("Search Event name");
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     protected void initializeViews() {

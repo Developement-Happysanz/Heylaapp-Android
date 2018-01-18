@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,6 +54,12 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     TextView name, username;
     RelativeLayout login, share, check_in, booking, reviews;
     ImageView userPic;
+
+   /* @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -186,7 +193,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    @Override
+   /* @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
         if (menu != null) {
@@ -194,7 +201,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
             menu.findItem(R.id.action_search_view).setVisible(false);
         }
         super.onCreateOptionsMenu(menu, inflater);
-    }
+    }*/
 
     @Override
     public void onResponse(final JSONObject response) {
