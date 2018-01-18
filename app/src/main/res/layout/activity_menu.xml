@@ -64,7 +64,7 @@
                             android:layout_below="@+id/profile_img"
                             android:fontFamily="@font/muli"
                             android:gravity="center"
-                            android:hint="Kamal"
+                            android:hint="Guest User"
                             android:textColor="@color/white"
                             android:textColorHint="@color/white"
                             android:textSize="18sp" />

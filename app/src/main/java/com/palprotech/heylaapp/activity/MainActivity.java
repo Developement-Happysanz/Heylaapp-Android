@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.fragment.FavouriteFragment;
 import com.palprotech.heylaapp.fragment.HotspotFragment;
-import com.palprotech.heylaapp.fragment.LandingPagerFragment;
 import com.palprotech.heylaapp.fragment.LeaderboardFragment;
 import com.palprotech.heylaapp.fragment.PopularFragment;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
@@ -104,7 +103,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                                fabView.setVisibility(View.VISIBLE);
                                 break;
                             case R.id.action_leaderboard:
-                                changeFragment(3);
+                                if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("2")) {
+                                    changeFragment(3);
+                                } else {
+                                    AlertDialogHelper.showCompoundAlertDialog(MainActivity.this, "Login", "Login to access", "OK", "CANCEL", 1);
+                                }
 //                                fabView.setVisibility(View.INVISIBLE);
 //                                closeSubMenusFab();
                                 break;

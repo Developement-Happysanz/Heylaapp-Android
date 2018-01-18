@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -38,11 +41,6 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -126,25 +124,42 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         }
         if (v == imEventFavourite) {
 //            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
-            addToFavourite();
+            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("2")) {
+                addToFavourite();
+            } else {
+                AlertDialogHelper.showCompoundAlertDialog(EventDetailActivity.this, "Login", "Login to access", "OK", "CANCEL", 1);
+            }
         }
         if (v == imEventOrganiserRequest) {
 //            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == txtEventReview) {
-            Intent intent = new Intent(getApplicationContext(), EventReviewActivity.class);
-            intent.putExtra("eventObj", event);
-            startActivity(intent);
+            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("2")) {
+                Intent intent = new Intent(getApplicationContext(), EventReviewActivity.class);
+                intent.putExtra("eventObj", event);
+                startActivity(intent);
+            } else {
+                AlertDialogHelper.showCompoundAlertDialog(EventDetailActivity.this, "Login", "Login to access", "OK", "CANCEL", 1);
+            }
 //            finish();
         }
         if (v == txtCheckInEvent) {
-            checkdistance();
+            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("2")) {
+                checkdistance();
+            } else {
+                AlertDialogHelper.showCompoundAlertDialog(EventDetailActivity.this, "Login", "Login to access", "OK", "CANCEL", 1);
+            }
+
         }
         if (v == txtBookEvent) {
-            Intent intent = new Intent(getApplicationContext(), BookingActivity.class);
-            intent.putExtra("eventObj", event);
-            startActivity(intent);
-            finish();
+            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("2")) {
+                Intent intent = new Intent(getApplicationContext(), BookingActivity.class);
+                intent.putExtra("eventObj", event);
+                startActivity(intent);
+                finish();
+            } else {
+                AlertDialogHelper.showCompoundAlertDialog(EventDetailActivity.this, "Login", "Login to access", "OK", "CANCEL", 1);
+            }
         }
     }
 

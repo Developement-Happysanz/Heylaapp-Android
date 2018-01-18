@@ -4,18 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.SplashScreenActivity;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by Admin on 20-10-2017.
@@ -25,6 +22,7 @@ public class CompoundAlertDialogFragment extends DialogFragment {
 
     private int tag;
     DialogClickListener dialogActions;
+    Context context;
 
     public static CompoundAlertDialogFragment newInstance(String title, String message, String posButton, String negButton, int tag) {
         CompoundAlertDialogFragment frag = new CompoundAlertDialogFragment();
@@ -77,12 +75,12 @@ public class CompoundAlertDialogFragment extends DialogFragment {
                     CompoundAlertDialogFragment.this.dialogActions
                             .onAlertPositiveClicked(tag);
 
-                SharedPreferences sharedPreferences =
-                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                sharedPreferences.edit().clear().commit();
+//                SharedPreferences sharedPreferences =
+//                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//                sharedPreferences.edit().clear().commit();
 
 
-                Intent navigationIntent = new Intent(getApplicationContext(), SplashScreenActivity.class);
+                Intent navigationIntent = new Intent(context, SplashScreenActivity.class);
                 navigationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(navigationIntent);
                 getActivity().finish();
