@@ -4,11 +4,13 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -124,41 +126,41 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         }
         if (v == imEventFavourite) {
 //            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
-            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("2")) {
+            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
                 addToFavourite();
             } else {
-                AlertDialogHelper.showCompoundAlertDialog(EventDetailActivity.this, "Login", "Login to access", "OK", "CANCEL", 1);
+                guestLoginAlert();
             }
         }
         if (v == imEventOrganiserRequest) {
 //            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == txtEventReview) {
-            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("2")) {
+            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
                 Intent intent = new Intent(getApplicationContext(), EventReviewActivity.class);
                 intent.putExtra("eventObj", event);
                 startActivity(intent);
             } else {
-                AlertDialogHelper.showCompoundAlertDialog(EventDetailActivity.this, "Login", "Login to access", "OK", "CANCEL", 1);
+                guestLoginAlert();
             }
 //            finish();
         }
         if (v == txtCheckInEvent) {
-            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("2")) {
+            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
                 checkdistance();
             } else {
-                AlertDialogHelper.showCompoundAlertDialog(EventDetailActivity.this, "Login", "Login to access", "OK", "CANCEL", 1);
+                guestLoginAlert();
             }
 
         }
         if (v == txtBookEvent) {
-            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("2")) {
+            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
                 Intent intent = new Intent(getApplicationContext(), BookingActivity.class);
                 intent.putExtra("eventObj", event);
                 startActivity(intent);
                 finish();
             } else {
-                AlertDialogHelper.showCompoundAlertDialog(EventDetailActivity.this, "Login", "Login to access", "OK", "CANCEL", 1);
+                guestLoginAlert();
             }
         }
     }
@@ -443,6 +445,37 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     public void onError(String error) {
         progressDialogHelper.hideProgressDialog();
         AlertDialogHelper.showSimpleAlertDialog(this, error);
+    }
+
+    public void guestLoginAlert() {
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(EventDetailActivity.this);
+        alertDialogBuilder.setTitle("Login");
+        alertDialogBuilder.setMessage("Log in to Access");
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                doLogout();
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialogBuilder.show();
+    }
+
+    public void doLogout() {
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.edit().clear().commit();
+//        TwitterUtil.getInstance().resetTwitterRequestToken();
+
+        Intent homeIntent = new Intent(this, SplashScreenActivity.class);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
+        this.finish();
     }
 
     @Override
