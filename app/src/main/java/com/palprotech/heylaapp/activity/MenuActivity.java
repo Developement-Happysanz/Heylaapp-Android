@@ -1,5 +1,6 @@
 package com.palprotech.heylaapp.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -76,8 +77,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v == vBooking) {
-            Intent homeIntent = new Intent(getApplicationContext(), BookingHistoryActivity.class);
-            startActivity(homeIntent);
+            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
+                Intent homeIntent = new Intent(getApplicationContext(), BookingHistoryActivity.class);
+                startActivity(homeIntent);
+            }
+            else {
+                guestLoginAlert();
+            }
         }
         if (v == vCategory) {
             Intent homeIntent = new Intent(getApplicationContext(), SetUpPreferenceActivity.class);
@@ -88,8 +94,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(homeIntent);
         }
         if (v == vWishList) {
-            Intent homeIntent = new Intent(getApplicationContext(), WishListActivity.class);
-            startActivity(homeIntent);
+            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
+                Intent homeIntent = new Intent(getApplicationContext(), WishListActivity.class);
+                startActivity(homeIntent);
+            }
+            else {
+                guestLoginAlert();
+            }
         }
         if (v == vShare) {
             Intent i = new Intent(android.content.Intent.ACTION_SEND);
@@ -111,8 +122,32 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             doLogout();
         }
         if (v == vUserImage) {
-            startPersonDetailsActivity(-1);
+            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
+                startPersonDetailsActivity(-1);
+            }
+            else {
+                guestLoginAlert();
+            }
         }
+    }
+
+    public void guestLoginAlert() {
+            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MenuActivity.this);
+            alertDialogBuilder.setTitle("Login");
+            alertDialogBuilder.setMessage("Log in to Access");
+            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    doLogout();
+                }
+            });
+            alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            alertDialogBuilder.show();
     }
 
     public void doLogout() {
