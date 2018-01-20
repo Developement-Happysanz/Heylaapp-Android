@@ -32,6 +32,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout vAboutUs;
     private RelativeLayout vRateUs;
     private RelativeLayout vSignOut;
+    private RelativeLayout vSettings;
     private ImageView vUserImage;
     private TextView profileName;
 
@@ -51,6 +52,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         vShare.setOnClickListener(this);
         vAboutUs = (RelativeLayout) findViewById(R.id.about_us_img);
         vAboutUs.setOnClickListener(this);
+        vSettings = (RelativeLayout) findViewById(R.id.settings_img);
+        vSettings.setOnClickListener(this);
         vRateUs = (RelativeLayout) findViewById(R.id.rate_us_img);
         vRateUs.setOnClickListener(this);
         vSignOut = (RelativeLayout) findViewById(R.id.sign_out_img);
@@ -91,6 +94,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (v == vChangeCity) {
             Intent homeIntent = new Intent(getApplicationContext(), SelectCityActivity.class);
+            startActivity(homeIntent);
+        }
+        if (v == vSettings) {
+            Intent homeIntent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(homeIntent);
         }
         if (v == vWishList) {
