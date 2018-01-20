@@ -245,6 +245,21 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 //            checkState = "city";
             showCityList();
         }
+
+        if (v == btnCancel) {
+            etEventTypeList.setText("");
+
+            etEventCategoryList.setText("");
+
+            etPreferenceList.setText("");
+
+            etCityList.setText("");
+
+            btnFromDate.setText("DD-MM-YYYY");
+
+            btnToDate.setText("DD-MM-YYYY");
+        }
+
         switch (v.getId()) {
             case R.id.btnselectdate:
 

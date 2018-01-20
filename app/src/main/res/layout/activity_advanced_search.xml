@@ -274,7 +274,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/muli"
                     android:background="@drawable/button_sign_in"
-                    android:text="Cancel"
+                    android:text="Clear"
                     android:textAllCaps="false"
                     android:textColor="@color/colour_pick" />
 
