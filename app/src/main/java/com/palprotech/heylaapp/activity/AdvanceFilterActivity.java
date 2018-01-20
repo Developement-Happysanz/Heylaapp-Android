@@ -87,7 +87,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
     DatePickerDialog mFromDatePickerDialog = null;
     private ServiceHelper serviceHelper;
-    HashSet<Integer> mSelectedCategoryList = new HashSet<Integer>();
+    HashSet<Integer> mSelectedPreferenceList = new HashSet<Integer>();
     private String mFromDateVal = null;
     private String mTodateVal = null;
 
@@ -197,7 +197,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 prefid = (PreferenceList.get(position));
                 CheckBox checkbox = (CheckBox) view.findViewById(R.id.item_selection);
                 checkbox.setTag(Integer.toString(position));
-                if (mSelectedCategoryList.contains(position)) {
+                if (mSelectedPreferenceList.contains(position)) {
                     checkbox.setChecked(true);
                 } else {
                     checkbox.setChecked(false);
@@ -208,10 +208,10 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                         String tag = (String) buttonView.getTag();
                         if (tag != null) {
                             int index = Integer.parseInt(tag);
-                            if (mSelectedCategoryList.contains(index)) {
-                                mSelectedCategoryList.remove(index);
+                            if (mSelectedPreferenceList.contains(index)) {
+                                mSelectedPreferenceList.remove(index);
                             } else {
-                                mSelectedCategoryList.add(index);
+                                mSelectedPreferenceList.add(index);
                             }
                         }
                     }
@@ -252,6 +252,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
             etEventCategoryList.setText("");
 
             etPreferenceList.setText("");
+            mSelectedPreferenceList.clear();
 
             etCityList.setText("");
 
@@ -694,7 +695,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                         //fetch all the selected category'
                         int ival = 0;
 //                        boolean checkFirst = true;
-                        for (Integer i : mSelectedCategoryList) {
+                        for (Integer i : mSelectedPreferenceList) {
                             String name = PreferenceList.get(i);
                             String id = PreferenceIdList.get(i);
                             if (ival == 0) {
@@ -818,7 +819,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     ArrayList<Category> arrayList = gson.fromJson(getData.toString(), listType);
                     PreferenceList.clear();
                     PreferenceIdList.clear();
-                    mSelectedCategoryList.clear();
+                    mSelectedPreferenceList.clear();
                     for (Category category : arrayList) {
                         PreferenceList.add(category.getCategory());
                         PreferenceIdList.add(category.getId());
