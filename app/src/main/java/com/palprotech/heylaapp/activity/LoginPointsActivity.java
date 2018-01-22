@@ -229,7 +229,7 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
                     dayTwoPoint.setText("2");
                     dayThreePoint.setText("3");
                     dayFourPoint.setText("4");
-                    dayFivePoint.setText("5");
+                    dayFivePoint.setText("20");
 
                     break;
                 default:
