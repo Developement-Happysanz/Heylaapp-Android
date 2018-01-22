@@ -33,7 +33,8 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
     private static final String TAG = LoginPointsActivity.class.getName();
     RelativeLayout day1, day2, day3, day4, day5;
     TextView dayTwoPoint, dayOnePoint, dayThreePoint, dayFourPoint, dayFivePoint, totalDailyPoint;
-    int one, two, three, four, five, total;
+    String sCount;
+    int one, two, three, four, five, total, count;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,7 +102,6 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
                         signInSuccess = false;
                         Log.d(TAG, "Show error dialog");
                         AlertDialogHelper.showSimpleAlertDialog(this, msg);
-
                     } else {
                         signInSuccess = true;
                     }
@@ -121,6 +121,8 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
 
                 JSONArray getData = response.getJSONArray("Data");
                 generatePointsUI(getData);
+                sCount = response.getString("Totalpoints");
+                totalDailyPoint.setText(sCount);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -135,7 +137,6 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void loadLoginPoints() {
-
         JSONObject jsonObject = new JSONObject();
         try {
 
@@ -164,43 +165,35 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
                 dayCount = jsonobj.getString("cons_login_days");
                 consDays = Integer.parseInt(dayCount);
 //            }
-            Drawable dr = getResources().getDrawable(R.drawable.ic_unhide_calender);
+            Drawable dr = getResources().getDrawable(R.drawable.ic_point_hide);
+            Drawable drBig = getResources().getDrawable(R.drawable.ic_point_wide_hide);
 
             switch (consDays) {
                 case 1:
                     day1.setBackground(dr);
                     total=total + one;
-                    totalDailyPoint.setText(String.valueOf(total));
                     break;
                 case 2:
                     day1.setBackground(dr);
                     day2.setBackground(dr);
-                    total = total + one + two;
-                    totalDailyPoint.setText(String.valueOf(total));
                     break;
                 case 3:
                     day1.setBackground(dr);
                     day2.setBackground(dr);
                     day3.setBackground(dr);
-                    total = total + one + two + three;
-                    totalDailyPoint.setText(String.valueOf(total));
                     break;
                 case 4:
                     day1.setBackground(dr);
                     day2.setBackground(dr);
                     day3.setBackground(dr);
                     day4.setBackground(dr);
-                    total = total + one + two + three + four;
-                    totalDailyPoint.setText(String.valueOf(total));
                     break;
                 case 5:
                     day1.setBackground(dr);
                     day2.setBackground(dr);
                     day3.setBackground(dr);
                     day4.setBackground(dr);
-                    day5.setBackground(dr);
-                    total = total + one + two + three + four + five;
-                    totalDailyPoint.setText(String.valueOf(total));
+                    day5.setBackground(drBig);
                     break;
                 default:
                     break;

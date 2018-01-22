@@ -98,6 +98,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -113,7 +114,7 @@
                     android:layout_width="135dp"
                     android:layout_height="135dp"
                     android:layout_marginEnd="30dp"
-                    android:background="@drawable/ic_hide_calender"
+                    android:background="@drawable/ic_point_unhide"
                     android:orientation="vertical">
 
                     <TextView
@@ -138,18 +139,18 @@
                         android:textSize="18sp" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignBottom="@+id/day_one_points"
                         android:layout_toStartOf="@+id/day_one_points"
-                        android:src="@drawable/ic_leaderboard_star" />
+                        android:src="@drawable/ic_star_hide" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/day_two"
                     android:layout_width="135dp"
                     android:layout_height="135dp"
-                    android:background="@drawable/ic_hide_calender"
+                    android:background="@drawable/ic_point_unhide"
                     android:orientation="vertical">
 
                     <TextView
@@ -174,29 +175,29 @@
                         android:textSize="18sp" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignBottom="@+id/day_two_points"
                         android:layout_toStartOf="@+id/day_two_points"
-                        android:src="@drawable/ic_leaderboard_star" />
+                        android:src="@drawable/ic_star_hide" />
                 </RelativeLayout>
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/second_set"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@+id/first_set"
-                android:id="@+id/second_set">
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp">
 
                 <RelativeLayout
                     android:id="@+id/day_three"
                     android:layout_width="135dp"
                     android:layout_height="135dp"
                     android:layout_marginEnd="30dp"
-                    android:background="@drawable/ic_hide_calender"
+                    android:background="@drawable/ic_point_unhide"
                     android:orientation="vertical">
 
                     <TextView
@@ -221,18 +222,18 @@
                         android:textSize="18sp" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignBottom="@+id/day_three_points"
                         android:layout_toStartOf="@+id/day_three_points"
-                        android:src="@drawable/ic_leaderboard_star" />
+                        android:src="@drawable/ic_star_hide" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/day_four"
                     android:layout_width="135dp"
                     android:layout_height="135dp"
-                    android:background="@drawable/ic_hide_calender"
+                    android:background="@drawable/ic_point_unhide"
                     android:orientation="vertical">
 
                     <TextView
@@ -257,31 +258,31 @@
                         android:textSize="18sp" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignBottom="@+id/day_four_points"
                         android:layout_toStartOf="@+id/day_four_points"
-                        android:src="@drawable/ic_leaderboard_star" />
+                        android:src="@drawable/ic_star_hide" />
                 </RelativeLayout>
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/third_set"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:layout_below="@+id/second_set"
-                android:layout_alignStart="@+id/second_set"
                 android:layout_alignEnd="@+id/second_set"
-                android:id="@+id/third_set">
+                android:layout_alignStart="@+id/second_set"
+                android:layout_below="@+id/second_set"
+                android:layout_centerHorizontal="true"
+                android:gravity="center">
 
                 <RelativeLayout
                     android:id="@+id/day_five"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
 
-                    android:background="@drawable/ic_hide_calender"
+                    android:background="@drawable/ic_point_wide"
                     android:orientation="vertical">
 
                     <TextView
@@ -306,11 +307,11 @@
                         android:textSize="18sp" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignBottom="@+id/day_five_points"
                         android:layout_toStartOf="@+id/day_five_points"
-                        android:src="@drawable/ic_leaderboard_star" />
+                        android:src="@drawable/ic_star_hide" />
                 </RelativeLayout>
             </LinearLayout>
 
