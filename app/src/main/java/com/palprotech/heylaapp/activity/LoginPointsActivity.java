@@ -65,13 +65,6 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
         dayFiveStar = findViewById(R.id.dayfivestar);
 
 
-        one = Integer.parseInt(dayOnePoint.getText().toString());
-        two = Integer.parseInt(dayTwoPoint.getText().toString());
-        three = Integer.parseInt(dayThreePoint.getText().toString());
-        four = Integer.parseInt(dayFourPoint.getText().toString());
-        five = Integer.parseInt(dayFivePoint.getText().toString());
-        total = Integer.parseInt(totalDailyPoint.getText().toString());
-
         findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
