@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
     private ServiceHelper serviceHelper;
     private static final String TAG = LoginPointsActivity.class.getName();
     RelativeLayout day1, day2, day3, day4, day5;
+    ImageView dayOneStar, daytwoStar, dayThreeStar, dayFourStar, dayFiveStar;
     TextView dayTwoPoint, dayOnePoint, dayThreePoint, dayFourPoint, dayFivePoint, totalDailyPoint;
     String sCount;
     int one, two, three, four, five, total, count;
@@ -55,6 +57,13 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
         dayFourPoint = findViewById(R.id.day_four_points);
         dayFivePoint = findViewById(R.id.day_five_points);
         totalDailyPoint = findViewById(R.id.daily_point);
+
+        dayOneStar = findViewById(R.id.dayonestar);
+        daytwoStar = findViewById(R.id.daytwostar);
+        dayThreeStar = findViewById(R.id.daythreestar);
+        dayFourStar = findViewById(R.id.dayfourstar);
+        dayFiveStar = findViewById(R.id.dayfivestar);
+
 
         one = Integer.parseInt(dayOnePoint.getText().toString());
         two = Integer.parseInt(dayTwoPoint.getText().toString());
@@ -166,27 +175,51 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
                 consDays = Integer.parseInt(dayCount);
 //            }
             Drawable dr = getResources().getDrawable(R.drawable.ic_point_hide);
+            Drawable drStar = getResources().getDrawable(R.drawable.ic_leaderboard_star);
             Drawable drBig = getResources().getDrawable(R.drawable.ic_point_wide_hide);
 
             switch (consDays) {
                 case 1:
                     day1.setBackground(dr);
-                    total=total + one;
+                    dayOneStar.setBackground(drStar);
+                    dayOnePoint.setText("1");
+
                     break;
                 case 2:
                     day1.setBackground(dr);
                     day2.setBackground(dr);
+                    dayOneStar.setBackground(drStar);
+                    daytwoStar.setBackground(drStar);
+                    dayOnePoint.setText("1");
+                    dayTwoPoint.setText("2");
+
                     break;
                 case 3:
                     day1.setBackground(dr);
                     day2.setBackground(dr);
                     day3.setBackground(dr);
+                    dayOneStar.setBackground(drStar);
+                    daytwoStar.setBackground(drStar);
+                    dayThreeStar.setBackground(drStar);
+                    dayOnePoint.setText("1");
+                    dayTwoPoint.setText("2");
+                    dayThreePoint.setText("3");
+
                     break;
                 case 4:
                     day1.setBackground(dr);
                     day2.setBackground(dr);
                     day3.setBackground(dr);
                     day4.setBackground(dr);
+                    dayOneStar.setBackground(drStar);
+                    daytwoStar.setBackground(drStar);
+                    dayThreeStar.setBackground(drStar);
+                    dayFourStar.setBackground(drStar);
+                    dayOnePoint.setText("1");
+                    dayTwoPoint.setText("2");
+                    dayThreePoint.setText("3");
+                    dayFourPoint.setText("4");
+
                     break;
                 case 5:
                     day1.setBackground(dr);
@@ -194,6 +227,17 @@ public class LoginPointsActivity extends AppCompatActivity implements View.OnCli
                     day3.setBackground(dr);
                     day4.setBackground(dr);
                     day5.setBackground(drBig);
+                    dayOneStar.setBackground(drStar);
+                    daytwoStar.setBackground(drStar);
+                    dayThreeStar.setBackground(drStar);
+                    dayFourStar.setBackground(drStar);
+                    dayFiveStar.setBackground(drStar);
+                    dayOnePoint.setText("1");
+                    dayTwoPoint.setText("2");
+                    dayThreePoint.setText("3");
+                    dayFourPoint.setText("4");
+                    dayFivePoint.setText("5");
+
                     break;
                 default:
                     break;

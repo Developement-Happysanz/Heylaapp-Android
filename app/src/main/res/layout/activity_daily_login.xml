@@ -134,11 +134,12 @@
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/muli"
                         android:paddingTop="20dp"
-                        android:text="1"
+                        android:hint="1"
                         android:textColor="@color/text_black"
                         android:textSize="18sp" />
 
                     <ImageView
+                        android:id="@+id/dayonestar"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignBottom="@+id/day_one_points"
@@ -170,11 +171,12 @@
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/muli"
                         android:paddingTop="20dp"
-                        android:text="2"
+                        android:hint="2"
                         android:textColor="@color/text_black"
                         android:textSize="18sp" />
 
                     <ImageView
+                        android:id="@+id/daytwostar"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignBottom="@+id/day_two_points"
@@ -217,11 +219,12 @@
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/muli"
                         android:paddingTop="20dp"
-                        android:text="3"
+                        android:hint="3"
                         android:textColor="@color/text_black"
                         android:textSize="18sp" />
 
                     <ImageView
+                        android:id="@+id/daythreestar"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignBottom="@+id/day_three_points"
@@ -253,11 +256,12 @@
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/muli"
                         android:paddingTop="20dp"
-                        android:text="4"
+                        android:hint="4"
                         android:textColor="@color/text_black"
                         android:textSize="18sp" />
 
                     <ImageView
+                        android:id="@+id/dayfourstar"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignBottom="@+id/day_four_points"
@@ -302,11 +306,12 @@
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/muli"
                         android:paddingTop="20dp"
-                        android:text="20"
+                        android:hint="20"
                         android:textColor="@color/text_black"
                         android:textSize="18sp" />
 
                     <ImageView
+                        android:id="@+id/dayfivestar"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignBottom="@+id/day_five_points"

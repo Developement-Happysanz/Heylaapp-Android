@@ -94,6 +94,8 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
 
         txtEventName.setText(bookingHistory.getEventName());
         txtEventTime.setText(bookingHistory.getPlanTime());
+        txtEventAddress.setText(bookingHistory.getEventAddress());
+        txtEventDate.setText(bookingHistory.getBookingDate());
 
         String bookingDate = HeylaAppHelper.getDate(bookingHistory.getBookingDate());
 
