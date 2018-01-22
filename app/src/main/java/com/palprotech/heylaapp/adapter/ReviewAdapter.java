@@ -15,7 +15,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.app.AppController;
 import com.palprotech.heylaapp.bean.support.Review;
-import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
@@ -98,7 +97,7 @@ public class ReviewAdapter extends BaseAdapter {
         Review review = reviews.get(position);
 
         holder.txtComments.setText(reviews.get(position).getEventComments());
-        holder.txtUsernameDisp.setText(PreferenceStorage.getUsername(context));
+        holder.txtUsernameDisp.setText(reviews.get(position).getUserName());
         holder.rtbRating.setRating(Integer.parseInt(reviews.get(position).getEventRating()));
 
         return convertView;

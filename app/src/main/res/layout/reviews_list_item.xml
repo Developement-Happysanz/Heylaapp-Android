@@ -26,6 +26,7 @@
             android:layout_marginStart="10dp"
             android:layout_height="wrap_content"
             android:text="Username"
+            android:textStyle="bold"
             android:fontFamily="@font/muli"
             android:textColor="@color/text_black"
             android:textSize="22sp"/>
