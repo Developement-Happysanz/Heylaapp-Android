@@ -401,7 +401,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         cityName = city.getText().toString();
         PreferenceStorage.saveEventCityName(this, cityName);
         pinCode = pincode.getText().toString();
-        PreferenceStorage.saveUserZipCode(this, userName);
+        PreferenceStorage.saveUserZipCode(this, pinCode);
         newsLetter = cbSubscription.isChecked();
         if (newsLetter) {
             newsLetterStatus = "Y";

@@ -97,8 +97,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(homeIntent);
         }
         if (v == vSettings) {
-            Intent homeIntent = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(homeIntent);
+            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
+                Intent homeIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(homeIntent);
+            }
+            else {
+                guestLoginAlert();
+            }
         }
         if (v == vWishList) {
             if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
