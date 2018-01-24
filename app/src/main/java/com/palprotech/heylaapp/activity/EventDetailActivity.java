@@ -152,7 +152,6 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
             } else {
                 guestLoginAlert();
             }
-
         }
         if (v == txtBookEvent) {
             if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
