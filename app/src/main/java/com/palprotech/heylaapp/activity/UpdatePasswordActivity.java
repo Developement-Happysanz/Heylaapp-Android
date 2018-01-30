@@ -1,6 +1,7 @@
 package com.palprotech.heylaapp.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -145,7 +146,10 @@ public class UpdatePasswordActivity extends AppCompatActivity implements View.On
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
-
+            Intent homeIntent = new Intent(getApplicationContext(), LoginActivity.class);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+            this.finish();
         }
     }
 
