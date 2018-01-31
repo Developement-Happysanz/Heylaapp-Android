@@ -741,11 +741,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         Log.d(TAG, "Show error dialog");
                         AlertDialogHelper.showSimpleAlertDialog(this, msg);
 
-                    } else if (msg.equalsIgnoreCase("Profile Updated")){
-                        signInSuccess = true;
-                        Log.d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
-                    }else {
+                    } else {
                         signInSuccess = true;
                     }
 
@@ -779,6 +775,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
                         homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(homeIntent);
+                        Toast.makeText(this,"Profile Updated!!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 } else if (checkInternalState.equalsIgnoreCase("country")) {
