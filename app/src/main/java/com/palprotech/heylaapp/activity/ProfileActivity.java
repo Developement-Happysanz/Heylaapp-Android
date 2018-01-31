@@ -267,6 +267,8 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             }
         });
 
+        GetCountry();
+
         mGenderList.add("Male");
         mGenderList.add("Female");
         mGenderList.add("Other");
@@ -328,7 +330,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             }
         });
 
-        GetCountry();
     }
 
     @Override
@@ -744,7 +745,10 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         signInSuccess = true;
                         Log.d(TAG, "Show error dialog");
                         AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                    }else {
+                        signInSuccess = true;
                     }
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
