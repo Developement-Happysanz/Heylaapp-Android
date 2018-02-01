@@ -48,7 +48,9 @@ import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.AdvanceFilterActivity;
 import com.palprotech.heylaapp.activity.EventDetailActivity;
+import com.palprotech.heylaapp.activity.ForgotPasswordNumberVerificationActivity;
 import com.palprotech.heylaapp.activity.MainActivity;
+import com.palprotech.heylaapp.activity.NearbyActivity;
 import com.palprotech.heylaapp.adapter.EventsListAdapter;
 import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.bean.support.EventList;
@@ -220,12 +222,23 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             }
         });
 
+        layoutFabNearby.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                performSlideRightAnimation();
+
+                Intent homeIntent = new Intent(getActivity(), NearbyActivity.class);
+                homeIntent.putExtra("event_type", "Favourite");
+                startActivity(homeIntent);
+            }
+        });
+
         return rootView;
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
 
 
         inflater.inflate(R.menu.menu_landing, menu);

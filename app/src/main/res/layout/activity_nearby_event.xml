@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/event_detail_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--<include-->
+    <!--android:id="@+id/activity_toolbar"-->
+    <!--layout="@layout/tool_bar"></include>-->
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appColorBase"
+        android:minHeight="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/back_res"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:src="@drawable/ic_back_button" />
+
+    <TextView
+        android:id="@+id/tvtitletext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:minHeight="?attr/actionBarSize"
+        android:padding="5dp"
+        android:text="Nearby"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/actionbarTextSize" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvtitletext"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/tveventtype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="@dimen/mainmargin"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="Select Nearby Distance"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/actionbarTextSize" />
+
+
+        <Spinner
+            android:id="@+id/nearbyspinner"
+            style="@style/spinner_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tveventtype"
+            android:layout_marginBottom="@dimen/mainmargin"
+            android:spinnerMode="dialog"
+            android:textSize="15sp"></Spinner>
+
+        <TextView
+            android:id="@+id/totalnearby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/nearbyspinner"
+            android:layout_marginBottom="@dimen/mainmargin"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text=" Nearby Events"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/actionbarTextSize" />
+
+
+        <ImageView
+            android:id="@+id/nearby_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/totalnearby"
+            android:src="@drawable/map" />
+
+        <ListView
+            android:id="@+id/listView_events"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/totalnearby"
+            android:divider="#ffffff"
+            android:dividerHeight="4dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -153,6 +153,14 @@ public class HeylaAppConstants {
     //    Event popularity
     public static final String EVENT_POPULARITY = "apimain/eventPopularity/";
 
+    //    Event nearby list
+    public static final String EVENT_NEAR_BY = "apimain/nearBy/";
+
+    //Event nearby list params
+    public static final String CURRENT_LATITUDE = "latitude";
+    public static final String CURRENT_LONGITUDE = "longitude";
+    public static final String NEAR_BY_DISTANCE = "nearby_distance";
+
     //    Advanced filter search
     public static final String GET_ADVANCE_SINGLE_SEARCH = "apimain/advanceSearch/";
 

@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.EventDetailActivity;
+import com.palprotech.heylaapp.activity.NearbyActivity;
 import com.palprotech.heylaapp.adapter.EventsListAdapter;
 import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.bean.support.EventList;
@@ -201,6 +202,18 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
 
 
 //                mTotalEventCount.setText(Integer.toString(eventsArrayList.size()) + " Favorite Events");
+            }
+        });
+
+        layoutFabNearby.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                performSlideRightAnimation();
+
+                Intent homeIntent = new Intent(getActivity(), NearbyActivity.class);
+                homeIntent.putExtra("event_type", "Hotspot");
+                startActivity(homeIntent);
             }
         });
 
