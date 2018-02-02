@@ -145,6 +145,7 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
             jsonObject.put(HeylaAppConstants.CURRENT_LATITUDE, currentLatitude);
             jsonObject.put(HeylaAppConstants.CURRENT_LONGITUDE, currentLongitude);
             jsonObject.put(HeylaAppConstants.NEAR_BY_DISTANCE, nearByDistance);
+            jsonObject.put(HeylaAppConstants.PARAMS_CITY_ID, PreferenceStorage.getEventCityId(this));
 
         } catch (JSONException e) {
             e.printStackTrace();
