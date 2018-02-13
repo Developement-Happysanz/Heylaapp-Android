@@ -776,6 +776,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(homeIntent);
                         Toast.makeText(this,"Profile Updated!!", Toast.LENGTH_SHORT).show();
+                        setResult(RESULT_OK);
                         finish();
                     }
                 } else if (checkInternalState.equalsIgnoreCase("country")) {
@@ -1176,8 +1177,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onAlertPositiveClicked(int tag) {
-        setResult(RESULT_OK);
-        finish();
     }
 
     @Override

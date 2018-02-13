@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 
 import com.palprotech.heylaapp.R;
@@ -39,6 +40,7 @@ public class EventReviewAddActivity extends AppCompatActivity implements DialogC
     private Button btnSubmit;
     private String checkString;
     private String reviewId = "";
+    private ImageView ivBack;
 
 
     @Override
@@ -53,6 +55,13 @@ public class EventReviewAddActivity extends AppCompatActivity implements DialogC
         edtComments = findViewById(R.id.edtComments);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(this);
+        ivBack = findViewById(R.id.back_rew);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         loadCheckUserReviewStatus();
     }
 
