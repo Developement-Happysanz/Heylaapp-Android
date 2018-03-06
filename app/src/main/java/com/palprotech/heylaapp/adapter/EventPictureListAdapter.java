@@ -95,7 +95,7 @@ public class EventPictureListAdapter extends BaseAdapter {
 
         holder.txtId.setText(eventPictures.get(position).getGalleryId());
 
-        if (HeylaAppValidator.checkNullString(eventPictures.get(position).getEventBanner())) {
+        if (HeylaAppValidator.checkNullString(eventPicture.getEventBanner())) {
             Picasso.with(this.context).load(eventPictures.get(position).getEventBanner()).fit().transform(this.transformation).placeholder(R.drawable.heyla_logo_transparent).error(R.drawable.heyla_logo_transparent).into(holder.imageView);
         } else {
             holder.imageView.setImageResource(R.drawable.heyla_logo_transparent);
@@ -108,4 +108,17 @@ public class EventPictureListAdapter extends BaseAdapter {
         public TextView txtId;
         public ImageView imageView;
     }
+
+    public boolean ismSearching() {
+        return mSearching;
+    }
+
+    public int getActualEventPos(int selectedSearchpos) {
+        if (selectedSearchpos < mValidSearchIndices.size()) {
+            return mValidSearchIndices.get(selectedSearchpos);
+        } else {
+            return 0;
+        }
+    }
+
 }

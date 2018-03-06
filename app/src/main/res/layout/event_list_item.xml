@@ -124,39 +124,86 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/txt_event_date"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="center|bottom"
-            android:layout_marginTop="2dp"
-            android:layout_marginStart="1dp"
-            android:layout_alignStart="@id/txt_event_month"
-            android:layout_alignEnd="@id/txt_event_month"
-            android:background="@color/appColorBase"
-            android:ellipsize="end"
-            android:fontFamily="@font/muli"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text=""
-            android:textColor="@android:color/white"
-            android:textSize="15dp" />
+            android:background="@color/appColorBase">
 
-        <TextView
-            android:id="@+id/txt_event_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:gravity="center|top"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:layout_marginStart="1dp"
-            android:fontFamily="@font/muli"
-            android:background="@color/appColorBase"
-            android:textColor="@android:color/white"
-            android:textSize="15dp"
-            android:layout_below="@+id/txt_event_date"/>
+            <TextView
+                android:id="@+id/txt_event_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="1dp"
+                android:layout_alignStart="@id/txt_event_month"
+                android:layout_alignEnd="@id/txt_event_month"
+                android:ellipsize="end"
+                android:fontFamily="@font/muli"
+                android:gravity="center"
+                android:singleLine="true"
+                android:hint="25"
+                android:textColor="@android:color/white"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/txt_event_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginStart="1dp"
+                android:fontFamily="@font/muli"
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:layout_below="@+id/txt_event_date"/>
+
+            <TextView
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_alignTop="@+id/txt_event_date"
+                android:layout_alignBottom="@+id/txt_event_month"
+                android:layout_toEndOf="@+id/txt_event_month"
+                android:background="@color/white"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/txt_event_end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="1dp"
+                android:layout_toEndOf="@+id/txt_event_date"
+                android:layout_alignStart="@id/txt_event_end_month"
+                android:layout_alignEnd="@id/txt_event_end_month"
+                android:ellipsize="end"
+                android:fontFamily="@font/muli"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/txt_event_end_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:gravity="center|top"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:layout_toEndOf="@+id/txt_event_date"
+                android:layout_marginStart="1dp"
+                android:fontFamily="@font/muli"
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:layout_below="@+id/txt_event_date"/>
+        </RelativeLayout>
 
 
     </RelativeLayout>

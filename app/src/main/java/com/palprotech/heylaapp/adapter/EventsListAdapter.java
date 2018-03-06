@@ -95,7 +95,9 @@ public class EventsListAdapter extends BaseAdapter {
             holder.txtEventName = (TextView) convertView.findViewById(R.id.txt_event_name);
             holder.txtEventVenue = (TextView) convertView.findViewById(R.id.txt_event_location);
             holder.txtDate = (TextView) convertView.findViewById(R.id.txt_event_date);
+            holder.txtEndDate = (TextView) convertView.findViewById(R.id.txt_event_end_date);
             holder.txtMonth = convertView.findViewById(R.id.txt_event_month);
+            holder.txtEndMonth = convertView.findViewById(R.id.txt_event_end_month);
             holder.txtTime = (TextView) convertView.findViewById(R.id.txt_event_time);
             holder.imageView = (ImageView) convertView.findViewById(R.id.img_logo);
             holder.paidBtn = (Button) convertView.findViewById(R.id.event_paid_btn);
@@ -150,13 +152,18 @@ public class EventsListAdapter extends BaseAdapter {
         try {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
             Date date = (Date) formatter.parse(start);
+            Date date1 = (Date) formatter.parse(end);
             SimpleDateFormat month_date = new SimpleDateFormat("MMM");
-            String month_name = month_date.format(date.getTime());
             SimpleDateFormat event_date = new SimpleDateFormat("dd");
+            String month_name = month_date.format(date.getTime());
             String date_name = event_date.format(date.getTime());
+            String month_end_name = month_date.format(date1.getTime());
+            String date_end_name = event_date.format(date1.getTime());
             if ((start != null) && (end != null)) {
                 holder.txtDate.setText(date_name);
                 holder.txtMonth.setText(month_name);
+                holder.txtEndDate.setText(date_end_name);
+                holder.txtEndMonth.setText(month_end_name);
             } else {
                 holder.txtDate.setText("N/A");
             }
@@ -200,7 +207,7 @@ public class EventsListAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        public TextView txtEventName, txtEventVenue, txtDate, txtMonth, txtTime , txtPrice;
+        public TextView txtEventName, txtEventVenue, txtDate, txtMonth, txtTime , txtPrice, txtEndDate, txtEndMonth;
         public ImageView imageView;
         public Button paidBtn;
     }

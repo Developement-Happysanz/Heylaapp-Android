@@ -223,6 +223,12 @@
             android:theme="@style/AppThemeNoActionBar" />
 
         <activity
+            android:name=".activity.EventImageZoomActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar" />
+
+        <activity
             android:name=".activity.NearbyActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

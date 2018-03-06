@@ -1,11 +1,13 @@
 package com.palprotech.heylaapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -21,7 +23,6 @@ import com.palprotech.heylaapp.interfaces.DialogClickListener;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
-import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
  * Created by Admin on 12-01-2018.
  */
 
-public class EventImagesActivity extends AppCompatActivity implements View.OnClickListener, IServiceListener, DialogClickListener {
+public class EventImagesActivity extends AppCompatActivity implements View.OnClickListener, IServiceListener, DialogClickListener, AdapterView.OnItemClickListener {
 
     protected ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
@@ -47,7 +48,7 @@ public class EventImagesActivity extends AppCompatActivity implements View.OnCli
     protected boolean isLoadingForFirstTime = true;
 
     @Override
-    protected void  onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wish_list);
         serviceHelper = new ServiceHelper(this);
@@ -59,6 +60,7 @@ public class EventImagesActivity extends AppCompatActivity implements View.OnCli
         ivBack.setOnClickListener(this);
 
         loadMoreListView = (ListView) findViewById(R.id.listView_events);
+        loadMoreListView.setOnItemClickListener(this);
         eventPictureArrayList = new ArrayList<>();
 
         loadEventImages();
@@ -105,6 +107,23 @@ public class EventImagesActivity extends AppCompatActivity implements View.OnCli
             }
         }
         return signInSuccess;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d(TAG, "onEvent list item click" + position);
+        EventPicture eventPicture = null;
+        if ((eventPictureListAdapter != null) && (eventPictureListAdapter.ismSearching())) {
+            Log.d(TAG, "while searching");
+            int actualindex = eventPictureListAdapter.getActualEventPos(position);
+            Log.d(TAG, "actual index" + actualindex);
+            eventPicture = eventPictureArrayList.get(actualindex);
+        } else {
+            eventPicture = eventPictureArrayList.get(position);
+        }
+        Intent intent = new Intent(this, EventImageZoomActivity.class);
+        intent.putExtra("eventObj", eventPicture);
+        startActivity(intent);
     }
 
     @Override

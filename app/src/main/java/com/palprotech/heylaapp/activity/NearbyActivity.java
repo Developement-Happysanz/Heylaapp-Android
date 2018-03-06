@@ -1,12 +1,19 @@
 package com.palprotech.heylaapp.activity;
 
+import android.Manifest;
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -14,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,12 +31,23 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.adapter.EventsListAdapter;
 import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.bean.support.EventList;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
+import com.palprotech.heylaapp.helper.LocationHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
@@ -40,6 +59,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Admin on 01-02-2018.
@@ -47,11 +68,12 @@ import java.util.ArrayList;
 
 public class NearbyActivity extends AppCompatActivity implements IServiceListener, AdapterView.OnItemClickListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener, OnMapReadyCallback {
 
     private static final String TAG = NearbyActivity.class.getName();
     Spinner spinNearby;
     ImageView imgMapbg;
+    private boolean fabExpanded = false;
     ListView loadMoreListView;
     View view;
     protected EventsListAdapter eventsListAdapter;
@@ -60,6 +82,24 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
     private ServiceHelper serviceHelper;
     protected boolean isLoadingForFirstTime = true;
     int pageNumber = 0, totalCount = 0;
+
+    //Linear layout holding the Edit submenu
+    private FloatingActionButton fabView;
+    private LinearLayout layoutFabMapview;
+    private LinearLayout layoutFabListView;
+    GoogleMap mGoogleMap = null;
+    private List<Marker> mAddedMarkers = new ArrayList<Marker>();
+    private HashMap<LatLng, Event> mDisplayedEvents = new HashMap<LatLng, Event>();
+    Location mLastLocation = null;
+    private String listFlag = null;
+
+    MapView mMapView = null;
+    private BitmapDescriptor mMapIcon = null;
+    private boolean mAddddLocations = true;
+    private float mStartX;
+    private float mStartY;
+    private float mEndX;
+    private float mEndY;
 
     Handler mHandler = new Handler();
     private SearchView mSearchView = null;
@@ -81,6 +121,9 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
         setContentView(R.layout.activity_nearby_event);
 
         // initiate functions
+        mMapView = (MapView) findViewById(R.id.mapview);
+        mMapView.onCreate(savedInstanceState);
+        setUpGoogleMaps();
         loadMoreListView = (ListView) findViewById(R.id.listView_events);
         //loadMoreListView.setOnLoadMoreListener(this);
         loadMoreListView.setOnItemClickListener(this);
@@ -99,6 +142,23 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
             }
         });
 
+        fabView = (FloatingActionButton) findViewById(R.id.viewOptions);
+
+        fabView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (fabExpanded) {
+                    closeSubMenusFab();
+                } else {
+                    openSubMenusFab();
+                }
+            }
+        });
+        closeSubMenusFab();
+
+        layoutFabListView = (LinearLayout) findViewById(R.id.layoutFabListView);
+        layoutFabMapview = (LinearLayout) findViewById(R.id.layoutFabMapView);
+
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 // The next two lines tell the new client that “this” current class will handle connection stuff
                 .addConnectionCallbacks(this)
@@ -116,8 +176,48 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
         iniView();
 
         callGetFilterService(5);
+
+        layoutFabMapview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadMoreListView.setVisibility(View.GONE);
+                LocationHelper.FindLocationManager(getApplicationContext());
+
+                mMapView.setVisibility(View.VISIBLE);
+                performSlideLeftAnimation();
+            }
+        });
+
+        layoutFabListView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                listFlag = "Full";
+                performSlideRightAnimation();
+
+                loadMoreListView.setVisibility(View.VISIBLE);
+                if (eventsListAdapter != null) {
+                    eventsListAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+    }
+    private void closeSubMenusFab() {
+        layoutFabListView.setVisibility(View.INVISIBLE);
+        layoutFabMapview.setVisibility(View.INVISIBLE);
+        fabView.setImageResource(R.drawable.ic_plus);
+        fabExpanded = false;
     }
 
+    //Opens FAB submenus
+    private void openSubMenusFab() {
+        layoutFabListView.setVisibility(View.VISIBLE);
+        layoutFabMapview.setVisibility(View.VISIBLE);
+//        Change settings icon to 'X' icon
+        fabView.setImageResource(R.drawable.ic_close);
+        fabExpanded = true;
+    }
     public void callGetFilterService(int kms) {
         /*if(eventsListAdapter != null){
             eventsListAdapter.clearSearchFlag();
@@ -263,6 +363,16 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
         if (location == null) {
@@ -322,13 +432,6 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        //Now lets connect to the API
-        mGoogleApiClient.connect();
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
         Log.v(this.getClass().getSimpleName(), "onPause()");
@@ -337,6 +440,256 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
         if (mGoogleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume called");
+        mMapView.onResume();
+
+        if ((mGoogleApiClient != null) && !mGoogleApiClient.isConnected()) {
+            Log.d(TAG, "make api connect");
+            mGoogleApiClient.connect();
+
+        } else {
+            Log.e(TAG, "googleapi is null");
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
+
+    private void setUpGoogleMaps() {
+        Log.d(TAG, "Setting up google maps");
+        buildGoogleApiClient();
+        mGoogleMap = null;
+        mMapView.getMapAsync(this);
+        mAddedMarkers.clear();
+        mDisplayedEvents.clear();
+
+        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+        try {
+            MapsInitializer.initialize(this.getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void buildGoogleApiClient() {
+        Log.d(TAG, "Initiate GoogleApi connection");
+        mGoogleApiClient = new GoogleApiClient.Builder(getApplicationContext())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+    }
+
+    private void showMapsView() {
+
+        if (mMapView.getVisibility() == View.VISIBLE) {
+            Log.d(TAG, "displaying the Map view");
+            //fetch the lat and longitudes
+            int i = 0;
+
+            if (mMapIcon == null) {
+                mMapIcon = BitmapDescriptorFactory.fromResource(R.drawable.location_dot_img);
+            }
+
+            for (Event event : eventsArrayList) {
+                if ((event.getEventLatitude() != null) && (event.getEventLongitude() != null)) {
+                    double lat = Double.parseDouble(event.getEventLatitude());
+                    double longitude = Double.parseDouble(event.getEventLongitude());
+                    if ((lat > 0) | (longitude > 0)) {
+                        LatLng pos = new LatLng(lat, longitude);
+                        if ((pos != null) && (mGoogleMap != null)) {
+                            Log.d(TAG, "has lat lon" + "lat:" + event.getEventLatitude() + "long:" + event.getEventLongitude());
+
+                            Marker marker = null;
+                            if (mMapIcon != null) {
+                                Log.d(TAG, "Valid bitmap icon");
+                                marker = mGoogleMap.addMarker(new MarkerOptions().position(pos).icon(mMapIcon));
+
+                            } else {
+                                Log.d(TAG, "No valid map icon");
+                                marker = mGoogleMap.addMarker(new MarkerOptions().position(pos));
+                            }
+
+                            mAddedMarkers.add(marker);
+                            mDisplayedEvents.put(pos, event);
+                            marker.showInfoWindow();
+                        } else {
+                            Log.d(TAG, "Google maps was not created properly");
+                        }
+                    }
+                }
+            }
+            //zoom the camera to current location
+            if (mLastLocation != null) {
+                LatLng pos = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+
+                mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 14), 1000, null);
+            }
+
+            mAddddLocations = false;
+        }
+    }
+
+    private void performSlideLeftAnimation() {
+        PropertyValuesHolder transX = PropertyValuesHolder.ofFloat("x", mEndX, mStartX);
+        PropertyValuesHolder alphaV = PropertyValuesHolder.ofFloat("alpha", 1, 0);
+
+        ObjectAnimator anim = ObjectAnimator.ofPropertyValuesHolder(mMapView, transX);
+        ObjectAnimator alphaAnim = ObjectAnimator.ofPropertyValuesHolder(loadMoreListView, alphaV);
+        anim.setDuration(500);
+        alphaAnim.setDuration(500);
+
+        anim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                loadMoreListView.setVisibility(View.GONE);
+
+                if (mAddddLocations) {
+                    showMapsView();
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        anim.start();
+    }
+
+    private void performSlideRightAnimation() {
+        PropertyValuesHolder transX = PropertyValuesHolder.ofFloat("x", mStartX, mEndX);
+        PropertyValuesHolder alphaV = PropertyValuesHolder.ofFloat("alpha", 1, 0);
+
+        ObjectAnimator anim = ObjectAnimator.ofPropertyValuesHolder(mMapView, transX);
+
+        anim.setDuration(500);
+
+
+        anim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mMapView.setVisibility(View.GONE);
+                loadMoreListView.setVisibility(View.VISIBLE);
+                if (eventsListAdapter != null) {
+                    eventsListAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        anim.start();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Log.d(TAG, "ON Google map ready");
+        try {
+            mGoogleMap = googleMap;
+            mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+            mGoogleMap.setMyLocationEnabled(true);
+            if (mGoogleMap != null) {
+                mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                    @Override
+                    public View getInfoWindow(Marker marker) {
+                        Log.d(TAG, "Getting the info view contents");
+
+                        View infowindow = getLayoutInflater().inflate(R.layout.map_info_window_layout, null);
+                        LatLng pos = marker.getPosition();
+                        if (pos != null) {
+                            Event event = mDisplayedEvents.get(pos);
+
+                            if (event != null) {
+                                TextView title = (TextView) infowindow.findViewById(R.id.info_window_Title);
+                                TextView subTitle = (TextView) infowindow.findViewById(R.id.info_window_subtext);
+                                String eventname = event.getEventName();
+                                if ((eventname != null) && !eventname.isEmpty()) {
+                                    if (eventname.length() > 15) {
+                                        Log.d(TAG, "length more that 15");
+                                        String substr = eventname.substring(0, 14);
+                                        Log.d(TAG, "title is" + substr);
+                                        title.setText(substr + "..");
+                                    } else {
+                                        Log.d(TAG, "title less that 15 is" + eventname);
+                                        title.setText(eventname);
+                                    }
+                                }
+
+                                subTitle.setText(event.getEventName());
+                            }
+                        }
+                        return infowindow;
+                    }
+
+                    @Override
+                    public View getInfoContents(Marker marker) {
+                        return null;
+                    }
+                });
+            }
+            mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(Marker marker) {
+                    LatLng pos = marker.getPosition();
+                    Log.d(TAG, "Marker Info window clicked");
+
+                    Event event = mDisplayedEvents.get(pos);
+                    if (event != null) {
+                        Log.d(TAG, "map info view clicked");
+                        Intent intent = new Intent(getApplicationContext(), EventDetailActivity.class);
+                        intent.putExtra("eventObj", event);
+                        startActivity(intent);
+                    }
+                }
+            });
+            mGoogleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                @Override
+                public void onMapLoaded() {
+                    // mMapLoaded = true;
+                    Log.d(TAG, "Map loaded");
+
+                }
+            });
+        } catch (SecurityException e) {
+
         }
     }
 }
