@@ -109,7 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/totalnearby"
-            android:visibility="gone"
+            android:visibility="invisible"
             map:cameraTargetLat="16.29905101"
             map:cameraTargetLng="78.3984375" />
 

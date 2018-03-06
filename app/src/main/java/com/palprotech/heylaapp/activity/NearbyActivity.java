@@ -142,6 +142,9 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
             }
         });
 
+        layoutFabListView = (LinearLayout) findViewById(R.id.layoutFabListView);
+        layoutFabMapview = (LinearLayout) findViewById(R.id.layoutFabMapView);
+
         fabView = (FloatingActionButton) findViewById(R.id.viewOptions);
 
         fabView.setOnClickListener(new View.OnClickListener() {
@@ -155,9 +158,6 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
             }
         });
         closeSubMenusFab();
-
-        layoutFabListView = (LinearLayout) findViewById(R.id.layoutFabListView);
-        layoutFabMapview = (LinearLayout) findViewById(R.id.layoutFabMapView);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 // The next two lines tell the new client that “this” current class will handle connection stuff
