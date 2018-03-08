@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -110,6 +111,9 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
     private LocationRequest mLocationRequest;
     private double currentLatitude;
     private double currentLongitude;
+    private boolean mNearbySelected = false;
+    private int mTotalReceivedEvents = 0;
+    private ProgressDialog mLocationProgress = null;
     private int nearByDistance = 0;
     private TextView mTotalEventCount = null;
     private String eventType;
@@ -119,63 +123,11 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.slide_right, 0);
         setContentView(R.layout.activity_nearby_event);
-
-        // initiate functions
         mMapView = (MapView) findViewById(R.id.mapview);
         mMapView.onCreate(savedInstanceState);
-        setUpGoogleMaps();
-        loadMoreListView = (ListView) findViewById(R.id.listView_events);
-        //loadMoreListView.setOnLoadMoreListener(this);
-        loadMoreListView.setOnItemClickListener(this);
-        mTotalEventCount = (TextView) findViewById(R.id.totalnearby);
-        imgMapbg = (ImageView) findViewById(R.id.nearby_bg);
-        eventType = getIntent().getStringExtra("event_type");
-        eventsArrayList = new ArrayList<>();
-        serviceHelper = new ServiceHelper(this);
-        serviceHelper.setServiceListener(this);
-        progressDialogHelper = new ProgressDialogHelper(this);
-
-        findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        layoutFabListView = (LinearLayout) findViewById(R.id.layoutFabListView);
-        layoutFabMapview = (LinearLayout) findViewById(R.id.layoutFabMapView);
-
-        fabView = (FloatingActionButton) findViewById(R.id.viewOptions);
-
-        fabView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (fabExpanded) {
-                    closeSubMenusFab();
-                } else {
-                    openSubMenusFab();
-                }
-            }
-        });
-        closeSubMenusFab();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                // The next two lines tell the new client that “this” current class will handle connection stuff
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                //fourth line adds the LocationServices API endpoint from GooglePlayServices
-                .addApi(LocationServices.API)
-                .build();
-
-        // Create the LocationRequest object
-        mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
-                .setFastestInterval(1 * 1000); // 1 second, in milliseconds
-
         iniView();
 
-        callGetFilterService(5);
+        callGetFilterService(35);
 
         layoutFabMapview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,7 +146,7 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
 
                 listFlag = "Full";
                 performSlideRightAnimation();
-
+                setUpGoogleMaps();
                 loadMoreListView.setVisibility(View.VISIBLE);
                 if (eventsListAdapter != null) {
                     eventsListAdapter.notifyDataSetChanged();
@@ -323,7 +275,56 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
     }
 
     private void iniView() {
+// initiate functions
+        setUpGoogleMaps();
+        loadMoreListView = (ListView) findViewById(R.id.listView_events);
+        //loadMoreListView.setOnLoadMoreListener(this);
+        loadMoreListView.setOnItemClickListener(this);
+        mTotalEventCount = (TextView) findViewById(R.id.totalnearby);
+        imgMapbg = (ImageView) findViewById(R.id.nearby_bg);
+        eventType = getIntent().getStringExtra("event_type");
+        eventsArrayList = new ArrayList<>();
+        serviceHelper = new ServiceHelper(this);
+        serviceHelper.setServiceListener(this);
+        progressDialogHelper = new ProgressDialogHelper(this);
 
+        findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        layoutFabListView = (LinearLayout) findViewById(R.id.layoutFabListView);
+        layoutFabMapview = (LinearLayout) findViewById(R.id.layoutFabMapView);
+
+        fabView = (FloatingActionButton) findViewById(R.id.viewOptions);
+
+        fabView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (fabExpanded) {
+                    closeSubMenusFab();
+                } else {
+                    openSubMenusFab();
+                }
+            }
+        });
+        closeSubMenusFab();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                // The next two lines tell the new client that “this” current class will handle connection stuff
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                //fourth line adds the LocationServices API endpoint from GooglePlayServices
+                .addApi(LocationServices.API)
+                .build();
+
+        // Create the LocationRequest object
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
+                .setFastestInterval(1 * 1000); // 1 second, in milliseconds
         spinNearby = (Spinner) findViewById(R.id.nearbyspinner);
 
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, R.layout.spinner_item_ns, getResources().getStringArray(R.array.nearby_distance));
@@ -351,6 +352,14 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
                     nearByDistance = distance;
                     callGetFilterService(distance);
                     // mTotalEventCount.setText(Integer.toString(eventsArrayList.size()) + " Nearby Events");
+                }
+                closeSubMenusFab();
+                listFlag = "Full";
+                performSlideRightAnimation();
+
+                loadMoreListView.setVisibility(View.VISIBLE);
+                if (eventsListAdapter != null) {
+                    eventsListAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -384,6 +393,33 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
             currentLongitude = location.getLongitude();
 
             //  Toast.makeText(this, currentLatitude + " WORKS " + currentLongitude + "", Toast.LENGTH_LONG).show();
+        }
+        fetchCurrentLocation();
+    }
+
+    private void fetchCurrentLocation() {
+        Log.d(TAG, "fetch the current location");
+        try {
+            try {
+                mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                        mGoogleApiClient);
+            } catch (SecurityException e) {
+
+            }
+            if (mLocationProgress != null) {
+                mLocationProgress.cancel();
+            }
+            if (mNearbySelected && (mLastLocation != null)) {
+                mTotalReceivedEvents = 0;
+//                callGetEventService(1);
+
+            }
+            if (mLastLocation == null) {
+                Log.e(TAG, "Received location is null");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -617,6 +653,7 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
             }
         });
         anim.start();
+        mAddddLocations = true;
     }
 
     @Override
