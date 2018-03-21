@@ -74,6 +74,7 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
     private static final String TAG = NearbyActivity.class.getName();
     Spinner spinNearby;
     ImageView imgMapbg;
+    String className;
     private boolean fabExpanded = false;
     ListView loadMoreListView;
     View view;
@@ -249,7 +250,7 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
         mTotalEventCount.setText(Integer.toString(eventsArrayList.size()) + " Nearby Events");
         this.eventsArrayList.addAll(eventsArrayList);
         if (eventsListAdapter == null) {
-            eventsListAdapter = new EventsListAdapter(this, this.eventsArrayList);
+            eventsListAdapter = new EventsListAdapter(this, this.eventsArrayList, className);
             loadMoreListView.setAdapter(eventsListAdapter);
         } else {
             eventsListAdapter.notifyDataSetChanged();
@@ -277,6 +278,7 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
     private void iniView() {
 // initiate functions
         setUpGoogleMaps();
+        className = this.getClass().getSimpleName();
         loadMoreListView = (ListView) findViewById(R.id.listView_events);
         //loadMoreListView.setOnLoadMoreListener(this);
         loadMoreListView.setOnItemClickListener(this);

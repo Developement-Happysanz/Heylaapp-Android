@@ -75,6 +75,7 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
 
     private static final String TAG = HotspotFragment.class.getName();
     private String listFlag = null;
+    String className;
     private View rootView;
     MapView mMapView = null;
     GoogleMap mGoogleMap = null;
@@ -357,6 +358,7 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
     protected void initializeViews() {
         Log.d(TAG, "initialize pull to refresh view");
         loadMoreListView = (ListView) rootView.findViewById(R.id.listView_events);
+        className = this.getClass().getSimpleName();
        /* mNoEventsFound = (TextView) view.findViewById(R.id.no_home_events);
         if (mNoEventsFound != null)
             mNoEventsFound.setVisibility(View.GONE);
@@ -784,7 +786,7 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
             mNoEventsFound.setVisibility(View.GONE);*/
 
         if (eventsListAdapter == null) {
-            eventsListAdapter = new EventsListAdapter(getActivity(), this.eventsArrayList);
+            eventsListAdapter = new EventsListAdapter(getActivity(), this.eventsArrayList, className);
             loadMoreListView.setAdapter(eventsListAdapter);
         } else {
             eventsListAdapter.notifyDataSetChanged();

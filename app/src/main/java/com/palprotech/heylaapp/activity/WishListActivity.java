@@ -40,6 +40,7 @@ public class WishListActivity extends AppCompatActivity implements AdapterView.O
     private static final String TAG = "AdvaSearchResAct";
     protected ListView loadMoreListView;
     View view;
+    String className;
     EventsListAdapter eventsListAdapter;
     private ServiceHelper serviceHelper;
     ArrayList<Event> eventsArrayList;
@@ -56,6 +57,7 @@ public class WishListActivity extends AppCompatActivity implements AdapterView.O
         setContentView(R.layout.activity_wish_list);
         //        getSupportActionBar().hide();
         loadMoreListView = findViewById(R.id.listView_events);
+        className = this.getClass().getSimpleName();
 //        loadMoreListView.setOnLoadMoreListener(this);
         loadMoreListView.setOnItemClickListener(this);
         eventsArrayList = new ArrayList<>();
@@ -198,7 +200,7 @@ public class WishListActivity extends AppCompatActivity implements AdapterView.O
     protected void updateListAdapter(ArrayList<Event> eventsArrayList) {
         this.eventsArrayList.addAll(eventsArrayList);
         if (eventsListAdapter == null) {
-            eventsListAdapter = new EventsListAdapter(this, this.eventsArrayList);
+            eventsListAdapter = new EventsListAdapter(this, this.eventsArrayList, className);
             loadMoreListView.setAdapter(eventsListAdapter);
         } else {
             eventsListAdapter.notifyDataSetChanged();

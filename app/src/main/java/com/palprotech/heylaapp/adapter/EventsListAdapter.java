@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
@@ -38,14 +39,16 @@ public class EventsListAdapter extends BaseAdapter {
     private final Transformation transformation;
     private Context context;
     private ArrayList<Event> events;
+    String className;
     private boolean mSearching = false;
     private boolean mAnimateSearch = false;
     private ArrayList<Integer> mValidSearchIndices = new ArrayList<Integer>();
     private ImageLoader imageLoader = AppController.getInstance().getUniversalImageLoader();
 
-    public EventsListAdapter(Context context, ArrayList<Event> events) {
+    public EventsListAdapter(Context context, ArrayList<Event> events, String className) {
         this.context = context;
         this.events = events;
+        this.className = className;
 
         transformation = new RoundedTransformationBuilder()
                 .cornerRadiusDp(0)
@@ -92,6 +95,7 @@ public class EventsListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.event_list_item, parent, false);
 
             holder = new ViewHolder();
+            holder.dateLayout = convertView.findViewById(R.id.date_layout);
             holder.txtEventName = (TextView) convertView.findViewById(R.id.txt_event_name);
             holder.txtEventVenue = (TextView) convertView.findViewById(R.id.txt_event_location);
             holder.txtDate = (TextView) convertView.findViewById(R.id.txt_event_date);
@@ -139,6 +143,13 @@ public class EventsListAdapter extends BaseAdapter {
             } else if (paidBtnVal.equalsIgnoreCase("paid")) {
                 holder.paidBtn.setTextColor(context.getResources().getColor(R.color.white)); //rounder_button
             }
+        }
+
+        if (className.equalsIgnoreCase("HotspotFragment")) {
+            holder.dateLayout.setVisibility(View.INVISIBLE);
+        }
+        else {
+            holder.dateLayout.setVisibility(View.VISIBLE);
         }
 
         if (HeylaAppValidator.checkNullString(events.get(position).getEventBanner())) {
@@ -208,6 +219,7 @@ public class EventsListAdapter extends BaseAdapter {
 
     public class ViewHolder {
         public TextView txtEventName, txtEventVenue, txtDate, txtMonth, txtTime , txtPrice, txtEndDate, txtEndMonth;
+        public RelativeLayout dateLayout;
         public ImageView imageView;
         public Button paidBtn;
     }

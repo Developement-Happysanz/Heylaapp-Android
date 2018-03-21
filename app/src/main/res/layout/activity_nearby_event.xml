@@ -159,9 +159,9 @@
                 android:id="@+id/layoutFabListView"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_gravity="bottom|end"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="100dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="150dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 

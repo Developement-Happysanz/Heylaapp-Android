@@ -103,7 +103,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         }
         if (v == imEventBanner) {
 //            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show(); EventImagesActivity
-            Intent intent = new Intent(getApplicationContext(), EventImagesActivity.class);
+            Intent intent = new Intent(getApplicationContext(), EventImagesActivitySwipe.class);
             intent.putExtra("eventObj", event);
             startActivity(intent);
         }

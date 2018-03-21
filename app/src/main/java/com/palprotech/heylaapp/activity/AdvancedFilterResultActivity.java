@@ -37,6 +37,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
     private static final String TAG = "AdvaSearchResAct";
     protected ListView loadMoreListView;
     View view;
+    String className;
     EventsListAdapter eventsListAdapter;
     private ServiceHelper serviceHelper;
     ArrayList<Event> eventsArrayList;
@@ -54,6 +55,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
         loadMoreListView = findViewById(R.id.listView_events);
 //        loadMoreListView.setOnLoadMoreListener(this);
         loadMoreListView.setOnItemClickListener(this);
+        className = this.getClass().getSimpleName();
         eventsArrayList = new ArrayList<>();
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
@@ -153,7 +155,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
     protected void updateListAdapter(ArrayList<Event> eventsArrayList) {
         this.eventsArrayList.addAll(eventsArrayList);
         if (eventsListAdapter == null) {
-            eventsListAdapter = new EventsListAdapter(this, this.eventsArrayList);
+            eventsListAdapter = new EventsListAdapter(this, this.eventsArrayList, className);
             loadMoreListView.setAdapter(eventsListAdapter);
         } else {
             eventsListAdapter.notifyDataSetChanged();

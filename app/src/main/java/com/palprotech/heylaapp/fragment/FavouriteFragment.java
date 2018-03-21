@@ -17,7 +17,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,8 +47,6 @@ import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.AdvanceFilterActivity;
 import com.palprotech.heylaapp.activity.EventDetailActivity;
-import com.palprotech.heylaapp.activity.ForgotPasswordNumberVerificationActivity;
-import com.palprotech.heylaapp.activity.MainActivity;
 import com.palprotech.heylaapp.activity.NearbyActivity;
 import com.palprotech.heylaapp.adapter.EventsListAdapter;
 import com.palprotech.heylaapp.bean.support.Event;
@@ -80,6 +77,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
 
     private static final String TAG = FavouriteFragment.class.getName();
     private String listFlag = null;
+    String className;
     private View rootView;
     MapView mMapView = null;
     GoogleMap mGoogleMap = null;
@@ -157,7 +155,6 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_favourite, container, false);
-
         TransPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         isFirstRunLocation = TransPrefs.getBoolean("isFirstRunLocation", true);
         isFirstRunNearby = TransPrefs.getBoolean("isFirstRunNearby", true);
@@ -344,7 +341,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
     protected void initializeViews() {
         Log.d(TAG, "initialize pull to refresh view");
         loadMoreListView = (ListView) rootView.findViewById(R.id.listView_events);
-
+        className = this.getClass().getSimpleName();
         loadMoreListView.setOnItemClickListener(this);
         eventsArrayList = new ArrayList<>();
     }
@@ -693,7 +690,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
         this.eventsArrayList.addAll(eventsArrayList);
 
         if (eventsListAdapter == null) {
-            eventsListAdapter = new EventsListAdapter(getActivity(), this.eventsArrayList);
+            eventsListAdapter = new EventsListAdapter(getActivity(), this.eventsArrayList, className);
             loadMoreListView.setAdapter(eventsListAdapter);
         } else {
             eventsListAdapter.notifyDataSetChanged();

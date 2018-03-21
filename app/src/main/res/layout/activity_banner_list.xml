@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/banner_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_black"
+    android:orientation="vertical"
+    tools:context=".activity.EventImagesActivitySwipe">
+
+    <com.palprotech.heylaapp.helper.AViewFlipper
+    android:id="@+id/banner_new"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    </com.palprotech.heylaapp.helper.AViewFlipper>
+
+    <!--<com.findafun.helper.TouchImageView-->
+    <!--android:id="@+id/banner_list"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:background="@color/black"-->
+    <!--android:paddingBottom="5dp"-->
+    <!--android:paddingLeft="10dp"-->
+    <!--android:paddingRight="10dp"-->
+    <!--android:paddingTop="5dp"-->
+    <!--android:scaleType="matrix"/>-->
+
+    <!--<com.findafun.helper.TouchImageView-->
+    <!--android:id="@+id/banner_list1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:background="@color/black"-->
+    <!--android:paddingBottom="5dp"-->
+    <!--android:paddingLeft="10dp"-->
+    <!--android:paddingRight="10dp"-->
+    <!--android:paddingTop="5dp"-->
+    <!--android:scaleType="matrix"-->
+    <!--android:visibility="gone"/>-->
+
+    <!--<com.findafun.helper.TouchImageView-->
+    <!--android:id="@+id/banner_list2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:background="@color/black"-->
+    <!--android:paddingBottom="5dp"-->
+    <!--android:paddingLeft="10dp"-->
+    <!--android:paddingRight="10dp"-->
+    <!--android:paddingTop="5dp"-->
+    <!--android:scaleType="matrix"-->
+    <!--android:visibility="gone"/>-->
+
+    <!--<com.findafun.helper.TouchImageView-->
+    <!--android:id="@+id/banner_list3"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:background="@color/black"-->
+    <!--android:paddingBottom="5dp"-->
+    <!--android:paddingLeft="10dp"-->
+    <!--android:paddingRight="10dp"-->
+    <!--android:paddingTop="5dp"-->
+    <!--android:scaleType="matrix"-->
+    <!--android:visibility="gone"/>-->
+
+    <!--<com.findafun.helper.TouchImageView-->
+    <!--android:id="@+id/banner_list4"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:background="@color/black"-->
+    <!--android:paddingBottom="5dp"-->
+    <!--android:paddingLeft="10dp"-->
+    <!--android:paddingRight="10dp"-->
+    <!--android:paddingTop="5dp"-->
+    <!--android:scaleType="matrix"-->
+    <!--android:visibility="gone"/>-->
+
+    <!--</com.findafun.helper.AViewFlipper>-->
+
+</LinearLayout>
