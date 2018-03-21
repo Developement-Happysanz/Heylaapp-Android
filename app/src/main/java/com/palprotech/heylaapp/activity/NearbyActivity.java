@@ -154,8 +154,8 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
                 }
             }
         });
-
     }
+
     private void closeSubMenusFab() {
         layoutFabListView.setVisibility(View.INVISIBLE);
         layoutFabMapview.setVisibility(View.INVISIBLE);
@@ -171,6 +171,7 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
         fabView.setImageResource(R.drawable.ic_close);
         fabExpanded = true;
     }
+
     public void callGetFilterService(int kms) {
         /*if(eventsListAdapter != null){
             eventsListAdapter.clearSearchFlag();
