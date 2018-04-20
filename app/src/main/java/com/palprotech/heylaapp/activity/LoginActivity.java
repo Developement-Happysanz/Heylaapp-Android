@@ -48,11 +48,11 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
 
     private static final String TAG = LoginActivity.class.getName();
     Context context;
-    String IMEINo;
+    String IMEINo = "";
     private ProgressDialogHelper progressDialogHelper;
     TextView txtGuestLogin;
     private ServiceHelper serviceHelper;
-
+    private static final int PERMISSION_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,32 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+
+            TelephonyManager tm = (TelephonyManager)
+                    getSystemService(Context.TELEPHONY_SERVICE);
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
+                    == PackageManager.PERMISSION_DENIED) {
+
+                Log.d("permission", "permission denied to SEND_SMS - requesting it");
+                String[] permissions = {Manifest.permission.READ_PHONE_STATE};
+
+                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
+            }
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                IMEINo = tm.getImei();
+            } else {
+                if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
+                        == PackageManager.PERMISSION_DENIED) {
+                    IMEINo = "";
+                } else {
+                    IMEINo = tm.getDeviceId();
+                }
+            }
+        }
+
+        /*if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             TelephonyManager tm = (TelephonyManager)
                     getSystemService(Context.TELEPHONY_SERVICE);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
@@ -79,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
         } else {
             TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
             IMEINo = telephonyManager.getDeviceId();
-        }
+        }*/
 
         if (PreferenceStorage.getUserId(getApplicationContext()) != null && HeylaAppValidator.checkNullString(PreferenceStorage.getUserId(getApplicationContext()))) {
             String city = PreferenceStorage.getEventCityName(getApplicationContext());
@@ -164,6 +189,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
             }
         }
     }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

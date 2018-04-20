@@ -83,8 +83,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
                 Intent homeIntent = new Intent(getApplicationContext(), BookingHistoryActivity.class);
                 startActivity(homeIntent);
-            }
-            else {
+            } else {
                 guestLoginAlert();
             }
         }
@@ -109,8 +108,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
                 Intent homeIntent = new Intent(getApplicationContext(), WishListActivity.class);
                 startActivity(homeIntent);
-            }
-            else {
+            } else {
                 guestLoginAlert();
             }
         }
@@ -136,36 +134,34 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         if (v == vUserImage) {
             if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
                 startPersonDetailsActivity(-1);
-            }
-            else {
+            } else {
                 guestLoginAlert();
             }
         }
     }
 
     public void guestLoginAlert() {
-            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MenuActivity.this);
-            alertDialogBuilder.setTitle("Login");
-            alertDialogBuilder.setMessage("Log in to Access");
-            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface arg0, int arg1) {
-                    doLogout();
-                }
-            });
-            alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            alertDialogBuilder.show();
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MenuActivity.this);
+        alertDialogBuilder.setTitle("Login");
+        alertDialogBuilder.setMessage("Log in to Access");
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                doLogout();
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialogBuilder.show();
     }
 
     public void doLogout() {
-        SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        sharedPreferences.edit().clear().commit();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.edit().clear().apply();
 //        TwitterUtil.getInstance().resetTwitterRequestToken();
 
         Intent homeIntent = new Intent(this, SplashScreenActivity.class);
