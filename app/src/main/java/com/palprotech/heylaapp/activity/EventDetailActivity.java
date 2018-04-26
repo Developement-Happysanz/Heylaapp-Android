@@ -20,6 +20,7 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Narendar on 03/11/17.
@@ -65,6 +67,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     private TextView imEventsView;
     private ImageView imEventFavourite;
     MapView mMapView = null;
+    private String eventType = "";
 
     private ImageView imEventOrganiserRequest;
     private TextView txtEventReview;
@@ -93,6 +96,8 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         });
 
         event = (Event) getIntent().getSerializableExtra("eventObj");
+        eventType = getIntent().getExtras().getString("eventType");
+
         setUpUI();
     }
 
@@ -204,12 +209,30 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 //        Event end time
         TextView txtEventEndTime = findViewById(R.id.end_time_txt);
         txtEventEndTime.setText(event.getEndTime());
+//        Event date layout
+        RelativeLayout rl = findViewById(R.id.datelayout);
+        if (eventType.contentEquals("Hotspot")) {
+            rl.setVisibility(View.GONE);
+        }
 //        Event start date
         TextView txtEventStartDate = findViewById(R.id.start_date_txt);
-        txtEventStartDate.setText(event.getStartDate());
+        String start = dateConversion(event.getStartDate());
+        txtEventStartDate.setText(start);
+        if (eventType.contentEquals("Hotspot")) {
+            txtEventStartDate.setVisibility(View.GONE);
+        }
+//        text between date
+        TextView txtTo = findViewById(R.id.date_to);
+        if (eventType.contentEquals("Hotspot")) {
+            txtTo.setVisibility(View.GONE);
+        }
 //        Event end date
         TextView txtEventEndDate = findViewById(R.id.end_date_txt);
-        txtEventEndDate.setText(event.getEndDate());
+        String end = dateConversion(event.getEndDate());
+        txtEventEndDate.setText(end);
+        if (eventType.contentEquals("Hotspot")) {
+            txtEventEndDate.setVisibility(View.GONE);
+        }
 //        Event details
         TextView txtEventDetails = findViewById(R.id.eventdetailtxt);
         txtEventDetails.setText(event.getDescription());
@@ -260,6 +283,20 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_POPULARITY;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private String dateConversion(String inputDate) {
+        String outputDate = inputDate;
+        try {
+            DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+            Date date = format.parse(outputDate);
+            System.out.println(date);
+            SimpleDateFormat startFormat = new SimpleDateFormat("dd-mm-yyyy");
+            outputDate = startFormat.format(date);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return outputDate;
     }
 
     private void sendShareStatus() {

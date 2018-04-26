@@ -681,6 +681,7 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
 
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
         intent.putExtra("eventObj", event);
+        intent.putExtra("eventType","Hotspot");
         // intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
 //        // getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_right);

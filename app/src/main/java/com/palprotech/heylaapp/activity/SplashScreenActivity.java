@@ -40,24 +40,24 @@ public class SplashScreenActivity extends AppCompatActivity {
             PreferenceStorage.saveGCM(getApplicationContext(), refreshedToken);
         }
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
 
             if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
                     == PackageManager.PERMISSION_DENIED) {
 
-                /*Log.d("permission", "permission denied to SEND_SMS - requesting it");
+                *//*Log.d("permission", "permission denied to SEND_SMS - requesting it");
                 String[] permissions = {Manifest.permission.READ_PHONE_STATE};
 
-                requestPermissions(permissions, PERMISSION_REQUEST_CODE);*/
+                requestPermissions(permissions, PERMISSION_REQUEST_CODE);*//*
 
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-                sharedPreferences.edit().clear().apply();
+                *//*SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+                sharedPreferences.edit().clear().apply();*//*
 
                 Intent i = new Intent(SplashScreenActivity.this, WelcomeActivity.class);
                 startActivity(i);
                 finish();
 
-            } else {
+            } else {*/
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -74,7 +74,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         }
                     }
                 }, SPLASH_TIME_OUT);
-            }
-        }
+//            }
+//        }
     }
 }

@@ -606,6 +606,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
 
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
         intent.putExtra("eventObj", event);
+        intent.putExtra("eventType","General");
         startActivity(intent);
     }
 

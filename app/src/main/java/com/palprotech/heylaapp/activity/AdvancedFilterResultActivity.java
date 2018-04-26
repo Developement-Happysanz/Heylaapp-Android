@@ -146,8 +146,15 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
         } else {
             event = eventsArrayList.get(position);
         }
+        String eventType = "";
+        if (PreferenceStorage.getFilterEventType(this).equalsIgnoreCase("Hotspot")) {
+            eventType = "Hotspot";
+        } else {
+            eventType = "General";
+        }
         Intent intent = new Intent(this, EventDetailActivity.class);
         intent.putExtra("eventObj", event);
+        intent.putExtra("eventType", eventType);
         // intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }
