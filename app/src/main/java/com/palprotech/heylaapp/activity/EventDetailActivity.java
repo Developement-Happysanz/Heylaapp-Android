@@ -96,7 +96,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         });
 
         event = (Event) getIntent().getSerializableExtra("eventObj");
-        eventType = getIntent().getExtras().getString("eventType");
+        eventType = event.getHotspotStatus();
 
         setUpUI();
     }
@@ -211,26 +211,26 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         txtEventEndTime.setText(event.getEndTime());
 //        Event date layout
         RelativeLayout rl = findViewById(R.id.datelayout);
-        if (eventType.contentEquals("Hotspot")) {
+        if (eventType.contentEquals("Y")) {
             rl.setVisibility(View.GONE);
         }
 //        Event start date
         TextView txtEventStartDate = findViewById(R.id.start_date_txt);
         String start = dateConversion(event.getStartDate());
         txtEventStartDate.setText(start);
-        if (eventType.contentEquals("Hotspot")) {
+        if (eventType.contentEquals("Y")) {
             txtEventStartDate.setVisibility(View.GONE);
         }
 //        text between date
         TextView txtTo = findViewById(R.id.date_to);
-        if (eventType.contentEquals("Hotspot")) {
+        if (eventType.contentEquals("Y")) {
             txtTo.setVisibility(View.GONE);
         }
 //        Event end date
         TextView txtEventEndDate = findViewById(R.id.end_date_txt);
         String end = dateConversion(event.getEndDate());
         txtEventEndDate.setText(end);
-        if (eventType.contentEquals("Hotspot")) {
+        if (eventType.contentEquals("Y")) {
             txtEventEndDate.setVisibility(View.GONE);
         }
 //        Event details

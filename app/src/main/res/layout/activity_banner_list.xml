@@ -1,17 +1,49 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/banner_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/text_black"
-    android:orientation="vertical"
     tools:context=".activity.EventImagesActivitySwipe">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appColorBase"
+        android:minHeight="60dp" />
+
+    <ImageView
+        android:id="@+id/back_res"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="10dp"
+        android:minHeight="60dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        android:src="@drawable/ic_back_button" />
+
+    <TextView
+        android:id="@+id/tvtitletext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/muli"
+        android:gravity="center"
+        android:minHeight="60dp"
+        android:padding="5dp"
+        android:text="Wishlist"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/actionbarTextSize" />
+
     <com.palprotech.heylaapp.helper.AViewFlipper
-    android:id="@+id/banner_new"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        android:id="@+id/banner_new"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tvtitletext">
     </com.palprotech.heylaapp.helper.AViewFlipper>
 
     <!--<com.findafun.helper.TouchImageView-->
@@ -85,4 +117,4 @@
 
     <!--</com.findafun.helper.AViewFlipper>-->
 
-</LinearLayout>
+</RelativeLayout>
