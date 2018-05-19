@@ -143,7 +143,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-         if (view == profileImg) {
+         if (view == userPic) {
             Intent homeIntent = new Intent(getActivity(), ProfileActivity.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
