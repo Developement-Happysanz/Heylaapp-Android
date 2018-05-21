@@ -129,7 +129,22 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         if (v == vSignOut) {
-            doLogout();
+            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MenuActivity.this);
+            alertDialogBuilder.setTitle("Signout");
+            alertDialogBuilder.setMessage("Do you really want to signout?");
+            alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    doLogout();
+                }
+            });
+            alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            alertDialogBuilder.show();
         }
         if (v == vUserImage) {
             if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {

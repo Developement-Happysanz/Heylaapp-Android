@@ -208,6 +208,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/ordernum"
                 android:fontFamily="@font/muli"
+                android:textColor="@color/white"
                 android:hint="Order number"
                 android:textSize="20dp" />
 

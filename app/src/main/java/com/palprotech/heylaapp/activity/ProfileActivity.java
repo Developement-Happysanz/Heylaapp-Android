@@ -3,6 +3,7 @@ package com.palprotech.heylaapp.activity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -108,6 +109,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     private ImageView mProfileImage = null;
     private Uri outputFileUri;
     static final int REQUEST_IMAGE_GET = 1;
+    static final int CROP_PIC = 2;
     Button save;
     private String checkProfileState = "";
     private String checkInternalState = "";
@@ -652,9 +654,19 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 Log.d(TAG, "image Uri is" + selectedImageUri);
                 if (selectedImageUri != null) {
                     Log.d(TAG, "image URI is" + selectedImageUri);
+                    performCrop();
                     setPic(selectedImageUri);
                 }
             }
+
+            else if (requestCode == CROP_PIC) {
+                // get the returned data
+                Bundle extras = data.getExtras();
+                // get the cropped bitmap
+                Bitmap thePic = extras.getParcelable("data");
+                mProfileImage.setImageBitmap(thePic);
+            }
+
         }
     }
 
@@ -1183,4 +1195,34 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     public void onAlertNegativeClicked(int tag) {
 
     }
+
+    private void performCrop() {
+        // take care of exceptions
+        try {
+            // call the standard crop action intent (the user device may not
+            // support it)
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            // indicate image type and Uri
+            cropIntent.setDataAndType(outputFileUri, "image/*");
+            // set crop properties
+            cropIntent.putExtra("crop", "true");
+            // indicate aspect of desired crop
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            // indicate output X and Y
+            cropIntent.putExtra("outputX", 256);
+            cropIntent.putExtra("outputY", 256);
+            // retrieve data on return
+            cropIntent.putExtra("return-data", true);
+            // start the activity - we handle returning in onActivityResult
+            startActivityForResult(cropIntent, CROP_PIC);
+        }
+        // respond to users whose devices do not support the crop action
+        catch (ActivityNotFoundException anfe) {
+            Toast toast = Toast
+                    .makeText(this, "This device doesn't support the crop action!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
 }

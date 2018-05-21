@@ -101,6 +101,7 @@
                         android:background="@drawable/ic_round_full_color"
                         android:fontFamily="@font/muli"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:text="QA"
                         android:textColor="@color/white" />
 

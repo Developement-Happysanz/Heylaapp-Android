@@ -9,6 +9,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -50,6 +51,7 @@ public class EventImagesActivitySwipe extends AppCompatActivity implements View.
     int pageNumber = 0, totalCount = 0;
     protected boolean isLoadingForFirstTime = true;
     EventPictureList eventPictureList;
+    private ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +61,8 @@ public class EventImagesActivitySwipe extends AppCompatActivity implements View.
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
-
+        ivBack = findViewById(R.id.back_res);
+        ivBack.setOnClickListener(this);
         aViewFlipper=  findViewById(R.id.banner_new);
         loadEventImages();
 
@@ -182,7 +185,9 @@ public class EventImagesActivitySwipe extends AppCompatActivity implements View.
 
     @Override
     public void onClick(View view) {
-
+        if (view == ivBack) {
+            finish();
+        }
     }
 
     @Override

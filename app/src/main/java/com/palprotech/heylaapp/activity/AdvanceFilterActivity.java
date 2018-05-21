@@ -170,7 +170,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         };
 
 
-        eventCategoryList.add("General");
+        eventCategoryList.add("Popular");
         eventCategoryList.add("Hotspot");
 
         eventCategoryAdapter = new ArrayAdapter<String>(this, R.layout.gender_layout, R.id.gender_name, eventCategoryList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
