@@ -184,7 +184,6 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
             eventsListAdapter.exitSearch();
             eventsListAdapter.notifyDataSetChanged();
         }
-
     }
 
     @Override
