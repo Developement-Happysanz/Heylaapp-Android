@@ -131,6 +131,9 @@ dependencies {
     implementation 'com.android.support:percent:26+'
     implementation 'com.android.support:cardview-v7:26+'
     implementation 'com.android.support:gridlayout-v7:26+'
+
+    implementation 'com.github.stfalcon:smsverifycatcher:0.3.1'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

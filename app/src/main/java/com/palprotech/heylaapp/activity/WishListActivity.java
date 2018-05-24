@@ -60,6 +60,7 @@ public class WishListActivity extends AppCompatActivity implements AdapterView.O
         className = this.getClass().getSimpleName();
 //        loadMoreListView.setOnLoadMoreListener(this);
         loadMoreListView.setOnItemClickListener(this);
+        loadMoreListView.setOnItemLongClickListener(this);
         eventsArrayList = new ArrayList<>();
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);

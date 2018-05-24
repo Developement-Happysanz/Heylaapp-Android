@@ -33,6 +33,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout vRateUs;
     private RelativeLayout vSignOut;
     private RelativeLayout vSettings;
+    private RelativeLayout profileLayout;
     private ImageView vUserImage;
     private TextView profileName;
 
@@ -56,12 +57,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         vSettings.setOnClickListener(this);
         vRateUs = (RelativeLayout) findViewById(R.id.rate_us_img);
         vRateUs.setOnClickListener(this);
+        profileLayout = (RelativeLayout) findViewById(R.id.info_layout);
+        profileLayout.setOnClickListener(this);
         vSignOut = (RelativeLayout) findViewById(R.id.sign_out_img);
         vSignOut.setOnClickListener(this);
         profileName = findViewById(R.id.profile_name);
         profileName.setText(PreferenceStorage.getFullName(this));
         vUserImage = (ImageView) findViewById(R.id.profile_img);
-        vUserImage.setOnClickListener(this);
         String url = PreferenceStorage.getUserPicture(this);
         String getSocialUrl = PreferenceStorage.getSocialNetworkProfileUrl(this);
         if (((url != null) && !(url.isEmpty()))) {
@@ -146,7 +148,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             });
             alertDialogBuilder.show();
         }
-        if (v == vUserImage) {
+        if (v == profileLayout) {
             if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
                 startPersonDetailsActivity(-1);
             } else {

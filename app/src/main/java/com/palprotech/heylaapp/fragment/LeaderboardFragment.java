@@ -48,7 +48,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     TextView viewFullStatistics, loginCount, loginPoints, shareCount, sharePoints, checkinCount;
     TextView checkinPoints, bookingCount, bookingPoints, reviewCount, reviewPoints, totalPoints;
     TextView name, username;
-    RelativeLayout login, share, check_in, booking, reviews;
+    RelativeLayout login, share, check_in, booking, reviews, profile;
     ImageView userPic;
 
    /* @Override
@@ -83,7 +83,8 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
             username.setText(PreferenceStorage.getUsername(getActivity()));
         }
         userPic = rootView.findViewById(R.id.leaderboard_profile_img);
-        userPic.setOnClickListener(this);
+        profile = rootView.findViewById(R.id.edit_profile);
+        profile.setOnClickListener(this);
         String url = PreferenceStorage.getUserPicture(getActivity());
         String getSocialUrl = PreferenceStorage.getSocialNetworkProfileUrl(getActivity());
         if (((url != null) && !(url.isEmpty()))) {
@@ -143,7 +144,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-         if (view == userPic) {
+         if (view == profile) {
             Intent homeIntent = new Intent(getActivity(), ProfileActivity.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);

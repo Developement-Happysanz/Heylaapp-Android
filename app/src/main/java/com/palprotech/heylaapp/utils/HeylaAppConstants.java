@@ -122,6 +122,9 @@ public class HeylaAppConstants {
     //    Event city list
     public static final String EVENT_CITY_LIST = "apimain/selectAllCity/";
 
+    //    Event city list
+    public static final String EVENT_PRICE_LIST = "apimain/bookingPricerange/";
+
     //    Preferences list
     public static final String USER_PREFERENCES_LIST = "apimain/userPreference/";
 
@@ -152,6 +155,9 @@ public class HeylaAppConstants {
 
     //    Event popularity
     public static final String EVENT_POPULARITY = "apimain/eventPopularity/";
+
+    //    Event popularity
+    public static final String EVENT_WISHLIST_STATUS = "apimain/wishListStatus/";
 
     //    Event nearby list
     public static final String EVENT_NEAR_BY = "apimain/nearBy/";

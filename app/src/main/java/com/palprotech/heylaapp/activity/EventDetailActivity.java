@@ -68,6 +68,9 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     private ImageView imEventFavourite;
     MapView mMapView = null;
     private String eventType = "";
+    private String wishliststatus = "";
+    private String wishlist_id = "";
+    private String res = "";
 
     private ImageView imEventOrganiserRequest;
     private TextView txtEventReview;
@@ -97,7 +100,8 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 
         event = (Event) getIntent().getSerializableExtra("eventObj");
         eventType = event.getHotspotStatus();
-
+        setUpServices();
+        getWishlistStatus();
         setUpUI();
     }
 
@@ -131,9 +135,16 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 //            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
         if (v == imEventFavourite) {
-//            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
             if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
-                addToFavourite();
+                getWishlistStatus();
+                if (wishliststatus.equalsIgnoreCase("exist")){
+                    imEventFavourite.setImageResource(R.drawable.ic_unlike);
+                    removeFromWishlist();
+                } else {
+                    imEventFavourite.setImageResource(R.drawable.ic_like);
+                    addToWishlist();
+                }
+
             } else {
                 guestLoginAlert();
             }
@@ -170,11 +181,15 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         }
     }
 
-    //    Setup UI page
-    void setUpUI() {
+    void setUpServices() {
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
+    }
+
+    //    Setup UI page
+    void setUpUI() {
+
 //        Back button
         imBack = findViewById(R.id.back_res);
 //        Event banner
@@ -282,6 +297,25 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 
         progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_POPULARITY;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void getWishlistStatus() {
+
+        res = "wishlistStatus";
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_EVENT_ID, event.getId());
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_WISHLIST_STATUS;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
@@ -419,7 +453,10 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
-    private void addToFavourite() {
+    private void addToWishlist() {
+
+        res = "wishlistADD";
+
         JSONObject jsonObject = new JSONObject();
         try {
 
@@ -433,6 +470,25 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 
         progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.WISH_LIST_ADD;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void removeFromWishlist() {
+
+        res = "wishlistDEL";
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
+            jsonObject.put(HeylaAppConstants.PARAMS_WISH_LIST_ID, wishlist_id);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.WISH_LIST_DELETE;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
@@ -474,7 +530,33 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
-
+            if (res.equalsIgnoreCase("wishlistStatus")){
+                try{
+                    wishliststatus = response.getString("status");
+                    wishlist_id = response.getString("wishlist_id");
+                    if (wishliststatus.equalsIgnoreCase("success")){
+                        imEventFavourite.setImageResource(R.drawable.ic_like);
+                    } else {
+                        imEventFavourite.setImageResource(R.drawable.ic_unlike);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else if (res.equalsIgnoreCase("wishlistADD")){
+                try{
+                    wishliststatus = response.getString("status");
+                    Toast.makeText(this,"Wishlist Updated!!", Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else if (res.equalsIgnoreCase("wishlistDEL")){
+                try{
+                    wishliststatus = response.getString("status");
+                    Toast.makeText(this,"Wishlist Updated!!", Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
