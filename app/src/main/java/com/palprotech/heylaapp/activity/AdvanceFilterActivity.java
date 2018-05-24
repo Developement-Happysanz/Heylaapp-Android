@@ -401,12 +401,12 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     PreferenceStorage.saveFilterSingleDate(this, singleDate);
                     PreferenceStorage.saveFilterFromDate(this, "");
                     PreferenceStorage.saveFilterToDate(this, "");
-                    if (!city.equalsIgnoreCase("Select Your City")) {
+                    if (!city.equalsIgnoreCase("Select your city")) {
                         PreferenceStorage.saveFilterCity(this, city);
                     }
                     PreferenceStorage.saveFilterEventType(this, eventTypeStr);
                     PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
-                    if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
+                    if (!eventCategoryStr.equalsIgnoreCase("Select category")) {
                         PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
                     } else {
                         PreferenceStorage.saveFilterPreference(this, "");
@@ -417,9 +417,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     PreferenceStorage.saveFilterSingleDate(this, singleDate);
 
                     if (fromdate.equalsIgnoreCase("")) {
-                        Toast.makeText(this, "Select From Date", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Select from date", Toast.LENGTH_SHORT).show();
                     } else if (todate.equalsIgnoreCase("")) {
-                        Toast.makeText(this, "Select To Date", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Select to date", Toast.LENGTH_SHORT).show();
                     } else {
 
                         PreferenceStorage.saveFilterFromDate(this, mFromDateVal);
