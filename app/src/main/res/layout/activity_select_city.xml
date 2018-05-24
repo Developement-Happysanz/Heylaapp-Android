@@ -41,13 +41,41 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/location_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/currentlocation"
             android:layout_width="wrap_content"
-            android:layout_height="75dp"
-            android:fontFamily="@font/muli"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Current Location"
+            android:textColor="@color/text_black"
+            android:fontFamily="@font/muli"
+            android:textSize="22dp" />
+
+        <ImageView
+            android:id="@+id/currentLocimg"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_below="@+id/currentlocation"
+            android:layout_marginLeft="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/ic_current_location" />
+
+        <TextView
+            android:id="@+id/currentloctxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/currentLocimg"
+            android:layout_alignTop="@+id/currentLocimg"
+            android:layout_toRightOf="@+id/currentLocimg"
+            android:gravity="center"
+            android:fontFamily="@font/muli"
+            android:textColor="@color/text_black"
+            android:textSize="18dp" />
 
     </RelativeLayout>
 
@@ -55,9 +83,9 @@
         android:id="@+id/listView_events"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/muli"
         android:divider="@color/background_grey"
         android:dividerHeight="2dp"
+        android:fontFamily="@font/muli"
         android:paddingEnd="10dp"
         android:paddingStart="10dp">
 

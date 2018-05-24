@@ -111,21 +111,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:paddingBottom="10dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/login_using_fb"
                 android:layout_width="match_parent"
+                android:layout_weight="0.5"
                 android:layout_height="50dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:background="@drawable/btn_square_facebook"
                 android:drawableLeft="@drawable/ic_fb_login"
                 android:gravity="center"
                 android:fontFamily="@font/muli"
                 android:paddingEnd="8dp"
-                android:text="Connect with Facebook"
+                android:text="Facebook"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -133,33 +133,54 @@
                 android:id="@+id/login_using_gplus"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginBottom="20dp"
+                android:layout_weight="0.5"
                 android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:fontFamily="@font/muli"
                 android:background="@drawable/btn_square_google"
                 android:drawableLeft="@drawable/ic_btn_google_light_normal_ios"
                 android:gravity="center"
                 android:paddingEnd="8dp"
-                android:text="Connect with Google"
+                android:text="Google"
                 android:textSize="15sp" />
-
-            <!--<ImageView-->
-            <!--android:id="@+id/login_using_fb"-->
-            <!--android:layout_width="45dp"-->
-            <!--android:layout_height="45dp"-->
-            <!--android:layout_marginEnd="10dp"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:src="@drawable/ic_login_facebook" />-->
-
-            <!--<ImageView-->
-            <!--android:id="@+id/login_using_gplus"-->
-            <!--android:layout_width="45dp"-->
-            <!--android:layout_height="45dp"-->
-            <!--android:src="@drawable/ic_login_google_plus" />-->
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_guest_login"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_guest_login"/>
+
+            <TextView
+                android:id="@+id/guest_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/img_guest_login"
+                android:layout_alignBottom="@id/img_guest_login"
+                android:layout_toRightOf="@id/img_guest_login"
+                android:text="Continue as Guest"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:textSize="18dp"
+                android:textColor="@color/text_black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_alignLeft="@+id/guest_txt"
+                android:layout_alignRight="@id/guest_txt"
+                android:background="@color/text_black"
+                android:layout_below="@id/guest_txt"/>
+
+        </RelativeLayout>
     </LinearLayout>
 
 </ScrollView>

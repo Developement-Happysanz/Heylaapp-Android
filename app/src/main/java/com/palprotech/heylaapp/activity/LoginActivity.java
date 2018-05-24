@@ -139,8 +139,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
             serviceHelper = new ServiceHelper(this);
             serviceHelper.setServiceListener(this);
             progressDialogHelper = new ProgressDialogHelper(this);
-            txtGuestLogin = (TextView) findViewById(R.id.guestlogin);
-            txtGuestLogin.setOnClickListener(this);
+
 
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
@@ -270,23 +269,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
     @Override
     public void onClick(View v) {
         if (CommonUtils.isNetworkAvailable(this)) {
-            if (v == txtGuestLogin) {
 
-                String GCMKey = PreferenceStorage.getGCM(this);
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put(HeylaAppConstants.PARAMS_UNIQUE_ID, IMEINo);
-                    jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
-                    jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.GUEST_LOGIN;
-                serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-            }
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection available");
         }

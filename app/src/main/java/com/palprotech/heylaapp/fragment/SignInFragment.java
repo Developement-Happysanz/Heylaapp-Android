@@ -1,14 +1,18 @@
 package com.palprotech.heylaapp.fragment;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -69,11 +73,14 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
     private CheckBox saveLoginCheckBox;
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
-    private TextView forgotPassword, btnGoogle, btnFacebook;
+    private TextView forgotPassword, btnGoogle, btnFacebook, txtGuestLogin;
     private static final int RC_SIGN_IN = 9001;
     private int mSelectedLoginMode = 0;
     private GoogleApiClient mGoogleApiClient;
     SQLiteHelper database;
+    String IMEINo = "";
+    private static final int PERMISSION_REQUEST_CODE = 1;
+
 
     public static SignInFragment newInstance(int position) {
         SignInFragment frag = new SignInFragment();
@@ -89,6 +96,29 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
         rootView = inflater.inflate(R.layout.fragment_sign_in, container, false);
 
         initializeViews();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+
+            TelephonyManager tm = (TelephonyManager)
+                    getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE)
+                    == PackageManager.PERMISSION_DENIED) {
+
+                Log.d("permission", "permission denied to SEND_SMS - requesting it");
+                String[] permissions = {Manifest.permission.READ_PHONE_STATE};
+
+                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
+            }
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                IMEINo = tm.getImei();
+            } else {
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE)
+                        == PackageManager.PERMISSION_DENIED) {
+                    IMEINo = "";
+                } else {
+                    IMEINo = tm.getDeviceId();
+                }
+            }
+        }
 
         return rootView;
     }
@@ -106,6 +136,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
         btnGoogle.setOnClickListener(this);
         btnFacebook = rootView.findViewById(R.id.login_using_fb);
         btnFacebook.setOnClickListener(this);
+        txtGuestLogin = (TextView) rootView.findViewById(R.id.guest_txt);
+        txtGuestLogin.setOnClickListener(this);
 
         serviceHelper = new ServiceHelper(getActivity());
         serviceHelper.setServiceListener(this);
@@ -305,6 +337,22 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                 initFacebook();
                 PreferenceStorage.saveLoginMode(getActivity(), HeylaAppConstants.FACEBOOK);
                 mSelectedLoginMode = HeylaAppConstants.FACEBOOK;
+            } if (v == txtGuestLogin) {
+
+                String GCMKey = PreferenceStorage.getGCM(getActivity());
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put(HeylaAppConstants.PARAMS_UNIQUE_ID, IMEINo);
+                    jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
+                    jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.GUEST_LOGIN;
+                serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
             }
         } else {
             AlertDialogHelper.showSimpleAlertDialog(getActivity(), "No Network connection available");

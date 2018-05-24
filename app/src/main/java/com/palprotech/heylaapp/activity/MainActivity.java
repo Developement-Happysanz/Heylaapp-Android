@@ -580,6 +580,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     public void onProviderDisabled(String s) {
 
     }
+
     public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
