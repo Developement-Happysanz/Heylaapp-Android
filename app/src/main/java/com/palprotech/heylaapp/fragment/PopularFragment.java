@@ -133,6 +133,8 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
     protected boolean isLoadingForFirstTime = true;
     int pageNumber = 0, totalCount = 0;
 
+    TextView today, tomo, week, month;
+
     private SearchView mSearchView = null;
 
     public static PopularFragment newInstance(int position) {
@@ -172,6 +174,50 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
         layoutFabListView = (LinearLayout) rootView.findViewById(R.id.layoutFabListView);
         layoutFabNearby = (LinearLayout) rootView.findViewById(R.id.layoutFabNearby);
         layoutFabMapview = (LinearLayout) rootView.findViewById(R.id.layoutFabMapView);
+
+        today = (TextView) rootView.findViewById(R.id.txt_today);
+        today.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                today.setBackgroundResource(R.drawable.btn_round_grey);
+                tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
+                week.setBackgroundResource(R.drawable.btn_round_nocolor);
+                month.setBackgroundResource(R.drawable.btn_round_nocolor);
+            }
+        });
+
+        tomo = (TextView) rootView.findViewById(R.id.txt_tomo);
+        tomo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                today.setBackgroundResource(R.drawable.btn_round_nocolor);
+                tomo.setBackgroundResource(R.drawable.btn_round_grey);
+                week.setBackgroundResource(R.drawable.btn_round_nocolor);
+                month.setBackgroundResource(R.drawable.btn_round_nocolor);
+            }
+        });
+
+        week = (TextView) rootView.findViewById(R.id.txt_week);
+        week.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                today.setBackgroundResource(R.drawable.btn_round_nocolor);
+                tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
+                week.setBackgroundResource(R.drawable.btn_round_grey);
+                month.setBackgroundResource(R.drawable.btn_round_nocolor);
+            }
+        });
+
+        month = (TextView) rootView.findViewById(R.id.txt_month);
+        month.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                today.setBackgroundResource(R.drawable.btn_round_nocolor);
+                tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
+                week.setBackgroundResource(R.drawable.btn_round_nocolor);
+                month.setBackgroundResource(R.drawable.btn_round_grey);
+            }
+        });
 
         mMapIcon = BitmapDescriptorFactory.fromResource(R.drawable.location_dot_img);
 

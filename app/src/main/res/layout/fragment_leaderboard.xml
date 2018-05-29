@@ -9,14 +9,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center_vertical">
 
         <RelativeLayout
             android:id="@+id/userinfo"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@color/appColorBase"
-            android:gravity="">
+            android:gravity="left">
 
             <Button
                 android:id="@+id/follow"
@@ -25,8 +25,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
-                android:visibility="gone"
-                android:background="@drawable/ic_leaderboard_follow" />
+                android:background="@drawable/ic_leaderboard_follow"
+                android:visibility="gone" />
 
 
             <RelativeLayout
@@ -34,50 +34,49 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:gravity="center">
+                android:layout_marginLeft="30dp"
+                android:gravity="center_vertical">
 
                 <com.palprotech.heylaapp.customview.CircleImageView
                     android:id="@+id/leaderboard_profile_img"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
                     android:src="@drawable/ic_default_profile" />
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/username"
-                    android:layout_alignTop="@+id/username"
-                    android:layout_toEndOf="@+id/username"
-                    android:paddingEnd="5dp"
-                    android:paddingStart="5dp"
-                    android:src="@drawable/ic_leaderboard_edit" />
-
-                <TextView
-                    android:id="@+id/name"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/leaderboard_profile_img"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center_horizontal"
-                    android:hint="Narendar Ravikrishnan"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
-                    android:textSize="19sp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:layout_alignTop="@+id/leaderboard_profile_img"
+                    android:layout_alignBottom="@+id/leaderboard_profile_img"
+                    android:layout_toRightOf="@+id/leaderboard_profile_img">
 
-                <TextView
-                    android:id="@+id/username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/name"
-                    android:layout_centerInParent="true"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/muli"
-                    android:hint=""
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
-                    android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/muli"
+                        android:hint="Narendar Ravikrishnan"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/muli"
+                        android:hint=""
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -214,9 +213,9 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignBottom="@id/login_text"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/login_text"
                     android:layout_marginEnd="50dp"
-                    android:layout_alignParentEnd="true"
                     android:src="@drawable/ic_leaderboard_star" />
 
                 <TextView
@@ -227,10 +226,10 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/login_star"
                     android:layout_marginEnd="20dp"
-                    android:text="000"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
+                    android:text="000"
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
 
@@ -286,10 +285,10 @@
                     android:id="@+id/share_star"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginEnd="50dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignBottom="@id/sharing_text"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/sharing_text"
+                    android:layout_marginEnd="50dp"
                     android:src="@drawable/ic_leaderboard_star" />
 
                 <TextView
@@ -300,10 +299,10 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/share_star"
                     android:layout_marginEnd="20dp"
-                    android:text="000"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
+                    android:text="000"
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
 
@@ -360,9 +359,9 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignBottom="@id/check_in_text"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/check_in_text"
                     android:layout_marginEnd="50dp"
-                    android:layout_alignParentEnd="true"
                     android:src="@drawable/ic_leaderboard_star" />
 
                 <TextView
@@ -373,10 +372,10 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/check_in_star"
                     android:layout_marginEnd="20dp"
-                    android:text="000"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
+                    android:text="000"
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
 
@@ -433,9 +432,9 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignBottom="@id/review_text"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/review_text"
                     android:layout_marginEnd="50dp"
-                    android:layout_alignParentEnd="true"
                     android:src="@drawable/ic_leaderboard_star" />
 
                 <TextView
@@ -446,10 +445,10 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/review_star"
                     android:layout_marginEnd="20dp"
-                    android:text="000"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
+                    android:text="000"
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
 
@@ -506,9 +505,9 @@
                     android:id="@+id/booking_star"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignTop="@+id/booking_count"
                     android:layout_marginEnd="50dp"
-                    android:layout_alignParentEnd="true"
                     android:src="@drawable/ic_leaderboard_star" />
 
                 <TextView
@@ -519,10 +518,10 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/booking_star"
                     android:layout_marginEnd="20dp"
-                    android:text="000"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
+                    android:text="000"
                     android:textColor="@color/text_black"
                     android:textSize="15sp" />
 

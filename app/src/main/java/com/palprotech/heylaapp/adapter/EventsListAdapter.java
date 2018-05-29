@@ -95,14 +95,9 @@ public class EventsListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.event_list_item, parent, false);
 
             holder = new ViewHolder();
-            holder.dateLayout = convertView.findViewById(R.id.date_layout);
             holder.txtEventName = (TextView) convertView.findViewById(R.id.txt_event_name);
-            holder.txtEventVenue = (TextView) convertView.findViewById(R.id.txt_event_location);
             holder.txtDate = (TextView) convertView.findViewById(R.id.txt_event_date);
             holder.txtEndDate = (TextView) convertView.findViewById(R.id.txt_event_end_date);
-            holder.txtMonth = convertView.findViewById(R.id.txt_event_month);
-            holder.txtEndMonth = convertView.findViewById(R.id.txt_event_end_month);
-            holder.txtTime = (TextView) convertView.findViewById(R.id.txt_event_time);
             holder.imageView = (ImageView) convertView.findViewById(R.id.img_logo);
             holder.paidBtn = (Button) convertView.findViewById(R.id.event_paid_btn);
             holder.txtPrice = convertView.findViewById(R.id.txt_event_price);
@@ -131,7 +126,6 @@ public class EventsListAdapter extends BaseAdapter {
         } else {
             result = aux[aux.length - 1];
         }
-        holder.txtEventVenue.setText(result);
 
         String paidBtnVal = event.getEventType();
         if (paidBtnVal != null) {
@@ -143,13 +137,6 @@ public class EventsListAdapter extends BaseAdapter {
             } else if (paidBtnVal.equalsIgnoreCase("paid")) {
                 holder.paidBtn.setTextColor(context.getResources().getColor(R.color.white)); //rounder_button
             }
-        }
-
-        if (className.equalsIgnoreCase("HotspotFragment")) {
-            holder.dateLayout.setVisibility(View.INVISIBLE);
-        }
-        else {
-            holder.dateLayout.setVisibility(View.VISIBLE);
         }
 
         if (HeylaAppValidator.checkNullString(events.get(position).getEventBanner())) {
@@ -164,28 +151,18 @@ public class EventsListAdapter extends BaseAdapter {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
             Date date = (Date) formatter.parse(start);
             Date date1 = (Date) formatter.parse(end);
-            SimpleDateFormat month_date = new SimpleDateFormat("MMM");
-            SimpleDateFormat event_date = new SimpleDateFormat("dd");
-            String month_name = month_date.format(date.getTime());
+            SimpleDateFormat event_date = new SimpleDateFormat("dd MMM yyyy");
             String date_name = event_date.format(date.getTime());
-            String month_end_name = month_date.format(date1.getTime());
             String date_end_name = event_date.format(date1.getTime());
             if ((start != null) && (end != null)) {
-                holder.txtDate.setText(date_name);
-                holder.txtMonth.setText(month_name);
+                holder.txtDate.setText(date_name + " - ");
                 holder.txtEndDate.setText(date_end_name);
-                holder.txtEndMonth.setText(month_end_name);
             } else {
                 holder.txtDate.setText("N/A");
             }
         } catch (final ParseException e) {
             e.printStackTrace();
         }
-
-        start = events.get(position).getStartTime();
-        end = events.get(position).getEndTime();
-
-        holder.txtTime.setText(start + " - " + end);
 
         return convertView;
     }
@@ -218,8 +195,7 @@ public class EventsListAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        public TextView txtEventName, txtEventVenue, txtDate, txtMonth, txtTime , txtPrice, txtEndDate, txtEndMonth;
-        public RelativeLayout dateLayout;
+        public TextView txtEventName, txtDate, txtPrice, txtEndDate;
         public ImageView imageView;
         public Button paidBtn;
     }

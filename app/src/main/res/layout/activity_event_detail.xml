@@ -6,149 +6,156 @@
     android:background="@color/bordergray"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_result"
+    <RelativeLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/appColorBase"
+            android:minHeight="60dp" />
+
+        <ImageView
+            android:id="@+id/detail_back"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="10dp"
+            android:minHeight="60dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:src="@drawable/ic_back_button" />
+
+        <TextView
+            android:id="@+id/tvtitletext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/muli"
+            android:gravity="center"
+            android:minHeight="60dp"
+            android:padding="5dp"
+            android:text="Event Detail"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/actionbarTextSize" />
+
+        <ImageView
+            android:id="@+id/addfav"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@id/tvtitletext"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/tvtitletext"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:src="@drawable/ic_unlike" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/banner_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/appColorBase"
-        android:minHeight="60dp" />
+        android:layout_below="@+id/toolbar_layout">
 
-    <ImageView
-        android:id="@+id/detail_back"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="10dp"
-        android:minHeight="60dp"
-        android:paddingEnd="15dp"
-        android:paddingStart="15dp"
-        android:src="@drawable/ic_back_button" />
+        <ImageView
+            android:id="@+id/event_detail_img"
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:contentDescription="@string/app_name"
+            android:foreground="@color/temp" />
 
-    <TextView
-        android:id="@+id/tvtitletext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="@font/muli"
-        android:gravity="center"
-        android:minHeight="60dp"
-        android:padding="5dp"
-        android:text="Event Detail"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="@dimen/actionbarTextSize" />
+        <TextView
+            android:id="@+id/event_detail_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/event_detail_img"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/muli"
+            android:paddingBottom="10dp"
+            android:text="CAKE POINT"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/share_event"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/event_detail_img"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="-18dp"
+            android:background="@drawable/ic_round_full_color"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:src="@drawable/ic_menu_share_app"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/event_qa"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/event_detail_img"
+            android:layout_marginEnd="60dp"
+            android:layout_marginTop="-18dp"
+            android:background="@drawable/ic_round_full_color"
+            android:fontFamily="@font/muli"
+            android:gravity="center"
+            android:text="QA"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/event_views"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_toLeftOf="@id/eventviews"
+            android:fontFamily="@font/muli"
+            android:gravity="center"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:text="200"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+
+        <ImageView
+            android:id="@+id/eventviews"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:src="@drawable/ic_hide" />
+
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bookingbar"
-        android:layout_below="@id/toolbar_result">
+        android:layout_below="@id/banner_layout"
+        android:layout_marginTop="-50dp">
 
         <RelativeLayout
+            android:id="@+id/eventimglayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <FrameLayout
-                android:id="@+id/eventimglayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/event_detail_img"
-                        android:layout_width="match_parent"
-                        android:layout_height="225dp"
-                        android:contentDescription="@string/app_name"
-                        android:foreground="@color/temp" />
-
-                    <TextView
-                        android:id="@+id/event_detail_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/event_detail_img"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/muli"
-                        android:paddingBottom="10dp"
-                        android:text="CAKE POINT"
-                        android:textColor="@color/white"
-                        android:textSize="20dp" />
-
-                    <ImageView
-                        android:id="@+id/share_event"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_below="@+id/event_detail_img"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginTop="-18dp"
-                        android:background="@drawable/ic_round_full_color"
-                        android:paddingEnd="10dp"
-                        android:paddingStart="10dp"
-                        android:src="@drawable/ic_menu_share_app" />
-
-                    <TextView
-                        android:id="@+id/event_qa"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_below="@+id/event_detail_img"
-                        android:layout_marginEnd="60dp"
-                        android:layout_marginTop="-18dp"
-                        android:background="@drawable/ic_round_full_color"
-                        android:fontFamily="@font/muli"
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:text="QA"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/event_views"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_toLeftOf="@id/eventviews"
-                        android:fontFamily="@font/muli"
-                        android:gravity="center"
-                        android:paddingEnd="10dp"
-                        android:paddingStart="10dp"
-                        android:text="200"
-                        android:textColor="@color/white"
-                        android:textSize="15dp" />
-
-                    <ImageView
-                        android:id="@+id/eventviews"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_toLeftOf="@id/addfav"
-                        android:paddingEnd="10dp"
-                        android:paddingStart="10dp"
-                        android:src="@drawable/ic_hide" />
-
-                    <ImageView
-                        android:id="@+id/addfav"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentEnd="true"
-                        android:paddingEnd="10dp"
-                        android:paddingStart="10dp"
-                        android:src="@drawable/ic_unlike" />
-
-                </RelativeLayout>
-
-            </FrameLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/btn_round_nocolor"
+            android:paddingBottom="10dp">
 
             <RelativeLayout
                 android:id="@+id/one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/eventimglayout"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/btn_round_nocolor">
+                android:layout_marginBottom="10dp">
 
                 <RelativeLayout
                     android:id="@+id/addresslayout"
@@ -530,6 +537,8 @@
 
                 </RelativeLayout>
             </RelativeLayout>
+
+
         </RelativeLayout>
 
     </ScrollView>

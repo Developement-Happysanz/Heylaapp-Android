@@ -49,7 +49,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/trans"
                 android:divider="@color/white"
-                android:dividerHeight="5dp"></ListView>
+                android:dividerHeight="5dp"/>
 
         </RelativeLayout>
 

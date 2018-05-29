@@ -10,13 +10,22 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp">
+        android:layout_height="240dp">
 
         <ImageView
             android:id="@+id/img_logo"
             android:layout_width="match_parent"
             android:layout_height="190dp"
             android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foreground="@color/temp"
+            android:layout_alignTop="@id/img_logo"
+            android:layout_alignBottom="@id/img_logo"
+            android:layout_alignLeft="@id/img_logo"
+            android:layout_alignRight="@id/img_logo"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
-                android:background="@color/temp">
+                android:background="@color/white">
 
                 <TextView
                     android:id="@+id/txt_event_name"
@@ -41,47 +50,35 @@
                     android:singleLine="true"
                     android:fontFamily="@font/muli"
                     android:text="Mini Marathon Championship"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_black"
                     android:textSize="18dp" />
 
 
                 <TextView
-                    android:id="@+id/txt_event_time"
+                    android:id="@+id/txt_event_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txt_event_name"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="10dp"
-                    android:drawablePadding="5dp"
-                    android:drawableStart="@drawable/ic_time"
-                    android:ellipsize="end"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_event_name"
                     android:fontFamily="@font/muli"
-                    android:gravity="center"
+                    android:layout_alignLeft="@+id/txt_event_name"
                     android:singleLine="true"
-                    android:text="9:00 PM"
-                    android:textColor="@android:color/white"
-                    android:textSize="11dp" />
+                    android:textColorHint="@color/text_black"
+                    android:hint="25"
+                    android:textColor="@color/text_black"
+                    android:textSize="15dp" />
+
 
                 <TextView
-                    android:id="@+id/txt_event_location"
+                    android:id="@+id/txt_event_end_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_below="@+id/txt_event_name"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@id/txt_event_time"
-                    android:drawablePadding="5dp"
-                    android:drawableStart="@drawable/ic_location"
-                    android:ellipsize="end"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/txt_event_date"
+                    android:layout_toEndOf="@+id/txt_event_date"
                     android:fontFamily="@font/muli"
-                    android:gravity="center"
                     android:singleLine="true"
-                    android:text="Peelamedu"
-                    android:textColor="@android:color/white"
-                    android:textSize="11dp" />
+                    android:text="25"
+                    android:textColor="@color/text_black"
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/txt_event_price"
@@ -91,7 +88,7 @@
                     android:layout_gravity="center"
                     android:layout_marginEnd="5dp"
                     android:layout_marginStart="20dp"
-                    android:layout_toEndOf="@id/txt_event_location"
+                    android:layout_toEndOf="@id/txt_event_end_date"
                     android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/muli"
@@ -100,7 +97,7 @@
                     android:singleLine="true"
                     android:text="Paid"
                     android:textColor="@color/appColorBase"
-                    android:textSize="12dp" />
+                    android:textSize="15dp" />
 
                 <Button
                     android:id="@+id/event_paid_btn"
@@ -113,7 +110,6 @@
                     android:background="@color/appColorBase"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
-
                     android:text=""
                     android:textAllCaps="true"
                     android:textColor="@color/white"
@@ -123,89 +119,6 @@
             </RelativeLayout>
 
         </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/date_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/appColorBase">
-
-            <TextView
-                android:id="@+id/txt_event_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginStart="1dp"
-                android:layout_alignStart="@id/txt_event_month"
-                android:layout_alignEnd="@id/txt_event_month"
-                android:ellipsize="end"
-                android:fontFamily="@font/muli"
-                android:gravity="center"
-                android:singleLine="true"
-                android:hint="25"
-                android:textColor="@android:color/white"
-                android:textSize="15dp" />
-
-            <TextView
-                android:id="@+id/txt_event_month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:gravity="center"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginStart="1dp"
-                android:fontFamily="@font/muli"
-                android:textColor="@android:color/white"
-                android:textSize="15dp"
-                android:layout_below="@+id/txt_event_date"/>
-
-            <TextView
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:layout_alignTop="@+id/txt_event_date"
-                android:layout_alignBottom="@+id/txt_event_month"
-                android:layout_toEndOf="@+id/txt_event_month"
-                android:background="@color/white"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"/>
-
-            <TextView
-                android:id="@+id/txt_event_end_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:layout_marginStart="1dp"
-                android:layout_toEndOf="@+id/txt_event_date"
-                android:layout_alignStart="@id/txt_event_end_month"
-                android:layout_alignEnd="@id/txt_event_end_month"
-                android:ellipsize="end"
-                android:fontFamily="@font/muli"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text=""
-                android:textColor="@android:color/white"
-                android:textSize="15dp" />
-
-            <TextView
-                android:id="@+id/txt_event_end_month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:gravity="center|top"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:layout_toEndOf="@+id/txt_event_date"
-                android:layout_marginStart="1dp"
-                android:fontFamily="@font/muli"
-                android:textColor="@android:color/white"
-                android:textSize="15dp"
-                android:layout_below="@+id/txt_event_date"/>
-        </RelativeLayout>
-
 
     </RelativeLayout>
 

@@ -14,10 +14,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:background="@color/white">
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/mapview"
@@ -39,17 +36,84 @@
                 android:textStyle="bold"
                 android:visibility="gone" />
 
+            <RelativeLayout
+                android:id="@+id/current_view_layout"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_alignParentTop="true"
+                android:background="@color/bordergray"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/btn_round_nocolor"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/txt_today"
+                        android:layout_width="85dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/btn_round_grey"
+                        android:gravity="center"
+                        android:text="Today"
+                        android:textColor="@color/text_black"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/txt_tomo"
+                        android:layout_width="85dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/btn_round_nocolor"
+                        android:gravity="center"
+                        android:text="Tomorrow"
+                        android:textColor="@color/text_black"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/txt_week"
+                        android:layout_width="85dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/btn_round_nocolor"
+                        android:gravity="center"
+                        android:text="This week"
+                        android:textColor="@color/text_black"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/txt_month"
+                        android:layout_width="85dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/btn_round_nocolor"
+                        android:gravity="center"
+                        android:text="This month"
+                        android:textColor="@color/text_black"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
             <ListView
                 android:id="@+id/listView_events"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/mapview"
+                android:layout_below="@+id/current_view_layout"
                 android:layout_marginTop="5dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:background="@color/trans"
                 android:divider="@color/white"
-                android:dividerHeight="5dp"></ListView>
+                android:dividerHeight="5dp"/>
 
         </RelativeLayout>
 
