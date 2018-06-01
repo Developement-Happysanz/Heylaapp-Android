@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -19,7 +20,9 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,8 +34,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.adapter.ReviewAdapter;
 import com.palprotech.heylaapp.bean.support.Event;
+import com.palprotech.heylaapp.bean.support.Review;
+import com.palprotech.heylaapp.bean.support.ReviewList;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
@@ -42,11 +49,13 @@ import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -85,6 +94,15 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     String provider;
     protected Double latitude, longitude, latitude1, longitude1;
     protected boolean gps_enabled, network_enabled;
+
+    ListView reviewsListView;
+    Handler mHandler = new Handler();
+    int totalCount = 0;
+    protected boolean isLoadingForFirstTime = true;
+    ReviewAdapter reviewAdapter;
+    ArrayList<Review> reviewArrayList;
+    TextView viewMore;
+    Button writeReview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,11 +155,11 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         if (v == imEventFavourite) {
             if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
                 getWishlistStatus();
-                if (wishliststatus.equalsIgnoreCase("exist")){
-                    imEventFavourite.setImageResource(R.drawable.ic_unlike);
+                if (wishliststatus.equalsIgnoreCase("exist")) {
+                    imEventFavourite.setImageResource(R.drawable.ic_fav_deselect);
                     removeFromWishlist();
                 } else {
-                    imEventFavourite.setImageResource(R.drawable.ic_like);
+                    imEventFavourite.setImageResource(R.drawable.ic_fav_select);
                     addToWishlist();
                 }
 
@@ -152,9 +170,19 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         if (v == imEventOrganiserRequest) {
 //            Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
         }
-        if (v == txtEventReview) {
+        if (v == viewMore) {
             if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
                 Intent intent = new Intent(getApplicationContext(), EventReviewActivity.class);
+                intent.putExtra("eventObj", event);
+                startActivity(intent);
+            } else {
+                guestLoginAlert();
+            }
+//            finish();
+        }
+        if (v == writeReview) {
+            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
+                Intent intent = new Intent(getApplicationContext(), EventReviewAddActivity.class);
                 intent.putExtra("eventObj", event);
                 startActivity(intent);
             } else {
@@ -281,7 +309,15 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         if (isBooking.equalsIgnoreCase("N")) {
             txtBookEvent.setVisibility(View.GONE);
         }
+
+        reviewArrayList = new ArrayList<>();
+        reviewsListView = findViewById(R.id.listView_reviews);
+        viewMore = findViewById(R.id.view_more);
+        viewMore.setOnClickListener(this);
+        writeReview = findViewById(R.id.write_review);
+        writeReview.setOnClickListener(this);
         updateEventViews();
+        loadReviewList();
     }
 
     private void updateEventViews() {
@@ -500,7 +536,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(event.getEventLatitude()), Double.parseDouble(event.getEventLongitude())), 14.0f));
     }
 
-    private boolean validateSignInResponse(JSONObject response) {
+    private boolean validateSignInResponse(final JSONObject response) {
         boolean signInSuccess = false;
         if ((response != null)) {
             try {
@@ -527,37 +563,63 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     }
 
     @Override
-    public void onResponse(JSONObject response) {
+    public void onResponse(final JSONObject response) {
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
-            if (res.equalsIgnoreCase("wishlistStatus")){
-                try{
+            try {
+                if (res.equalsIgnoreCase("wishlistStatus")) {
                     wishliststatus = response.getString("status");
                     wishlist_id = response.getString("wishlist_id");
-                    if (wishliststatus.equalsIgnoreCase("success")){
-                        imEventFavourite.setImageResource(R.drawable.ic_like);
+                    if (wishliststatus.equalsIgnoreCase("success")) {
+                        imEventFavourite.setImageResource(R.drawable.ic_fav_select);
                     } else {
-                        imEventFavourite.setImageResource(R.drawable.ic_unlike);
+                        imEventFavourite.setImageResource(R.drawable.ic_fav_deselect);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else if (res.equalsIgnoreCase("wishlistADD")){
-                try{
+                } else if (res.equalsIgnoreCase("wishlistADD")) {
                     wishliststatus = response.getString("status");
-                    Toast.makeText(this,"Wishlist Updated!!", Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else if (res.equalsIgnoreCase("wishlistDEL")){
-                try{
+                    Toast.makeText(this, "Wishlist Updated!!", Toast.LENGTH_SHORT).show();
+
+                } else if (res.equalsIgnoreCase("wishlistDEL")) {
                     wishliststatus = response.getString("status");
-                    Toast.makeText(this,"Wishlist Updated!!", Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    Toast.makeText(this, "Wishlist Updated!!", Toast.LENGTH_SHORT).show();
+                } else if (res.equalsIgnoreCase("reviewList")) {
+                    JSONArray getData = response.getJSONArray("Reviewdetails");
+                    if (getData != null && getData.length() > 0) {
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Gson gson = new Gson();
+                                ReviewList reviewList = gson.fromJson(response.toString(), ReviewList.class);
+                                if (reviewList.getReviews() != null && reviewList.getReviews().size() > 0) {
+                                    totalCount = reviewList.getCount();
+                                    isLoadingForFirstTime = false;
+                                    updateListAdapter(reviewList.getReviews());
+                                }
+                            }
+                        });
+                    } else {
+                        if (reviewArrayList != null) {
+                            reviewArrayList.clear();
+                            reviewAdapter = new ReviewAdapter(this, this.reviewArrayList);
+                            reviewsListView.setAdapter(reviewAdapter);
+                        }
+                    }
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
+    }
+
+    protected void updateListAdapter(ArrayList<Review> reviewArrayList) {
+        this.reviewArrayList.addAll(reviewArrayList);
+//        if (bookingPlanAdapter == null) {
+        reviewAdapter = new ReviewAdapter(this, this.reviewArrayList);
+        reviewsListView.setAdapter(reviewAdapter);
+//        } else {
+        reviewAdapter.notifyDataSetChanged();
+//        }
     }
 
     @Override
@@ -583,6 +645,22 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
             }
         });
         alertDialogBuilder.show();
+    }
+
+    private void loadReviewList() {
+        res = "reviewList";
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_EVENT_ID, event.getId());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_REVIEW_LIST;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
     public void doLogout() {

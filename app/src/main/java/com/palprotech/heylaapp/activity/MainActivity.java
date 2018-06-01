@@ -19,6 +19,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,11 +33,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.adapter.SideMenuAdapterTemp;
 import com.palprotech.heylaapp.bean.support.EventCities;
 import com.palprotech.heylaapp.bean.support.EventCitiesList;
+import com.palprotech.heylaapp.customview.SideDrawerLayout;
+import com.palprotech.heylaapp.customview.SideDrawerToggle;
+import com.palprotech.heylaapp.customview.SideMenuView;
 import com.palprotech.heylaapp.fragment.FavouriteFragment;
 import com.palprotech.heylaapp.fragment.HotspotFragment;
 import com.palprotech.heylaapp.fragment.LeaderboardFragment;
@@ -58,12 +62,14 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity implements LocationListener, View.OnClickListener, ViewPager.OnPageChangeListener, DialogClickListener, IServiceListener {
+
+public class MainActivity extends AppCompatActivity implements SideMenuView.OnMenuClickListener, LocationListener, View.OnClickListener, ViewPager.OnPageChangeListener, DialogClickListener, IServiceListener {
 
     private static final String TAG = MainActivity.class.getName();
     private static final int TAG_LOGOUT = 100;
@@ -93,13 +99,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     private TextView sample;
 
+    private SideMenuAdapterTemp mMenuAdapter;
+    private ViewHolder mViewHolder;
+
+    private ArrayList<String> mTitles = new ArrayList<>();
+
     int checkPointSearch = 0;
     protected Double latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_new);
         initToolBar();
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         serviceHelper = new ServiceHelper(this);
@@ -160,6 +171,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         eventCitiesArrayList = new ArrayList<>();
         GetEventCities();
         sendLoginStatus();
+
+//        mTitles = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.menuOptions)));
+
+        // Initialize the views
+        mViewHolder = new ViewHolder();
+
+        // Handle toolbar actions
+        handleToolbar();
+
+        // Handle menu actions
+        handleMenu();
+
+        // Handle drawer actions
+        handleDrawer();
+
+        // Show main fragment in container
+        changeFragment(0);
+//        mMenuAdapter.setSelectView(0, true);
+//        setTitle(mTitles.get(0));
 
     }
 
@@ -361,15 +391,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationIcon(R.drawable.ic_sidemenu);
-        toolbar.setNavigationOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent homeIntent = new Intent(getApplicationContext(), MenuActivity.class);
-                        startActivity(homeIntent);
-                    }
-                }
-        );
+//        toolbar.setNavigationOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent homeIntent = new Intent(getApplicationContext(), MenuActivity.class);
+//                        startActivity(homeIntent);
+//                    }
+//                }
+//        );
     }
 
     @Override
@@ -630,7 +660,86 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
         }
     }
+
     protected void updateListAdapter(ArrayList<EventCities> eventCitiesArrayList) {
         this.eventCitiesArrayList.addAll(eventCitiesArrayList);
     }
+
+    private void handleToolbar() {
+        setSupportActionBar(mViewHolder.mToolbar);
+    }
+
+    private void handleDrawer() {
+        SideDrawerToggle SideDrawerToggle = new SideDrawerToggle(this,
+                mViewHolder.mSideDrawerLayout,
+                mViewHolder.mToolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+
+        mViewHolder.mSideDrawerLayout.setDrawerListener(SideDrawerToggle);
+        SideDrawerToggle.syncState();
+
+    }
+
+    private void handleMenu() {
+//        mMenuAdapter = new SideMenuAdapterTemp(mTitles);
+
+        mViewHolder.mSideMenuView.setOnMenuClickListener(this);
+//        mViewHolder.mSideMenuView.setAdapter(mMenuAdapter);
+    }
+
+    @Override
+    public void onFooterClicked() {
+        Toast.makeText(this, "onFooterClicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onHeaderClicked() {
+        Toast.makeText(this, "onHeaderClicked", Toast.LENGTH_SHORT).show();
+    }
+
+    private void goToFragment(android.support.v4.app.Fragment fragment, boolean addToBackStack) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        if (addToBackStack) {
+            transaction.addToBackStack(null);
+        }
+
+        transaction.add(R.id.container, fragment).commit();
+    }
+
+    @Override
+    public void onOptionClicked(int position, Object objectClicked) {
+        // Set the toolbar title
+//        setTitle(mTitles.get(position));
+//
+//        // Set the right options selected
+//        mMenuAdapter.setSelectView(position, true);
+//
+//        // Navigate to the right fragment
+//        switch (position) {
+//            default:
+//                changeFragment(0);
+//                break;
+//        }
+
+        // Close the drawer
+        mViewHolder.mSideDrawerLayout.closeDrawer();
+    }
+
+    private class ViewHolder {
+        private SideDrawerLayout mSideDrawerLayout;
+        private SideMenuView mSideMenuView;
+        private Toolbar mToolbar;
+
+        ViewHolder() {
+            mSideDrawerLayout = (SideDrawerLayout) findViewById(R.id.drawer);
+            mSideMenuView = (SideMenuView) mSideDrawerLayout.getMenuView();
+//            mToolbar = (Toolbar) findViewById(R.id.toolbar);
+            mToolbar = (Toolbar) findViewById(R.id.activity_toolbar);
+
+            setSupportActionBar(mToolbar);
+        }
+    }
+
 }

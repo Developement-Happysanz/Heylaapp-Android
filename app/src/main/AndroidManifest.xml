@@ -126,6 +126,13 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
+            android:name=".activity.LoginGreetingActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBarLogin"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
             android:name=".activity.ProfileActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

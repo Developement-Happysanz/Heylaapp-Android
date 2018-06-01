@@ -296,6 +296,9 @@ public class HeylaAppConstants {
     //    Shared Event City Id
     public static final String KEY_EVENT_CITY_ID = "event_city_id";
 
+    //    Shared Event Date Id
+    public static final String KEY_DATE_TYPE = "day_type";
+
     //    Shared Event City Name
     public static final String KEY_EVENT_CITY_NAME = "event_city_name";
 

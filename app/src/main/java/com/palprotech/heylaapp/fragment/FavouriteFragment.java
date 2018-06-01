@@ -129,7 +129,8 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
     private LinearLayout layoutFabNearby;
     private LinearLayout layoutFabListView;
 
-    TextView today, tomo, week, month;
+    TextView all, today, tomo, week, month;
+    String dateType = "";
 
     protected ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
@@ -177,14 +178,39 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
         layoutFabNearby = (LinearLayout) rootView.findViewById(R.id.layoutFabNearby);
         layoutFabMapview = (LinearLayout) rootView.findViewById(R.id.layoutFabMapView);
 
+        all = (TextView) rootView.findViewById(R.id.txt_all);
+        all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateType = "All";
+                all.setBackgroundResource(R.drawable.btn_round_grey);
+                today.setBackgroundResource(R.drawable.btn_round_nocolor);
+                tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
+                week.setBackgroundResource(R.drawable.btn_round_nocolor);
+                month.setBackgroundResource(R.drawable.btn_round_nocolor);
+                eventsArrayList.clear();
+                makeEventListServiceCall();
+                if (eventsListAdapter != null) {
+                    eventsListAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
         today = (TextView) rootView.findViewById(R.id.txt_today);
         today.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dateType = "Today";
+                all.setBackgroundResource(R.drawable.btn_round_nocolor);
                 today.setBackgroundResource(R.drawable.btn_round_grey);
                 tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
                 week.setBackgroundResource(R.drawable.btn_round_nocolor);
                 month.setBackgroundResource(R.drawable.btn_round_nocolor);
+                eventsArrayList.clear();
+                makeEventListServiceCall();
+                if (eventsListAdapter != null) {
+                    eventsListAdapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -192,10 +218,17 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
         tomo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dateType = "Tomorrow";
+                all.setBackgroundResource(R.drawable.btn_round_nocolor);
                 today.setBackgroundResource(R.drawable.btn_round_nocolor);
                 tomo.setBackgroundResource(R.drawable.btn_round_grey);
                 week.setBackgroundResource(R.drawable.btn_round_nocolor);
                 month.setBackgroundResource(R.drawable.btn_round_nocolor);
+                eventsArrayList.clear();
+                makeEventListServiceCall();
+                if (eventsListAdapter != null) {
+                    eventsListAdapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -203,10 +236,17 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
         week.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dateType = "Week";
+                all.setBackgroundResource(R.drawable.btn_round_nocolor);
                 today.setBackgroundResource(R.drawable.btn_round_nocolor);
                 tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
                 week.setBackgroundResource(R.drawable.btn_round_grey);
                 month.setBackgroundResource(R.drawable.btn_round_nocolor);
+                eventsArrayList.clear();
+                makeEventListServiceCall();
+                if (eventsListAdapter != null) {
+                    eventsListAdapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -214,10 +254,17 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
         month.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dateType = "Month";
+                all.setBackgroundResource(R.drawable.btn_round_nocolor);
                 today.setBackgroundResource(R.drawable.btn_round_nocolor);
                 tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
                 week.setBackgroundResource(R.drawable.btn_round_nocolor);
                 month.setBackgroundResource(R.drawable.btn_round_grey);
+                eventsArrayList.clear();
+                makeEventListServiceCall();
+                if (eventsListAdapter != null) {
+                    eventsListAdapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -451,6 +498,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getActivity()));
             jsonObject.put(HeylaAppConstants.KEY_USER_TYPE, PreferenceStorage.getUserType(getActivity()));
             jsonObject.put(HeylaAppConstants.KEY_EVENT_CITY_ID, PreferenceStorage.getEventCityId(getActivity()));
+            jsonObject.put(HeylaAppConstants.KEY_DATE_TYPE, dateType);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -652,17 +700,46 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
 
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
         intent.putExtra("eventObj", event);
-        intent.putExtra("eventType","General");
+        intent.putExtra("eventType", "General");
         startActivity(intent);
+    }
+
+    private boolean validateSignInResponse(JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(HeylaAppConstants.PARAM_MESSAGE);
+                Log.d(TAG, "status val" + status + "msg" + msg);
+
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        Log.d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(getActivity(), msg);
+
+                    } else {
+                        signInSuccess = true;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return signInSuccess;
     }
 
     @Override
     public void onResponse(JSONObject response) {
-        LoadListView(response);
+        progressDialogHelper.hideProgressDialog();
+        if (validateSignInResponse(response)) {
+            LoadListView(response);
+        }
     }
 
     private void LoadListView(JSONObject response) {
-        progressDialogHelper.hideProgressDialog();
+
 
         Gson gson = new Gson();
         EventList eventsList = gson.fromJson(response.toString(), EventList.class);

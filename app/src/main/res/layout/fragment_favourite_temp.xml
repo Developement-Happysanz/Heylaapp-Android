@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/bordergray"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -15,7 +14,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="10dp">
+            android:background="@color/white">
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/mapview"
@@ -30,86 +29,42 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/muli"
                 android:text="No Events Found"
+                android:fontFamily="@font/muli"
                 android:textColor="@color/appColorBase"
                 android:textSize="22dp"
                 android:textStyle="bold"
                 android:visibility="gone" />
 
-            <RelativeLayout
-                android:id="@+id/current_view_layout"
+            <LinearLayout
+                android:id="@+id/tool_bar"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_alignParentTop="true"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/white"
-                    android:gravity="center_vertical">
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:background="@color/appColorBase"
+                    android:elevation="6dp"
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:tabGravity="center"
+                    app:tabMode="scrollable"
+                    app:tabIndicatorColor="@color/white" />
 
-                    <TextView
-                        android:id="@+id/txt_all"
-                        android:layout_width="85dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1.9"
-                        android:background="@drawable/btn_round_grey"
-                        android:gravity="center"
-                        android:text="All"
-                        android:textColor="@color/text_black"
-                        android:textSize="15dp" />
 
-                    <TextView
-                        android:id="@+id/txt_today"
-                        android:layout_width="85dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1.5"
-                        android:background="@drawable/btn_round_nocolor"
-                        android:gravity="center"
-                        android:text="Today"
-                        android:textColor="@color/text_black"
-                        android:textSize="15dp" />
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-                    <TextView
-                        android:id="@+id/txt_tomo"
-                        android:layout_width="85dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.2"
-                        android:background="@drawable/btn_round_nocolor"
-                        android:gravity="center"
-                        android:text="Tomorrow"
-                        android:textColor="@color/text_black"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/txt_week"
-                        android:layout_width="85dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.7"
-                        android:background="@drawable/btn_round_nocolor"
-                        android:gravity="center"
-                        android:text="This week"
-                        android:textColor="@color/text_black"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/txt_month"
-                        android:layout_width="85dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.25"
-                        android:background="@drawable/btn_round_nocolor"
-                        android:gravity="center"
-                        android:text="This month"
-                        android:textColor="@color/text_black"
-                        android:textSize="15dp" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
+            </LinearLayout>
 
             <ListView
                 android:id="@+id/listView_events"
@@ -118,10 +73,13 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/current_view_layout"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="5dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:background="@color/trans"
-                android:divider="@color/bordergray"
-                android:dividerHeight="5dp" />
+                android:divider="@color/white"
+                android:dividerHeight="5dp"/>
 
         </RelativeLayout>
 
@@ -144,9 +102,9 @@
             android:id="@+id/sampleViewChanger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/muli"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp"
-            android:fontFamily="@font/muli" />
+            android:layout_marginTop="50dp" />
 
         <LinearLayout
             android:id="@+id/layoutFabMapView"

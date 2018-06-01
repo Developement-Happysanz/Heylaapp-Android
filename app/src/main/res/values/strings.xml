@@ -136,4 +136,19 @@
         <item>35 kms</item>
     </string-array>
 
+    <!--<string-array name="menuOptions">-->
+        <!--<item>Booking History</item>-->
+        <!--<item>Preference</item>-->
+        <!--<item>Change City</item>-->
+        <!--<item>Wishlist</item>-->
+        <!--<item>Share App</item>-->
+        <!--<item>Rate App</item>-->
+        <!--<item>Blog</item>-->
+        <!--<item>City Guide</item>-->
+        <!--<item>Settings</item>-->
+    <!--</string-array>-->
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
 </resources>

@@ -2,60 +2,242 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/leaderboard_gray">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/appColorBase"
+            android:minHeight="60dp" />
+
+        <ImageView
+            android:id="@+id/back_res"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="10dp"
+            android:minHeight="60dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:src="@drawable/ic_back_button" />
 
         <TextView
-            android:id="@+id/profile_settings"
+            android:id="@+id/tvtitletext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Edit Profile"
+            android:layout_centerHorizontal="true"
             android:fontFamily="@font/muli"
-            android:textColor="@color/text_black"
-            android:textSize="20dp" />
-
-        <TextView
-            android:id="@+id/change_number_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile_settings"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Change Number"
-            android:fontFamily="@font/muli"
-            android:textColor="@color/text_black"
-            android:textSize="20dp" />
-
-        <TextView
-            android:id="@+id/change_password_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/change_number_settings"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/muli"
-            android:text="Change Password"
-            android:textColor="@color/text_black"
-            android:textSize="20dp" />
-
-        <TextView
-            android:id="@+id/verify_mail_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/change_password_settings"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Verify Mail"
-            android:fontFamily="@font/muli"
-            android:textColor="@color/text_black"
-            android:textSize="20dp" />
-
+            android:gravity="center"
+            android:minHeight="60dp"
+            android:padding="5dp"
+            android:text="Settings"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/actionbarTextSize" />
 
     </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Basic"
+                    android:textSize="22dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/text_black"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/btn_square_settings">
+
+                    <com.palprotech.heylaapp.customview.CircleImageView
+                        android:id="@+id/profile_img"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="20dp"
+                        android:src="@drawable/ic_default_profile" />
+
+                    <TextView
+                        android:id="@+id/profile_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/profile_img"
+                        android:layout_alignBottom="@id/profile_img"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/profile_img"
+                        android:text="My Profile Settings"
+                        android:fontFamily="@font/muli"
+                        android:textColor="@color/text_black"
+                        android:textSize="18dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="-1dp"
+                    android:background="@drawable/btn_square_settings">
+
+                    <TextView
+                        android:id="@+id/change_number_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Edit Profile Picture"
+                        android:fontFamily="@font/muli"
+                        android:textColor="@color/text_black"
+                        android:textSize="18dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="-1dp"
+                    android:background="@drawable/btn_square_settings">
+
+                    <TextView
+                        android:id="@+id/change_password_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/muli"
+                        android:text="Push Notification"
+                        android:textColor="@color/text_black"
+                        android:textSize="18dp" />
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Support"
+                    android:textSize="22dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/text_black"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="-1dp"
+                    android:background="@drawable/btn_square_settings">
+
+                    <TextView
+                        android:id="@+id/report_problem_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/muli"
+                        android:text="Report a Problem"
+                        android:textColor="@color/text_black"
+                        android:textSize="18dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="-1dp"
+                    android:background="@drawable/btn_square_settings">
+
+                    <TextView
+                        android:id="@+id/privacy_policy_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/muli"
+                        android:text="Privacy Policy"
+                        android:textColor="@color/text_black"
+                        android:textSize="18dp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="-1dp"
+                    android:background="@drawable/btn_square_settings">
+
+                    <TextView
+                        android:id="@+id/verify_mail_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="About us"
+                        android:fontFamily="@font/muli"
+                        android:textColor="@color/appColorBase"
+                        android:textSize="18dp" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/ic_heyla_bluelogo"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="15dp"
+                    android:text="Version 1.2.1134"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </LinearLayout>

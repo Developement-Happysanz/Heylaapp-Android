@@ -258,7 +258,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
                     String userId = response.getString("user_id");
                     PreferenceStorage.saveUserId(getApplicationContext(), userId);
                     PreferenceStorage.saveCheckFirstTimeProfile(getApplicationContext(), "new");
-                    Intent homeIntent = new Intent(getApplicationContext(), ProfileActivity.class);
+                    Intent homeIntent = new Intent(getApplicationContext(), LoginGreetingActivity.class);
                     homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                    homeIntent.putExtra("profile_state", "new");
                     startActivity(homeIntent);
