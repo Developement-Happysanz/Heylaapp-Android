@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.activity.BlogViewActivity;
 import com.palprotech.heylaapp.activity.BookingHistoryActivity;
 import com.palprotech.heylaapp.activity.MenuActivity;
 import com.palprotech.heylaapp.activity.SelectCityActivity;
@@ -461,7 +462,8 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
             this.vAboutUs.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    finish();
+                    Intent homeIntent = new Intent(context, BlogViewActivity.class);
+                    context.startActivity(homeIntent);
                 }
             });
             this.vSettings = (RelativeLayout) rootView.findViewById(R.id.settings_img);

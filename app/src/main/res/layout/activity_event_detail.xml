@@ -582,9 +582,16 @@
                     android:dividerHeight="2dp" />
 
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/bordergray"
+                    android:layout_below="@id/listView_reviews"/>
+
+                <TextView
                     android:id="@+id/view_more"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:gravity="right"
                     android:text="View More"
                     android:textColor="@color/colorAccent"/>

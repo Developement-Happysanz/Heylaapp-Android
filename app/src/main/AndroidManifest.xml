@@ -179,6 +179,12 @@
             android:theme="@style/AppThemeNoActionBar" />
 
         <activity
+            android:name=".activity.BlogViewActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar" />
+
+        <activity
             android:name=".activity.SettingsActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
