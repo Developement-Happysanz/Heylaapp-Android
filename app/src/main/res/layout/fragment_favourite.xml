@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/bordergray"
+    android:background="@color/eventListbg"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -40,7 +40,7 @@
             <RelativeLayout
                 android:id="@+id/current_view_layout"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="60dp"
                 android:layout_alignParentTop="true"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -56,11 +56,12 @@
                         android:layout_width="85dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.9"
-                        android:background="@drawable/btn_round_grey"
+                        android:background="@color/appColorBase"
                         android:gravity="center"
                         android:text="All"
-                        android:textColor="@color/text_black"
-                        android:textSize="15dp" />
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/txt_today"
@@ -70,8 +71,9 @@
                         android:background="@drawable/btn_round_nocolor"
                         android:gravity="center"
                         android:text="Today"
+                        android:textStyle="bold"
                         android:textColor="@color/text_black"
-                        android:textSize="15dp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/txt_tomo"
@@ -80,9 +82,10 @@
                         android:layout_weight="0.2"
                         android:background="@drawable/btn_round_nocolor"
                         android:gravity="center"
+                        android:textStyle="bold"
                         android:text="Tomorrow"
                         android:textColor="@color/text_black"
-                        android:textSize="15dp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/txt_week"
@@ -91,9 +94,10 @@
                         android:layout_weight="0.7"
                         android:background="@drawable/btn_round_nocolor"
                         android:gravity="center"
-                        android:text="This week"
+                        android:textStyle="bold"
+                        android:text="Week"
                         android:textColor="@color/text_black"
-                        android:textSize="15dp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/txt_month"
@@ -101,10 +105,11 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.25"
                         android:background="@drawable/btn_round_nocolor"
+                        android:textStyle="bold"
                         android:gravity="center"
-                        android:text="This month"
+                        android:text="Month"
                         android:textColor="@color/text_black"
-                        android:textSize="15dp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -120,7 +125,7 @@
                 android:layout_below="@+id/current_view_layout"
                 android:layout_marginTop="0dp"
                 android:background="@color/trans"
-                android:divider="@color/bordergray"
+                android:divider="@color/eventListbg"
                 android:dividerHeight="5dp" />
 
         </RelativeLayout>

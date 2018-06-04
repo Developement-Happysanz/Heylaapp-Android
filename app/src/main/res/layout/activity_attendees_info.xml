@@ -36,7 +36,7 @@
             android:minHeight="60dp"
             android:padding="5dp"
             android:text="Attendees"
-            android:textAllCaps="true"
+            android:textStyle="bold"
             android:textColor="@color/white"
             android:textSize="@dimen/actionbarTextSize" />
 
@@ -80,8 +80,9 @@
         android:fontFamily="@font/muli"
         android:background="@drawable/btn_square_login"
         android:text="Proceed"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
 </LinearLayout>

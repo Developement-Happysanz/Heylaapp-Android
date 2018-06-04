@@ -37,8 +37,8 @@
             android:minHeight="60dp"
             android:padding="5dp"
             android:text="Booking"
-            android:textAllCaps="true"
             android:textColor="@color/white"
+            android:textStyle="bold"
             android:textSize="@dimen/actionbarTextSize" />
 
     </RelativeLayout>
@@ -76,15 +76,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toLeftOf="@+id/event_paid_btn"
                 android:ellipsize="end"
                 android:fontFamily="@font/muli"
                 android:singleLine="true"
+                android:textStyle="bold"
                 android:text="Mini Marathon Championship"
                 android:textColor="@color/text_black"
-                android:textSize="18dp" />
+                android:textSize="16sp" />
 
 
             <TextView
@@ -138,18 +139,20 @@
                     android:singleLine="true"
                     android:text="Peelamedu"
                     android:textColor="@color/text_black"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
             </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:background="@color/white"
                 android:fontFamily="@font/muli"
                 android:gravity="center_vertical"
-                android:text="DATE"
+                android:text="Date"
+                android:textStyle="bold"
+                android:textSize="16sp"
                 android:textColor="@color/text_black" />
 
             <HorizontalScrollView
@@ -157,7 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/muli">
@@ -192,11 +195,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:background="@color/white"
                 android:fontFamily="@font/muli"
                 android:gravity="center_vertical"
-                android:text="TIME"
+                android:text="Time"
+                android:textStyle="bold"
+                android:textSize="16sp"
                 android:textColor="@color/text_black" />
 
             <HorizontalScrollView
@@ -204,7 +209,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/muli">
@@ -217,6 +222,18 @@
                     android:orientation="horizontal" />
 
             </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:background="@color/white"
+                android:fontFamily="@font/muli"
+                android:gravity="center_vertical"
+                android:text="Plan"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/text_black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -278,39 +295,32 @@
                     android:background="@drawable/ic_add_circle_outline_black_24dp"
                     android:fontFamily="@font/muli" />
 
-            </LinearLayout>
 
+            </LinearLayout>
             <LinearLayout
+                android:id="@+id/payment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnTotalPrice"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.50"
-                    android:background="@color/temp"
-                    android:fontFamily="@font/muli"
-                    android:text="Total"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
-
-                <Button
                     android:id="@+id/btnBookNow"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.50"
                     android:background="@color/appColorBase"
                     android:fontFamily="@font/muli"
                     android:text="Book Now"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
+
 
         </LinearLayout>
 
     </ScrollView>
+
 
 </LinearLayout>

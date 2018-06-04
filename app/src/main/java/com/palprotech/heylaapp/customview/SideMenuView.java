@@ -24,17 +24,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.BlogViewActivity;
 import com.palprotech.heylaapp.activity.BookingHistoryActivity;
 import com.palprotech.heylaapp.activity.MenuActivity;
+import com.palprotech.heylaapp.activity.ProfileActivity;
 import com.palprotech.heylaapp.activity.SelectCityActivity;
 import com.palprotech.heylaapp.activity.SetUpPreferenceActivity;
 import com.palprotech.heylaapp.activity.SettingsActivity;
 import com.palprotech.heylaapp.activity.SplashScreenActivity;
 import com.palprotech.heylaapp.activity.WishListActivity;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
+import com.squareup.picasso.Picasso;
 
+import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 
@@ -353,16 +358,34 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
      */
     private class MenuViewHolder {
         private LinearLayout mMenuOptions;
-        private RelativeLayout vBooking, vCategory, vChangeCity, vWishList, vShare, vAboutUs, vRateUs, vSignOut, vSettings;
-        private ImageView mMenuBackground;
+        private RelativeLayout vBooking, vCategory, vChangeCity, vWishList, vShare, vAboutUs, vRateUs, vSignOut, vSettings, vProfile;
+        private ImageView mMenuBackground, vUserImage;
         private ViewGroup mMenuHeader;
         private ViewGroup mMenuFooter;
+        private TextView profileName, userName;
 
         MenuViewHolder(ViewGroup rootView, final Context context) {
             this.mMenuOptions = (LinearLayout) rootView.findViewById(R.id.side_view_menu_options_layout);
             this.mMenuBackground = (ImageView) rootView.findViewById(R.id.side_view_menu_background);
             this.mMenuHeader = (ViewGroup) rootView.findViewById(R.id.side_view_menu_header_layout);
             this.mMenuFooter = (ViewGroup) rootView.findViewById(R.id.side_view_menu_footer_layout);
+
+            profileName = (TextView) rootView.findViewById(R.id.profile_name);
+            profileName.setText(PreferenceStorage.getFullName(context));
+            vUserImage = (ImageView) rootView.findViewById(R.id.profile_img);
+            String url = PreferenceStorage.getUserPicture(context);
+            String getSocialUrl = PreferenceStorage.getSocialNetworkProfileUrl(context);
+            if (((url != null) && !(url.isEmpty()))) {
+                Picasso.with(context).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(vUserImage);
+            } else if (((getSocialUrl != null) && !(getSocialUrl.isEmpty()))) {
+                Picasso.with(context).load(getSocialUrl).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(vUserImage);
+            }
+            userName = rootView.findViewById(R.id.user_name);
+            if (PreferenceStorage.getUsername(context) == null) {
+                userName.setText("Username");
+            } else {
+                userName.setText(PreferenceStorage.getUsername(context));
+            }
 
             this.vBooking = (RelativeLayout) rootView.findViewById(R.id.booking_history_img);
             this.vBooking.setOnClickListener(new View.OnClickListener() {
@@ -536,6 +559,40 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                         }
                     });
                     alertDialogBuilder.show();
+                }
+            });
+            this.vProfile = (RelativeLayout) rootView.findViewById(R.id.profile_layout);
+            this.vProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (PreferenceStorage.getUserType(context).equalsIgnoreCase("1")) {
+                        Intent homeIntent = new Intent(context, ProfileActivity.class);
+                        context.startActivity(homeIntent);
+                    } else {
+                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context);
+                        alertDialogBuilder.setTitle("Login");
+                        alertDialogBuilder.setMessage("Log in to Access");
+                        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+                                sharedPreferences.edit().clear().apply();
+//        TwitterUtil.getInstance().resetTwitterRequestToken();
+
+                                Intent homeIntent = new Intent(context, SplashScreenActivity.class);
+                                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                context.startActivity(homeIntent);
+
+                            }
+                        });
+                        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        alertDialogBuilder.show();
+                    }
                 }
             });
         }

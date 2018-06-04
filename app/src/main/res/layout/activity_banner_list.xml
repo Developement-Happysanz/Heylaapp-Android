@@ -35,7 +35,7 @@
         android:minHeight="60dp"
         android:padding="5dp"
         android:text="Gallery"
-        android:textAllCaps="true"
+        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="@dimen/actionbarTextSize" />
 

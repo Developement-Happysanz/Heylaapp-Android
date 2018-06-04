@@ -37,7 +37,7 @@
             android:minHeight="60dp"
             android:padding="5dp"
             android:text="Ticket detail"
-            android:textAllCaps="true"
+            android:textStyle="bold"
             android:textColor="@color/white"
             android:textSize="@dimen/actionbarTextSize" />
 
@@ -47,14 +47,14 @@
         android:id="@+id/txt_event_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:ellipsize="end"
         android:fontFamily="@font/muli"
         android:gravity="center"
         android:singleLine="true"
         android:text="Mini Marathon Championship"
         android:textColor="@color/text_black"
-        android:textSize="25dp" />
+        android:textStyle="bold"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -82,9 +82,10 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/muli"
                 android:singleLine="true"
+                android:textStyle="bold"
                 android:text="Date"
                 android:textColor="@color/text_black"
-                android:textSize="20dp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txt_event_booked_date"
@@ -96,7 +97,7 @@
                 android:singleLine="true"
                 android:text="20/12/2017"
                 android:textColor="@color/text_black"
-                android:textSize="18dp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -119,9 +120,10 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/muli"
                 android:singleLine="true"
+                android:textStyle="bold"
                 android:text="Time"
                 android:textColor="@color/text_black"
-                android:textSize="20dp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txt_event_booked_time"
@@ -133,7 +135,7 @@
                 android:singleLine="true"
                 android:text="12:00 PM"
                 android:textColor="@color/text_black"
-                android:textSize="18dp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -153,8 +155,9 @@
             android:fontFamily="@font/muli"
             android:singleLine="true"
             android:text="Address"
+            android:textStyle="bold"
             android:textColor="@color/text_black"
-            android:textSize="20dp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txt_event_location"
@@ -169,7 +172,7 @@
             android:singleLine="true"
             android:text="12, Mini Marathon Championship, Marathon "
             android:textColor="@color/text_black"
-            android:textSize="18dp" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
@@ -200,7 +203,7 @@
                 android:singleLine="true"
                 android:text="Attendees"
                 android:textColor="@color/text_black"
-                android:textSize="20dp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/txt_event_attendees_count"
@@ -213,7 +216,7 @@
                 android:singleLine="true"
                 android:text="4"
                 android:textColor="@color/text_black"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -235,7 +238,7 @@
                 android:singleLine="true"
                 android:text="Class"
                 android:textColor="@color/text_black"
-                android:textSize="20dp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/txt_event_booking_plan"
@@ -248,7 +251,7 @@
                 android:singleLine="true"
                 android:text="12:00 PM"
                 android:textColor="@color/text_black"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -263,8 +266,9 @@
         android:fontFamily="@font/muli"
         android:singleLine="true"
         android:text="Attendees Details"
+        android:textStyle="bold"
         android:textColor="@color/text_black"
-        android:textSize="20dp" />
+        android:textSize="16sp" />
 
     <ListView
         android:id="@+id/listView_attendees"

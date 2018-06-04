@@ -7,14 +7,14 @@
     <ImageView
         android:id="@+id/img_logo"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="70dp"
         android:layout_above="@id/txt_layout"
         android:layout_marginBottom="50dp"
         android:src="@drawable/heyla_logo_transparent"/>
 
     <RelativeLayout
         android:id="@+id/txt_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
         
@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:text="Welcome"
             android:textSize="36dp"
+            android:layout_marginTop="30dp"
             android:gravity="center"
             android:layout_marginBottom="10dp"
             android:textStyle="bold"
@@ -37,20 +38,21 @@
             android:layout_below="@+id/welcome_txt"
             android:textColor="@color/white"
             android:padding="10dp"
-            android:textSize="20dp"
+            android:textSize="16sp"
             android:text="Heyla is your gateway to the world outside in your pocket - Explore, Discover, Share and Enjoy"/>
 
         <Button
             android:id="@+id/get_started"
-            android:layout_width="match_parent"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/welcome"
             android:text="Get Started"
             android:textStyle="bold"
-            android:textSize="18dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
+            android:textSize="16sp"
+            android:textColor="@color/appColorBase"
+            android:layout_marginTop="30dp"
+            android:textAllCaps="false"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/btn_round_nocolor"/>
 
     </RelativeLayout>

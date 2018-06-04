@@ -13,8 +13,7 @@
         android:background="@drawable/grad_view_menu_bg"
         android:orientation="vertical"
         android:tag="menu"
-        app:footer="@layout/side_view_footer"
-        app:header="@layout/side_view_header" />
+        app:footer="@layout/side_view_footer" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,7 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="1dp"
             app:itemBackground="@color/appColorBase"
             app:itemIconTint="@color/white"
             app:itemTextColor="@color/white"

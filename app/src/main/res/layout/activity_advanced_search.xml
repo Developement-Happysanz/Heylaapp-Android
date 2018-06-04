@@ -31,7 +31,7 @@
         android:padding="5dp"
         android:fontFamily="@font/muli"
         android:text="Advance Search"
-        android:textAllCaps="true"
+        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="@dimen/actionbarTextSize" />
 
@@ -70,7 +70,7 @@
                 android:gravity="center"
                 android:text="Select day"
                 android:textColor="@color/appColorBase"
-                android:textSize="@dimen/actionbarTextSize"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -217,7 +217,7 @@
                 android:text="Select Date"
                 android:fontFamily="@font/muli"
                 android:textColor="@color/appColorBase"
-                android:textSize="@dimen/actionbarTextSize"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -231,6 +231,7 @@
                 android:fontFamily="@font/muli"
                 android:gravity="center"
                 android:text="From"
+                android:textSize="15sp"
                 android:textColor="@color/appColorBase" />
 
             <Button
@@ -244,7 +245,7 @@
                 android:gravity="left|center_vertical"
                 android:textColor="@color/text_black"
                 android:text="DD-MM-YYYY"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tvto"
@@ -257,6 +258,7 @@
                 android:background="@color/transparent"
                 android:gravity="center"
                 android:text="To"
+                android:textSize="15sp"
                 android:textColor="@color/appColorBase" />
 
             <Button
@@ -270,7 +272,7 @@
                 android:gravity="left|center_vertical"
                 android:textColor="@color/text_black"
                 android:text="DD-MM-YYYY"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:id="@+id/twobtn"
@@ -292,6 +294,7 @@
                     android:background="@drawable/button_sign_in"
                     android:text="Clear"
                     android:textAllCaps="false"
+                    android:textStyle="bold"
                     android:textColor="@color/colour_pick" />
 
                 <Button
@@ -303,6 +306,7 @@
                     android:fontFamily="@font/muli"
                     android:background="@drawable/button_sign_in"
                     android:text="Search"
+                    android:textStyle="bold"
                     android:textAllCaps="false"
                     android:textColor="@color/colour_pick" />
 

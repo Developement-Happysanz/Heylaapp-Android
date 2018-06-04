@@ -34,7 +34,7 @@
                 android:fontFamily="@font/muli"
                 android:text="@string/verificationcode"
                 android:textColor="@color/appColorBase"
-                android:textSize="22dp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -107,7 +107,9 @@
                     android:background="@drawable/button_sign_in"
                     android:fontFamily="@font/muli"
                     android:text="@string/confirm"
-                    android:textColor="@color/colour_pick" />
+                    android:textAllCaps="false"
+                    android:textColor="@color/colour_pick"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/changenumber"
@@ -118,7 +120,9 @@
                     android:background="@drawable/button_sign_in"
                     android:fontFamily="@font/muli"
                     android:text="@string/changenumber"
-                    android:textColor="@color/colour_pick" />
+                    android:textAllCaps="false"
+                    android:textColor="@color/colour_pick"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

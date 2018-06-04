@@ -39,7 +39,7 @@
             android:minHeight="60dp"
             android:padding="5dp"
             android:text="Event Detail"
-            android:textAllCaps="true"
+            android:textStyle="bold"
             android:textColor="@color/white"
             android:textSize="@dimen/actionbarTextSize" />
 
@@ -56,558 +56,565 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/banner_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_layout">
-
-        <ImageView
-            android:id="@+id/event_detail_img"
-            android:layout_width="match_parent"
-            android:layout_height="225dp"
-            android:contentDescription="@string/app_name"
-            android:foreground="@color/temp" />
-
-        <TextView
-            android:id="@+id/event_qa"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/event_detail_img"
-            android:layout_marginEnd="60dp"
-            android:layout_marginTop="-18dp"
-            android:background="@drawable/ic_round_full_color"
-            android:fontFamily="@font/muli"
-            android:gravity="center"
-            android:text="QA"
-            android:textColor="@color/white"
-            android:visibility="gone" />
-
-    </RelativeLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bookingbar"
-        android:layout_below="@id/banner_layout"
-        android:layout_marginTop="-50dp">
+        android:layout_below="@id/toolbar_layout">
 
         <RelativeLayout
-            android:id="@+id/eventimglayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/btn_round_nocolor"
-            android:paddingBottom="10dp">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:id="@+id/one"
+                android:id="@+id/banner_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
-
-                <TextView
-                    android:id="@+id/event_detail_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toLeftOf="@+id/event_views"
-                    android:fontFamily="@font/muli"
-                    android:text="CAKE POINT"
-                    android:textColor="@color/text_black"
-                    android:textSize="20dp" />
-
+                android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/share_event"
+                    android:id="@+id/event_detail_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="225dp"
+                    android:contentDescription="@string/app_name"
+                    android:foreground="@color/temp" />
+
+                <TextView
+                    android:id="@+id/event_qa"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@id/event_detail_name"
-                    android:layout_marginEnd="10dp"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp"
-                    android:src="@drawable/ic_share_event_detail" />
-
-                <TextView
-                    android:id="@+id/event_views"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/eventviews"
-                    android:layout_alignStart="@+id/eventviews"
-                    android:layout_below="@+id/eventviews"
+                    android:layout_below="@+id/event_detail_img"
+                    android:layout_marginEnd="60dp"
                     android:layout_marginTop="-18dp"
+                    android:background="@drawable/ic_round_full_color"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
-                    android:text="200"
-                    android:textColor="@color/text_black"
-                    android:textSize="12dp" />
-
-                <ImageView
-                    android:id="@+id/eventviews"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignTop="@id/event_detail_name"
-                    android:layout_marginTop="-8dp"
-                    android:layout_toLeftOf="@id/share_event"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp"
-                    android:src="@drawable/ic_user_view" />
-
-                <RelativeLayout
-                    android:id="@+id/addresslayout"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignBottom="@+id/addresstxt"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignTop="@+id/addresstxt"
-                    android:layout_marginStart="10dp"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/addressimg"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_location_event_detail" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/addresstxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/event_detail_name"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@+id/addresslayout"
-                    android:fontFamily="@font/muli"
-                    android:gravity="left"
-                    android:text="51, Mariamman Kovil Street Peelamedu"
-                    android:textColor="@color/text_black"
-                    android:textSize="15dp" />
-
-                <RelativeLayout
-                    android:id="@+id/timelayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@id/addresslayout"
-                    android:layout_alignStart="@id/addresslayout"
-                    android:layout_below="@id/addresstxt"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/timeimg"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_time_event_detail" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/start_time_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/timelayout"
-                    android:layout_alignTop="@+id/timelayout"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_toRightOf="@+id/timelayout"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center"
-                    android:text="12-12-1212"
-                    android:textColor="@color/text_black"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/time_to"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/timelayout"
-                    android:layout_alignTop="@+id/timelayout"
-                    android:layout_toRightOf="@+id/start_time_txt"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center"
-                    android:text="to"
-                    android:textColor="@color/text_black"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/end_time_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/timelayout"
-                    android:layout_alignTop="@+id/timelayout"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_toRightOf="@+id/time_to"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center"
-                    android:text="12-12-1212"
-                    android:textColor="@color/text_black"
-                    android:textSize="15dp" />
-
-                <RelativeLayout
-                    android:id="@+id/datelayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@id/addresslayout"
-                    android:layout_alignStart="@id/addresslayout"
-                    android:layout_below="@id/timelayout"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/dateimg"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_date_event_detail" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/start_date_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/datelayout"
-                    android:layout_alignTop="@+id/datelayout"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_toRightOf="@+id/datelayout"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center"
-                    android:text="12-12-1212"
-                    android:textColor="@color/text_black"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/date_to"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/datelayout"
-                    android:layout_alignTop="@+id/datelayout"
-                    android:layout_toRightOf="@+id/start_date_txt"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center"
-                    android:text="to"
-                    android:textColor="@color/text_black"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/end_date_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/datelayout"
-                    android:layout_alignTop="@+id/datelayout"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_toRightOf="@+id/date_to"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center"
-                    android:text="12-12-1212"
-                    android:textColor="@color/text_black"
-                    android:textSize="15dp" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/one_line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/one"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/text_gray" />
-
-            <LinearLayout
-                android:id="@+id/two"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/one_line"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/btn_round_nocolor"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/muli"
-                    android:text="Event Details"
-                    android:textColor="@color/text_black"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/eventdetailtxt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/muli"
-                    android:text="abcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsd"
-                    android:textColor="@color/text_black" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/two_line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/two"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/text_gray" />
-
-            <LinearLayout
-                android:id="@+id/three"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_below="@+id/two_line"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/btn_round_nocolor"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/muli"
-                    android:text="Venue"
-                    android:textColor="@color/text_black"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <!--<com.google.android.gms.maps.MapView
-                    android:id="@+id/mapview"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    map:cameraTargetLat="16.29905101"
-                    map:cameraTargetLng="78.3984375" />-->
-                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_margin="7dp"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/three_line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/three"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/text_gray" />
-
-            <RelativeLayout
-                android:id="@+id/four"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/three_line"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/btn_round_nocolor">
-
-                <TextView
-                    android:id="@+id/orgtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/muli"
-                    android:text="Organiser Details"
-                    android:textColor="@color/text_black"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/followrequest"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignBottom="@+id/orgtitle"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@+id/orgtitle"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_follow"
+                    android:text="QA"
+                    android:textColor="@color/white"
                     android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/organiser_name"
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/eventimglayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="-50dp"
+                android:layout_below="@+id/banner_layout"
+                android:background="@drawable/btn_round_nocolor"
+                android:paddingBottom="10dp">
+
+                <RelativeLayout
+                    android:id="@+id/one"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/orgtitle"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/event_detail_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toLeftOf="@+id/event_views"
+                        android:fontFamily="@font/muli"
+                        android:text="CAKE POINT"
+                        android:textColor="@color/text_black"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+
+                    <ImageView
+                        android:id="@+id/share_event"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@id/event_detail_name"
+                        android:layout_marginEnd="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/ic_share_event_detail" />
+
+                    <TextView
+                        android:id="@+id/event_views"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/eventviews"
+                        android:layout_alignStart="@+id/eventviews"
+                        android:layout_below="@+id/eventviews"
+                        android:layout_marginTop="-18dp"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="200"
+                        android:textColor="@color/text_black"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:id="@+id/eventviews"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignTop="@id/event_detail_name"
+                        android:layout_marginTop="-8dp"
+                        android:layout_toLeftOf="@id/share_event"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/ic_user_view" />
+
+                    <RelativeLayout
+                        android:id="@+id/addresslayout"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignBottom="@+id/addresstxt"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignTop="@+id/addresstxt"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/addressimg"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_location_event_detail" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/addresstxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/event_detail_name"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@+id/addresslayout"
+                        android:fontFamily="@font/muli"
+                        android:gravity="left"
+                        android:text="51, Mariamman Kovil Street Peelamedu"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/timelayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@id/addresslayout"
+                        android:layout_alignStart="@id/addresslayout"
+                        android:layout_below="@id/addresstxt"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/timeimg"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_time_event_detail" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/start_time_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/timelayout"
+                        android:layout_alignTop="@+id/timelayout"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_toRightOf="@+id/timelayout"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="12-12-1212"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/time_to"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/timelayout"
+                        android:layout_alignTop="@+id/timelayout"
+                        android:layout_toRightOf="@+id/start_time_txt"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="to"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/end_time_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/timelayout"
+                        android:layout_alignTop="@+id/timelayout"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_toRightOf="@+id/time_to"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="12-12-1212"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/datelayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@id/addresslayout"
+                        android:layout_alignStart="@id/addresslayout"
+                        android:layout_below="@id/timelayout"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/dateimg"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_date_event_detail" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/start_date_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/datelayout"
+                        android:layout_alignTop="@+id/datelayout"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_toRightOf="@+id/datelayout"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="12-12-1212"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/date_to"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/datelayout"
+                        android:layout_alignTop="@+id/datelayout"
+                        android:layout_toRightOf="@+id/start_date_txt"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="to"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/end_date_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/datelayout"
+                        android:layout_alignTop="@+id/datelayout"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_toRightOf="@+id/date_to"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="12-12-1212"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/one_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/one"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/text_gray" />
+
+                <LinearLayout
+                    android:id="@+id/two"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/one_line"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/btn_round_nocolor"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/muli"
+                        android:text="Event Detail"
+                        android:textColor="@color/text_black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/eventdetailtxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/muli"
+                        android:textSize="14sp"
+                        android:text="abcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsdabcabcabacbasklsjdfksdfn,sdflksjfsd"
+                        android:textColor="@color/text_black" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/two_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/two"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/text_gray" />
+
+                <LinearLayout
+                    android:id="@+id/three"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_below="@+id/two_line"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/muli"
-                    android:text="BaBaga, Head of cake point"
-                    android:textColor="@color/text_black" />
-
-                <RelativeLayout
-                    android:id="@+id/organisermobile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/organiser_name"
-                    android:layout_below="@+id/organiser_name"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
+                    android:background="@drawable/btn_round_nocolor"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/muli"
-                        android:text="Mobile"
-                        android:textColor="@color/text_black" />
+                        android:text="Venue"
+                        android:textColor="@color/text_black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="125dp"
-                        android:fontFamily="@font/muli"
-                        android:text=":"
-                        android:textColor="@color/text_black" />
+                    <!--<com.google.android.gms.maps.MapView
+                        android:id="@+id/mapview"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        map:cameraTargetLat="16.29905101"
+                        map:cameraTargetLng="78.3984375" />-->
+                    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_margin="7dp"
+                        android:layout_weight="1" />
 
-                    <TextView
-                        android:id="@+id/organisermobiletxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="135dp"
-                        android:fontFamily="@font/muli"
-                        android:text="9999999999"
-                        android:textColor="@color/text_black" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/organisermail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/organiser_name"
-                    android:layout_alignStart="@+id/organiser_name"
-                    android:layout_below="@+id/organisermobile"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/muli"
-                        android:text="Email"
-                        android:textColor="@color/text_black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="125dp"
-                        android:fontFamily="@font/muli"
-                        android:text=":"
-                        android:textColor="@color/text_black" />
-
-                    <TextView
-                        android:id="@+id/organisermailtxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="135dp"
-                        android:fontFamily="@font/muli"
-                        android:text="9999999999"
-                        android:textColor="@color/text_black" />
-
-                </RelativeLayout>
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/four_line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/four"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/text_gray" />
-
-            <LinearLayout
-                android:id="@+id/five"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/four_line"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/btn_round_nocolor"
-                android:orientation="vertical">
+                </LinearLayout>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/three_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/three"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/text_gray" />
+
+                <RelativeLayout
+                    android:id="@+id/four"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/three_line"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/muli"
-                    android:text="Review"
-                    android:textColor="@color/text_black"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:background="@drawable/btn_round_nocolor">
 
-                <ListView
-                    android:id="@+id/listView_reviews"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:clickable="false"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/muli"
-                    android:divider="@color/bordergray"
-                    android:dividerHeight="2dp" />
+                    <TextView
+                        android:id="@+id/orgtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/muli"
+                        android:text="Organiser Details"
+                        android:textColor="@color/text_black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/followrequest"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignBottom="@+id/orgtitle"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@+id/orgtitle"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_follow"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/organiser_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/orgtitle"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/muli"
+                        android:text="BaBaga, Head of cake point"
+                        android:textColor="@color/text_black" />
+
+                    <RelativeLayout
+                        android:id="@+id/organisermobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/organiser_name"
+                        android:layout_below="@+id/organiser_name"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/muli"
+                            android:text="Mobile"
+                            android:textColor="@color/text_black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="125dp"
+                            android:fontFamily="@font/muli"
+                            android:text=":"
+                            android:textColor="@color/text_black" />
+
+                        <TextView
+                            android:id="@+id/organisermobiletxt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="130dp"
+                            android:fontFamily="@font/muli"
+                            android:text="9999999999"
+                            android:textColor="@color/text_black" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/organisermail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/organiser_name"
+                        android:layout_alignStart="@+id/organiser_name"
+                        android:layout_below="@+id/organisermobile"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/muli"
+                            android:text="Email"
+                            android:textColor="@color/text_black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="125dp"
+                            android:fontFamily="@font/muli"
+                            android:text=":"
+                            android:textColor="@color/text_black" />
+
+                        <TextView
+                            android:id="@+id/organisermailtxt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="130dp"
+                            android:fontFamily="@font/muli"
+                            android:text="9999999999"
+                            android:textColor="@color/text_black" />
+
+                    </RelativeLayout>
+                </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/four_line"
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/bordergray"
-                    android:layout_below="@id/listView_reviews"/>
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/four"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/text_gray" />
 
-                <TextView
-                    android:id="@+id/view_more"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="right"
-                    android:text="View More"
-                    android:textColor="@color/colorAccent"/>
-
-                <Button
-                    android:id="@+id/write_review"
+                <LinearLayout
+                    android:id="@+id/five"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="100dp"
-                    android:layout_marginRight="100dp"
-                    android:text="Write Review"
-                    android:textColor="@color/white"
-                    android:background="@color/text_black"/>
+                    android:layout_below="@+id/four_line"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/btn_round_nocolor"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/muli"
+                        android:text="Review"
+                        android:textColor="@color/text_black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ListView
+                        android:id="@+id/listView_reviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:clickable="false"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/muli"
+                        android:divider="@color/bordergray"
+                        android:dividerHeight="2dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/bordergray"
+                        android:layout_below="@id/listView_reviews"/>
+
+                    <TextView
+                        android:id="@+id/view_more"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="right"
+                        android:text="View More"
+                        android:textColor="@color/colorAccent"/>
+
+                    <Button
+                        android:id="@+id/write_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="100dp"
+                        android:layout_marginRight="100dp"
+                        android:text="Write Review"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:background="@color/text_black"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
         </RelativeLayout>
 
@@ -653,7 +660,7 @@
             android:paddingStart="5dp"
             android:text="Check-In"
             android:textColor="@color/white"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -670,7 +677,7 @@
             android:paddingStart="5dp"
             android:text="Book"
             android:textColor="@color/white"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </LinearLayout>

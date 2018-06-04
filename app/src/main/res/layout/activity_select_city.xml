@@ -34,61 +34,100 @@
             android:minHeight="?attr/actionBarSize"
             android:paddingLeft="10dp"
             android:text="Select City"
-            android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/location_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/location_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/currentlocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/muli"
+                android:text="Current Location"
+                android:textColor="@color/text_black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/currentLocimg"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_below="@+id/currentlocation"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:src="@drawable/ic_current_location" />
+
+            <TextView
+                android:id="@+id/currentloctxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/currentLocimg"
+                android:layout_alignTop="@+id/currentLocimg"
+                android:layout_toRightOf="@+id/currentLocimg"
+                android:fontFamily="@font/muli"
+                android:gravity="center"
+                android:textColor="@color/text_black"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/currentlocation"
+            android:id="@+id/event_location_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/location_layout"
             android:layout_marginLeft="10dp"
-            android:text="Current Location"
-            android:textColor="@color/text_black"
             android:fontFamily="@font/muli"
-            android:textSize="22dp" />
+            android:text="Event Locations"
+            android:textColor="@color/text_black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/listView_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/app_logo_color"
+            android:layout_below="@+id/event_location_txt"
+            android:divider="@color/background_grey"
+            android:dividerHeight="2dp"
+            android:fontFamily="@font/muli"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp">
+
+        </ListView>
 
         <ImageView
-            android:id="@+id/currentLocimg"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_below="@+id/currentlocation"
-            android:layout_marginLeft="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:src="@drawable/ic_current_location" />
-
-        <TextView
-            android:id="@+id/currentloctxt"
+            android:id="@+id/app_logo_color"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/currentLocimg"
-            android:layout_alignTop="@+id/currentLocimg"
-            android:layout_toRightOf="@+id/currentLocimg"
-            android:gravity="center"
-            android:fontFamily="@font/muli"
-            android:textColor="@color/text_black"
-            android:textSize="18dp" />
+            android:layout_height="25dp"
+            android:layout_above="@+id/bg_select_city"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_heyla_bluelogo" />
+
+        <ImageView
+            android:id="@+id/bg_select_city"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="@drawable/select_citybg" />
 
     </RelativeLayout>
-
-    <ListView
-        android:id="@+id/listView_events"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@color/background_grey"
-        android:dividerHeight="2dp"
-        android:fontFamily="@font/muli"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp">
-
-    </ListView>
 
 </LinearLayout>

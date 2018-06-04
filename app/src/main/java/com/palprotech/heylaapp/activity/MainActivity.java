@@ -12,6 +12,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -53,6 +54,7 @@ import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.CommonUtils;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -390,6 +392,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
 
         setSupportActionBar(toolbar);
 
+
         toolbar.setNavigationIcon(R.drawable.ic_sidemenu);
 //        toolbar.setNavigationOnClickListener(
 //                new View.OnClickListener() {
@@ -695,7 +698,27 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
 
     @Override
     public void onHeaderClicked() {
-        Toast.makeText(this, "onHeaderClicked", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "onHeaderClicked", Toast.LENGTH_SHORT).show();
+        if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
+            startPersonDetailsActivity(-1);
+        } else {
+            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MainActivity.this);
+            alertDialogBuilder.setTitle("Login");
+            alertDialogBuilder.setMessage("Log in to Access");
+            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    doLogout();
+                }
+            });
+            alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            alertDialogBuilder.show();
+        }
     }
 
     private void goToFragment(android.support.v4.app.Fragment fragment, boolean addToBackStack) {
@@ -740,6 +763,11 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
 
             setSupportActionBar(mToolbar);
         }
+    }
+
+    public void startPersonDetailsActivity(long id) {
+        Intent homeIntent = new Intent(getApplicationContext(), ProfileActivity.class);
+        startActivityForResult(homeIntent, 0);
     }
 
 }

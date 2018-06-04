@@ -76,7 +76,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
     int counter;
     ImageButton inc, dec;
     TextView result;
-    Button totalPrice, bookNow;
+    Button bookNow;
     String orderId;
     Handler mHandler = new Handler();
     String noOfTickets = "0";
@@ -116,12 +116,12 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                     String setValue = String.valueOf(setTicketCount);
                     result.setText(setValue);
                     double TotalAmountForPlan = setTicketCount * Double.parseDouble(rate);
-                    totalPrice.setText("Total Price - Rs : " + TotalAmountForPlan + "/-");
+                    bookNow.setText("Pay - Rs : " + TotalAmountForPlan + "/-");
                 } else {
                     String setValue = String.valueOf(setTicketCount);
                     result.setText(setValue);
                     double TotalAmountForPlan = setTicketCount * Double.parseDouble(rate);
-                    totalPrice.setText("Total Price - Rs : " + TotalAmountForPlan + "/-");
+                    bookNow.setText("Pay - Rs : " + TotalAmountForPlan + "/-");
                 }
                 totalCount = setTicketCount;
             }
@@ -151,7 +151,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                 result.setText(String.valueOf(setTicketCount));
                 totalCount = setTicketCount;
                 double TotalAmountForPlan = setTicketCount * Double.parseDouble(rate);
-                totalPrice.setText("Total Price - Rs : " + TotalAmountForPlan + "/-");
+                bookNow.setText("Pay - Rs : " + TotalAmountForPlan + "/-");
             }
 
             if (setTicketCount == 0) {
@@ -332,7 +332,6 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         dec.setOnClickListener(this);
         dec.setEnabled(false);
         result = findViewById(R.id.tcktcount);
-        totalPrice = findViewById(R.id.btnTotalPrice);
         bookNow = findViewById(R.id.btnBookNow);
         bookNow.setOnClickListener(this);
 
@@ -446,7 +445,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                         public void onClick(View v) {
                             // TODO Auto-generated method stub
 //                            viewDateFormat.setBackgroundColor(Color.parseColor("#708090"));
-                            Toast.makeText(getApplicationContext(), functionalDateFormat.getText(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), functionalDateFormat.getText(), Toast.LENGTH_SHORT).show();
                             showDate = functionalDateFormat.getText().toString();
                             loadBookingTimings();
                             if (showDate.equalsIgnoreCase("")) {
@@ -584,7 +583,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                         public void onClick(View v) {
                             // TODO Auto-generated method stub
 //                            viewDateFormat.setBackgroundColor(Color.parseColor("#708090"));
-                            Toast.makeText(getApplicationContext(), viewTimeFormat.getText() + "ID : " + storeTimeId.getText(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), viewTimeFormat.getText() + "ID : " + storeTimeId.getText(), Toast.LENGTH_SHORT).show();
                             showTime = viewTimeFormat.getText().toString();
                             showTimeId = storeTimeId.getText().toString();
                             if (bookPlanArrayList != null) {
@@ -659,9 +658,9 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         view.setSelected(true);
 //        view.setBackgroundColor(getResources().getColor(R.color.appColorBase));
         TextView planName = view.findViewById(R.id.txt_plan_name);
-//        planName.setTextColor(Color.WHITE);
+        planName.setTextColor(Color.WHITE);
         TextView planRate = view.findViewById(R.id.txt_plan_rate);
-//        planRate.setTextColor(Color.WHITE);
+        planRate.setTextColor(Color.WHITE);
         LinearLayout ll = findViewById(R.id.layoutTickets);
         ll.setVisibility(View.VISIBLE);
 

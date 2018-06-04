@@ -91,10 +91,11 @@
             android:layout_marginStart="20dp"
             android:fontFamily="@font/muli"
             android:layout_marginTop="20dp"
+            android:textStyle="bold"
             android:background="@drawable/btn_square_login"
             android:text="@string/login"
             android:textColor="@color/colour_pick"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
 
         <TextView
@@ -103,6 +104,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="14sp"
             android:fontFamily="@font/muli"
             android:text="@string/alternatelogin" />
 
@@ -127,7 +130,7 @@
                 android:paddingEnd="8dp"
                 android:text="Facebook"
                 android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/login_using_gplus"
@@ -142,7 +145,7 @@
                 android:gravity="center"
                 android:paddingEnd="8dp"
                 android:text="Google"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
         </LinearLayout>
 
@@ -169,7 +172,7 @@
                 android:text="Continue as Guest"
                 android:gravity="center"
                 android:layout_marginLeft="10dp"
-                android:textSize="18dp"
+                android:textSize="16sp"
                 android:textColor="@color/text_black"/>
 
             <TextView

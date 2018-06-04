@@ -14,7 +14,7 @@
         <RelativeLayout
             android:id="@+id/userinfo"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:background="@color/appColorBase"
             android:gravity="left">
 
@@ -34,8 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="30dp"
-                android:gravity="center_vertical">
+                android:layout_marginLeft="30dp">
 
                 <com.palprotech.heylaapp.customview.CircleImageView
                     android:id="@+id/leaderboard_profile_img"
@@ -46,11 +45,11 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical"
-                    android:layout_alignTop="@+id/leaderboard_profile_img"
                     android:layout_alignBottom="@+id/leaderboard_profile_img"
-                    android:layout_toRightOf="@+id/leaderboard_profile_img">
+                    android:layout_alignTop="@+id/leaderboard_profile_img"
+                    android:layout_toRightOf="@+id/leaderboard_profile_img"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/name"
@@ -61,7 +60,7 @@
                         android:hint="Narendar Ravikrishnan"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
-                        android:textSize="19sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -74,7 +73,7 @@
                         android:hint=""
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -111,7 +110,8 @@
                     android:fontFamily="@font/muli"
                     android:text="Total Points"
                     android:textColor="@color/text_black"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/total_points"
@@ -124,7 +124,8 @@
                     android:fontFamily="@font/muli"
                     android:text=""
                     android:textColor="@color/text_black"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -193,7 +194,7 @@
                     android:paddingStart="5dp"
                     android:text="Login"
                     android:textColor="@color/text_black"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/login_count"
@@ -206,7 +207,7 @@
                     android:fontFamily="@font/muli"
                     android:gravity="center_vertical"
                     android:textColor="@color/text_black"
-                    android:textSize="15sp" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/login_star"
@@ -231,7 +232,8 @@
                     android:gravity="center"
                     android:text="000"
                     android:textColor="@color/text_black"
-                    android:textSize="15sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -266,7 +268,7 @@
                     android:paddingStart="5dp"
                     android:text="Event Sharing"
                     android:textColor="@color/text_black"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/sharing_count"
@@ -279,7 +281,7 @@
                     android:fontFamily="@font/muli"
                     android:gravity="center_vertical"
                     android:textColor="@color/text_black"
-                    android:textSize="15sp" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/share_star"
@@ -304,7 +306,8 @@
                     android:gravity="center"
                     android:text="000"
                     android:textColor="@color/text_black"
-                    android:textSize="15sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -339,7 +342,7 @@
                     android:paddingStart="5dp"
                     android:text="Check-In"
                     android:textColor="@color/text_black"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/check_in_count"
@@ -352,7 +355,7 @@
                     android:fontFamily="@font/muli"
                     android:gravity="center_vertical"
                     android:textColor="@color/text_black"
-                    android:textSize="15sp" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/check_in_star"
@@ -377,7 +380,8 @@
                     android:gravity="center"
                     android:text="000"
                     android:textColor="@color/text_black"
-                    android:textSize="15sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -412,7 +416,7 @@
                     android:paddingStart="5dp"
                     android:text="Review"
                     android:textColor="@color/text_black"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/review_count"
@@ -425,7 +429,7 @@
                     android:fontFamily="@font/muli"
                     android:gravity="center_vertical"
                     android:textColor="@color/text_black"
-                    android:textSize="15sp" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/review_star"
@@ -449,8 +453,9 @@
                     android:fontFamily="@font/muli"
                     android:gravity="center"
                     android:text="000"
+                    android:textStyle="bold"
                     android:textColor="@color/text_black"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 
@@ -486,7 +491,7 @@
                     android:paddingStart="5dp"
                     android:text="Booking"
                     android:textColor="@color/text_black"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/booking_count"
@@ -499,7 +504,7 @@
                     android:fontFamily="@font/muli"
                     android:gravity="center_vertical"
                     android:textColor="@color/text_black"
-                    android:textSize="15sp" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/booking_star"
@@ -522,8 +527,9 @@
                     android:fontFamily="@font/muli"
                     android:gravity="center"
                     android:text="000"
+                    android:textStyle="bold"
                     android:textColor="@color/text_black"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 

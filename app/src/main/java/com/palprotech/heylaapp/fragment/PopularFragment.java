@@ -9,6 +9,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -71,7 +72,7 @@ import java.util.List;
  */
 
 public class PopularFragment extends Fragment implements AdapterView.OnItemClickListener, IServiceListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = PopularFragment.class.getName();
     private String listFlag = null;
@@ -181,11 +182,16 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
             @Override
             public void onClick(View v) {
                 dateType = "All";
-                all.setBackgroundResource(R.drawable.btn_round_grey);
-                today.setBackgroundResource(R.drawable.btn_round_nocolor);
-                tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
-                week.setBackgroundResource(R.drawable.btn_round_nocolor);
-                month.setBackgroundResource(R.drawable.btn_round_nocolor);
+                all.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                all.setTextColor(getResources().getColor(R.color.white));
+                today.setBackgroundColor(getResources().getColor(R.color.white));
+                today.setTextColor(getResources().getColor(R.color.text_black));
+                tomo.setBackgroundColor(getResources().getColor(R.color.white));
+                tomo.setTextColor(getResources().getColor(R.color.text_black));
+                week.setBackgroundColor(getResources().getColor(R.color.white));
+                week.setTextColor(getResources().getColor(R.color.text_black));
+                month.setBackgroundColor(getResources().getColor(R.color.white));
+                month.setTextColor(getResources().getColor(R.color.text_black));
                 eventsArrayList.clear();
                 makeEventListServiceCall();
                 if (eventsListAdapter != null) {
@@ -199,11 +205,16 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
             @Override
             public void onClick(View v) {
                 dateType = "Today";
-                all.setBackgroundResource(R.drawable.btn_round_nocolor);
-                today.setBackgroundResource(R.drawable.btn_round_grey);
-                tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
-                week.setBackgroundResource(R.drawable.btn_round_nocolor);
-                month.setBackgroundResource(R.drawable.btn_round_nocolor);
+                all.setBackgroundColor(getResources().getColor(R.color.white));
+                all.setTextColor(getResources().getColor(R.color.text_black));
+                today.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                today.setTextColor(getResources().getColor(R.color.white));
+                tomo.setBackgroundColor(getResources().getColor(R.color.white));
+                tomo.setTextColor(getResources().getColor(R.color.text_black));
+                week.setBackgroundColor(getResources().getColor(R.color.white));
+                week.setTextColor(getResources().getColor(R.color.text_black));
+                month.setBackgroundColor(getResources().getColor(R.color.white));
+                month.setTextColor(getResources().getColor(R.color.text_black));
                 eventsArrayList.clear();
                 makeEventListServiceCall();
                 if (eventsListAdapter != null) {
@@ -217,11 +228,16 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
             @Override
             public void onClick(View v) {
                 dateType = "Tomorrow";
-                all.setBackgroundResource(R.drawable.btn_round_nocolor);
-                today.setBackgroundResource(R.drawable.btn_round_nocolor);
-                tomo.setBackgroundResource(R.drawable.btn_round_grey);
-                week.setBackgroundResource(R.drawable.btn_round_nocolor);
-                month.setBackgroundResource(R.drawable.btn_round_nocolor);
+                all.setBackgroundColor(getResources().getColor(R.color.white));
+                all.setTextColor(getResources().getColor(R.color.text_black));
+                today.setBackgroundColor(getResources().getColor(R.color.white));
+                today.setTextColor(getResources().getColor(R.color.text_black));
+                tomo.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                tomo.setTextColor(getResources().getColor(R.color.white));
+                week.setBackgroundColor(getResources().getColor(R.color.white));
+                week.setTextColor(getResources().getColor(R.color.text_black));
+                month.setBackgroundColor(getResources().getColor(R.color.white));
+                month.setTextColor(getResources().getColor(R.color.text_black));
                 eventsArrayList.clear();
                 makeEventListServiceCall();
                 if (eventsListAdapter != null) {
@@ -235,11 +251,16 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
             @Override
             public void onClick(View v) {
                 dateType = "Week";
-                all.setBackgroundResource(R.drawable.btn_round_nocolor);
-                today.setBackgroundResource(R.drawable.btn_round_nocolor);
-                tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
-                week.setBackgroundResource(R.drawable.btn_round_grey);
-                month.setBackgroundResource(R.drawable.btn_round_nocolor);
+                all.setBackgroundColor(getResources().getColor(R.color.white));
+                all.setTextColor(getResources().getColor(R.color.text_black));
+                today.setBackgroundColor(getResources().getColor(R.color.white));
+                today.setTextColor(getResources().getColor(R.color.text_black));
+                tomo.setBackgroundColor(getResources().getColor(R.color.white));
+                tomo.setTextColor(getResources().getColor(R.color.text_black));
+                week.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                week.setTextColor(getResources().getColor(R.color.white));
+                month.setBackgroundColor(getResources().getColor(R.color.white));
+                month.setTextColor(getResources().getColor(R.color.text_black));
                 eventsArrayList.clear();
                 makeEventListServiceCall();
                 if (eventsListAdapter != null) {
@@ -253,11 +274,16 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
             @Override
             public void onClick(View v) {
                 dateType = "Month";
-                all.setBackgroundResource(R.drawable.btn_round_nocolor);
-                today.setBackgroundResource(R.drawable.btn_round_nocolor);
-                tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
-                week.setBackgroundResource(R.drawable.btn_round_nocolor);
-                month.setBackgroundResource(R.drawable.btn_round_grey);
+                all.setBackgroundColor(getResources().getColor(R.color.white));
+                all.setTextColor(getResources().getColor(R.color.text_black));
+                today.setBackgroundColor(getResources().getColor(R.color.white));
+                today.setTextColor(getResources().getColor(R.color.text_black));
+                tomo.setBackgroundColor(getResources().getColor(R.color.white));
+                tomo.setTextColor(getResources().getColor(R.color.text_black));
+                week.setBackgroundColor(getResources().getColor(R.color.white));
+                week.setTextColor(getResources().getColor(R.color.text_black));
+                month.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                month.setTextColor(getResources().getColor(R.color.white));
                 eventsArrayList.clear();
                 makeEventListServiceCall();
                 if (eventsListAdapter != null) {
@@ -265,6 +291,7 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
                 }
             }
         });
+
 
         mMapIcon = BitmapDescriptorFactory.fromResource(R.drawable.location_dot_img);
 
@@ -367,7 +394,6 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
 
 
         inflater.inflate(R.menu.menu_landing, menu);
@@ -751,7 +777,7 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
             //zoom the camera to current location
             if (mLastLocation != null) {
                 LatLng pos = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-               /* mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos,10));*/
+                /* mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos,10));*/
                 mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 14), 1000, null);
             }
 
@@ -774,7 +800,7 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
 
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
         intent.putExtra("eventObj", event);
-        intent.putExtra("eventType","General");
+        intent.putExtra("eventType", "General");
         // intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
 //        // getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_right);
@@ -832,10 +858,10 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
                 int i = 0;
                 for (Event event : eventsList.getEvents()) {
                     //Testing. remove later
-                    if(latitude.get(i) != null){
+                    if (latitude.get(i) != null) {
                         event.setEventLatitude(latitude.get(i));
                     }
-                    if(longitude.get(i) != null){
+                    if (longitude.get(i) != null) {
                         event.setEventLongitude(longitude.get(i));
                     }
                     //end of testing
@@ -846,8 +872,8 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
                         temEventLoc.setLongitude(Double.parseDouble(event.getEventLongitude()));
                         float distance = mLastLocation.distanceTo(temEventLoc);
                         Log.d(TAG, "calculated distance is" + distance);
-                        if (distanceFlag==2){
-                            if(distance < (5 * 1000)) {
+                        if (distanceFlag == 2) {
+                            if (distance < (5 * 1000)) {
                                 mNearbyLIst.add(event);
                             }
                         } else {

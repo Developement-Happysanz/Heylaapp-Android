@@ -183,11 +183,16 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             @Override
             public void onClick(View v) {
                 dateType = "All";
-                all.setBackgroundResource(R.drawable.btn_round_grey);
-                today.setBackgroundResource(R.drawable.btn_round_nocolor);
-                tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
-                week.setBackgroundResource(R.drawable.btn_round_nocolor);
-                month.setBackgroundResource(R.drawable.btn_round_nocolor);
+                all.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                all.setTextColor(getResources().getColor(R.color.white));
+                today.setBackgroundColor(getResources().getColor(R.color.white));
+                today.setTextColor(getResources().getColor(R.color.text_black));
+                tomo.setBackgroundColor(getResources().getColor(R.color.white));
+                tomo.setTextColor(getResources().getColor(R.color.text_black));
+                week.setBackgroundColor(getResources().getColor(R.color.white));
+                week.setTextColor(getResources().getColor(R.color.text_black));
+                month.setBackgroundColor(getResources().getColor(R.color.white));
+                month.setTextColor(getResources().getColor(R.color.text_black));
                 eventsArrayList.clear();
                 makeEventListServiceCall();
                 if (eventsListAdapter != null) {
@@ -201,11 +206,16 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             @Override
             public void onClick(View v) {
                 dateType = "Today";
-                all.setBackgroundResource(R.drawable.btn_round_nocolor);
-                today.setBackgroundResource(R.drawable.btn_round_grey);
-                tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
-                week.setBackgroundResource(R.drawable.btn_round_nocolor);
-                month.setBackgroundResource(R.drawable.btn_round_nocolor);
+                all.setBackgroundColor(getResources().getColor(R.color.white));
+                all.setTextColor(getResources().getColor(R.color.text_black));
+                today.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                today.setTextColor(getResources().getColor(R.color.white));
+                tomo.setBackgroundColor(getResources().getColor(R.color.white));
+                tomo.setTextColor(getResources().getColor(R.color.text_black));
+                week.setBackgroundColor(getResources().getColor(R.color.white));
+                week.setTextColor(getResources().getColor(R.color.text_black));
+                month.setBackgroundColor(getResources().getColor(R.color.white));
+                month.setTextColor(getResources().getColor(R.color.text_black));
                 eventsArrayList.clear();
                 makeEventListServiceCall();
                 if (eventsListAdapter != null) {
@@ -219,11 +229,16 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             @Override
             public void onClick(View v) {
                 dateType = "Tomorrow";
-                all.setBackgroundResource(R.drawable.btn_round_nocolor);
-                today.setBackgroundResource(R.drawable.btn_round_nocolor);
-                tomo.setBackgroundResource(R.drawable.btn_round_grey);
-                week.setBackgroundResource(R.drawable.btn_round_nocolor);
-                month.setBackgroundResource(R.drawable.btn_round_nocolor);
+                all.setBackgroundColor(getResources().getColor(R.color.white));
+                all.setTextColor(getResources().getColor(R.color.text_black));
+                today.setBackgroundColor(getResources().getColor(R.color.white));
+                today.setTextColor(getResources().getColor(R.color.text_black));
+                tomo.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                tomo.setTextColor(getResources().getColor(R.color.white));
+                week.setBackgroundColor(getResources().getColor(R.color.white));
+                week.setTextColor(getResources().getColor(R.color.text_black));
+                month.setBackgroundColor(getResources().getColor(R.color.white));
+                month.setTextColor(getResources().getColor(R.color.text_black));
                 eventsArrayList.clear();
                 makeEventListServiceCall();
                 if (eventsListAdapter != null) {
@@ -237,11 +252,16 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             @Override
             public void onClick(View v) {
                 dateType = "Week";
-                all.setBackgroundResource(R.drawable.btn_round_nocolor);
-                today.setBackgroundResource(R.drawable.btn_round_nocolor);
-                tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
-                week.setBackgroundResource(R.drawable.btn_round_grey);
-                month.setBackgroundResource(R.drawable.btn_round_nocolor);
+                all.setBackgroundColor(getResources().getColor(R.color.white));
+                all.setTextColor(getResources().getColor(R.color.text_black));
+                today.setBackgroundColor(getResources().getColor(R.color.white));
+                today.setTextColor(getResources().getColor(R.color.text_black));
+                tomo.setBackgroundColor(getResources().getColor(R.color.white));
+                tomo.setTextColor(getResources().getColor(R.color.text_black));
+                week.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                week.setTextColor(getResources().getColor(R.color.white));
+                month.setBackgroundColor(getResources().getColor(R.color.white));
+                month.setTextColor(getResources().getColor(R.color.text_black));
                 eventsArrayList.clear();
                 makeEventListServiceCall();
                 if (eventsListAdapter != null) {
@@ -255,11 +275,16 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             @Override
             public void onClick(View v) {
                 dateType = "Month";
-                all.setBackgroundResource(R.drawable.btn_round_nocolor);
-                today.setBackgroundResource(R.drawable.btn_round_nocolor);
-                tomo.setBackgroundResource(R.drawable.btn_round_nocolor);
-                week.setBackgroundResource(R.drawable.btn_round_nocolor);
-                month.setBackgroundResource(R.drawable.btn_round_grey);
+                all.setBackgroundColor(getResources().getColor(R.color.white));
+                all.setTextColor(getResources().getColor(R.color.text_black));
+                today.setBackgroundColor(getResources().getColor(R.color.white));
+                today.setTextColor(getResources().getColor(R.color.text_black));
+                tomo.setBackgroundColor(getResources().getColor(R.color.white));
+                tomo.setTextColor(getResources().getColor(R.color.text_black));
+                week.setBackgroundColor(getResources().getColor(R.color.white));
+                week.setTextColor(getResources().getColor(R.color.text_black));
+                month.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                month.setTextColor(getResources().getColor(R.color.white));
                 eventsArrayList.clear();
                 makeEventListServiceCall();
                 if (eventsListAdapter != null) {

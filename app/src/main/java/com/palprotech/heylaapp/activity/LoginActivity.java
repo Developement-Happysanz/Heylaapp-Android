@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -145,6 +146,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
 
             tabLayout.addTab(tabLayout.newTab().setText("SIGN IN"));
             tabLayout.addTab(tabLayout.newTab().setText("SIGN UP"));
+            tabLayout.setTabTextColors(getResources().getColor(R.color.text_gray), getResources().getColor(R.color.appColorBase));
 
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
@@ -159,6 +161,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     viewPager.setCurrentItem(tab.getPosition());
+                    viewPager.getCurrentItem();
                 }
 
                 @Override
