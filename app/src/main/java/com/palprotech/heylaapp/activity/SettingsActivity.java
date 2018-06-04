@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
@@ -16,6 +17,7 @@ import com.palprotech.heylaapp.R;
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView profile, changePassword, changeNumber, verifyMail;
+    ImageView ivBack;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +38,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         verifyMail = findViewById(R.id.verify_mail_settings);
         verifyMail.setOnClickListener(this);
+
+        ivBack = findViewById(R.id.back_res);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
