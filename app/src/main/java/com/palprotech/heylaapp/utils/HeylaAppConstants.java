@@ -179,6 +179,7 @@ public class HeylaAppConstants {
     public static final String FILTEREVENTTYPE = "event_type";
     public static final String FILTEREVENTCATEGORY = "event_category";
     public static final String FILTERPREF = "selected_preference";
+    public static final String FILTERRANGE = "price_range";
 
     //    Event review list
     public static final String EVENT_REVIEW_LIST = "apimain/listEventReview/";

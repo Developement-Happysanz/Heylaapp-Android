@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,7 +52,7 @@ import java.util.List;
  * Created by Narendar on 16/11/17.
  */
 
-public class AdvanceFilterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, IServiceListener, DialogClickListener {
+public class AdvanceFilterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, IServiceListener, DialogClickListener, SeekBar.OnSeekBarChangeListener {
 
     private static final String TAG = AdvanceFilterActivity.class.getName();
 
@@ -76,10 +77,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
     private ArrayList<String> PreferenceList = new ArrayList<String>();
     private ArrayList<String> PreferenceIdList = new ArrayList<String>();
 
-    ArrayAdapter<String> mPriceAdapter = null;
-    private ArrayList<String> PriceList = new ArrayList<String>();
-    private ArrayList<String> PriceIdList = new ArrayList<String>();
-
     ArrayAdapter<StoreCity> mCityAdapter = null;
     ArrayList<StoreCity> cityList;
 
@@ -92,15 +89,18 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
     DatePickerDialog mFromDatePickerDialog = null;
     private ServiceHelper serviceHelper;
     HashSet<Integer> mSelectedPreferenceList = new HashSet<Integer>();
-    HashSet<Integer> mSelectedPriceList = new HashSet<Integer>();
     private String mFromDateVal = null;
     private String mTodateVal = null;
 
     private ImageView ivBack;
     private Button btnToday, btnTomorrow, btnSelectedDate;
-    private EditText etEventTypeList, etEventCategoryList, etPreferenceList, etCityList, etPriceList;
+    private EditText etEventTypeList, etEventCategoryList, etPreferenceList, etCityList;
+    private SeekBar etPriceList;
     private Button btnFromDate, btnToDate;
     private Button btnCancel, btnSubmit;
+
+    private TextView endRangeText;
+    double startRange , mSelectedPriceRange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,9 +142,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         etCityList.setOnClickListener(this);
         etCityList.setFocusable(false);
 
-        etPriceList = findViewById(R.id.priceRangeList);
-        etPriceList.setOnClickListener(this);
-        etPriceList.setFocusable(false);
+        etPriceList = findViewById(R.id.price_range);
+        etPriceList.setOnSeekBarChangeListener(this);
+        endRangeText = findViewById(R.id.end_range_text);
 
         btnFromDate = findViewById(R.id.btnfrom);
         btnFromDate.setOnClickListener(this);
@@ -230,42 +230,6 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 return view;
             }
         };
-
-    mPriceAdapter = new ArrayAdapter<String>(this, R.layout.category_list_item, R.id.category_list_name, PriceList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                Log.d(TAG, "getview called" + position);
-                View view = getLayoutInflater().inflate(R.layout.category_list_item, parent, false);
-                TextView name = (TextView) view.findViewById(R.id.category_list_name);
-                String prefid = "";
-                name.setText(PriceList.get(position));
-                prefid = (PriceList.get(position));
-                CheckBox checkbox = (CheckBox) view.findViewById(R.id.item_selection);
-                checkbox.setTag(Integer.toString(position));
-                if (mSelectedPriceList.contains(position)) {
-                    checkbox.setChecked(true);
-                } else {
-                    checkbox.setChecked(false);
-                }
-                checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        String tag = (String) buttonView.getTag();
-                        if (tag != null) {
-                            int index = Integer.parseInt(tag);
-                            if (mSelectedPriceList.contains(index)) {
-                                mSelectedPriceList.remove(index);
-                            } else {
-                                mSelectedPriceList.add(index);
-                            }
-                        }
-                    }
-                });
-
-                // ... Fill in other views ...
-                return view;
-            }
-        };
     }
 
     @Override
@@ -292,7 +256,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         }
         if (v == etPriceList) {
 //            checkState = "city";
-            showPriceList();
+//            showPriceList();
         }
 
         if (v == btnCancel) {
@@ -303,8 +267,8 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
             etPreferenceList.setText("");
             mSelectedPreferenceList.clear();
 
-            etPriceList.setText("");
-            mSelectedPriceList.clear();
+            etPriceList.setProgress(0);
+            mSelectedPriceRange = 0.0;
 
             etCityList.setText("");
 
@@ -445,7 +409,8 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     eventPreferenceIdStr = sb1.toString();
                 }
                 String city = etCityList.getText().toString();
-                String price = etPriceList.getText().toString();
+                String range = "0.00-" + mSelectedPriceRange + "0";
+//                String price = etPriceList.getText().toString();
 //                String city = spincity.getSelectedItem().toString();
                 String eventCategoryStr = etEventCategoryList.getText().toString();
                 String fromdate = ((Button) findViewById(R.id.btnfrom)).getText().toString();
@@ -459,6 +424,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     }
                     PreferenceStorage.saveFilterEventType(this, eventTypeStr);
                     PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
+
+                    PreferenceStorage.saveFilterRange(this, range);
+
                     if (!eventCategoryStr.equalsIgnoreCase("Select category")) {
                         PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
                     } else {
@@ -483,6 +451,8 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                         PreferenceStorage.saveFilterEventType(this, eventTypeStr);
                         PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
 
+                        PreferenceStorage.saveFilterRange(this, range);
+
                         if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
                             PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
                         } else {
@@ -499,6 +469,8 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     }
                     PreferenceStorage.saveFilterEventType(this, eventTypeStr);
                     PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
+
+                    PreferenceStorage.saveFilterRange(this, range);
 
                     if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
                         PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
@@ -807,25 +779,25 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         }
     }
 
-    private void showCityList() {
+    private void showPriceList() {
 
-        Log.d(TAG, "Show city list");
+        Log.d(TAG, "Show price range list");
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
         TextView header = (TextView) view.findViewById(R.id.gender_header);
         header.setText("Select Price Range");
-        builderSingle.setCustomTitle(view);
-
-        builderSingle.setAdapter(mCityAdapter,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        StoreCity cty = cityList.get(which);
-                        etPriceList.setText(cty.getCityName());
-                        cityId = cty.getCityId();
-                    }
-                });
-        builderSingle.show();
+//        builderSingle.setCustomTitle(view);
+//
+//        builderSingle.setAdapter(mCityAdapter,
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        StoreCity cty = cityList.get(which);
+//                        etCityList.setText(cty.getCityName());
+//                        cityId = cty.getCityId();
+//                    }
+//                });
+//        builderSingle.show();
     }
 
    private void GetPriceRange() {
@@ -851,9 +823,10 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         }
     }
 
-    private void showPriceList() {
+    private void showCityList() {
 
-        Log.d(TAG, "Show price range list");
+        Log.d(TAG, "Show city list");
+
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
         TextView header = (TextView) view.findViewById(R.id.gender_header);
@@ -952,35 +925,17 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                             return view;
                         }
                     };
+
+                    GetPriceRange();
+
                 } else if (checkState.equalsIgnoreCase("price")) {
 
                     firstTime = true;
-                    JSONArray getData = response.getJSONArray("Cities");
-                    int getLength = getData.length();
-                    String cityId = "";
-                    String cityName = "";
-                    cityList = new ArrayList<>();
-
-                    for (int i = 0; i < getLength; i++) {
-
-                        cityId = getData.getJSONObject(i).getString("id");
-                        cityName = getData.getJSONObject(i).getString("city_name");
-                        cityList.add(new StoreCity(cityId, cityName));
-                    }
-
-                    //fill data in spinner
-                    mCityAdapter = new ArrayAdapter<StoreCity>(getApplicationContext(), R.layout.gender_layout, R.id.gender_name, cityList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
-                        @Override
-                        public View getView(int position, View convertView, ViewGroup parent) {
-                            Log.d(TAG, "getview called" + position);
-                            View view = getLayoutInflater().inflate(R.layout.gender_layout, parent, false);
-                            TextView gendername = (TextView) view.findViewById(R.id.gender_name);
-                            gendername.setText(cityList.get(position).getCityName());
-
-                            // ... Fill in other views ...
-                            return view;
-                        }
-                    };
+                    String maxRange = response.getString("Pricerange");
+                    startRange = Double.parseDouble(maxRange);
+                    int endPoint = (int) startRange;
+                    etPriceList.setMax(endPoint);
+                    endRangeText.setText("Rs."+ endPoint);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -1007,6 +962,21 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
     @Override
     public void onAlertNegativeClicked(int tag) {
 
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        mSelectedPriceRange = progress;
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        Toast.makeText(getApplicationContext(),"Price range: Rs.0 - Rs."+seekBar.getProgress(), Toast.LENGTH_SHORT).show();
     }
 }
 

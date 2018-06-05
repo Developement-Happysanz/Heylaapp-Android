@@ -786,6 +786,21 @@ public class PreferenceStorage {
         return userId;
     }
 
+    public static void saveFilterRange(Context context, String range) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.FILTERRANGE, range);
+        editor.commit();
+    }
+
+    public static String getFilterRange(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String userId = sharedPreferences.getString(HeylaAppConstants.FILTERRANGE, "");
+        return userId;
+    }
+
     // Booking Status check
 
     public static void saveOrderId(Context context, String orderID) {

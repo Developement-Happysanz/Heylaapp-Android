@@ -27,6 +27,7 @@ import com.palprotech.heylaapp.interfaces.DialogClickListener;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,6 +75,7 @@ public class EventReviewActivity extends AppCompatActivity implements DialogClic
         try {
 
             jsonObject.put(HeylaAppConstants.KEY_EVENT_ID, event.getId());
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -653,6 +653,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         try {
 
             jsonObject.put(HeylaAppConstants.KEY_EVENT_ID, event.getId());
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
 
         } catch (JSONException e) {
             e.printStackTrace();

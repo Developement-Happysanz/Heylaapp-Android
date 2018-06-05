@@ -87,6 +87,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
                 jsonObject.put(HeylaAppConstants.FILTEREVENTTYPE, PreferenceStorage.getFilterEventType(this));
                 jsonObject.put(HeylaAppConstants.FILTEREVENTCATEGORY, PreferenceStorage.getFilterEventCategory(this));
                 jsonObject.put(HeylaAppConstants.FILTERPREF, PreferenceStorage.getFilterPreference(this));
+                jsonObject.put(HeylaAppConstants.FILTERRANGE, PreferenceStorage.getFilterRange(this));
 
             } catch (JSONException e) {
                 e.printStackTrace();
