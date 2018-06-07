@@ -6,6 +6,7 @@
     android:id="@+id/event_detail_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/eventListbg"
     android:orientation="vertical">
 
     <!--<include-->
@@ -24,10 +25,10 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="5dp"
-        android:minHeight="?attr/actionBarSize"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:layout_marginStart="10dp"
+        android:minHeight="60dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
         android:src="@drawable/ic_back_button" />
 
     <TextView
@@ -35,12 +36,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/muli"
         android:gravity="center"
         android:minHeight="?attr/actionBarSize"
         android:padding="5dp"
         android:text="Nearby"
-        android:textAllCaps="true"
+        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="@dimen/actionbarTextSize" />
 
@@ -58,11 +59,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="@dimen/mainmargin"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/muli"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="Select Nearby Distance"
+            android:textStyle="bold"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/actionbarTextSize" />
+            android:textSize="16sp" />
 
 
         <Spinner
@@ -82,11 +85,12 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@id/nearbyspinner"
             android:layout_marginBottom="@dimen/mainmargin"
-            android:fontFamily="sans-serif"
+            android:fontFamily="@font/muli"
+            android:textStyle="bold"
             android:gravity="center"
             android:text=" Nearby Events"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/actionbarTextSize" />
+            android:textSize="16sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -97,7 +101,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
+                android:background="@color/eventListbg"
                 android:paddingBottom="10dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp">
@@ -106,7 +110,8 @@
                     android:id="@+id/nearby_bg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/map" />
+                    android:src="@drawable/map"
+                    android:visibility="gone"/>
 
                 <com.google.android.gms.maps.MapView
                     android:id="@+id/mapview"
@@ -119,12 +124,24 @@
                 <ListView
                     android:id="@+id/listView_events"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:divider="#ffffff"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/logo"
+                    android:divider="@color/eventListbg"
                     android:dividerHeight="4dp" />
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_heyla_bluelogo"/>
 
             </RelativeLayout>
         </RelativeLayout>
+
+
 
         <FrameLayout
             android:id="@+id/fabFrame"

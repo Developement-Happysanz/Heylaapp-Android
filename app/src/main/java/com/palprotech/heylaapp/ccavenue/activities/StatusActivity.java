@@ -79,9 +79,9 @@ public class StatusActivity extends Activity {
 
         switch (tv4.getText().toString()) {
             case "Transaction Declined!":
+                Failure.setVisibility(View.VISIBLE);
                 Success.setVisibility(View.INVISIBLE);
                 Cancel.setVisibility(View.INVISIBLE);
-                Failure.setVisibility(View.VISIBLE);
                 PaymentStatus.setText("Failed");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);
@@ -92,9 +92,9 @@ public class StatusActivity extends Activity {
 //                payment.setBackground(getResources().getDrawable(R.drawable.payment_status_failure));
                 break;
             case "Transaction Successful!":
+                Success.setVisibility(View.VISIBLE);
                 Failure.setVisibility(View.INVISIBLE);
                 Cancel.setVisibility(View.INVISIBLE);
-                Success.setVisibility(View.VISIBLE);
                 PaymentStatus.setText("Success");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);
@@ -105,9 +105,9 @@ public class StatusActivity extends Activity {
 //                payment.setBackground(getResources().getDrawable(R.drawable.payment_status_success));
                 break;
             case "Transaction Cancelled!":
+                Cancel.setVisibility(View.VISIBLE);
                 Success.setVisibility(View.INVISIBLE);
                 Failure.setVisibility(View.INVISIBLE);
-                Cancel.setVisibility(View.VISIBLE);
                 PaymentStatus.setText("Canceled");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);

@@ -60,6 +60,7 @@
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
+            android:visibility="invisible"
             android:src="@drawable/ic_payment_success" />
 
         <ImageView
@@ -67,6 +68,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
+            android:visibility="invisible"
             android:layout_marginTop="25dp"
             android:src="@drawable/ic_payment_failed" />
 
@@ -75,6 +77,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
+            android:visibility="invisible"
             android:layout_marginTop="25dp"
             android:src="@drawable/ic_payment_cancel" />
 

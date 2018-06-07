@@ -36,7 +36,7 @@
             android:minHeight="60dp"
             android:padding="5dp"
             android:text="Daily Login"
-            android:textAllCaps="true"
+            android:textStyle="bold"
             android:textColor="@color/white"
             android:textSize="@dimen/actionbarTextSize" />
 
@@ -61,7 +61,7 @@
             android:paddingStart="20dp"
             android:text="DAILY POINTS"
             android:textColor="@color/text_black"
-            android:textSize="20dp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
@@ -76,7 +76,7 @@
             android:paddingBottom="5dp"
             android:text="Total Login Points"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/daily_point"
@@ -91,7 +91,7 @@
             android:paddingBottom="5dp"
             android:text="0"
             android:textColor="@color/white"
-            android:textSize="30dp" />
+            android:textSize="18sp" />
 
     </RelativeLayout>
 
@@ -124,6 +124,7 @@
                         android:fontFamily="@font/muli"
                         android:gravity="center"
                         android:text="Day 1"
+                        android:textStyle="bold"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -160,6 +161,7 @@
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/muli"
                         android:gravity="center"
+                        android:textStyle="bold"
                         android:text="Day 2"
                         android:textColor="@color/white" />
 
@@ -208,6 +210,7 @@
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/muli"
                         android:gravity="center"
+                        android:textStyle="bold"
                         android:text="Day 3"
                         android:textColor="@color/white" />
 
@@ -245,6 +248,7 @@
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/muli"
                         android:gravity="center"
+                        android:textStyle="bold"
                         android:text="Day 4"
                         android:textColor="@color/white" />
 
@@ -295,6 +299,7 @@
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/muli"
                         android:gravity="center"
+                        android:textStyle="bold"
                         android:text="Day 5"
                         android:textColor="@color/white" />
 

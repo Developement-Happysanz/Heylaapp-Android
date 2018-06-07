@@ -155,8 +155,13 @@ public class EventsListAdapter extends BaseAdapter {
             String date_name = event_date.format(date.getTime());
             String date_end_name = event_date.format(date1.getTime());
             if ((start != null) && (end != null)) {
-                holder.txtDate.setText(date_name + " - ");
-                holder.txtEndDate.setText(date_end_name);
+                if (events.get(position).getHotspotStatus().equalsIgnoreCase("N")) {
+                    holder.txtDate.setText(date_name + " - ");
+                    holder.txtEndDate.setText(date_end_name);
+                } else {
+                    holder.txtDate.setVisibility(View.GONE);
+                    holder.txtEndDate.setVisibility(View.GONE);
+                }
             } else {
                 holder.txtDate.setText("N/A");
             }
