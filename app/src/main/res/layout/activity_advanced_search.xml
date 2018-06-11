@@ -385,7 +385,7 @@
                 android:layout_below="@id/date_range_layout"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
-                android:background="@color/white"
+                android:background="@color/eventListbg"
                 android:weightSum="2">
 
                 <Button

@@ -101,6 +101,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
     private TextView endRangeText;
     double startRange , mSelectedPriceRange;
+    String range = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -409,7 +410,11 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     eventPreferenceIdStr = sb1.toString();
                 }
                 String city = etCityList.getText().toString();
-                String range = "0.00-" + mSelectedPriceRange + "0";
+                if (mSelectedPriceRange > 0.00) {
+                    range = "0.00-" + mSelectedPriceRange + "0";
+                } else {
+                    range = "";
+                }
 //                String price = etPriceList.getText().toString();
 //                String city = spincity.getSelectedItem().toString();
                 String eventCategoryStr = etEventCategoryList.getText().toString();
