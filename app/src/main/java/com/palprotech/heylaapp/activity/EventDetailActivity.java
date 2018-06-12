@@ -317,7 +317,6 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         writeReview = findViewById(R.id.write_review);
         writeReview.setOnClickListener(this);
         updateEventViews();
-        loadReviewList();
     }
 
     private void updateEventViews() {
@@ -575,6 +574,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
                     } else {
                         imEventFavourite.setImageResource(R.drawable.ic_fav_deselect);
                     }
+                    loadReviewList();
                 } else if (res.equalsIgnoreCase("wishlistADD")) {
                     wishliststatus = response.getString("status");
                     Toast.makeText(this, "Wishlist Updated!!", Toast.LENGTH_SHORT).show();

@@ -566,6 +566,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                 @Override
                 public void onClick(View v) {
                     if (PreferenceStorage.getUserType(context).equalsIgnoreCase("1")) {
+                        PreferenceStorage.saveCheckFirstTimeProfile(context, "reuse");
                         Intent homeIntent = new Intent(context, ProfileActivity.class);
                         context.startActivity(homeIntent);
                     } else {

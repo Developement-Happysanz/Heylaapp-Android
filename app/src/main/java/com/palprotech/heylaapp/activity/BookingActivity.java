@@ -64,7 +64,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
     private String checkPoint;
     LinearLayout layout_date;
     LinearLayout layout_timing;
-    private String showDate = "", showTime = "", showTimeId = "";
+    private String showDate = "", showTime = "", showTimeId = "", transactionDate = "";
     ListView plansListView;
     BookingPlanAdapter bookingPlanAdapter;
     ArrayList<BookPlan> bookPlanArrayList;
@@ -255,7 +255,10 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                     PreferenceStorage.saveOrderId(getApplicationContext(), orderId);
                     PreferenceStorage.savePaymentAmount(getApplicationContext(), "" + totalRate);
                     PreferenceStorage.saveTotalNoOfTickets(getApplicationContext(), totalTicketNo);
-                    PreferenceStorage.saveTransactionDate(getApplicationContext(), showDate);
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.UK);
+                    Date date = new Date();
+                    transactionDate = formatter.format(date);
+                    PreferenceStorage.saveTransactionDate(getApplicationContext(), transactionDate);
                     startActivity(intent);
                     finish();
                 }
@@ -703,7 +706,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
             jsonObject.put(HeylaAppConstants.KEY_ORDER_ID, orderId);
             jsonObject.put(HeylaAppConstants.KEY_EVENT_ID, event.getId());
             jsonObject.put(HeylaAppConstants.KEY_PLAN_ID, bookPlan.getPlanId());
-            jsonObject.put(HeylaAppConstants.KEY_PLAN_TIME_ID, showTimeId);
+            jsonObject.put(HeylaAppConstants.KEY_PLAN_TIME_ID, bookPlan.getPlanTimeId());
             jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
             jsonObject.put(HeylaAppConstants.KEY_NO_OF_SEATS, noOfTicket);
             jsonObject.put(HeylaAppConstants.KEY_TOTAL_AMOUNT, "" + totalRate);

@@ -14,21 +14,31 @@ public class BookPlan implements Serializable {
     @SerializedName("plan_name")
     @Expose
     private String plan_name;
+
     @SerializedName("seat_rate")
     @Expose
     private String seat_rate;
+
     @SerializedName("event_id")
     @Expose
     private String event_id;
+
     @SerializedName("plan_id")
     @Expose
     private String plan_id;
+
+    @SerializedName("plan_time_id")
+    @Expose
+    private String plan_time_id;
+
     @SerializedName("show_date")
     @Expose
     private String show_date;
+
     @SerializedName("show_time")
     @Expose
     private String show_time;
+
     @SerializedName("seat_available")
     @Expose
     private String seat_available;
@@ -64,6 +74,15 @@ public class BookPlan implements Serializable {
     public void setPlanId(String plan_id) {
         this.plan_id = plan_id;
     }
+
+    public String getPlanTimeId() {
+        return plan_time_id;
+    }
+
+    public void setPlanTimeId(String plan_time_id) {
+        this.plan_time_id = plan_time_id;
+    }
+
 
     public String getShowDate() {
         return show_date;

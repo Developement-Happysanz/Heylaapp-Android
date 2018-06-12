@@ -1203,7 +1203,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             // support it)
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
             // indicate image type and Uri
-            cropIntent.setDataAndType(outputFileUri, "image/*");
+            cropIntent.setDataAndType(Uri.parse(mActualFilePath), "image/*");
             // set crop properties
             cropIntent.putExtra("crop", "true");
             // indicate aspect of desired crop
