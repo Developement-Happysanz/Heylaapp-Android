@@ -638,28 +638,53 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                     }
                 }
 
-                Uri selectedImageUri;
 
                 if (isCamera) {
                     Log.d(TAG, "Add to gallery");
-                    selectedImageUri = outputFileUri;
+                    mSelectedImageUri = outputFileUri;
                     mActualFilePath = outputFileUri.getPath();
-                    galleryAddPic(selectedImageUri);
+                    galleryAddPic(mSelectedImageUri);
                 } else {
-                    selectedImageUri = data == null ? null : data.getData();
-                    mActualFilePath = getRealPathFromURI(this, selectedImageUri);
-                    Log.d(TAG, "path to image is" + mActualFilePath);
+//                    selectedImageUri = data == null ? null : data.getData();
+//                    mActualFilePath = getRealPathFromURI(this, selectedImageUri);
+//                    Log.d(TAG, "path to image is" + mActualFilePath);
 
+                    if (data != null && data.getData() != null) {
+                        try{
+                            mSelectedImageUri = data.getData();
+                            String[] filePathColumn = {MediaStore.Images.Media.DATA };
+                            Cursor cursor = getContentResolver().query(mSelectedImageUri,
+                                    filePathColumn, null, null, null);
+                            cursor.moveToFirst();
+                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                            mActualFilePath = getRealPathFromURI(this, mSelectedImageUri);
+                            cursor.close();
+
+                            //return Image Path to the Main Activity
+                            Intent returnFromGalleryIntent = new Intent();
+                            returnFromGalleryIntent.putExtra("picturePath",mActualFilePath);
+                            setResult(RESULT_OK,returnFromGalleryIntent);
+                        }catch(Exception e){
+                            e.printStackTrace();
+                            Intent returnFromGalleryIntent = new Intent();
+                            setResult(RESULT_CANCELED, returnFromGalleryIntent);
+                            finish();
+                        }
+                    }else{
+                        Log.i(TAG,"RESULT_CANCELED");
+                        Intent returnFromGalleryIntent = new Intent();
+                        setResult(RESULT_CANCELED, returnFromGalleryIntent);
+                        finish();
+                    }
+                    
                 }
-                Log.d(TAG, "image Uri is" + selectedImageUri);
-                if (selectedImageUri != null) {
-                    Log.d(TAG, "image URI is" + selectedImageUri);
+                Log.d(TAG, "image Uri is" + mSelectedImageUri);
+                if (mSelectedImageUri != null) {
+                    Log.d(TAG, "image URI is" + mSelectedImageUri);
                     performCrop();
-                    setPic(selectedImageUri);
+                    setPic(mSelectedImageUri);
                 }
-            }
-
-            else if (requestCode == CROP_PIC) {
+            }  else if (requestCode == CROP_PIC) {
                 // get the returned data
                 Bundle extras = data.getExtras();
                 // get the cropped bitmap
@@ -1203,7 +1228,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             // support it)
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
             // indicate image type and Uri
-            cropIntent.setDataAndType(Uri.parse(mActualFilePath), "image/*");
+            cropIntent.setDataAndType(mSelectedImageUri, "image/*");
             // set crop properties
             cropIntent.putExtra("crop", "true");
             // indicate aspect of desired crop
