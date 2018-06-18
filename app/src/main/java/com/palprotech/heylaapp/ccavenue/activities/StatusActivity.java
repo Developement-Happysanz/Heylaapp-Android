@@ -85,7 +85,7 @@ public class StatusActivity extends Activity {
                 PaymentStatus.setText("Failed");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);
-                TransactionDate.setText(showTransactionDate);
+                TransactionDate.setText(getTransactionDate);
                 PaymentDone.setText("Try Again");
                 PaymentDone.setTextColor(getResources().getColor(R.color.failure_new));
                 statusBG.setBackgroundColor(getResources().getColor(R.color.failure_new));
@@ -98,7 +98,7 @@ public class StatusActivity extends Activity {
                 PaymentStatus.setText("Success");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);
-                TransactionDate.setText(showTransactionDate);
+                TransactionDate.setText(getTransactionDate);
                 PaymentDone.setText("Done");
                 PaymentDone.setTextColor(getResources().getColor(R.color.success_new));
                 statusBG.setBackgroundColor(getResources().getColor(R.color.success_new));
@@ -111,7 +111,7 @@ public class StatusActivity extends Activity {
                 PaymentStatus.setText("Canceled");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);
-                TransactionDate.setText(showTransactionDate);
+                TransactionDate.setText(getTransactionDate);
                 PaymentDone.setText("Ok");
                 PaymentDone.setTextColor(getResources().getColor(R.color.cancel_new));
                 statusBG.setBackgroundColor(getResources().getColor(R.color.cancel_new));

@@ -83,13 +83,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by Narendar on 23/10/17.
- */
-
-public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener, View.OnClickListener, IServiceListener, DialogClickListener {
+public class PATemp extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener, View.OnClickListener, IServiceListener, DialogClickListener {
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
-    private static final String TAG = ProfileActivity.class.getName();
+    private static final String TAG = PATemp.class.getName();
 
     private List<String> mOccupationList = new ArrayList<String>();
     private ArrayAdapter<String> mOccupationAdapter = null;
@@ -527,7 +523,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             String responseString = null;
 
             httpclient = new DefaultHttpClient();
-            httppost = new HttpPost(String.format(HeylaAppConstants.BASE_URL + HeylaAppConstants.PROFILE_IMAGE + Integer.parseInt(PreferenceStorage.getUserId(ProfileActivity.this))));
+            httppost = new HttpPost(String.format(HeylaAppConstants.BASE_URL + HeylaAppConstants.PROFILE_IMAGE + Integer.parseInt(PreferenceStorage.getUserId(PATemp.this))));
 
             try {
                 AndroidMultiPartEntity entity = new AndroidMultiPartEntity(
@@ -548,8 +544,8 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                     entity.addPart("user_pic", new FileBody(sourceFile));
 
                     // Extra parameters if you want to pass to server
-                    entity.addPart("user_id", new StringBody(PreferenceStorage.getUserId(ProfileActivity.this)));
-//                    entity.addPart("user_type", new StringBody(PreferenceStorage.getUserType(ProfileActivity.this)));
+                    entity.addPart("user_id", new StringBody(PreferenceStorage.getUserId(PATemp.this)));
+//                    entity.addPart("user_type", new StringBody(PreferenceStorage.getUserType(PATemp.this)));
 
                     totalSize = entity.getContentLength();
                     httppost.setEntity(entity);
@@ -596,10 +592,10 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
             super.onPostExecute(result);
             if ((result == null) || (result.isEmpty()) || (result.contains("Error"))) {
-                Toast.makeText(ProfileActivity.this, "Unable to save profile picture", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PATemp.this, "Unable to save profile picture", Toast.LENGTH_SHORT).show();
             } else {
                 if (mUpdatedImageUrl != null) {
-                    PreferenceStorage.saveUserPicture(ProfileActivity.this, mUpdatedImageUrl);
+                    PreferenceStorage.saveUserPicture(PATemp.this, mUpdatedImageUrl);
                 }
             }
             saveProfileData();
@@ -715,7 +711,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         setResult(RESULT_CANCELED, returnFromGalleryIntent);
                         finish();
                     }
-                    
+
                 }
                 Log.d(TAG, "image Uri is" + mSelectedImageUri);
                 if (mSelectedImageUri != null) {
@@ -1236,7 +1232,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         if (!(view instanceof EditText)) {
             view.setOnTouchListener(new View.OnTouchListener() {
                 public boolean onTouch(View v, MotionEvent event) {
-                    hideSoftKeyboard(ProfileActivity.this);
+                    hideSoftKeyboard(PATemp.this);
                     return false;
                 }
             });

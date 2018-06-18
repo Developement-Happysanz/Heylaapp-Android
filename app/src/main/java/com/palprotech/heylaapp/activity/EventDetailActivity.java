@@ -137,9 +137,14 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         if (v == imEventShare) {
             SpannableString content = new SpannableString("http://www.heylaapp.com/");
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-            String text = event.getEventName() + "\n" + "From : " + event.getStartDate() + " To : " + event.getEndDate() + "\n"
-                    + event.getStartTime() + "-" + event.getEndTime() + "\n" + event.getDescription() + "\n" + content;
-
+            String text = "";
+            if (eventType.equalsIgnoreCase("N")) {
+                text = event.getEventName() + "\n" + "From : " + event.getStartDate() + " To : " + event.getEndDate() + "\n"
+                        + event.getStartTime() + "-" + event.getEndTime() + "\n" + event.getDescription() + "\n" + content;
+            } else {
+                text = event.getEventName() + "\n"
+                        + event.getStartTime() + "-" + event.getEndTime() + "\n" + event.getDescription() + "\n" + content;
+            }
 
             Intent i = new Intent(android.content.Intent.ACTION_SEND);
             i.setType("text/plain");
