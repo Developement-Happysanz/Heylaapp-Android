@@ -322,7 +322,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                 }
             } else if (v == forgotPassword) {
                 Intent homeIntent = new Intent(getActivity(), ForgotPasswordActivity.class);
-                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(homeIntent);
 //                getActivity().finish();
             } else if (v == btnGoogle) {

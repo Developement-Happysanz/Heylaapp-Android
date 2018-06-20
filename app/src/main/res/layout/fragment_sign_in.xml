@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_grey"
+    android:background="@color/white"
     android:scrollbars="vertical">
 
     <LinearLayout
@@ -15,14 +15,14 @@
             android:id="@+id/ti_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
             <EditText
                 android:id="@+id/edtUsername"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/muli"
                 android:hint="@string/usernameormail"
                 android:inputType="text"
@@ -44,7 +44,7 @@
             <EditText
                 android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:maxLines="1"
@@ -66,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:fontFamily="@font/muli"
+                android:textSize="14sp"
                 android:layout_alignParentStart="true"
                 android:text="@string/remember" />
 
@@ -78,6 +79,7 @@
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/muli"
                 android:text="@string/forgot"
+                android:textSize="14sp"
                 android:textColor="@color/appColorBase" />
 
         </RelativeLayout>
@@ -85,17 +87,15 @@
         <Button
             android:id="@+id/signin"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:fontFamily="@font/muli"
-            android:layout_marginTop="20dp"
-            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/muli_bold"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/btn_square_login"
             android:text="@string/login"
             android:textColor="@color/colour_pick"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
 
         <TextView
@@ -121,8 +121,8 @@
                 android:id="@+id/login_using_fb"
                 android:layout_width="match_parent"
                 android:layout_weight="0.5"
-                android:layout_height="50dp"
-                android:layout_marginStart="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:background="@drawable/btn_square_facebook"
                 android:drawableLeft="@drawable/ic_fb_login"
                 android:gravity="center"
@@ -130,14 +130,14 @@
                 android:paddingEnd="8dp"
                 android:text="Facebook"
                 android:textColor="@color/white"
-                android:textSize="17sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/login_using_gplus"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/muli"
                 android:background="@drawable/btn_square_google"
@@ -145,7 +145,7 @@
                 android:gravity="center"
                 android:paddingEnd="8dp"
                 android:text="Google"
-                android:textSize="17sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -153,7 +153,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:gravity="center">
 
             <ImageView
@@ -169,7 +169,7 @@
                 android:layout_alignTop="@+id/img_guest_login"
                 android:layout_alignBottom="@id/img_guest_login"
                 android:layout_toRightOf="@id/img_guest_login"
-                android:text="Continue as Guest"
+                android:text="Continue as guest"
                 android:gravity="center"
                 android:layout_marginLeft="10dp"
                 android:textSize="16sp"

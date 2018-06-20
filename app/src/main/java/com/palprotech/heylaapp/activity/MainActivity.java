@@ -392,6 +392,10 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
 
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_heyla_logo_toolbar);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
 
         toolbar.setNavigationIcon(R.drawable.ic_sidemenu);
 //        toolbar.setNavigationOnClickListener(

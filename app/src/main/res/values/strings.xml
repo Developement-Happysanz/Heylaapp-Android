@@ -12,7 +12,7 @@
     <string name="facebook_app_id">276047162921002</string>
     <string name="guest">GUEST LOGIN</string>
     <string name="signup">Sign Up</string>
-    <string name="login">Login</string>
+    <string name="login">SIGN IN</string>
     <string name="send">Send</string>
     <string name="confirm">Confirm</string>
     <string name="submit">Submit</string>
@@ -26,7 +26,7 @@
     <string name="newpassword">New Password</string>
     <string name="remember">Remember me</string>
     <string name="alternatelogin">Or</string>
-    <string name="forgot">Forgot Password?</string>
+    <string name="forgot">Forgot password?</string>
     <string name="verificationcode">Verification Code</string>
     <string name="mobile_number">New Mobile Number</string>
     <string name="verificationcodeforforgotpassword">Enter Your OTP</string>

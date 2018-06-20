@@ -21,7 +21,7 @@
             <EditText
                 android:id="@+id/edtMail"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/muli"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
@@ -43,7 +43,7 @@
             <EditText
                 android:id="@+id/edtMobilenum"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:digits="0123456789+"
                 android:fontFamily="@font/muli"
                 android:hint="@string/mobileno"
@@ -67,7 +67,7 @@
             <EditText
                 android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/muli"
                 android:hint="@string/password"
                 android:inputType="textPassword"
@@ -80,19 +80,17 @@
         <Button
             android:id="@+id/btnSignup"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/ti_password"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:textStyle="bold"
             android:background="@drawable/btn_square_login"
-            android:fontFamily="@font/muli"
+            android:fontFamily="@font/muli_bold"
             android:text="@string/signup"
             android:textColor="@color/colour_pick"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 

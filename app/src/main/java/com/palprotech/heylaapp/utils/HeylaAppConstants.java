@@ -8,7 +8,7 @@ public class HeylaAppConstants {
 
     //    URLS
     //    BASE URL
-    public static final String BASE_URL = "https://heylaapp.com/";
+    public static final String BASE_URL = "https://heylaapp.com/testing/";
 
     //    SignIn
     public static final String SIGN_IN = "apimain/login/";

@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/ToolBarStyle.Event"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+    android:layout_height="?android:attr/actionBarSize"
     android:background="@color/appColorBase"
     android:minHeight="@dimen/abc_action_bar_default_height_material"
     android:theme="@style/ThemeOverlay.MyApp.ActionBar">
+
+
 
 </android.support.v7.widget.Toolbar>

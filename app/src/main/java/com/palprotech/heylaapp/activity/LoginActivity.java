@@ -148,6 +148,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
             tabLayout.addTab(tabLayout.newTab().setText("SIGN UP"));
             tabLayout.setTabTextColors(getResources().getColor(R.color.text_gray), getResources().getColor(R.color.appColorBase));
 
+
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
             final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);

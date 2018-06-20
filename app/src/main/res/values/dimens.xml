@@ -11,6 +11,6 @@
     <dimen name="slide_desc">16dp</dimen>
     <dimen name="desc_padding">40dp</dimen>
     <dimen name="event_title_text_size">18dp</dimen>
-    <dimen name="actionbarTextSize">20sp</dimen>
+    <dimen name="actionbarTextSize">18sp</dimen>
     <dimen name="mainmargin">10dp</dimen>
 </resources>

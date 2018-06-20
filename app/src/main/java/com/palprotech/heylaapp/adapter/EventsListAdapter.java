@@ -3,6 +3,7 @@ package com.palprotech.heylaapp.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -156,10 +157,14 @@ public class EventsListAdapter extends BaseAdapter {
             String date_end_name = event_date.format(date1.getTime());
             if ((start != null) && (end != null)) {
                 if (events.get(position).getHotspotStatus().equalsIgnoreCase("N")) {
+                    holder.txtDate.setTextColor(Color.parseColor("#676767"));
                     holder.txtDate.setText(date_name + " - ");
+                    holder.txtEndDate.setTextColor(Color.parseColor("#676767"));
                     holder.txtEndDate.setText(date_end_name);
                 } else {
-                    holder.txtDate.setVisibility(View.GONE);
+//                    holder.txtDate.setVisibility(View.GONE);
+                    holder.txtDate.setText(events.get(position).getEventVenue());
+                    holder.txtDate.setTextColor(Color.parseColor("#676767"));
                     holder.txtEndDate.setVisibility(View.GONE);
                 }
             } else {

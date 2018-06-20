@@ -92,6 +92,7 @@ public class WishListActivity extends AppCompatActivity implements AdapterView.O
         startActivity(intent);
     }
 
+
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
         Log.d(TAG, "onEvent list item clicked" + position);
