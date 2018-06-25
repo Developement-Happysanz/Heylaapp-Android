@@ -863,6 +863,36 @@ public class PreferenceStorage {
         return transactionDate;
     }
 
+    public static void saveBookingDate(Context context, String eventDate) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.BOOKING_DATE, eventDate);
+        editor.commit();
+    }
+
+    public static String getBookingDate(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String transactionDate = sharedPreferences.getString(HeylaAppConstants.BOOKING_DATE, "");
+        return transactionDate;
+    }
+
+    public static void saveBookingTime(Context context, String eventTime) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HeylaAppConstants.BOOKING_TIME, eventTime);
+        editor.commit();
+    }
+
+    public static String getBookingTime(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String transactionDate = sharedPreferences.getString(HeylaAppConstants.BOOKING_TIME, "");
+        return transactionDate;
+    }
+
     public static void IsFilterApply(Context context, boolean IsFilterApply) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);

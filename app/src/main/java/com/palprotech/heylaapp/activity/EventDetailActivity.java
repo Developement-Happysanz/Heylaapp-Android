@@ -109,7 +109,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
 
-        findViewById(R.id.detail_back).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

@@ -9,11 +9,12 @@
 
     <!--Login Module-->
     <color name="text_black">#000000</color>
+    <color name="eventDetail">#2d2d2d</color>
     <color name="white">#ffffff</color>
     <color name="transparent">#00000000</color>
     <color name="temp">#7e000000</color>
     <color name="bordergray">#c9c9c9</color>
-    <color name="eventListbg">#eaeaea</color>
+    <color name="eventListbg">#dedbdb</color>
     <color name="light_line_color">#f9f9f9</color>
     <color name="half_transparent">#1e468dcb</color>
     <color name="background_grey">#e5e6e9</color>
@@ -65,9 +66,13 @@
     <color name="failure">#e11f26</color>
     <color name="cancel">#f15528</color>
 
-    <color name="success_new">#8BC349</color>
-    <color name="failure_new">#BF3B30</color>
-    <color name="cancel_new">#F4A337</color>
+    <color name="success_txt">#40BF49</color>
+    <color name="failure_txt">#BF3B30</color>
+    <color name="cancel_txt">#F4A337</color>
+
+    <color name="success_new_bg">#BCDFB6</color>
+    <color name="failure_new_bg">#EF9C9D</color>
+    <color name="cancel_new_bg">#F0CA9E</color>
 
     <color name="leaderboard_login">#8dc63f</color>
     <color name="leaderboard_share">#444da1</color>

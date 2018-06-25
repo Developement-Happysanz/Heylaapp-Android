@@ -34,7 +34,7 @@
                 android:fontFamily="@font/muli"
                 android:text="@string/verificationcode"
                 android:textColor="@color/appColorBase"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView

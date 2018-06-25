@@ -15,7 +15,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="10dp">
+            android:paddingBottom="5dp">
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/mapview"
@@ -40,15 +40,17 @@
             <RelativeLayout
                 android:id="@+id/current_view_layout"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="41dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_alignParentTop="true"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/white"
+                    android:layout_height="35dp"
+                    android:background="@color/appColorBase"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -56,10 +58,12 @@
                         android:layout_width="85dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.9"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
                         android:background="@color/appColorBase"
                         android:gravity="center"
                         android:text="All"
-                        android:textStyle="bold"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
 
@@ -68,11 +72,13 @@
                         android:layout_width="85dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.5"
-                        android:background="@drawable/btn_round_nocolor"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:background="@color/white"
+                        android:layout_marginLeft="1dp"
                         android:gravity="center"
                         android:text="Today"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_black"
+                        android:textColor="@color/appColorBase"
                         android:textSize="14sp" />
 
                     <TextView
@@ -80,23 +86,27 @@
                         android:layout_width="85dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.2"
-                        android:background="@drawable/btn_round_nocolor"
+                        android:background="@color/white"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginLeft="1dp"
                         android:gravity="center"
-                        android:textStyle="bold"
                         android:text="Tomorrow"
-                        android:textColor="@color/text_black"
+                        android:textColor="@color/appColorBase"
                         android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/txt_week"
                         android:layout_width="85dp"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
                         android:layout_weight="0.7"
-                        android:background="@drawable/btn_round_nocolor"
+                        android:background="@color/white"
                         android:gravity="center"
-                        android:textStyle="bold"
                         android:text="Week"
-                        android:textColor="@color/text_black"
+                        android:textColor="@color/appColorBase"
                         android:textSize="14sp" />
 
                     <TextView
@@ -104,11 +114,14 @@
                         android:layout_width="85dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.25"
-                        android:background="@drawable/btn_round_nocolor"
-                        android:textStyle="bold"
+                        android:background="@color/white"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginLeft="1dp"
                         android:gravity="center"
                         android:text="Month"
-                        android:textColor="@color/text_black"
+                        android:textColor="@color/appColorBase"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -122,6 +135,8 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_below="@+id/current_view_layout"
                 android:layout_marginTop="0dp"
                 android:background="@color/trans"

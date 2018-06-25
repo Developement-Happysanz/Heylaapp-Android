@@ -44,7 +44,7 @@ public class InitialScreenActivity extends Activity {
         TextView txtEventName = findViewById(R.id.txt_event_name);
         txtEventName.setText(event.getEventName());
         TextView txtEventTime = findViewById(R.id.txt_event_time);
-        txtEventTime.setText(event.getStartTime());
+        txtEventTime.setText(PreferenceStorage.getBookingDate(getApplicationContext()) + "  " + PreferenceStorage.getBookingTime(getApplicationContext()));
         TextView txtEventPlace = findViewById(R.id.txt_event_location);
         txtEventPlace.setText(event.getEventVenue());
         TextView txtTotalTickets = findViewById(R.id.txtTotalTickets);
