@@ -11,6 +11,7 @@ import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -228,7 +229,7 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
     private void loadAttendeesView() {
 
         try {
-
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             layout_all = findViewById(R.id.layout_timetable);
 
             for (int f = 1; f <= 1; f++) {
