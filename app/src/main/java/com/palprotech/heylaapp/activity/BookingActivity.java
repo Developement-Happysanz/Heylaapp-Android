@@ -290,11 +290,24 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         progressDialogHelper = new ProgressDialogHelper(this);
         back = findViewById(R.id.back_res);
         back.setOnClickListener(this);
-        ImageView imEventBanner = findViewById(R.id.img_logo);
+        final ImageView imEventBanner = findViewById(R.id.img_logo);
         String url = event.getEventBanner();
-        if (((url != null) && !(url.isEmpty()))) {
+        /*if (((url != null) && !(url.isEmpty()))) {
             Picasso.with(this).load(url).placeholder(R.drawable.event_img).error(R.drawable.event_img).into(imEventBanner);
-        }
+        }*/
+        final ImageView img = new ImageView(this);
+        Picasso.with(img.getContext())
+                .load(url)
+                .into(img, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        imEventBanner.setBackgroundDrawable(img.getDrawable());
+                    }
+
+                    @Override
+                    public void onError() {
+                    }
+                });
         TextView txtEventName = findViewById(R.id.txt_event_name);
         txtEventName.setText(event.getEventName());
         TextView txtEventTime = findViewById(R.id.txt_event_time);

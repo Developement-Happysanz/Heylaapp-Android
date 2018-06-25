@@ -24,6 +24,7 @@ public class InitialScreenActivity extends Activity {
     private Event event;
     String eventNoOfTicket;
     Double tickets = 1.00;
+    private ImageView imEventBanner;
 
     private void init() {
         accessCode = findViewById(R.id.accessCode);
@@ -36,11 +37,26 @@ public class InitialScreenActivity extends Activity {
         cancelUrl = findViewById(R.id.cancelUrl);
         event = (Event) getIntent().getSerializableExtra("eventObj");
 
-        ImageView imEventBanner = findViewById(R.id.img_logo);
+        imEventBanner = findViewById(R.id.img_logo);
         String url = event.getEventBanner();
-        if (((url != null) && !(url.isEmpty()))) {
+        /*if (((url != null) && !(url.isEmpty()))) {
             Picasso.with(this).load(url).placeholder(R.drawable.event_img).error(R.drawable.event_img).into(imEventBanner);
-        }
+        }*/
+
+        final ImageView img = new ImageView(this);
+        Picasso.with(img.getContext())
+                .load(url)
+                .into(img, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        imEventBanner.setBackgroundDrawable(img.getDrawable());
+                    }
+
+                    @Override
+                    public void onError() {
+                    }
+                });
+
         TextView txtEventName = findViewById(R.id.txt_event_name);
         txtEventName.setText(event.getEventName());
         TextView txtEventTime = findViewById(R.id.txt_event_time);
@@ -50,9 +66,9 @@ public class InitialScreenActivity extends Activity {
         TextView txtTotalTickets = findViewById(R.id.txtTotalTickets);
         txtTotalTickets.setText(PreferenceStorage.getTotalNoOfTickets(getApplicationContext()) + " Tickets");
         TextView txtTicketPrice = findViewById(R.id.txtTicketPrice);
-        txtTicketPrice.setText("Rs."+PreferenceStorage.getPaymentAmount(getApplicationContext()));
+        txtTicketPrice.setText("Rs." + PreferenceStorage.getPaymentAmount(getApplicationContext()));
         TextView txtTotalPrice = findViewById(R.id.txtTotalPrice);
-        txtTotalPrice.setText("Rs."+PreferenceStorage.getPaymentAmount(getApplicationContext()));
+        txtTotalPrice.setText("Rs." + PreferenceStorage.getPaymentAmount(getApplicationContext()));
 
         String orderIdValue = PreferenceStorage.getOrderId(getApplicationContext());
         amount.setText(PreferenceStorage.getPaymentAmount(getApplicationContext()));
