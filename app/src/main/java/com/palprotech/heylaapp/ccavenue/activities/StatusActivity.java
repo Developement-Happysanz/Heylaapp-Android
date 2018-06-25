@@ -50,7 +50,7 @@ public class StatusActivity extends Activity {
         PaymentAmount.setText(AvenuesParams.AMOUNT);
         PaymentDone = (Button) findViewById(R.id.pay_done);
 
-        statusBG = findViewById(R.id.status_bg);
+        statusBG = findViewById(R.id.status_img_layout);
 
         String getOrderId = PreferenceStorage.getOrderId(getApplicationContext());
         String getPaymentAmount = PreferenceStorage.getPaymentAmount(getApplicationContext());
@@ -79,6 +79,7 @@ public class StatusActivity extends Activity {
 
         switch (tv4.getText().toString()) {
             case "Transaction Declined!":
+                tv4.setTextColor(getResources().getColor(R.color.failure_txt));
                 Failure.setVisibility(View.VISIBLE);
                 Success.setVisibility(View.INVISIBLE);
                 Cancel.setVisibility(View.INVISIBLE);
@@ -87,11 +88,12 @@ public class StatusActivity extends Activity {
                 PaymentAmount.setText(getPaymentAmount);
                 TransactionDate.setText(getTransactionDate);
                 PaymentDone.setText("Try Again");
-                PaymentDone.setTextColor(getResources().getColor(R.color.failure_new));
-                statusBG.setBackgroundColor(getResources().getColor(R.color.failure_new));
+                PaymentDone.setBackgroundColor(getResources().getColor(R.color.failure_txt));
+                statusBG.setBackgroundColor(getResources().getColor(R.color.failure_new_bg));
 //                payment.setBackground(getResources().getDrawable(R.drawable.payment_status_failure));
                 break;
             case "Transaction Successful!":
+                tv4.setTextColor(getResources().getColor(R.color.success_txt));
                 Success.setVisibility(View.VISIBLE);
                 Failure.setVisibility(View.INVISIBLE);
                 Cancel.setVisibility(View.INVISIBLE);
@@ -100,11 +102,12 @@ public class StatusActivity extends Activity {
                 PaymentAmount.setText(getPaymentAmount);
                 TransactionDate.setText(getTransactionDate);
                 PaymentDone.setText("Done");
-                PaymentDone.setTextColor(getResources().getColor(R.color.success_new));
-                statusBG.setBackgroundColor(getResources().getColor(R.color.success_new));
+                PaymentDone.setBackgroundColor(getResources().getColor(R.color.success_txt));
+                statusBG.setBackgroundColor(getResources().getColor(R.color.success_new_bg));
 //                payment.setBackground(getResources().getDrawable(R.drawable.payment_status_success));
                 break;
             case "Transaction Cancelled!":
+                tv4.setTextColor(getResources().getColor(R.color.cancel_txt));
                 Cancel.setVisibility(View.VISIBLE);
                 Success.setVisibility(View.INVISIBLE);
                 Failure.setVisibility(View.INVISIBLE);
@@ -113,8 +116,8 @@ public class StatusActivity extends Activity {
                 PaymentAmount.setText(getPaymentAmount);
                 TransactionDate.setText(getTransactionDate);
                 PaymentDone.setText("Ok");
-                PaymentDone.setTextColor(getResources().getColor(R.color.cancel_new));
-                statusBG.setBackgroundColor(getResources().getColor(R.color.cancel_new));
+                PaymentDone.setBackgroundColor(getResources().getColor(R.color.cancel_txt));
+                statusBG.setBackgroundColor(getResources().getColor(R.color.cancel_new_bg));
 //                payment.setBackground(getResources().getDrawable(R.drawable.payment_status_cancel));
                 break;
             default:

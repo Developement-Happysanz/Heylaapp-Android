@@ -8,37 +8,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/appColorBase"
-        android:minHeight="60dp"/>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/appColorBase"
+            android:minHeight="60dp" />
 
-    <ImageView
-        android:id="@+id/back_res"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:minHeight="60dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:layout_marginStart="10dp"
-        android:src="@drawable/ic_back_button" />
+        <ImageView
+            android:id="@+id/back_res"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:minHeight="60dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="10dp"
+            android:src="@drawable/ic_arrow_back_white_24dp" />
 
-    <TextView
-        android:id="@+id/tvtitletext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:minHeight="60dp"
-        android:padding="5dp"
-        android:text="Profile"
-        android:fontFamily="@font/muli"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textSize="@dimen/actionbarTextSize" />
+        <TextView
+            android:id="@+id/tvtitletext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/back_res"
+            android:fontFamily="@font/muli"
+            android:gravity="center_vertical|left"
+            android:minHeight="60dp"
+            android:padding="5dp"
+            android:text="Profile"
+            android:textColor="@color/white"
+            android:textSize="@dimen/actionbarTextSize"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
@@ -99,10 +98,10 @@
                             android:id="@+id/edtName"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:maxLength="30"
+                            android:fontFamily="@font/muli"
                             android:hint="@string/name"
                             android:inputType="text"
-                            android:fontFamily="@font/muli"
+                            android:maxLength="30"
                             android:singleLine="true"
                             android:textSize="14sp" />
 
@@ -118,12 +117,12 @@
                         <EditText
                             android:id="@+id/edtUsername"
                             android:layout_width="match_parent"
-                            android:fontFamily="@font/muli"
                             android:layout_height="50dp"
-                            android:maxLength="15"
+                            android:fontFamily="@font/muli"
                             android:hint="@string/username"
                             android:imeOptions="actionDone"
                             android:inputType="text"
+                            android:maxLength="15"
                             android:singleLine="true"
                             android:textSize="14sp" />
 
@@ -149,8 +148,8 @@
                             android:id="@+id/edtBirthday"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:hint="@string/birthday"
                             android:fontFamily="@font/muli"
+                            android:hint="@string/birthday"
                             android:inputType="text"
                             android:singleLine="true"
                             android:textSize="14sp" />
@@ -193,8 +192,8 @@
                                 style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
-                                android:fontFamily="@font/muli"
                                 android:layout_weight="0.5"
+                                android:fontFamily="@font/muli"
                                 android:hint="@string/gender"
                                 android:textSize="14sp" />
                         </android.support.design.widget.TextInputLayout>
@@ -221,11 +220,11 @@
                             android:id="@+id/edtAddressLineOne"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:maxLength="30"
+                            android:fontFamily="@font/muli"
                             android:hint="@string/address1"
                             android:inputType="text"
+                            android:maxLength="30"
                             android:singleLine="true"
-                            android:fontFamily="@font/muli"
                             android:textSize="14sp" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -241,10 +240,10 @@
                             android:id="@+id/edtAddressLinetwo"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:maxLength="50"
-                            android:hint="@string/address2"
                             android:fontFamily="@font/muli"
+                            android:hint="@string/address2"
                             android:inputType="text"
+                            android:maxLength="50"
                             android:singleLine="true"
                             android:textSize="14sp" />
 
@@ -261,10 +260,10 @@
                             android:id="@+id/edtAddressLinethree"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:maxLength="50"
                             android:fontFamily="@font/muli"
                             android:hint="@string/address3"
                             android:inputType="text"
+                            android:maxLength="50"
                             android:singleLine="true"
                             android:textSize="14sp" />
 
@@ -315,11 +314,11 @@
 
                             <EditText
                                 android:id="@+id/stateList"
-                                android:fontFamily="@font/muli"
                                 style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_weight="0.5"
+                                android:fontFamily="@font/muli"
                                 android:hint="@string/selectstate"
                                 android:spinnerMode="dropdown"
                                 android:textSize="14sp" />
@@ -365,10 +364,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:digits="0123456789"
-                                android:maxLength="10"
                                 android:fontFamily="@font/muli"
                                 android:hint="@string/pincode"
                                 android:inputType="number"
+                                android:maxLength="10"
                                 android:singleLine="true"
                                 android:textSize="14sp" />
 
@@ -382,28 +381,28 @@
                     android:id="@+id/subscription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/muli"
                     android:layout_below="@+id/location"
                     android:layout_marginStart="10dp"
                     android:buttonTint="@color/appColorBase"
+                    android:fontFamily="@font/muli"
                     android:text="@string/subscribe" />
 
                 <Button
                     android:id="@+id/saveprofile"
                     android:layout_width="120dp"
                     android:layout_height="40dp"
-                    android:fontFamily="@font/muli"
                     android:layout_below="@+id/subscription"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_marginBottom="20dp"
                     android:layout_marginTop="20dp"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
                     android:background="@drawable/button_sign_in"
+                    android:fontFamily="@font/muli"
                     android:text="@string/save"
                     android:textAllCaps="false"
-                    android:textColor="@color/colour_pick" />
+                    android:textColor="@color/colour_pick"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 

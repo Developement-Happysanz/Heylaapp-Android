@@ -21,25 +21,24 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginStart="10dp"
             android:minHeight="60dp"
             android:paddingEnd="15dp"
-            android:paddingStart="15dp"
-            android:src="@drawable/ic_back_button" />
+            android:paddingStart="10dp"
+            android:src="@drawable/ic_arrow_back_white_24dp" />
 
         <TextView
             android:id="@+id/tvtitletext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:fontFamily="@font/muli"
-            android:gravity="center"
+            android:gravity="center_vertical|left"
             android:minHeight="60dp"
+            android:layout_toRightOf="@+id/back_res"
             android:padding="5dp"
             android:text="Settings"
-            android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="@dimen/actionbarTextSize" />
+            android:textSize="@dimen/actionbarTextSize"
+            android:textStyle="bold"/>
 
     </RelativeLayout>
 

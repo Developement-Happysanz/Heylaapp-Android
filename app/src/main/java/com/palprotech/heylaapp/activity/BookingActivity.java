@@ -259,6 +259,8 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                     Date date = new Date();
                     transactionDate = formatter.format(date);
                     PreferenceStorage.saveTransactionDate(getApplicationContext(), transactionDate);
+                    PreferenceStorage.saveBookingDate(getApplicationContext(), showDate);
+                    PreferenceStorage.saveBookingTime(getApplicationContext(), showTime);
                     startActivity(intent);
                     finish();
                 }
@@ -412,7 +414,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                     LinearLayout cell = new LinearLayout(this);
                     cell.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.MATCH_PARENT));
-                    TextView viewDateFormat = new TextView(this);
+                    final TextView viewDateFormat = new TextView(this);
                     final TextView functionalDateFormat = new TextView(this);
 
                     JSONObject jsonobj = getEventDates.getJSONObject(i);
@@ -441,8 +443,8 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
                     functionalDateFormat.setText(showDates);
 
-                    viewDateFormat.setBackgroundColor(Color.parseColor("#468dcb"));
-                    viewDateFormat.setTextColor(Color.parseColor("#FFFFFF"));
+                    viewDateFormat.setBackground(getResources().getDrawable(R.drawable.bg_advanced_filter_properties));
+                    viewDateFormat.setTextColor(getResources().getColor(R.color.appColorBase));
 
                     viewDateFormat.setTextSize(13.0f);
                     functionalDateFormat.setTextSize(13.0f);
@@ -463,6 +465,8 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 //                            viewDateFormat.setBackgroundColor(Color.parseColor("#708090"));
                             Toast.makeText(getApplicationContext(), functionalDateFormat.getText(), Toast.LENGTH_SHORT).show();
                             showDate = functionalDateFormat.getText().toString();
+                            viewDateFormat.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                            viewDateFormat.setTextColor(getResources().getColor(R.color.white));
                             loadBookingTimings();
                             if (showDate.equalsIgnoreCase("")) {
                                 flagBookingDate = "no";
@@ -577,10 +581,10 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
                     cell.setBackgroundColor(Color.WHITE);//argb(255,104,53,142)
 
-                    viewTimeFormat.setBackgroundColor(Color.parseColor("#468dcb"));
-                    storeTimeId.setBackgroundColor(Color.parseColor("#468dcb"));
-                    viewTimeFormat.setTextColor(Color.parseColor("#FFFFFF"));
-                    storeTimeId.setTextColor(Color.parseColor("#FFFFFF"));
+                    viewTimeFormat.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    storeTimeId.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    viewTimeFormat.setTextColor(Color.parseColor("#468dcb"));
+                    storeTimeId.setTextColor(Color.parseColor("#468dcb"));
 
                     viewTimeFormat.setTextSize(13.0f);
                     storeTimeId.setTextSize(13.0f);
@@ -602,6 +606,8 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                             Toast.makeText(getApplicationContext(), viewTimeFormat.getText() + "ID : " + storeTimeId.getText(), Toast.LENGTH_SHORT).show();
                             showTime = viewTimeFormat.getText().toString();
                             showTimeId = storeTimeId.getText().toString();
+                            viewTimeFormat.setTextColor(getResources().getColor(R.color.white));
+                            viewTimeFormat.setBackgroundColor(getResources().getColor(R.color.appColorBase));
                             if (bookPlanArrayList != null) {
                                 bookPlanArrayList.clear();
                                 plansListView.setAdapter(bookingPlanAdapter);

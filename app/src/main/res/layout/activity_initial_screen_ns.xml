@@ -159,25 +159,24 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginStart="10dp"
                 android:minHeight="60dp"
                 android:paddingEnd="15dp"
-                android:paddingStart="15dp"
-                android:src="@drawable/ic_back_button" />
+                android:paddingStart="10dp"
+                android:src="@drawable/ic_arrow_back_white_24dp" />
 
             <TextView
                 android:id="@+id/tvtitletext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:fontFamily="@font/muli"
-                android:gravity="center"
+                android:gravity="center_vertical|left"
                 android:minHeight="60dp"
+                android:layout_toRightOf="@+id/back_res"
                 android:padding="5dp"
                 android:text="Review Ticket Booking"
                 android:textColor="@color/white"
                 android:textSize="@dimen/actionbarTextSize"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
         </RelativeLayout>
 
@@ -218,6 +217,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
                     android:background="@drawable/btn_round_nocolor"
                     android:orientation="vertical">
 
@@ -243,7 +244,7 @@
                                 android:fontFamily="@font/muli"
                                 android:text="CAKE POINT"
                                 android:textColor="@color/text_black"
-                                android:textSize="18sp"
+                                android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <RelativeLayout
@@ -258,8 +259,8 @@
 
                                 <ImageView
                                     android:id="@+id/addressimg"
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
                                     android:src="@drawable/ic_location_event_detail" />
 
                             </RelativeLayout>
@@ -291,8 +292,8 @@
 
                                 <ImageView
                                     android:id="@+id/timeimg"
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
                                     android:src="@drawable/ic_time_event_detail" />
 
                             </RelativeLayout>
@@ -314,6 +315,12 @@
 
                         </RelativeLayout>
                     </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/text_gray"
+                        android:layout_margin="10dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -343,12 +350,13 @@
                             android:textColor="@color/text_black"
                             android:textSize="14sp" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:background="@color/text_black"
-                            android:fontFamily="@font/muli" />
                     </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/text_gray"
+                        android:layout_margin="10dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -372,7 +380,7 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp">
+                            android:layout_marginBottom="8dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -400,7 +408,7 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp">
+                            android:layout_marginBottom="8dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -428,7 +436,7 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp">
+                            android:layout_marginBottom="8dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -456,7 +464,7 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp">
+                            android:layout_marginBottom="8dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -485,7 +493,7 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp">
+                            android:layout_marginBottom="8dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -514,22 +522,22 @@
                         </RelativeLayout>
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/nextButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerInParent="true"
-                        android:background="@color/appColorBase"
-                        android:fontFamily="@font/muli"
-                        android:onClick="onClick"
-                        android:text="@string/pay_now_button"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/nextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true"
+                    android:background="@color/appColorBase"
+                    android:fontFamily="@font/muli"
+                    android:onClick="onClick"
+                    android:text="@string/pay_now_button"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

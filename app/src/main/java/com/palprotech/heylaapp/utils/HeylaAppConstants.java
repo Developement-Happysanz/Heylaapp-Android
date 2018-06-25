@@ -8,7 +8,8 @@ public class HeylaAppConstants {
 
     //    URLS
     //    BASE URL
-    public static final String BASE_URL = "https://heylaapp.com/testing/";
+//    public static final String BASE_URL = "https://heylaapp.com/testing/";
+    public static final String BASE_URL = "https://heylaapp.com/";
 
     //    SignIn
     public static final String SIGN_IN = "apimain/login/";
@@ -325,6 +326,8 @@ public class HeylaAppConstants {
     // Booking Status
     public static final String KEY_PAYMENT_AMOUNT = "eventRate";
     public static final String KEY_TRANSACTION_DATE = "eventDate";
+    public static final String BOOKING_DATE = "eventBookingDate";
+    public static final String BOOKING_TIME = "eventBookingTime";
     public static final String KEY_TOTAL_NO_OF_TICKETS = "totalNoOfTickets";
 
     public static final long TWENTY4HOURS = 24 * 60 * 60 * 1000;//24 hours in milli seconds format

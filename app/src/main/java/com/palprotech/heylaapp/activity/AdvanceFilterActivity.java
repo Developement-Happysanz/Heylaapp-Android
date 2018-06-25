@@ -115,7 +115,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
 
-        ivBack = findViewById(R.id.back_tic_his);
+        ivBack = findViewById(R.id.back_res);
         ivBack.setOnClickListener(this);
 
         btnToday = findViewById(R.id.btntoday);
@@ -287,6 +287,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advance_filter_orange);
                     findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    ((Button)findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button)findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.white));
                     final DatePickerDialog.OnDateSetListener singledate = new DatePickerDialog.OnDateSetListener() {
 
                         public void onDateSet(DatePicker view, int year, int month, int day) {
@@ -332,6 +335,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    ((Button)findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button)findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
                     singleDate = "";
                     datePressed = false;
                     todayPressed = false;
@@ -348,7 +354,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advance_filter_orange);
                     findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-
+                    ((Button)findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button)findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.white));
+                    ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
                     final Calendar c = Calendar.getInstance();
                     final int currentYear = c.get(Calendar.YEAR);
                     final int currentMonth = c.get(Calendar.MONTH);
@@ -359,9 +367,12 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     tomorrowPressed = true;
                 } else {
 
-                    findViewById(R.id.btnselectdate).setBackgroundColor(getResources().getColor(R.color.appColorBase));
-                    findViewById(R.id.btntomorrow).setBackgroundColor(getResources().getColor(R.color.appColorBase));
-                    findViewById(R.id.btntoday).setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                    findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    ((Button)findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button)findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
                     singleDate = "";
                     tomorrowPressed = false;
                     datePressed = false;
@@ -379,6 +390,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advance_filter_orange);
+                    ((Button)findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.white));
+                    ((Button)findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
                     final Calendar c1 = Calendar.getInstance();
                     final int currentYear1 = c1.get(Calendar.YEAR);
                     final int currentMonth1 = c1.get(Calendar.MONTH);
@@ -391,6 +405,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
+                    ((Button)findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button)findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
                     singleDate = "";
                     todayPressed = false;
                     datePressed = false;

@@ -55,7 +55,7 @@ public class EventReviewAddActivity extends AppCompatActivity implements DialogC
         edtComments = findViewById(R.id.edtComments);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(this);
-        ivBack = findViewById(R.id.back_rew);
+        ivBack = findViewById(R.id.back_res);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

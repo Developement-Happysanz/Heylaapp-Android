@@ -186,13 +186,13 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
                 all.setBackgroundColor(getResources().getColor(R.color.appColorBase));
                 all.setTextColor(getResources().getColor(R.color.white));
                 today.setBackgroundColor(getResources().getColor(R.color.white));
-                today.setTextColor(getResources().getColor(R.color.text_black));
+                today.setTextColor(getResources().getColor(R.color.appColorBase));
                 tomo.setBackgroundColor(getResources().getColor(R.color.white));
-                tomo.setTextColor(getResources().getColor(R.color.text_black));
+                tomo.setTextColor(getResources().getColor(R.color.appColorBase));
                 week.setBackgroundColor(getResources().getColor(R.color.white));
-                week.setTextColor(getResources().getColor(R.color.text_black));
+                week.setTextColor(getResources().getColor(R.color.appColorBase));
                 month.setBackgroundColor(getResources().getColor(R.color.white));
-                month.setTextColor(getResources().getColor(R.color.text_black));
+                month.setTextColor(getResources().getColor(R.color.appColorBase));
                 eventsArrayList.clear();
                 makeEventListServiceCall();
                 if (eventsListAdapter != null) {
@@ -207,15 +207,15 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             public void onClick(View v) {
                 dateType = "Today";
                 all.setBackgroundColor(getResources().getColor(R.color.white));
-                all.setTextColor(getResources().getColor(R.color.text_black));
+                all.setTextColor(getResources().getColor(R.color.appColorBase));
                 today.setBackgroundColor(getResources().getColor(R.color.appColorBase));
                 today.setTextColor(getResources().getColor(R.color.white));
                 tomo.setBackgroundColor(getResources().getColor(R.color.white));
-                tomo.setTextColor(getResources().getColor(R.color.text_black));
+                tomo.setTextColor(getResources().getColor(R.color.appColorBase));
                 week.setBackgroundColor(getResources().getColor(R.color.white));
-                week.setTextColor(getResources().getColor(R.color.text_black));
+                week.setTextColor(getResources().getColor(R.color.appColorBase));
                 month.setBackgroundColor(getResources().getColor(R.color.white));
-                month.setTextColor(getResources().getColor(R.color.text_black));
+                month.setTextColor(getResources().getColor(R.color.appColorBase));
                 eventsArrayList.clear();
                 makeEventListServiceCall();
                 if (eventsListAdapter != null) {
@@ -230,15 +230,15 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             public void onClick(View v) {
                 dateType = "Tomorrow";
                 all.setBackgroundColor(getResources().getColor(R.color.white));
-                all.setTextColor(getResources().getColor(R.color.text_black));
+                all.setTextColor(getResources().getColor(R.color.appColorBase));
                 today.setBackgroundColor(getResources().getColor(R.color.white));
-                today.setTextColor(getResources().getColor(R.color.text_black));
+                today.setTextColor(getResources().getColor(R.color.appColorBase));
                 tomo.setBackgroundColor(getResources().getColor(R.color.appColorBase));
                 tomo.setTextColor(getResources().getColor(R.color.white));
                 week.setBackgroundColor(getResources().getColor(R.color.white));
-                week.setTextColor(getResources().getColor(R.color.text_black));
+                week.setTextColor(getResources().getColor(R.color.appColorBase));
                 month.setBackgroundColor(getResources().getColor(R.color.white));
-                month.setTextColor(getResources().getColor(R.color.text_black));
+                month.setTextColor(getResources().getColor(R.color.appColorBase));
                 eventsArrayList.clear();
                 makeEventListServiceCall();
                 if (eventsListAdapter != null) {
@@ -253,15 +253,15 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             public void onClick(View v) {
                 dateType = "Week";
                 all.setBackgroundColor(getResources().getColor(R.color.white));
-                all.setTextColor(getResources().getColor(R.color.text_black));
+                all.setTextColor(getResources().getColor(R.color.appColorBase));
                 today.setBackgroundColor(getResources().getColor(R.color.white));
-                today.setTextColor(getResources().getColor(R.color.text_black));
+                today.setTextColor(getResources().getColor(R.color.appColorBase));
                 tomo.setBackgroundColor(getResources().getColor(R.color.white));
-                tomo.setTextColor(getResources().getColor(R.color.text_black));
+                tomo.setTextColor(getResources().getColor(R.color.appColorBase));
                 week.setBackgroundColor(getResources().getColor(R.color.appColorBase));
                 week.setTextColor(getResources().getColor(R.color.white));
                 month.setBackgroundColor(getResources().getColor(R.color.white));
-                month.setTextColor(getResources().getColor(R.color.text_black));
+                month.setTextColor(getResources().getColor(R.color.appColorBase));
                 eventsArrayList.clear();
                 makeEventListServiceCall();
                 if (eventsListAdapter != null) {
@@ -276,13 +276,13 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             public void onClick(View v) {
                 dateType = "Month";
                 all.setBackgroundColor(getResources().getColor(R.color.white));
-                all.setTextColor(getResources().getColor(R.color.text_black));
+                all.setTextColor(getResources().getColor(R.color.appColorBase));
                 today.setBackgroundColor(getResources().getColor(R.color.white));
-                today.setTextColor(getResources().getColor(R.color.text_black));
+                today.setTextColor(getResources().getColor(R.color.appColorBase));
                 tomo.setBackgroundColor(getResources().getColor(R.color.white));
-                tomo.setTextColor(getResources().getColor(R.color.text_black));
+                tomo.setTextColor(getResources().getColor(R.color.appColorBase));
                 week.setBackgroundColor(getResources().getColor(R.color.white));
-                week.setTextColor(getResources().getColor(R.color.text_black));
+                week.setTextColor(getResources().getColor(R.color.appColorBase));
                 month.setBackgroundColor(getResources().getColor(R.color.appColorBase));
                 month.setTextColor(getResources().getColor(R.color.white));
                 eventsArrayList.clear();

@@ -28,7 +28,7 @@
             android:fontFamily="@font/muli"
             android:text="Username"
             android:textColor="@color/text_black"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:fontFamily="@font/muli"
             android:text="Review"
             android:textColor="@color/text_black"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
