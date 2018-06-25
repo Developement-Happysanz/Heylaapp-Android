@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/mapview"
@@ -45,11 +45,11 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/mapview"
-                android:layout_marginTop="5dp"
+                android:layout_below="@+id/current_view_layout"
+                android:layout_marginTop="0dp"
                 android:background="@color/trans"
                 android:divider="@color/eventListbg"
-                android:dividerHeight="5dp"/>
+                android:dividerHeight="5dp" />
 
         </RelativeLayout>
 
