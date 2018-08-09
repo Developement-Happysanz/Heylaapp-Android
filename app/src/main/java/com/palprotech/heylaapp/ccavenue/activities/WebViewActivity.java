@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -36,7 +37,12 @@ public class WebViewActivity extends Activity {
         super.onCreate(bundle);
         setContentView(R.layout.activity_webview_ns);
         mainIntent = getIntent();
-
+        findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         // Calling async task to get display content
         new RenderView().execute();
     }

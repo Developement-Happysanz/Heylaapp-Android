@@ -51,7 +51,12 @@ public class StatusActivity extends Activity {
         PaymentDone = (Button) findViewById(R.id.pay_done);
 
         statusBG = findViewById(R.id.status_img_layout);
-
+        findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         String getOrderId = PreferenceStorage.getOrderId(getApplicationContext());
         String getPaymentAmount = PreferenceStorage.getPaymentAmount(getApplicationContext());
         String getTransactionDate = PreferenceStorage.getTransactionDate(getApplicationContext());

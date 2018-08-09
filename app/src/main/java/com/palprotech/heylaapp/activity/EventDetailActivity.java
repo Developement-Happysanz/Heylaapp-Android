@@ -207,7 +207,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
                 Intent intent = new Intent(getApplicationContext(), BookingActivity.class);
                 intent.putExtra("eventObj", event);
                 startActivity(intent);
-                finish();
+//                finish();
             } else {
                 guestLoginAlert();
             }
@@ -568,7 +568,9 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         Log.d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+//                        if (!res.equalsIgnoreCase("reviewList")){
+//                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
+//                        }
 
                     } else {
                         signInSuccess = true;

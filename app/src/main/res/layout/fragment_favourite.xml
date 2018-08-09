@@ -179,11 +179,12 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <android.support.design.widget.FloatingActionButton
+            <com.palprotech.heylaapp.customview.MovableFloatingActionButton
                 android:id="@+id/fabMapView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_floating_sub_two"
+                android:background="@color/ticket_yellow"
                 app:backgroundTint="@color/ticket_yellow"
                 app:fabSize="mini" />
 
@@ -199,11 +200,12 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <android.support.design.widget.FloatingActionButton
+            <com.palprotech.heylaapp.customview.MovableFloatingActionButton
                 android:id="@+id/fabListView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_floating_sub_one"
+                android:background="@color/ticket_yellow"
                 app:backgroundTint="@color/ticket_yellow"
                 app:fabSize="mini" />
 
@@ -220,23 +222,25 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <android.support.design.widget.FloatingActionButton
+            <com.palprotech.heylaapp.customview.MovableFloatingActionButton
                 android:id="@+id/fabNearby"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_floating_sub_three"
+                android:background="@color/ticket_yellow"
                 app:backgroundTint="@color/ticket_yellow"
                 app:fabSize="mini" />
 
         </LinearLayout>
 
-        <android.support.design.widget.FloatingActionButton
+        <com.palprotech.heylaapp.customview.MovableFloatingActionButton
             android:id="@+id/viewOptions"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="10dp"
+            android:background="@color/ticket_yellow"
             android:src="@drawable/ic_plus"
             app:backgroundTint="@color/ticket_yellow" />
 
