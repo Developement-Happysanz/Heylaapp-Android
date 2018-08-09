@@ -63,6 +63,12 @@ public class EventReviewActivity extends AppCompatActivity implements DialogClic
         progressDialogHelper = new ProgressDialogHelper(this);
         reviewsListView = findViewById(R.id.listView_reviews);
         reviewsListView.setOnItemClickListener(this);
+        findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         fabAddReview = findViewById(R.id.fab_add_review);
         fabAddReview.setOnClickListener(this);
         reviewArrayList = new ArrayList<>();
