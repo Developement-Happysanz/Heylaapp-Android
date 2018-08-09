@@ -51,7 +51,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         if(view == profile){
-//            startActivity(new Intent(SettingsActivity.this, ProfileActivity.class));
+            startActivity(new Intent(SettingsActivity.this, ProfileActivity.class));
         }
         else if(view == changePassword){
 //            startActivity(new Intent(SettingsActivity.this, ForgotPasswordActivity.class));
