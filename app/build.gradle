@@ -18,8 +18,8 @@ android {
         applicationId "com.palprotech.heylaapp"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 14
-        versionName "1.0.13"
+        versionCode 15
+        versionName "1.0.14"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -136,6 +136,7 @@ dependencies {
     implementation 'com.github.stfalcon:smsverifycatcher:0.3.1'
 
     implementation 'com.github.drawers:SpinnerDatePicker:1.0.6'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
