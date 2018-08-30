@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -71,7 +72,7 @@ import java.util.List;
  */
 
 public class HotspotFragment extends Fragment implements AdapterView.OnItemClickListener, IServiceListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = HotspotFragment.class.getName();
     private String listFlag = null;
@@ -276,7 +277,6 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
 
-
         inflater.inflate(R.menu.menu_landing, menu);
         SearchManager searchManager =
                 (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
@@ -371,7 +371,8 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
         serviceHelper = new ServiceHelper(getActivity());
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(getActivity());
-        callGetEventService(1);
+//        callGetEventService(1);
+        new GetListItems().execute();
     }
 
     private void setUpGoogleMaps() {
@@ -439,46 +440,6 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
-    }
-
-    public void callGetEventService(int position) {
-        Log.d(TAG, "fetch event list" + position);
-        /*if(eventsListAdapter != null){
-            eventsListAdapter.clearSearchFlag();
-        }*/
-
-        if (isLoadingForFirstTime) {
-            Log.d(TAG, "Loading for the first time");
-            if (eventsArrayList != null)
-                eventsArrayList.clear();
-
-            if (CommonUtils.isNetworkAvailable(getActivity())) {
-                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-                makeEventListServiceCall();
-            } else {
-                AlertDialogHelper.showSimpleAlertDialog(getActivity(), getString(R.string.no_connectivity));
-            }
-        } else {
-            Log.d(TAG, "Do nothing");
-        }
-    }
-
-    private void makeEventListServiceCall() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-
-            jsonObject.put(HeylaAppConstants.KEY_EVENT_TYPE, "Hotspot");
-            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getActivity()));
-            jsonObject.put(HeylaAppConstants.KEY_USER_TYPE, PreferenceStorage.getUserType(getActivity()));
-            jsonObject.put(HeylaAppConstants.KEY_EVENT_CITY_ID, PreferenceStorage.getEventCityId(getActivity()));
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_LIST;
-        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
     //closes FAB submenus
@@ -658,7 +619,7 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
             //zoom the camera to current location
             if (mLastLocation != null) {
                 LatLng pos = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-               /* mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos,10));*/
+                /* mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos,10));*/
                 mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 14), 1000, null);
             }
 
@@ -681,10 +642,105 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
 
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
         intent.putExtra("eventObj", event);
-        intent.putExtra("eventType","Hotspot");
+        intent.putExtra("eventType", "Hotspot");
         // intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
 //        // getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_right);
+    }
+
+    private class GetListItems extends AsyncTask<String, String, JSONObject> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+//            Log.d(TAG, "fetch event list" + position);
+        /*if(eventsListAdapter != null){
+            eventsListAdapter.clearSearchFlag();
+        }*/
+
+            if (isLoadingForFirstTime) {
+                Log.d(TAG, "Loading for the first time");
+                if (eventsArrayList != null)
+                    eventsArrayList.clear();
+
+                if (CommonUtils.isNetworkAvailable(getActivity())) {
+                    progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                    makeEventListServiceCall();
+                } else {
+                    AlertDialogHelper.showSimpleAlertDialog(getActivity(), getString(R.string.no_connectivity));
+                }
+            } else {
+                Log.d(TAG, "Do nothing");
+            }
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... strings) {
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+
+                jsonObject.put(HeylaAppConstants.KEY_EVENT_TYPE, "Hotspot");
+                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getActivity()));
+                jsonObject.put(HeylaAppConstants.KEY_USER_TYPE, PreferenceStorage.getUserType(getActivity()));
+                jsonObject.put(HeylaAppConstants.KEY_EVENT_CITY_ID, PreferenceStorage.getEventCityId(getActivity()));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_LIST;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+            return jsonObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            LoadListView(jsonObject);
+        }
+    }
+
+    public void callGetEventService(int position) {
+        Log.d(TAG, "fetch event list" + position);
+        /*if(eventsListAdapter != null){
+            eventsListAdapter.clearSearchFlag();
+        }*/
+
+        if (isLoadingForFirstTime) {
+            Log.d(TAG, "Loading for the first time");
+            if (eventsArrayList != null)
+                eventsArrayList.clear();
+
+            if (CommonUtils.isNetworkAvailable(getActivity())) {
+                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                makeEventListServiceCall();
+            } else {
+                AlertDialogHelper.showSimpleAlertDialog(getActivity(), getString(R.string.no_connectivity));
+            }
+        } else {
+            Log.d(TAG, "Do nothing");
+        }
+    }
+
+    private void makeEventListServiceCall() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_EVENT_TYPE, "Hotspot");
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getActivity()));
+            jsonObject.put(HeylaAppConstants.KEY_USER_TYPE, PreferenceStorage.getUserType(getActivity()));
+            jsonObject.put(HeylaAppConstants.KEY_EVENT_CITY_ID, PreferenceStorage.getEventCityId(getActivity()));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_LIST;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
     @Override
@@ -711,10 +767,10 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
                 int i = 0;
                 for (Event event : eventsList.getEvents()) {
                     //Testing. remove later
-                    if(latitude.get(i) != null){
+                    if (latitude.get(i) != null) {
                         event.setEventLatitude(latitude.get(i));
                     }
-                    if(longitude.get(i) != null){
+                    if (longitude.get(i) != null) {
                         event.setEventLongitude(longitude.get(i));
                     }
                     //end of testing
@@ -725,8 +781,8 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
                         temEventLoc.setLongitude(Double.parseDouble(event.getEventLongitude()));
                         float distance = mLastLocation.distanceTo(temEventLoc);
                         Log.d(TAG, "calculated distance is" + distance);
-                        if (distanceFlag==2){
-                            if(distance < (5 * 1000)) {
+                        if (distanceFlag == 2) {
+                            if (distance < (5 * 1000)) {
                                 mNearbyLIst.add(event);
                             }
                         } else {
@@ -781,6 +837,14 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
         }*/
     }
 
+    @Override
+    public void onError(String error) {
+        if (totalCount > 0) {
+//            mLocationBtn.setEnabled(true);
+        }
+//        mAddddLocations = true;
+    }
+
     protected void updateListAdapter(ArrayList<Event> eventsArrayList) {
         this.eventsArrayList.addAll(eventsArrayList);
        /* if (mNoEventsFound != null)
@@ -809,14 +873,6 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
             eventsListAdapter.exitSearch();
             eventsListAdapter.notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public void onError(String error) {
-        if (totalCount > 0) {
-//            mLocationBtn.setEnabled(true);
-        }
-//        mAddddLocations = true;
     }
 
     private void fetchCurrentLocation() {
