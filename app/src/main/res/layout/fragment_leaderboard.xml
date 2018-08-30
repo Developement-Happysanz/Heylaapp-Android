@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:fontFamily="@font/muli"
-                        android:hint="Narendar Ravikrishnan"
+                        android:hint=""
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
                         android:textSize="16sp"

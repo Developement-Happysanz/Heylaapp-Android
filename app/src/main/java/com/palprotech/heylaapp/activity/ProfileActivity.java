@@ -58,6 +58,7 @@ import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.HeylaAppValidator;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.squareup.picasso.Picasso;
+import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -87,7 +88,7 @@ import java.util.Locale;
  * Created by Narendar on 23/10/17.
  */
 
-public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener, View.OnClickListener, IServiceListener, DialogClickListener {
+public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener, View.OnClickListener, IServiceListener, DialogClickListener, com.tsongkha.spinnerdatepicker.DatePickerDialog.OnDateSetListener {
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
     private static final String TAG = ProfileActivity.class.getName();
 
@@ -496,6 +497,13 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 mProgressDialog.cancel();
             }
         }
+    }
+
+    @Override
+    public void onDateSet(com.tsongkha.spinnerdatepicker.DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        Calendar newDate = Calendar.getInstance();
+        newDate.set(year, monthOfYear, dayOfMonth);
+        mBirthday.setText(mDateFormatter.format(newDate.getTime()));
     }
 
     /**
@@ -959,6 +967,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     }
 
     private void showBirthdayDate() {
+
         Log.d(TAG, "Show the birthday date");
         Calendar newCalendar = Calendar.getInstance();
         String currentdate = mBirthday.getText().toString();
@@ -981,14 +990,36 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             } catch (ParseException e) {
                 e.printStackTrace();
             } finally {
-                mDatePicker = new DatePickerDialog(this, R.style.datePickerTheme, this, year, month, day);
-                mDatePicker.show();
+//                mDatePicker = new DatePickerDialog(this, R.style.datePickerTheme, this, year, month, day);
+//                mDatePicker.show();
+                new SpinnerDatePickerDialogBuilder()
+                        .context(ProfileActivity.this)
+                        .callback(ProfileActivity.this)
+                        .spinnerTheme(R.style.NumberPickerStyle)
+                        .showTitle(true)
+                        .showDaySpinner(true)
+                        .defaultDate(2018, 0, 1)
+                        .maxDate(2100, 11, 31)
+                        .minDate(1900, 0, 1)
+                        .build()
+                        .show();
             }
         } else {
             Log.d(TAG, "show default date");
 
-            mDatePicker = new DatePickerDialog(this, R.style.datePickerTheme, this, year, month, day);
-            mDatePicker.show();
+//            mDatePicker = new DatePickerDialog(this, R.style.datePickerTheme, this, year, month, day);
+//            mDatePicker.show();
+            new SpinnerDatePickerDialogBuilder()
+                    .context(ProfileActivity.this)
+                    .callback(ProfileActivity.this)
+                    .spinnerTheme(R.style.NumberPickerStyle)
+                    .showTitle(true)
+                    .showDaySpinner(true)
+                    .defaultDate(2018, 0, 1)
+                    .maxDate(2100, 11, 31)
+                    .minDate(1900, 0, 1)
+                    .build()
+                    .show();
         }
     }
 
