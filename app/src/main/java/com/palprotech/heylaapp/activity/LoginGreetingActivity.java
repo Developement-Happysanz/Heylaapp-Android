@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 public class LoginGreetingActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -20,6 +21,7 @@ public class LoginGreetingActivity extends AppCompatActivity implements View.OnC
         findViewById(R.id.get_started).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PreferenceStorage.saveUserType(getApplicationContext(), "1");
                 Intent homeIntent = new Intent(getApplicationContext(), ProfileActivity.class);
                 homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                    homeIntent.putExtra("profile_state", "new");
