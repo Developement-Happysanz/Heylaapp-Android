@@ -38,6 +38,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
     protected ListView loadMoreListView;
     View view;
     String className;
+    String event="";
     EventsListAdapter eventsListAdapter;
     private ServiceHelper serviceHelper;
     ArrayList<Event> eventsArrayList;
@@ -46,6 +47,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
     protected boolean isLoadingForFirstTime = true;
     Handler mHandler = new Handler();
     private SearchView mSearchView = null;
+    String advSearch = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,12 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
                 finish();
             }
         });
-        callGetFilterService();
+        event = PreferenceStorage.getFilterApply(this);
+        if(!event.isEmpty()){
+            makeSearch(event);
+        } else {
+            callGetFilterService();
+        }
     }
 
     public void callGetFilterService() {
@@ -77,6 +84,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
             eventsArrayList.clear();
 
         if (CommonUtils.isNetworkAvailable(this)) {
+            advSearch = "Adv";
             JSONObject jsonObject = new JSONObject();
             try {
 
@@ -101,26 +109,74 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
         }
 
     }
+    public void makeSearch(String event) {
+        /*if(eventsListAdapter != null){
+            eventsListAdapter.clearSearchFlag();
+        }*/
+        advSearch = "Sea";
+        if (eventsArrayList != null)
+            eventsArrayList.clear();
+
+        if (CommonUtils.isNetworkAvailable(this)) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+
+                jsonObject.put(HeylaAppConstants.KEY_EVENT_SEARCH, ""+event);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_SEARCH;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.no_connectivity));
+        }
+
+    }
 
     @Override
     public void onResponse(final JSONObject response) {
-        Log.d("ajazFilterresponse : ", response.toString());
+        if(advSearch.equalsIgnoreCase("Adv")){
+            Log.d("ajazFilterresponse : ", response.toString());
 
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                progressDialogHelper.hideProgressDialog();
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialogHelper.hideProgressDialog();
 //                loadMoreListView.onLoadMoreComplete();
 
-                Gson gson = new Gson();
-                EventList eventsList = gson.fromJson(response.toString(), EventList.class);
-                if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
-                    totalCount = eventsList.getCount();
-                    isLoadingForFirstTime = false;
-                    updateListAdapter(eventsList.getEvents());
+                    Gson gson = new Gson();
+                    EventList eventsList = gson.fromJson(response.toString(), EventList.class);
+                    if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
+                        totalCount = eventsList.getCount();
+                        isLoadingForFirstTime = false;
+                        updateListAdapter(eventsList.getEvents());
+                    }
                 }
-            }
-        });
+            });
+        } else if(advSearch.equalsIgnoreCase("Sea")){
+            Log.d("ajazFilterresponse : ", response.toString());
+
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialogHelper.hideProgressDialog();
+//                loadMoreListView.onLoadMoreComplete();
+
+                    Gson gson = new Gson();
+                    EventList eventsList = gson.fromJson(response.toString(), EventList.class);
+                    if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
+                        totalCount = eventsList.getCount();
+                        isLoadingForFirstTime = false;
+                        updateListAdapter(eventsList.getEvents());
+                    }
+                }
+            });
+        }
+
     }
 
     @Override

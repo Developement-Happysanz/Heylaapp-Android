@@ -46,6 +46,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.AdvanceFilterActivity;
+import com.palprotech.heylaapp.activity.AdvancedFilterResultActivity;
 import com.palprotech.heylaapp.activity.EventDetailActivity;
 import com.palprotech.heylaapp.activity.NearbyActivity;
 import com.palprotech.heylaapp.adapter.EventsListAdapter;
@@ -138,7 +139,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
     int pageNumber = 0, totalCount = 0;
 
     private SearchView mSearchView = null;
-
+    Boolean resSearch = false;
 
     public static FavouriteFragment newInstance(int position) {
         FavouriteFragment frag = new FavouriteFragment();
@@ -391,7 +392,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
 //                Log.d(TAG, "current item is" + currentpage);
 
                 if (s != null) {
-                    searchForEvent(s);
+                    makeSearch(s);
                 }
 
                 return false;
@@ -404,12 +405,13 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
 
                 if ((s != null) && (!s.isEmpty())) {
                     if (s != null) {
-                        searchForEvent(s);
+//                        makeSearchServiceCall(s);
+
                     }
                 } else {
                     if (s != null) {
                         Log.d(TAG, "call exit search");
-                        exitSearch();
+//                        exitSearch();
                     }
                 }
 
@@ -516,6 +518,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
     }
 
     private void makeEventListServiceCall() {
+        resSearch = false;
         JSONObject jsonObject = new JSONObject();
         try {
 
@@ -762,7 +765,6 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             LoadListView(response);
         }
     }
-
     private void LoadListView(JSONObject response) {
 
 
@@ -854,7 +856,11 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             loadMoreListView.invalidateViews();
         }
     }
-
+    private void makeSearch(String eventname) {
+        resSearch = true;
+        PreferenceStorage.IsFilterApply(getActivity(),eventname);
+        startActivity(new Intent(getActivity(), AdvancedFilterResultActivity.class));
+    }
     public void exitSearch() {
         Log.d(TAG, "exit event called");
         if (eventsListAdapter != null) {

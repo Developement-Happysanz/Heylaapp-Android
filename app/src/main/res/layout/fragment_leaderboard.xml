@@ -90,6 +90,7 @@
             android:gravity="">
 
             <RelativeLayout
+                android:id="@+id/point_table"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true">

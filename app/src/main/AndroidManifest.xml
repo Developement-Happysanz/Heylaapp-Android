@@ -167,6 +167,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBarForToolBar" />
 
+            <activity
+            android:name=".activity.PointTableActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBarForToolBar" />
+
         <activity
             android:name=".activity.MainNewActivity"
             android:screenOrientation="portrait"

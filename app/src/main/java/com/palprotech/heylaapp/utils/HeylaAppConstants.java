@@ -145,6 +145,12 @@ public class HeylaAppConstants {
     //    User activity params
     public static final String PARAMS_FULL_NAME1 = "full_name";
 
+    //    Event search
+    public static final String EVENT_SEARCH = "apimain/search_events/";
+
+    //    Event list params
+    public static final String KEY_EVENT_SEARCH = "search_event";
+
     //    Event list
     public static final String EVENT_LIST = "apimain/viewEvents/";
 
@@ -241,6 +247,9 @@ public class HeylaAppConstants {
 
     // LeaderBoard
     public static final String LEADER_BOARD = "apimain/leaderBoard/";
+
+    // LeaderBoardPoints
+    public static final String LEADER_BOARD_POINTS = "apimain/user_points/";
 
     // LeaderBoard daily login
     public static final String ACTIVITY_HISTORY = "apimain/activityHistory/";

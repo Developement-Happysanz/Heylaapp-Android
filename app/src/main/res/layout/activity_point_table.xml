@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_grey">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/appColorBase"
+            android:minHeight="?android:attr/actionBarSize"/>
+
+        <ImageView
+            android:id="@+id/back_res"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:minHeight="60dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="10dp"
+            android:src="@drawable/ic_arrow_back_white_24dp" />
+
+        <TextView
+            android:id="@+id/tvtitletext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/back_res"
+            android:fontFamily="@font/muli"
+            android:gravity="center_vertical|left"
+            android:minHeight="60dp"
+            android:padding="5dp"
+            android:text="Point Ranking"
+            android:textColor="@color/white"
+            android:textSize="@dimen/actionbarTextSize"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        android:background="@color/background_grey">
+
+        <LinearLayout
+            android:id="@+id/llTitle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:id="@+id/txtExamSubject"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="0.67"
+                android:background="@color/leaderboard_blue"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:text="Name"
+                android:textColor="@color/white" />
+
+
+
+            <TextView
+                android:id="@+id/txtSubTotalGrade"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/leaderboard_blue"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:text="Point"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/txtSubTotalMark"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/leaderboard_blue"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:text="Rank"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+        <ListView
+            android:id="@+id/listView_ranks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llTitle"
+            android:layout_marginBottom="1dp">
+
+        </ListView>
+
+    </RelativeLayout>
+
+</LinearLayout>

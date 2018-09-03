@@ -288,6 +288,9 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             pincode.setText(PreferenceStorage.getUserZipcode(this));
         }
         cbSubscription = (CheckBox) findViewById(R.id.subscription);
+        if (PreferenceStorage.getUserNewsLetterStatus(this).equalsIgnoreCase(String.valueOf('Y'))){
+            cbSubscription.setChecked(Boolean.TRUE);
+        }
         save = (Button) findViewById(R.id.saveprofile);
         save.setOnClickListener(this);
 
@@ -446,9 +449,13 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         pinCode = pincode.getText().toString();
         PreferenceStorage.saveUserZipCode(this, pinCode);
         newsLetter = cbSubscription.isChecked();
+
         if (newsLetter) {
             newsLetterStatus = "Y";
+        } else {
+            newsLetterStatus = "N";
         }
+        PreferenceStorage.saveUserNewsLetterStatus(this, newsLetterStatus);
 
         String newFormat = "";
         if (mBirthday.getText().toString() != null && mBirthday.getText().toString() == "") {

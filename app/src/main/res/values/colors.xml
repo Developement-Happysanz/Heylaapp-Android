@@ -29,6 +29,7 @@
 
     <!--Leaderboard Module-->
     <color name="leaderboard_gray">#f0f2f2</color>
+    <color name="leaderboard_blue">#5baed3</color>
 
     <!-- Screens background color-->
     <color name="bg_screen1">#468DCB</color>

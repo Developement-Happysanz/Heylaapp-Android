@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.EventSharingPointActivity;
 import com.palprotech.heylaapp.activity.LoginPointsActivity;
+import com.palprotech.heylaapp.activity.PointTableActivity;
 import com.palprotech.heylaapp.activity.ProfileActivity;
 import com.palprotech.heylaapp.customview.CircleImageView;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
@@ -48,7 +49,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     TextView viewFullStatistics, loginCount, loginPoints, shareCount, sharePoints, checkinCount;
     TextView checkinPoints, bookingCount, bookingPoints, reviewCount, reviewPoints, totalPoints;
     TextView name, username;
-    RelativeLayout login, share, check_in, booking, reviews, profile;
+    RelativeLayout login, share, check_in, booking, reviews, profile, points;
     ImageView userPic;
 
    /* @Override
@@ -121,6 +122,8 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         bookingPoints = rootView.findViewById(R.id.booking_star_count);
 
         totalPoints = rootView.findViewById(R.id.total_points);
+        points = rootView.findViewById(R.id.point_table);
+        points.setOnClickListener(this);
     }
 
     protected void initializeHelpers() {
@@ -183,6 +186,8 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
             homeIntent.putExtra("rule_id", "5");
             startActivity(homeIntent);
 //            getActivity().finish();
+        } else if (view == points) {
+             startActivity(new Intent(getActivity(), PointTableActivity.class));
         }
     }
 
