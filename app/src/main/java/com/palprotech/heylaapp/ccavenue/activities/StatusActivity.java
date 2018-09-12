@@ -94,7 +94,7 @@ public class StatusActivity extends Activity {
                 TransactionDate.setText(getTransactionDate);
                 PaymentDone.setText("Try Again");
                 PaymentDone.setBackgroundColor(getResources().getColor(R.color.failure_txt));
-                statusBG.setBackgroundColor(getResources().getColor(R.color.failure_new_bg));
+//                statusBG.setBackgroundColor(getResources().getColor(R.color.failure_new_bg));
 //                payment.setBackground(getResources().getDrawable(R.drawable.payment_status_failure));
                 break;
             case "Transaction Successful!":
@@ -108,7 +108,7 @@ public class StatusActivity extends Activity {
                 TransactionDate.setText(getTransactionDate);
                 PaymentDone.setText("Done");
                 PaymentDone.setBackgroundColor(getResources().getColor(R.color.success_txt));
-                statusBG.setBackgroundColor(getResources().getColor(R.color.success_new_bg));
+//                statusBG.setBackgroundColor(getResources().getColor(R.color.success_new_bg));
 //                payment.setBackground(getResources().getDrawable(R.drawable.payment_status_success));
                 break;
             case "Transaction Cancelled!":
@@ -122,7 +122,7 @@ public class StatusActivity extends Activity {
                 TransactionDate.setText(getTransactionDate);
                 PaymentDone.setText("Ok");
                 PaymentDone.setBackgroundColor(getResources().getColor(R.color.cancel_txt));
-                statusBG.setBackgroundColor(getResources().getColor(R.color.cancel_new_bg));
+//                statusBG.setBackgroundColor(getResources().getColor(R.color.cancel_new_bg));
 //                payment.setBackground(getResources().getDrawable(R.drawable.payment_status_cancel));
                 break;
             default:

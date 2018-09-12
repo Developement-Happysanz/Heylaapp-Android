@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,7 +43,7 @@ import java.util.Locale;
 public class BookingHistoryDetailsActivity extends AppCompatActivity implements IServiceListener, DialogClickListener, AdapterView.OnItemClickListener {
 
     private BookingHistory bookingHistory;
-    private TextView txtEventName, txtEventDate, txtEventTime, txtEventAddress, txtEventAttendees, txtEventTicktClass;
+    private TextView txtEventName, txtEventDate, txtEventTime, txtEventAddress, txtEventAttendees, txtEventTicktClass, txtEventTicketCount;
     static String[] suffixes =
             //    0     1     2     3     4     5     6     7     8     9
             {"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th",
@@ -61,11 +62,13 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
     int totalCount = 0;
     protected boolean isLoadingForFirstTime = true;
     private ImageView ivBack;
+    private TextView attendee;
+    private LinearLayout attendeeLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_booking_history_details);
+        setContentView(R.layout.activity_booking_history_detail_temp);
         bookingHistory = (BookingHistory) getIntent().getSerializableExtra("bookingObj");
         findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +84,14 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
+        attendeeLayout = findViewById(R.id.attendee_layout);
+        attendee = findViewById(R.id.attendee_visibility);
+        attendee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               attendeeLayout.setVisibility(View.VISIBLE);
+            }
+        });
         ivBack = findViewById(R.id.back_res);
         listView = findViewById(R.id.listView_attendees);
         listView.setOnItemClickListener(this);
@@ -114,6 +125,7 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
         txtEventAddress = findViewById(R.id.txt_event_location);
         txtEventAttendees = findViewById(R.id.txt_event_attendees_count);
         txtEventTicktClass = findViewById(R.id.txt_event_booking_plan);
+        txtEventTicketCount = findViewById(R.id.txt_event_booking_count);
 
         txtEventName.setText(bookingHistory.getEventName());
         txtEventTime.setText(bookingHistory.getPlanTime());
@@ -151,7 +163,8 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
         }
 
         txtEventAttendees.setText(bookingHistory.getNumberOfSeats());
-        txtEventTicktClass.setText(bookingHistory.getPlanName() + " - " + bookingHistory.getNumberOfSeats() + " tickets");
+        txtEventTicktClass.setText(bookingHistory.getPlanName());
+        txtEventTicketCount.setText(bookingHistory.getNumberOfSeats());
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -870,7 +870,8 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         setResult(RESULT_OK);
                         finish();
                     }
-                } else if (checkInternalState.equalsIgnoreCase("country")) {
+                }
+                else if (checkInternalState.equalsIgnoreCase("country")) {
 
                     JSONArray getData = response.getJSONArray("Countries");
                     int getLength = getData.length();
@@ -898,7 +899,8 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         }
                     };
 
-                } else if (checkInternalState.equalsIgnoreCase("state")) {
+                }
+                else if (checkInternalState.equalsIgnoreCase("state")) {
 
                     JSONArray getData = response.getJSONArray("States");
                     int getLength = getData.length();
@@ -999,6 +1001,10 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             } finally {
 //                mDatePicker = new DatePickerDialog(this, R.style.datePickerTheme, this, year, month, day);
 //                mDatePicker.show();
+                Calendar now = Calendar.getInstance();
+                int year1 = now.get(Calendar.YEAR);
+                int month1 = now.get(Calendar.MONTH) ; // Note: zero based!
+                int day1 = now.get(Calendar.DAY_OF_MONTH);
                 new SpinnerDatePickerDialogBuilder()
                         .context(ProfileActivity.this)
                         .callback(ProfileActivity.this)
@@ -1006,7 +1012,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         .showTitle(true)
                         .showDaySpinner(true)
                         .defaultDate(2018, 0, 1)
-                        .maxDate(2100, 11, 31)
+                        .maxDate(year1, month1, day1)
                         .minDate(1900, 0, 1)
                         .build()
                         .show();
@@ -1117,6 +1123,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     private void showCountryList() {
         Log.d(TAG, "Show country list");
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+
         View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
         TextView header = (TextView) view.findViewById(R.id.gender_header);
         header.setText("Select Country");
@@ -1138,6 +1145,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 });
         builderSingle.show();
     }
+
 
     private void showStateList() {
         Log.d(TAG, "Show state list");

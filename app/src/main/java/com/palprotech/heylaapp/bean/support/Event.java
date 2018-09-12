@@ -131,6 +131,10 @@ public class Event implements Serializable {
     @Expose
     private String updatedAt;
 
+    @SerializedName("advertisement")
+    @Expose
+    private String advertisement;
+
 
     public String getContactMail() {
         return contactEmail;
@@ -514,6 +518,21 @@ public class Event implements Serializable {
      */
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    /**
+     * @return The advertisement
+     */
+    public String getAdvertisement() {
+
+        return advertisement;
+    }
+
+    /**
+     * @param advertisement The advertisement
+     */
+    public void setAdvertisement(String advertisement) {
+        this.advertisement = advertisement;
     }
 
     /**

@@ -139,7 +139,6 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
     int pageNumber = 0, totalCount = 0;
 
     private SearchView mSearchView = null;
-    Boolean resSearch = false;
 
     public static FavouriteFragment newInstance(int position) {
         FavouriteFragment frag = new FavouriteFragment();
@@ -399,24 +398,11 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
-//                int currentpage = viewPager.getCurrentItem();
-//                Log.d(TAG, "current item is" + currentpage);
-
-                if ((s != null) && (!s.isEmpty())) {
-                    if (s != null) {
-//                        makeSearchServiceCall(s);
-
-                    }
-                } else {
-                    if (s != null) {
-                        Log.d(TAG, "call exit search");
-//                        exitSearch();
-                    }
-                }
-
+            public boolean onQueryTextChange(String newText) {
                 return false;
             }
+
+
         });
 
         mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
@@ -425,7 +411,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
             public boolean onClose() {
                 Log.d(TAG, "searchView closed");
 
-                exitSearch();
+//                exitSearch();
 
                 return false;
             }
@@ -518,7 +504,6 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
     }
 
     private void makeEventListServiceCall() {
-        resSearch = false;
         JSONObject jsonObject = new JSONObject();
         try {
 
@@ -838,6 +823,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
     }
 
     protected void updateListAdapter(ArrayList<Event> eventsArrayList) {
+        this.eventsArrayList.clear();
         this.eventsArrayList.addAll(eventsArrayList);
 
         if (eventsListAdapter == null) {
@@ -857,7 +843,6 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
         }
     }
     private void makeSearch(String eventname) {
-        resSearch = true;
         PreferenceStorage.IsFilterApply(getActivity(),eventname);
         startActivity(new Intent(getActivity(), AdvancedFilterResultActivity.class));
     }

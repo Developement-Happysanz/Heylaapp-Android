@@ -147,11 +147,11 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         etPriceList.setOnSeekBarChangeListener(this);
         endRangeText = findViewById(R.id.end_range_text);
 
-        btnFromDate = findViewById(R.id.btnfrom);
-        btnFromDate.setOnClickListener(this);
-
-        btnToDate = findViewById(R.id.btnto);
-        btnToDate.setOnClickListener(this);
+//        btnFromDate = findViewById(R.id.btnfrom);
+//        btnFromDate.setOnClickListener(this);
+//
+//        btnToDate = findViewById(R.id.btnto);
+//        btnToDate.setOnClickListener(this);
 
         btnCancel = findViewById(R.id.btncancel);
         btnCancel.setOnClickListener(this);
@@ -281,8 +281,8 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         switch (v.getId()) {
             case R.id.btnselectdate:
 
-                ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
-                ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
+                ((TextView) findViewById(R.id.select_date_range)).setText("DD-MM-YYYY");
+                ((TextView) findViewById(R.id.select_date_range)).setText("DD-MM-YYYY");
                 if (!datePressed) {
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advance_filter_orange);
                     findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
@@ -347,8 +347,8 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
             case R.id.btntomorrow:
 
-                ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
-                ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
+                ((TextView) findViewById(R.id.select_date_range)).setText("DD-MM-YYYY");
+                ((TextView) findViewById(R.id.select_date_range)).setText("DD-MM-YYYY");
                 if (!tomorrowPressed) {
 
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
@@ -383,8 +383,8 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
             case R.id.btntoday:
 
-                ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
-                ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
+                ((TextView) findViewById(R.id.select_date_range)).setText("DD-MM-YYYY");
+                ((TextView) findViewById(R.id.select_date_range)).setText("DD-MM-YYYY");
                 ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
                 if (!todayPressed) {
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
@@ -435,8 +435,8 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 //                String price = etPriceList.getText().toString();
 //                String city = spincity.getSelectedItem().toString();
                 String eventCategoryStr = etEventCategoryList.getText().toString();
-                String fromdate = ((Button) findViewById(R.id.btnfrom)).getText().toString();
-                String todate = ((Button) findViewById(R.id.btnto)).getText().toString();
+//                String fromdate = ((Button) findViewById(R.id.btnfrom)).getText().toString();
+//                String todate = ((Button) findViewById(R.id.btnto)).getText().toString();
                 if (!singleDate.equalsIgnoreCase("") && singleDate != null) {
                     PreferenceStorage.saveFilterSingleDate(this, singleDate);
                     PreferenceStorage.saveFilterFromDate(this, "");
@@ -455,35 +455,37 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                         PreferenceStorage.saveFilterPreference(this, "");
                     }
                     startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
-                } else if (fromdate.trim().length() > 0 || todate.trim().length() > 0) {
-                    singleDate = "";
-                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
-
-                    if (fromdate.equalsIgnoreCase("")) {
-                        Toast.makeText(this, "Select from date", Toast.LENGTH_SHORT).show();
-                    } else if (todate.equalsIgnoreCase("")) {
-                        Toast.makeText(this, "Select to date", Toast.LENGTH_SHORT).show();
-                    } else {
-
-                        PreferenceStorage.saveFilterFromDate(this, mFromDateVal);
-                        PreferenceStorage.saveFilterToDate(this, mTodateVal);
-                        if (!city.equalsIgnoreCase("Select Your City")) {
-                            PreferenceStorage.saveFilterCity(this, city);
-                        }
-                        PreferenceStorage.saveFilterEventType(this, eventTypeStr);
-                        PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
-
-                        PreferenceStorage.saveFilterRange(this, range);
-
-                        if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
-                            PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
-                        } else {
-                            PreferenceStorage.saveFilterPreference(this, "");
-                        }
-                        startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
-                    }
-
-                } else if (!city.equalsIgnoreCase("Select Your City") || !eventCategoryStr.equalsIgnoreCase("Select Category")) {
+                }
+//                else if (fromdate.trim().length() > 0 || todate.trim().length() > 0) {
+//                    singleDate = "";
+//                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
+//
+//                    if (fromdate.equalsIgnoreCase("")) {
+//                        Toast.makeText(this, "Select from date", Toast.LENGTH_SHORT).show();
+//                    } else if (todate.equalsIgnoreCase("")) {
+//                        Toast.makeText(this, "Select to date", Toast.LENGTH_SHORT).show();
+//                    } else {
+//
+//                        PreferenceStorage.saveFilterFromDate(this, mFromDateVal);
+//                        PreferenceStorage.saveFilterToDate(this, mTodateVal);
+//                        if (!city.equalsIgnoreCase("Select Your City")) {
+//                            PreferenceStorage.saveFilterCity(this, city);
+//                        }
+//                        PreferenceStorage.saveFilterEventType(this, eventTypeStr);
+//                        PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
+//
+//                        PreferenceStorage.saveFilterRange(this, range);
+//
+//                        if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
+//                            PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
+//                        } else {
+//                            PreferenceStorage.saveFilterPreference(this, "");
+//                        }
+//                        startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
+//                    }
+//
+//                }
+                else if (!city.equalsIgnoreCase("Select Your City") || !eventCategoryStr.equalsIgnoreCase("Select Category")) {
                     singleDate = "";
                     PreferenceStorage.saveFilterSingleDate(this, singleDate);
                     if (!city.equalsIgnoreCase("Select Your City")) {
@@ -557,18 +559,18 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 Log.d(TAG, "From selected");
                 if (isdoneclick) {
-                    ((Button) findViewById(R.id.btnfrom)).setText(formatDate(year, month, day));
+                    ((TextView) findViewById(R.id.select_date_range)).setText(formatDate(year, month, day));
                     mFromDateVal = formatDateServer(year, month, day);
                 } else {
                     Log.e("Close", "Close");
-                    ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
+                    ((TextView) findViewById(R.id.select_date_range)).setText("DD-MM-YYYY");
                     mFromDateVal = "DD-MM-YYYY";
                 }
             }
 
         };
 
-        findViewById(R.id.btnfrom).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.select_date_range).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -581,8 +583,10 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 todayPressed = false;
                 datePressed = false;
                 tomorrowPressed = false;
-                mFromDatePickerDialog = new DatePickerDialog(AdvanceFilterActivity.this, R.style.datePickerTheme, fromdate, currentYear,
+                mFromDatePickerDialog = new DatePickerDialog(AdvanceFilterActivity.this, fromdate, currentYear,
                         currentMonth, currentDay);
+
+
 
                 mFromDatePickerDialog.setButton(DatePickerDialog.BUTTON_POSITIVE, "Done", new DialogInterface.OnClickListener() {
                     @Override
@@ -598,7 +602,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         isdoneclick = false;
-                        ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
+//                        ((Button) findViewById(R.id.btnfrom)).setText("DD-MM-YYYY");
                         mFromDatePickerDialog.dismiss();
                     }
                 });
@@ -610,17 +614,17 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 if (isdoneclick) {
-                    ((Button) findViewById(R.id.btnto)).setText(formatDate(year, month, day));
+//                    ((Button) findViewById(R.id.btnto)).setText(formatDate(year, month, day));
                     mTodateVal = formatDateServer(year, month, day);
                 } else {
                     Log.e("Clear", "Clear");
-                    ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
+//                    ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
                     mTodateVal = "DD-MM-YYYY";
                 }
             }
         };
 
-        findViewById(R.id.btnto).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.select_date_range).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
@@ -646,7 +650,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         isdoneclick = false;
-                        ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
+//                        ((Button) findViewById(R.id.btnto)).setText("DD-MM-YYYY");
                         dpd.dismiss();
                     }
                 });
@@ -792,7 +796,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 e.printStackTrace();
             }
 
-            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_CITY_LIST;
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_ALL_CITY_LIST;
             serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
 

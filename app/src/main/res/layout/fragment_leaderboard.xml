@@ -14,9 +14,9 @@
         <RelativeLayout
             android:id="@+id/userinfo"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:background="@color/appColorBase"
-            android:gravity="left">
+            android:layout_height="200dp"
+            android:gravity="top|center"
+            android:background="@drawable/ic_leaderboard__arc">
 
             <Button
                 android:id="@+id/follow"
@@ -31,15 +31,14 @@
 
             <RelativeLayout
                 android:id="@+id/edit_profile"
+                android:layout_marginTop="30dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="30dp">
+                android:layout_height="wrap_content">
 
                 <com.palprotech.heylaapp.customview.CircleImageView
                     android:id="@+id/leaderboard_profile_img"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:src="@drawable/ic_default_profile" />
 
                 <LinearLayout
@@ -57,7 +56,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:fontFamily="@font/muli"
-                        android:hint=""
+                        android:hint="Guest User"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
                         android:textSize="16sp"
@@ -71,6 +70,7 @@
                         android:drawablePadding="10dp"
                         android:fontFamily="@font/muli"
                         android:hint=""
+                        android:visibility="gone"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
                         android:textSize="14sp" />
@@ -79,14 +79,18 @@
 
             </RelativeLayout>
 
+
+
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/user_point_info"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/userinfo"
-            android:background="@color/white"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="-70dp"
+            android:background="@drawable/btn_square_google"
             android:gravity="">
 
             <RelativeLayout
@@ -97,19 +101,20 @@
 
                 <ImageView
                     android:id="@+id/trophy"
-                    android:layout_width="75dp"
+                    android:layout_width="55dp"
                     android:layout_height="75dp"
-                    android:layout_alignEnd="@id/total_points"
-                    android:layout_alignStart="@+id/trophy_text"
                     android:src="@drawable/ic_leaderboard_trophy" />
 
                 <TextView
                     android:id="@+id/trophy_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/trophy"
+                    android:layout_toRightOf="@id/trophy"
                     android:fontFamily="@font/muli"
                     android:text="Total Points"
+                    android:layout_alignTop="@id/trophy"
+                    android:layout_alignBottom="@id/trophy"
+                    android:gravity="center"
                     android:textColor="@color/text_black"
                     android:textSize="18dp"
                     android:textStyle="bold" />
@@ -121,9 +126,10 @@
                     android:layout_alignBottom="@id/trophy_text"
                     android:layout_alignTop="@+id/trophy_text"
                     android:layout_marginStart="10dp"
+                    android:gravity="center"
                     android:layout_toEndOf="@id/trophy_text"
                     android:fontFamily="@font/muli"
-                    android:text=""
+                    android:text="11"
                     android:textColor="@color/text_black"
                     android:textSize="18dp"
                     android:textStyle="bold" />
@@ -165,307 +171,316 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/user_point_info">
 
-            <RelativeLayout
-                android:id="@+id/login_layout"
+            <LinearLayout
+                android:id="@+id/layout_one"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/btn_square_google"
-                android:gravity="center">
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/login_img"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_leaderboard_login" />
+                <RelativeLayout
+                    android:id="@+id/login_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_weight="0.5"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_square_google"
+                    android:gravity="center">
 
-                <TextView
-                    android:id="@+id/login_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/login_img"
-                    android:layout_alignTop="@+id/login_img"
-                    android:layout_marginStart="20dp"
-                    android:layout_toEndOf="@+id/login_img"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center"
-                    android:paddingStart="5dp"
-                    android:text="Login"
-                    android:textColor="@color/text_black"
-                    android:textSize="16sp" />
+                    <ImageView
+                        android:id="@+id/login_img"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_toLeftOf="@id/login_text"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_leaderboard_login" />
 
-                <TextView
-                    android:id="@+id/login_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/login_text"
-                    android:layout_alignTop="@id/login_text"
-                    android:layout_marginStart="5dp"
-                    android:layout_toRightOf="@id/login_text"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/text_black"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/login_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/login_img"
+                        android:layout_alignTop="@+id/login_img"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="Login"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
 
-                <ImageView
-                    android:id="@+id/login_star"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignBottom="@id/login_text"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@id/login_text"
-                    android:layout_marginEnd="50dp"
-                    android:src="@drawable/ic_leaderboard_star" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/login_count"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignBottom="@id/login_text"-->
+                        <!--android:layout_alignTop="@id/login_text"-->
+                        <!--android:layout_marginStart="5dp"-->
+                        <!--android:layout_toRightOf="@id/login_text"-->
+                        <!--android:fontFamily="@font/muli"-->
+                        <!--android:gravity="center_vertical"-->
+                        <!--android:textColor="@color/text_black"-->
+                        <!--android:textSize="16sp" />-->
 
-                <TextView
-                    android:id="@+id/login_star_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/login_star"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@id/login_star"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center"
-                    android:text="000"
-                    android:textColor="@color/text_black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    <!--<ImageView-->
+                        <!--android:id="@+id/login_star"-->
+                        <!--android:layout_width="30dp"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:layout_alignBottom="@id/login_text"-->
+                        <!--android:layout_alignParentEnd="true"-->
+                        <!--android:layout_alignTop="@id/login_text"-->
+                        <!--android:layout_marginEnd="50dp"-->
+                        <!--android:src="@drawable/ic_leaderboard_star" />-->
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/login_star_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/login_text"
+                        android:layout_alignTop="@id/login_text"
+                        android:layout_toRightOf="@id/login_text"
 
-            <RelativeLayout
-                android:id="@+id/sharing_layout"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="000"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/sharing_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_weight="0.5"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_square_google"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/sharing_img"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toLeftOf="@id/sharing_text"
+                        android:src="@drawable/ic_leaderboard_event_share" />
+
+                    <TextView
+                        android:id="@+id/sharing_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/sharing_img"
+                        android:layout_alignTop="@+id/sharing_img"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="Share"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/sharing_count"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignBottom="@id/sharing_text"-->
+                        <!--android:layout_alignTop="@id/sharing_text"-->
+                        <!--android:layout_marginStart="5dp"-->
+                        <!--android:layout_toRightOf="@id/sharing_text"-->
+                        <!--android:fontFamily="@font/muli"-->
+                        <!--android:gravity="center_vertical"-->
+                        <!--android:textColor="@color/text_black"-->
+                        <!--android:textSize="16sp" />-->
+
+                    <!--<ImageView-->
+                        <!--android:id="@+id/share_star"-->
+                        <!--android:layout_width="30dp"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:layout_alignBottom="@id/sharing_text"-->
+                        <!--android:layout_alignParentEnd="true"-->
+                        <!--android:layout_alignTop="@id/sharing_text"-->
+                        <!--android:layout_marginEnd="50dp"-->
+                        <!--android:src="@drawable/ic_leaderboard_star" />-->
+
+                    <TextView
+                        android:id="@+id/share_star_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/sharing_text"
+                        android:layout_alignTop="@id/sharing_text"
+                        android:layout_toRightOf="@id/sharing_text"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="000"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_two"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_below="@id/login_layout"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/btn_square_google"
-                android:gravity="center">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/booking_layout"
+                android:weightSum="1"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/sharing_img"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_leaderboard_event_share" />
+                <RelativeLayout
+                    android:id="@+id/check_in_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_weight="0.5"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_square_google"
+                    android:gravity="center">
 
-                <TextView
-                    android:id="@+id/sharing_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/sharing_img"
-                    android:layout_alignTop="@+id/sharing_img"
-                    android:layout_marginStart="20dp"
-                    android:layout_toEndOf="@+id/sharing_img"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center"
-                    android:paddingStart="5dp"
-                    android:text="Event Sharing"
-                    android:textColor="@color/text_black"
-                    android:textSize="16sp" />
+                    <ImageView
+                        android:id="@+id/check_in_img"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:padding="2dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toLeftOf="@id/check_in_text"
+                        android:src="@drawable/ic_leaderboard_check_in" />
 
-                <TextView
-                    android:id="@+id/sharing_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/sharing_text"
-                    android:layout_alignTop="@id/sharing_text"
-                    android:layout_marginStart="5dp"
-                    android:layout_toRightOf="@id/sharing_text"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/text_black"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/check_in_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/check_in_img"
+                        android:layout_alignTop="@+id/check_in_img"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:paddingStart="5dp"
+                        android:text="Check-In"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
 
-                <ImageView
-                    android:id="@+id/share_star"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignBottom="@id/sharing_text"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@id/sharing_text"
-                    android:layout_marginEnd="50dp"
-                    android:src="@drawable/ic_leaderboard_star" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/check_in_count"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignBottom="@id/check_in_text"-->
+                        <!--android:layout_alignTop="@id/check_in_text"-->
+                        <!--android:layout_marginStart="5dp"-->
+                        <!--android:layout_toRightOf="@id/check_in_text"-->
+                        <!--android:fontFamily="@font/muli"-->
+                        <!--android:gravity="center_vertical"-->
+                        <!--android:textColor="@color/text_black"-->
+                        <!--android:textSize="16sp" />-->
 
-                <TextView
-                    android:id="@+id/share_star_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/share_star"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@id/share_star"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center"
-                    android:text="000"
-                    android:textColor="@color/text_black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    <!--<ImageView-->
+                        <!--android:id="@+id/check_in_star"-->
+                        <!--android:layout_width="30dp"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:layout_alignBottom="@id/check_in_text"-->
+                        <!--android:layout_alignParentEnd="true"-->
+                        <!--android:layout_alignTop="@id/check_in_text"-->
+                        <!--android:layout_marginEnd="50dp"-->
+                        <!--android:src="@drawable/ic_leaderboard_star" />-->
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/check_in_star_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/check_in_text"
+                        android:layout_alignBottom="@id/check_in_text"
+                        android:layout_alignTop="@id/check_in_text"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="000"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-            <RelativeLayout
-                android:id="@+id/check_in_layout"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_below="@id/sharing_layout"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/btn_square_google"
-                android:gravity="center">
+                </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/check_in_img"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_leaderboard_check_in" />
+                <RelativeLayout
+                    android:id="@+id/review_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_weight="0.5"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_square_google"
+                    android:gravity="center">
 
-                <TextView
-                    android:id="@+id/check_in_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/check_in_img"
-                    android:layout_alignTop="@+id/check_in_img"
-                    android:layout_marginStart="20dp"
-                    android:layout_toEndOf="@+id/check_in_img"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center"
-                    android:paddingStart="5dp"
-                    android:text="Check-In"
-                    android:textColor="@color/text_black"
-                    android:textSize="16sp" />
+                    <ImageView
+                        android:id="@+id/review_img"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toLeftOf="@+id/review_text"
+                        android:src="@drawable/ic_leaderboard_review" />
 
-                <TextView
-                    android:id="@+id/check_in_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/check_in_text"
-                    android:layout_alignTop="@id/check_in_text"
-                    android:layout_marginStart="5dp"
-                    android:layout_toRightOf="@id/check_in_text"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/text_black"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/review_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/review_img"
+                        android:layout_alignTop="@+id/review_img"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:paddingStart="5dp"
+                        android:text="Review"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
 
-                <ImageView
-                    android:id="@+id/check_in_star"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignBottom="@id/check_in_text"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@id/check_in_text"
-                    android:layout_marginEnd="50dp"
-                    android:src="@drawable/ic_leaderboard_star" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/review_count"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignBottom="@id/review_text"-->
+                        <!--android:layout_alignTop="@id/review_text"-->
+                        <!--android:layout_marginStart="5dp"-->
+                        <!--android:layout_toRightOf="@id/review_text"-->
+                        <!--android:fontFamily="@font/muli"-->
+                        <!--android:gravity="center_vertical"-->
+                        <!--android:textColor="@color/text_black"-->
+                        <!--android:textSize="16sp" />-->
 
-                <TextView
-                    android:id="@+id/check_in_star_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/check_in_star"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@id/check_in_star"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center"
-                    android:text="000"
-                    android:textColor="@color/text_black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    <!--<ImageView-->
+                        <!--android:id="@+id/review_star"-->
+                        <!--android:layout_width="30dp"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:layout_alignBottom="@id/review_text"-->
+                        <!--android:layout_alignParentEnd="true"-->
+                        <!--android:layout_alignTop="@id/review_text"-->
+                        <!--android:layout_marginEnd="50dp"-->
+                        <!--android:src="@drawable/ic_leaderboard_star" />-->
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/review_star_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/review_text"
+                        android:layout_toRightOf="@+id/review_text"
+                        android:layout_alignTop="@id/review_text"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:text="000"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp" />
 
-            <RelativeLayout
-                android:id="@+id/review_layout"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_below="@id/check_in_layout"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/btn_square_google"
-                android:gravity="center">
+                </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/review_img"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_leaderboard_review" />
-
-                <TextView
-                    android:id="@+id/review_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/review_img"
-                    android:layout_alignTop="@+id/review_img"
-                    android:layout_marginStart="20dp"
-                    android:layout_toEndOf="@+id/review_img"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center"
-                    android:paddingStart="5dp"
-                    android:text="Review"
-                    android:textColor="@color/text_black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/review_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/review_text"
-                    android:layout_alignTop="@id/review_text"
-                    android:layout_marginStart="5dp"
-                    android:layout_toRightOf="@id/review_text"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/text_black"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/review_star"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignBottom="@id/review_text"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@id/review_text"
-                    android:layout_marginEnd="50dp"
-                    android:src="@drawable/ic_leaderboard_star" />
-
-                <TextView
-                    android:id="@+id/review_star_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/review_star"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@id/review_star"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center"
-                    android:text="000"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_black"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/booking_layout"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_below="@id/review_layout"
-                android:layout_marginBottom="20dp"
+                android:layout_height="100dp"
+                android:layout_below="@id/layout_one"
+                android:layout_marginBottom="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
@@ -474,9 +489,10 @@
 
                 <ImageView
                     android:id="@+id/booking_img"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginStart="20dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_toLeftOf="@id/booking_text"
                     android:src="@drawable/ic_leaderboard_booking" />
 
                 <TextView
@@ -485,52 +501,50 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/booking_img"
                     android:layout_alignTop="@+id/booking_img"
-                    android:layout_marginStart="20dp"
-                    android:layout_toEndOf="@+id/booking_img"
-                    android:fontFamily="@font/muli"
                     android:gravity="center"
-                    android:paddingStart="5dp"
+                    android:fontFamily="@font/muli"
+                    android:layout_centerInParent="true"
+                    android:padding="5dp"
                     android:text="Booking"
                     android:textColor="@color/text_black"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/booking_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/booking_text"
-                    android:layout_alignTop="@id/booking_text"
-                    android:layout_marginStart="5dp"
-                    android:layout_toRightOf="@id/booking_text"
-                    android:fontFamily="@font/muli"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/text_black"
-                    android:textSize="16sp" />
+                <!--<TextView-->
+                    <!--android:id="@+id/booking_count"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignBottom="@id/booking_text"-->
+                    <!--android:layout_alignTop="@id/booking_text"-->
+                    <!--android:layout_marginStart="5dp"-->
+                    <!--android:layout_toRightOf="@id/booking_text"-->
+                    <!--android:fontFamily="@font/muli"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:textColor="@color/text_black"-->
+                    <!--android:textSize="16sp" />-->
 
-                <ImageView
-                    android:id="@+id/booking_star"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@+id/booking_count"
-                    android:layout_marginEnd="50dp"
-                    android:src="@drawable/ic_leaderboard_star" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/booking_star"-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_alignTop="@+id/booking_count"-->
+                    <!--android:layout_marginEnd="50dp"-->
+                    <!--android:src="@drawable/ic_leaderboard_star" />-->
 
                 <TextView
                     android:id="@+id/booking_star_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/booking_star"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@id/booking_star"
-                    android:layout_marginEnd="20dp"
+                    android:layout_alignBottom="@id/booking_text"
+                    android:layout_toRightOf="@id/booking_text"
+                    android:layout_alignTop="@id/booking_text"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
                     android:text="000"
                     android:textStyle="bold"
                     android:textColor="@color/text_black"
-                    android:textSize="14sp" />
+                    android:textSize="20sp" />
 
             </RelativeLayout>
 

@@ -659,7 +659,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
             }
 
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_CITY_LIST;
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_ALL_CITY_LIST;
             serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
 

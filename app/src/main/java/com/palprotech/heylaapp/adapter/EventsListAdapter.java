@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -102,6 +103,9 @@ public class EventsListAdapter extends BaseAdapter {
             holder.imageView = (ImageView) convertView.findViewById(R.id.img_logo);
             holder.paidBtn = (Button) convertView.findViewById(R.id.event_paid_btn);
             holder.txtPrice = convertView.findViewById(R.id.txt_event_price);
+            holder.txtPromo = convertView.findViewById(R.id.ad_name);
+            holder.norEvent = convertView.findViewById(R.id.nor_event);
+
 
             convertView.setTag(holder);
         } else {
@@ -126,6 +130,20 @@ public class EventsListAdapter extends BaseAdapter {
             result = aux[aux.length - 2];
         } else {
             result = aux[aux.length - 1];
+        }
+
+        if(events.get(position).getIsAd().equalsIgnoreCase("Y")){
+            if(events.get(position).getAdvertisement().equalsIgnoreCase("y")){
+                holder.txtPromo.setVisibility(View.VISIBLE);
+                holder.norEvent.setVisibility(View.GONE);
+            } else {
+                holder.txtPromo.setVisibility(View.GONE);
+                holder.norEvent.setVisibility(View.VISIBLE);
+            }
+
+        } else {
+            holder.txtPromo.setVisibility(View.GONE);
+            holder.norEvent.setVisibility(View.VISIBLE);
         }
 
         String paidBtnVal = event.getEventType();
@@ -205,9 +223,10 @@ public class EventsListAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        public TextView txtEventName, txtDate, txtPrice, txtEndDate;
+        public TextView txtEventName, txtDate, txtPrice, txtEndDate, txtPromo;
         public ImageView imageView;
         public Button paidBtn;
+        public LinearLayout norEvent;
     }
 
     public boolean ismSearching() {

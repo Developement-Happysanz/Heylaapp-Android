@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bordergray"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -44,12 +45,11 @@
     <ScrollView
         android:id="@+id/ScrollView01"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_weight="1"
+        android:layout_weight="100"
         android:fadeScrollbars="false"
         android:scrollbars="horizontal|vertical">
 
@@ -60,28 +60,54 @@
 
         <LinearLayout
             android:id="@+id/layout_timetable"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/text_black"
             android:orientation="vertical" />
 
         <!--</HorizontalScrollView>-->
     </ScrollView>
 
-    <Button
-        android:id="@+id/btnproceed"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="5dp"
-        android:fontFamily="@font/muli"
-        android:background="@drawable/btn_square_login"
-        android:text="Proceed"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btnproceed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/muli"
+            android:layout_weight="0.5"
+            android:background="@drawable/btn_square_login"
+            android:text="Proceed"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnskip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/muli"
+            android:layout_weight="0.5"
+            android:background="@drawable/btn_square_login"
+            android:text="Skip"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

@@ -11,32 +11,10 @@
         android:layout_marginTop="10dp">
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/ti_mail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-
-            <EditText
-                android:id="@+id/edtMail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/muli"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:singleLine="true"
-                android:text=""
-                android:textSize="14sp" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
             android:id="@+id/ti_mobilenum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ti_mail"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
@@ -77,11 +55,32 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/ti_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ti_password"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <EditText
+                android:id="@+id/edtMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/muli"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:text=""
+                android:textSize="14sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
         <Button
             android:id="@+id/btnSignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ti_password"
+            android:layout_below="@id/ti_mail"
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"

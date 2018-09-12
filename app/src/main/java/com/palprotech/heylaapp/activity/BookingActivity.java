@@ -416,6 +416,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                             ViewGroup.LayoutParams.MATCH_PARENT));
                     final TextView viewDateFormat = new TextView(this);
                     final TextView functionalDateFormat = new TextView(this);
+                    final boolean clicked = false;
 
                     JSONObject jsonobj = getEventDates.getJSONObject(i);
 
@@ -465,7 +466,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 //                            viewDateFormat.setBackgroundColor(Color.parseColor("#708090"));
                             Toast.makeText(getApplicationContext(), functionalDateFormat.getText(), Toast.LENGTH_SHORT).show();
                             showDate = functionalDateFormat.getText().toString();
-                            viewDateFormat.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                            viewDateFormat.setBackground(getResources().getDrawable(R.drawable.bg_advanced_filter_properties_filled));
                             viewDateFormat.setTextColor(getResources().getColor(R.color.white));
                             loadBookingTimings();
                             if (showDate.equalsIgnoreCase("")) {
@@ -477,10 +478,9 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                     });
 
                     viewDateFormat.setPressed(true);
-                    viewDateFormat.setHeight(100);
-                    functionalDateFormat.setHeight(0);
-
+                    viewDateFormat.setHeight(120);
                     viewDateFormat.setWidth(100);
+                    functionalDateFormat.setHeight(0);
                     functionalDateFormat.setWidth(0);
 
                     viewDateFormat.setPadding(1, 0, 2, 0);
@@ -581,10 +581,10 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
                     cell.setBackgroundColor(Color.WHITE);//argb(255,104,53,142)
 
-                    viewTimeFormat.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                    storeTimeId.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                    viewTimeFormat.setTextColor(Color.parseColor("#468dcb"));
-                    storeTimeId.setTextColor(Color.parseColor("#468dcb"));
+                    viewTimeFormat.setBackground(getResources().getDrawable(R.drawable.bg_advanced_filter_properties));
+                    storeTimeId.setBackground(getResources().getDrawable(R.drawable.bg_advanced_filter_properties));
+                    viewTimeFormat.setTextColor(getResources().getColor(R.color.appColorBase));
+                    storeTimeId.setTextColor(getResources().getColor(R.color.appColorBase));
 
                     viewTimeFormat.setTextSize(13.0f);
                     storeTimeId.setTextSize(13.0f);
@@ -607,7 +607,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                             showTime = viewTimeFormat.getText().toString();
                             showTimeId = storeTimeId.getText().toString();
                             viewTimeFormat.setTextColor(getResources().getColor(R.color.white));
-                            viewTimeFormat.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                            viewTimeFormat.setBackground(getResources().getDrawable(R.drawable.bg_advanced_filter_properties_filled));
                             if (bookPlanArrayList != null) {
                                 bookPlanArrayList.clear();
                                 plansListView.setAdapter(bookingPlanAdapter);
@@ -618,9 +618,9 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
                     viewTimeFormat.setPressed(true);
 //                    storeTimeId.setPressed(true);
-                    viewTimeFormat.setHeight(100);
-                    storeTimeId.setHeight(0);
+                    viewTimeFormat.setHeight(120);
                     viewTimeFormat.setWidth(100);
+                    storeTimeId.setHeight(0);
                     storeTimeId.setWidth(0);
                     viewTimeFormat.setPadding(1, 0, 2, 0);
                     storeTimeId.setPadding(1, 0, 2, 0);
@@ -679,18 +679,24 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         Log.d(TAG, "onEvent list item clicked" + i);
         view.setSelected(true);
 //        view.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+        LinearLayout planLayout = view.findViewById(R.id.plan_layout);
         TextView planName = view.findViewById(R.id.txt_plan_name);
-        planName.setTextColor(Color.WHITE);
         TextView planRate = view.findViewById(R.id.txt_plan_rate);
-        planRate.setTextColor(Color.WHITE);
         LinearLayout ll = findViewById(R.id.layoutTickets);
         ll.setVisibility(View.VISIBLE);
 
         for (int a = 0; a < parent.getChildCount(); a++) {
-            parent.getChildAt(a).setBackgroundColor(Color.WHITE);
-        }
+            parent.getChildAt(a).findViewById(R.id.plan_layout).setBackground(getResources().getDrawable(R.drawable.bg_advanced_filter_properties));
+            TextView planName1 = parent.getChildAt(a).findViewById(R.id.txt_plan_name);
+            planName1.setTextColor(Color.parseColor("#468DCB"));
+            TextView planRate1 = parent.getChildAt(a).findViewById(R.id.txt_plan_rate);
+            planRate1.setTextColor(Color.parseColor("#468DCB"));
+           }
+        planLayout.setBackground(getResources().getDrawable(R.drawable.bg_advanced_filter_properties_filled));
+        planName.setTextColor(Color.WHITE);
+        planRate.setTextColor(Color.WHITE);
 
-        view.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+//        view.setBackgroundColor(getResources().getColor(R.color.appColorBase));
 
         if ((bookingPlanAdapter != null) && (bookingPlanAdapter.ismSearching())) {
             Log.d(TAG, "while searching");
@@ -705,6 +711,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         rate = bookPlan.getSeatRate();
 //        Toast.makeText(this, "Select ticket plan" + rate, Toast.LENGTH_SHORT).show();
         flagPlan = "yes";
+//        bookingPlanAdapter.
     }
 
     private void updateBookingProcess() {

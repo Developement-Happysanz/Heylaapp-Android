@@ -66,13 +66,13 @@ public class SideDrawerLayout extends RelativeLayout {
     @LayoutRes
     private static final int DEFAULT_ATTRIBUTE_VALUE = -54321;
     private static final float CONTENT_SCALE_CLOSED = 1.0f;
-    private static final float CONTENT_SCALE_OPEN = 0.7f;
+    private static final float CONTENT_SCALE_OPEN = 0.9f;
     private static final float CLICK_TO_CLOSE_SCALE = 0.7f;
     private static final float MENU_SCALE_CLOSED = 1.1f;
     private static final float MENU_SCALE_OPEN = 1.0f;
     private static final float MENU_ALPHA_CLOSED = 0.0f;
     private static final float MENU_ALPHA_OPEN = 1.0f;
-    private static final float MARGIN_FACTOR = 0.7f;
+    private static final float MARGIN_FACTOR = 0.6f;
 
     private static final float MAX_ATTRIBUTE_MULTIPLIER = 100f;
     private static final float MAX_CLICK_RANGE = 300f;

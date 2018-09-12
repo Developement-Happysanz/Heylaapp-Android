@@ -96,29 +96,29 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
         login = rootView.findViewById(R.id.login_layout);
         login.setOnClickListener(this);
-        loginCount = rootView.findViewById(R.id.login_count);
+//        loginCount = rootView.findViewById(R.id.login_count);
         loginPoints = rootView.findViewById(R.id.login_star_count);
 
 
         share = rootView.findViewById(R.id.sharing_layout);
         share.setOnClickListener(this);
-        shareCount = rootView.findViewById(R.id.sharing_count);
+//        shareCount = rootView.findViewById(R.id.sharing_count);
         sharePoints = rootView.findViewById(R.id.share_star_count);
 
 
         check_in = rootView.findViewById(R.id.check_in_layout);
         check_in.setOnClickListener(this);
-        checkinCount = rootView.findViewById(R.id.check_in_count);
+//        checkinCount = rootView.findViewById(R.id.check_in_count);
         checkinPoints = rootView.findViewById(R.id.check_in_star_count);
 
         reviews = rootView.findViewById(R.id.review_layout);
         reviews.setOnClickListener(this);
-        reviewCount = rootView.findViewById(R.id.review_count);
+//        reviewCount = rootView.findViewById(R.id.review_count);
         reviewPoints = rootView.findViewById(R.id.review_star_count);
 
         booking = rootView.findViewById(R.id.booking_layout);
         booking.setOnClickListener(this);
-        bookingCount = rootView.findViewById(R.id.booking_count);
+//        bookingCount = rootView.findViewById(R.id.booking_count);
         bookingPoints = rootView.findViewById(R.id.booking_star_count);
 
         totalPoints = rootView.findViewById(R.id.total_points);
@@ -223,16 +223,16 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
             rCount = getData.getJSONObject(0).getString("review_count");
             rPoint = getData.getJSONObject(0).getString("review_points");
 
-            loginCount.setText("(" + lCount + ")");
-            loginPoints.setText(lPoint);
-            shareCount.setText("(" + sCount + ")");
-            sharePoints.setText(sPoint);
-            checkinCount.setText("(" + cCount + ")");
-            checkinPoints.setText(cPoint);
-            reviewCount.setText("(" + rCount + ")");
-            reviewPoints.setText(rPoint);
-            bookingCount.setText("(" + bCount + ")");
-            bookingPoints.setText(bPoint);
+//            loginCount.setText("(" + lCount + ")");
+            loginPoints.setText("("+lPoint+")");
+//            shareCount.setText("(" + sCount + ")");
+            sharePoints.setText("("+sPoint+")");
+//            checkinCount.setText("(" + cCount + ")");
+            checkinPoints.setText("("+cPoint+")");
+//            reviewCount.setText("(" + rCount + ")");
+            reviewPoints.setText("("+rPoint+")");
+//            bookingCount.setText("(" + bCount + ")");
+            bookingPoints.setText("("+bPoint+")");
             totalPoints.setText("(" + tPoint + ")");
 
         } catch (JSONException e) {

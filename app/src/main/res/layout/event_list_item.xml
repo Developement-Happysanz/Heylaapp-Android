@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/img_logo"
@@ -18,10 +18,23 @@
             android:layout_height="190dp"
             android:layout_gravity="center_vertical" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/ad_name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
+            android:layout_height="190dp"
+            android:gravity="end|top"
+            android:padding="5dp"
+            android:text="Promoted"
+            android:textColor="@color/white"
+            android:background="@color/temp"
+            android:visibility="gone"
+            android:layout_centerInParent="true" />
+
+        <LinearLayout
+            android:id="@+id/nor_event"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_logo"
             android:orientation="horizontal">
 
             <RelativeLayout

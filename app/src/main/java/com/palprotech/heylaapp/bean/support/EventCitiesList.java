@@ -14,7 +14,7 @@ public class EventCitiesList {
     @SerializedName("count")
     @Expose
     private int count;
-    @SerializedName("Cities")
+    @SerializedName("cities")
     @Expose
     private ArrayList<EventCities> data = new ArrayList<EventCities>();
 
