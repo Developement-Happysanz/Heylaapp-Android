@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:background="@color/white"
-                android:layout_below="@id/threebtn">
+                android:layout_below="@id/date_range_layout">
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/ti_event_type"
@@ -271,7 +271,8 @@
                 android:id="@+id/date_range_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ti_price_range">
+                android:layout_marginBottom="10dp"
+                android:layout_below="@id/threebtn">
 
                 <TextView
                     android:id="@+id/tvdaterange"
@@ -296,89 +297,81 @@
                     android:background="@color/white"
                     android:layout_below="@id/tvdaterange">
 
-                    <TextView
-                        android:id="@+id/select_date_range"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:textSize="16dp"
-                        android:gravity="center"
-                        android:text="Click to select date range"/>
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
-                    <!--<LinearLayout-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:orientation="horizontal"-->
-                        <!--android:weightSum="2">-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
 
-                        <!--<LinearLayout-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:orientation="vertical"-->
-                            <!--android:layout_weight="1">-->
+                            <TextView
+                                android:id="@+id/tvfrom"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginBottom="4dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/muli"
+                                android:gravity="center"
+                                android:text="From"
+                                android:textSize="15sp"
+                                android:textColor="@color/text_black" />
 
-                            <!--<TextView-->
-                                <!--android:id="@+id/tvfrom"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_alignParentLeft="true"-->
-                                <!--android:layout_marginBottom="4dp"-->
-                                <!--android:layout_marginTop="10dp"-->
-                                <!--android:fontFamily="@font/muli"-->
-                                <!--android:gravity="center"-->
-                                <!--android:text="From"-->
-                                <!--android:textSize="15sp"-->
-                                <!--android:textColor="@color/text_black" />-->
+                            <Button
+                                android:id="@+id/btnfrom"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tvfrom"
+                                android:layout_marginBottom="@dimen/mainmargin"
+                                android:fontFamily="@font/muli"
+                                android:background="@color/transparent"
+                                android:gravity="left|center_vertical"
+                                android:textColor="@color/text_black"
+                                android:text="DD-MM-YYYY"
+                                android:textSize="14sp" />
 
-                            <!--<Button-->
-                                <!--android:id="@+id/btnfrom"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_below="@id/tvfrom"-->
-                                <!--android:layout_marginBottom="@dimen/mainmargin"-->
-                                <!--android:fontFamily="@font/muli"-->
-                                <!--android:background="@color/transparent"-->
-                                <!--android:gravity="left|center_vertical"-->
-                                <!--android:textColor="@color/text_black"-->
-                                <!--android:text="DD-MM-YYYY"-->
-                                <!--android:textSize="14sp" />-->
+                        </LinearLayout>
 
-                        <!--</LinearLayout>-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
 
-                        <!--<LinearLayout-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:orientation="vertical"-->
-                            <!--android:layout_weight="1">-->
+                            <TextView
+                                android:id="@+id/tvto"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/muli"
+                                android:background="@color/transparent"
+                                android:gravity="center"
+                                android:text="To"
+                                android:textSize="15sp"
+                                android:textColor="@color/text_black" />
 
-                            <!--<TextView-->
-                                <!--android:id="@+id/tvto"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_marginBottom="4dp"-->
-                                <!--android:layout_marginTop="10dp"-->
-                                <!--android:fontFamily="@font/muli"-->
-                                <!--android:background="@color/transparent"-->
-                                <!--android:gravity="center"-->
-                                <!--android:text="To"-->
-                                <!--android:textSize="15sp"-->
-                                <!--android:textColor="@color/text_black" />-->
+                            <Button
+                                android:id="@+id/btnto"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tvto"
+                                android:layout_marginBottom="16dp"
+                                android:fontFamily="@font/muli"
+                                android:background="@color/transparent"
+                                android:gravity="left|center_vertical"
+                                android:textColor="@color/text_black"
+                                android:text="DD-MM-YYYY"
+                                android:textSize="14sp" />
 
-                            <!--<Button-->
-                                <!--android:id="@+id/btnto"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_below="@id/tvto"-->
-                                <!--android:layout_marginBottom="16dp"-->
-                                <!--android:fontFamily="@font/muli"-->
-                                <!--android:background="@color/transparent"-->
-                                <!--android:gravity="left|center_vertical"-->
-                                <!--android:textColor="@color/text_black"-->
-                                <!--android:text="DD-MM-YYYY"-->
-                                <!--android:textSize="14sp" />-->
+                        </LinearLayout>
 
-                        <!--</LinearLayout>-->
-
-                    <!--</LinearLayout>-->
+                    </LinearLayout>
 
                 </RelativeLayout>
 
@@ -390,7 +383,7 @@
                 android:layout_height="60dp"
                 android:gravity="center"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@id/date_range_layout"
+                android:layout_below="@id/ti_price_range"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 android:background="@color/eventListbg"
