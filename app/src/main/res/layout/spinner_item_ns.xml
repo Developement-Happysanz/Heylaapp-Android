@@ -6,7 +6,7 @@
     android:ellipsize="end"
     android:gravity="left"
     android:fontFamily="@font/muli"
-    android:padding="5dip"
+    android:padding="10dip"
     android:singleLine="true"
     android:textColor="@color/text_black"
-    android:textSize="14sp" />
+    android:textSize="16sp" />

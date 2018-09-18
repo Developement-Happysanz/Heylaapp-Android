@@ -792,7 +792,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 e.printStackTrace();
             }
 
-            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_CITY_LIST;
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.ALL_EVENT_CITY_LIST;
             serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
 

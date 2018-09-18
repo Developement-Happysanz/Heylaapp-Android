@@ -371,7 +371,11 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
             this.mMenuFooter = (ViewGroup) rootView.findViewById(R.id.side_view_menu_footer_layout);
 
             profileName = (TextView) rootView.findViewById(R.id.profile_name);
-            profileName.setText(PreferenceStorage.getFullName(context));
+            if(PreferenceStorage.getFullName(context).equalsIgnoreCase("")){
+                profileName.setText("Guest User");
+            } else {
+                profileName.setText(PreferenceStorage.getFullName(context));
+            }
             vUserImage = (ImageView) rootView.findViewById(R.id.profile_img);
             String url = PreferenceStorage.getUserPicture(context);
             String getSocialUrl = PreferenceStorage.getSocialNetworkProfileUrl(context);
@@ -381,11 +385,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                 Picasso.with(context).load(getSocialUrl).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(vUserImage);
             }
             userName = rootView.findViewById(R.id.user_name);
-            if (PreferenceStorage.getUsername(context) == null) {
-                userName.setText("Username");
-            } else {
-                userName.setText(PreferenceStorage.getUsername(context));
-            }
+            userName.setText(PreferenceStorage.getEventCityName(context));
 
             this.vBooking = (RelativeLayout) rootView.findViewById(R.id.booking_history_img);
             this.vBooking.setOnClickListener(new View.OnClickListener() {

@@ -104,9 +104,12 @@ public class BookingHistoryListAdapter extends BaseAdapter {
 
             holder = new BookingHistoryListAdapter.ViewHolder();
             holder.txtEventName = convertView.findViewById(R.id.txt_event_name);
-            holder.txtEventBookedDate = convertView.findViewById(R.id.txt_event_booked_date);
+            holder.txtEventBookedDate1 = convertView.findViewById(R.id.txt_event_booked_date1);
+            holder.txtEventBookedDate2 = convertView.findViewById(R.id.txt_event_booked_date2);
+            holder.txtEventBookedDate3 = convertView.findViewById(R.id.txt_event_booked_date3);
             holder.txtEventBookedTime = convertView.findViewById(R.id.txt_event_booked_time);
             holder.txtEventLocation = convertView.findViewById(R.id.txt_event_location);
+            holder.txtTicketCount = convertView.findViewById(R.id.ticket_count);
 
             convertView.setTag(holder);
         } else {
@@ -138,13 +141,18 @@ public class BookingHistoryListAdapter extends BaseAdapter {
             String dayStr = day + suffixes[day];
 
             if ((bookingDate != null)) {
-                holder.txtEventBookedDate.setText(finalDay + " " + month_name + " " + dayStr + " " + year_name);
+                holder.txtEventBookedDate1.setText(" " + month_name );
+                holder.txtEventBookedDate2.setText(" " + dayStr );
+                holder.txtEventBookedDate3.setText(" " + finalDay);
             } else {
-                holder.txtEventBookedDate.setText("N/A");
+                holder.txtEventBookedDate1.setText("N/A");
+                holder.txtEventBookedDate2.setText("N/A");
+                holder.txtEventBookedDate3.setText("N/A");
             }
 
             holder.txtEventBookedTime.setText(bookingHistories.get(position).getPlanTime());
             holder.txtEventLocation.setText(bookingHistories.get(position).getEventVenue());
+            holder.txtTicketCount.setText(bookingHistories.get(position).getNumberOfSeats());
 
         } catch (final ParseException e) {
             e.printStackTrace();
@@ -186,7 +194,7 @@ public class BookingHistoryListAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        public TextView txtEventName, txtEventBookedDate, txtEventBookedTime, txtEventLocation;
+        public TextView txtEventName, txtEventBookedDate1,txtEventBookedDate2,txtEventBookedDate3, txtEventBookedTime, txtEventLocation, txtTicketCount;
     }
 
     public boolean ismSearching() {

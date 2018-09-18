@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:background="@color/white"
-                android:layout_below="@id/threebtn">
+                android:layout_below="@id/date_range_layout">
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/ti_event_type"
@@ -271,14 +271,14 @@
                 android:id="@+id/date_range_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ti_price_range">
+                android:layout_marginBottom="10dp"
+                android:layout_below="@id/threebtn">
 
                 <TextView
                     android:id="@+id/tvdaterange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginTop="@dimen/mainmargin"
                     android:gravity="center"
                     android:text="Select Date Range"
                     android:layout_marginLeft="10dp"
@@ -382,7 +382,7 @@
                 android:layout_height="60dp"
                 android:gravity="center"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@id/date_range_layout"
+                android:layout_below="@id/ti_price_range"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 android:background="@color/eventListbg"

@@ -110,18 +110,19 @@ public class SignUpFragment extends Fragment implements View.OnClickListener, IS
     }
 
     private boolean validateFields() {
-        inputEmail.setErrorEnabled(false);
+//        inputEmail.setErrorEnabled(false);
         inputMobile.setErrorEnabled(false);
         inputPassword.setErrorEnabled(false);
-        if (!HeylaAppValidator.checkNullString(this.email.getText().toString().trim())) {
-            inputEmail.setError(getString(R.string.err_email));
-            requestFocus(email);
-            return false;
-        } else if (!HeylaAppValidator.isEmailValid(this.email.getText().toString().trim())) {
-            inputEmail.setError(getString(R.string.err_email));
-            requestFocus(email);
-            return false;
-        } else if (!HeylaAppValidator.checkNullString(this.mobile.getText().toString().trim())) {
+//        if (!HeylaAppValidator.checkNullString(this.email.getText().toString().trim())) {
+//            inputEmail.setError(getString(R.string.err_email));
+//            requestFocus(email);
+//            return false;
+//        } else if (!HeylaAppValidator.isEmailValid(this.email.getText().toString().trim())) {
+//            inputEmail.setError(getString(R.string.err_email));
+//            requestFocus(email);
+//            return false;
+//        }
+        if (!HeylaAppValidator.checkNullString(this.mobile.getText().toString().trim())) {
             inputMobile.setError(getString(R.string.err_mobile));
             requestFocus(mobile);
             return false;

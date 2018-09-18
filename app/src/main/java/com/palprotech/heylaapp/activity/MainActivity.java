@@ -39,6 +39,7 @@ import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.adapter.SideMenuAdapterTemp;
 import com.palprotech.heylaapp.bean.support.EventCities;
 import com.palprotech.heylaapp.bean.support.EventCitiesList;
+import com.palprotech.heylaapp.bean.support.EventCitiesListAll;
 import com.palprotech.heylaapp.customview.SideDrawerLayout;
 import com.palprotech.heylaapp.customview.SideDrawerToggle;
 import com.palprotech.heylaapp.customview.SideMenuView;
@@ -478,7 +479,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
                         public void run() {
                             progressDialogHelper.hideProgressDialog();
                             Gson gson = new Gson();
-                            EventCitiesList eventCitiesList = gson.fromJson(response.toString(), EventCitiesList.class);
+                            EventCitiesListAll eventCitiesList = gson.fromJson(response.toString(), EventCitiesListAll.class);
                             if (eventCitiesList.getEventCities() != null && eventCitiesList.getEventCities().size() > 0) {
                                 totalCount = eventCitiesList.getCount();
                                 isLoadingForFirstTime = false;
@@ -622,7 +623,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
         // Setting Dialog Title
-        alertDialog.setTitle("GPS is settings");
+        alertDialog.setTitle("GPS settings");
 
         // Setting Dialog Message
         alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
@@ -659,7 +660,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
             }
 
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_CITY_LIST;
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_ALL_CITY_LIST;
             serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
 

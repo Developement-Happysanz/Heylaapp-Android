@@ -266,28 +266,30 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         if (PreferenceStorage.getUserCountryName(this) != null) {
             country.setText(PreferenceStorage.getUserCountryName(this));
         }
-        country.setOnClickListener(this);
-        country.setFocusable(false);
+//        country.setOnClickListener(this);
         inputState = (TextInputLayout) findViewById(R.id.ti_state);
         state = (EditText) findViewById(R.id.stateList);
         if (PreferenceStorage.getUserStateName(this) != null) {
             state.setText(PreferenceStorage.getUserStateName(this));
         }
-        state.setOnClickListener(this);
-        state.setFocusable(false);
+//        state.setOnClickListener(this);
+//        state.setFocusable(false);
         inputCity = (TextInputLayout) findViewById(R.id.ti_city);
         city = (EditText) findViewById(R.id.cityList);
         if (PreferenceStorage.getEventCityName(this) != null) {
             city.setText(PreferenceStorage.getEventCityName(this));
         }
-        city.setOnClickListener(this);
-        city.setFocusable(false);
+//        city.setOnClickListener(this);
+//        city.setFocusable(false);
         inputPincode = (TextInputLayout) findViewById(R.id.ti_pincode);
         pincode = (EditText) findViewById(R.id.edtPincode);
         if (PreferenceStorage.getUserZipcode(this) != null) {
             pincode.setText(PreferenceStorage.getUserZipcode(this));
         }
         cbSubscription = (CheckBox) findViewById(R.id.subscription);
+        if (PreferenceStorage.getUserNewsLetterStatus(this).equalsIgnoreCase(String.valueOf('Y'))){
+            cbSubscription.setChecked(Boolean.TRUE);
+        }
         save = (Button) findViewById(R.id.saveprofile);
         save.setOnClickListener(this);
 
@@ -388,14 +390,14 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 stateList.clear();
             if (cityList != null)
                 cityList.clear();
-            showCountryList();
+//            showCountryList();
 
         } else if (view == state) {
             if (cityList != null)
                 cityList.clear();
-            showStateList();
+//            showStateList();
         } else if (view == city) {
-            showCityList();
+//            showCityList();
         }
     }
 
@@ -446,9 +448,13 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         pinCode = pincode.getText().toString();
         PreferenceStorage.saveUserZipCode(this, pinCode);
         newsLetter = cbSubscription.isChecked();
+
         if (newsLetter) {
             newsLetterStatus = "Y";
+        } else {
+            newsLetterStatus = "N";
         }
+        PreferenceStorage.saveUserNewsLetterStatus(this, newsLetterStatus);
 
         String newFormat = "";
         if (mBirthday.getText().toString() != null && mBirthday.getText().toString() == "") {
@@ -863,7 +869,8 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         setResult(RESULT_OK);
                         finish();
                     }
-                } else if (checkInternalState.equalsIgnoreCase("country")) {
+                }
+                else if (checkInternalState.equalsIgnoreCase("country")) {
 
                     JSONArray getData = response.getJSONArray("Countries");
                     int getLength = getData.length();
@@ -891,7 +898,8 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         }
                     };
 
-                } else if (checkInternalState.equalsIgnoreCase("state")) {
+                }
+                else if (checkInternalState.equalsIgnoreCase("state")) {
 
                     JSONArray getData = response.getJSONArray("States");
                     int getLength = getData.length();
@@ -992,6 +1000,10 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             } finally {
 //                mDatePicker = new DatePickerDialog(this, R.style.datePickerTheme, this, year, month, day);
 //                mDatePicker.show();
+                Calendar now = Calendar.getInstance();
+                int year1 = now.get(Calendar.YEAR);
+                int month1 = now.get(Calendar.MONTH) ; // Note: zero based!
+                int day1 = now.get(Calendar.DAY_OF_MONTH);
                 new SpinnerDatePickerDialogBuilder()
                         .context(ProfileActivity.this)
                         .callback(ProfileActivity.this)
@@ -999,7 +1011,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         .showTitle(true)
                         .showDaySpinner(true)
                         .defaultDate(2018, 0, 1)
-                        .maxDate(2100, 11, 31)
+                        .maxDate(year1, month1, day1)
                         .minDate(1900, 0, 1)
                         .build()
                         .show();
@@ -1110,6 +1122,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     private void showCountryList() {
         Log.d(TAG, "Show country list");
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+
         View view = getLayoutInflater().inflate(R.layout.gender_header_layout, null);
         TextView header = (TextView) view.findViewById(R.id.gender_header);
         header.setText("Select Country");
@@ -1131,6 +1144,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 });
         builderSingle.show();
     }
+
 
     private void showStateList() {
         Log.d(TAG, "Show state list");

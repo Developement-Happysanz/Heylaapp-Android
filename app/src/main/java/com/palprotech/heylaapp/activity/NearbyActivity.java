@@ -117,6 +117,7 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
     private ProgressDialog mLocationProgress = null;
     private int nearByDistance = 0;
     private TextView mTotalEventCount = null;
+    private ImageView imgFiller;
     private String eventType;
 
     @Override
@@ -228,6 +229,7 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
                     if (totalCount != 0) {
                         imgMapbg.setVisibility(View.GONE);
                     }
+                    imgFiller.setVisibility(View.GONE);
                     updateListAdapter(eventsList.getEvents());
                 }
             }
@@ -285,6 +287,7 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
         loadMoreListView.setOnItemClickListener(this);
         mTotalEventCount = (TextView) findViewById(R.id.totalnearby);
         imgMapbg = (ImageView) findViewById(R.id.nearby_bg);
+        imgFiller = (ImageView) findViewById(R.id.logo);
         eventType = getIntent().getStringExtra("event_type");
         eventsArrayList = new ArrayList<>();
         serviceHelper = new ServiceHelper(this);

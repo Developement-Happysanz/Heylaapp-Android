@@ -29,6 +29,7 @@
 
     <!--Leaderboard Module-->
     <color name="leaderboard_gray">#f0f2f2</color>
+    <color name="leaderboard_blue">#5baed3</color>
 
     <!-- Screens background color-->
     <color name="bg_screen1">#468DCB</color>
@@ -66,9 +67,9 @@
     <color name="failure">#e11f26</color>
     <color name="cancel">#f15528</color>
 
-    <color name="success_txt">#40BF49</color>
-    <color name="failure_txt">#BF3B30</color>
-    <color name="cancel_txt">#F4A337</color>
+    <color name="success_txt">#8dc63f</color>
+    <color name="failure_txt">#ef3736</color>
+    <color name="cancel_txt">#faa433</color>
 
     <color name="success_new_bg">#BCDFB6</color>
     <color name="failure_new_bg">#EF9C9D</color>
@@ -79,6 +80,8 @@
     <color name="leaderboard_checkin">#ed1c24</color>
     <color name="leaderboard_review">#029b8c</color>
     <color name="leaderboard_booking">#ee7f22</color>
+
+    <color name="booking_line">#faa433</color>
 
 
 </resources>

@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.activity.AdvancedFilterResultActivity;
 import com.palprotech.heylaapp.activity.EventDetailActivity;
 import com.palprotech.heylaapp.activity.NearbyActivity;
 import com.palprotech.heylaapp.adapter.EventsListAdapter;
@@ -312,7 +313,7 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
 //                Log.d(TAG, "current item is" + currentpage);
 
                 if (s != null) {
-                    searchForEvent(s);
+                    makeSearch(s);
                 }
 
                 return false;
@@ -325,12 +326,12 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
 
                 if ((s != null) && (!s.isEmpty())) {
                     if (s != null) {
-                        searchForEvent(s);
+//                        makeSearch(s);
                     }
                 } else {
                     if (s != null) {
                         Log.d(TAG, "call exit search");
-                        exitSearch();
+//                        exitSearch();
                     }
                 }
 
@@ -858,13 +859,10 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
         }
     }
 
-    public void searchForEvent(String eventname) {
-        Log.d(TAG, "searchevent called");
-        if (eventsListAdapter != null) {
-            eventsListAdapter.startSearch(eventname);
-            eventsListAdapter.notifyDataSetChanged();
-            loadMoreListView.invalidateViews();
-        }
+    private void makeSearch(String eventname) {
+        PreferenceStorage.IsFilterApply(getActivity(),eventname);
+        PreferenceStorage.saveFilterEventType(getActivity(),"Hotspot");
+        startActivity(new Intent(getActivity(), AdvancedFilterResultActivity.class));
     }
 
     public void exitSearch() {

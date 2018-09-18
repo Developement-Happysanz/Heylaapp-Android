@@ -121,7 +121,17 @@ public class HeylaAppConstants {
     public static final String CHANGE_USERNAME1 = "full_name";
 
     //    Event city list
-    public static final String EVENT_CITY_LIST = "apimain/selectAllCity/";
+    public static final String EVENT_CITY_LIST = "apimain/getEventcities/";
+
+    //    Event city list
+    public static final String ALL_EVENT_CITY_LIST = "apimain/selectAllCity/";
+
+    //    Event city list
+    public static final String EVENT_ALL_CITY_LIST = "apimain/selectAllCity/";
+
+
+    //    Event city list
+    public static final String EVENT_COUNTRY_LIST = "apimain/getEventCountries";
 
     //    Event city list
     public static final String EVENT_PRICE_LIST = "apimain/bookingPricerange/";
@@ -144,6 +154,12 @@ public class HeylaAppConstants {
 
     //    User activity params
     public static final String PARAMS_FULL_NAME1 = "full_name";
+
+    //    Event search
+    public static final String EVENT_SEARCH = "apimain/search_events/";
+
+    //    Event list params
+    public static final String KEY_EVENT_SEARCH = "search_event";
 
     //    Event list
     public static final String EVENT_LIST = "apimain/viewEvents/";
@@ -242,6 +258,9 @@ public class HeylaAppConstants {
     // LeaderBoard
     public static final String LEADER_BOARD = "apimain/leaderBoard/";
 
+    // LeaderBoardPoints
+    public static final String LEADER_BOARD_POINTS = "apimain/user_points/";
+
     // LeaderBoard daily login
     public static final String ACTIVITY_HISTORY = "apimain/activityHistory/";
 
@@ -297,6 +316,9 @@ public class HeylaAppConstants {
 
     //    Shared Event City Id
     public static final String KEY_EVENT_CITY_ID = "event_city_id";
+
+    //    Shared Event Country Id
+    public static final String KEY_EVENT_COUNTRY_ID = "country_id";
 
     //    Shared Event Date Id
     public static final String KEY_DATE_TYPE = "day_type";

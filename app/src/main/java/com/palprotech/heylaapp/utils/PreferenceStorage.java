@@ -893,19 +893,19 @@ public class PreferenceStorage {
         return transactionDate;
     }
 
-    public static void IsFilterApply(Context context, boolean IsFilterApply) {
+    public static void IsFilterApply(Context context, String IsFilterApply) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(HeylaAppConstants.ISFILTERAPPLY, IsFilterApply);
+        editor.putString(HeylaAppConstants.ISFILTERAPPLY, IsFilterApply);
         editor.commit();
 
     }
 
-    public static boolean getFilterApply(Context context) {
+    public static String getFilterApply(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        boolean logged = sharedPreferences.getBoolean(HeylaAppConstants.ISFILTERAPPLY, false);
+        String logged = sharedPreferences.getString(HeylaAppConstants.ISFILTERAPPLY, "");
         return logged;
 
     }

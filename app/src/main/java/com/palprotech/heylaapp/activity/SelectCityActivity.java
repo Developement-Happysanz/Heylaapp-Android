@@ -20,8 +20,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.adapter.EventCitiesAdapter;
 import com.palprotech.heylaapp.bean.support.EventCities;
 import com.palprotech.heylaapp.bean.support.EventCitiesList;
+import com.palprotech.heylaapp.bean.support.StoreCountry;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
@@ -64,11 +67,11 @@ public class SelectCityActivity extends AppCompatActivity implements LocationLis
     Handler mHandler = new Handler();
     int pageNumber = 0, totalCount = 0;
     protected boolean isLoadingForFirstTime = true;
-
+    private Spinner spnCountryList;
     protected LocationManager locationManager;
     RelativeLayout location;
     protected Double latitude, longitude;
-    String address ="";
+    String address ="", resString = "", storeCountryId = "";
     TextView loc;
 
     @Override
@@ -79,18 +82,63 @@ public class SelectCityActivity extends AppCompatActivity implements LocationLis
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
-
-        location = (RelativeLayout) findViewById(R.id.location_layout);
-        location.setOnClickListener(this);
-        loc = (TextView) findViewById(R.id.currentloctxt);
+        spnCountryList = (Spinner) findViewById(R.id.country_list_spinner);
+//        location = (RelativeLayout) findViewById(R.id.location_layout);
+//        location.setOnClickListener(this);
+//        loc = (TextView) findViewById(R.id.currentloctxt);
         loadMoreListView = (ListView) findViewById(R.id.listView_events);
         loadMoreListView.setOnItemClickListener(this);
         eventCitiesArrayList = new ArrayList<>();
 
-        GetEventCities();
+        GetEventCountries();
+
+        spnCountryList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                StoreCountry classList = (StoreCountry) parent.getSelectedItem();
+
+                if (eventCitiesArrayList != null) {
+                    eventCitiesArrayList.clear();
+                    loadMoreListView.setAdapter(eventCitiesAdapter);
+                }
+                storeCountryId = classList.getCountryId();
+                GetEventCities();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private void GetEventCities() {
+
+        resString = "Cities";
+
+        if (CommonUtils.isNetworkAvailable(this)) {
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put(HeylaAppConstants.KEY_EVENT_COUNTRY_ID, storeCountryId);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_CITY_LIST;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+        }
+    }
+
+    private void GetEventCountries() {
+
+        resString = "Countries";
 
         if (CommonUtils.isNetworkAvailable(this)) {
 
@@ -103,7 +151,7 @@ public class SelectCityActivity extends AppCompatActivity implements LocationLis
             }
 
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_CITY_LIST;
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_COUNTRY_LIST;
             serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
 
@@ -124,35 +172,62 @@ public class SelectCityActivity extends AppCompatActivity implements LocationLis
 
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
-            try {
-                JSONArray getData = response.getJSONArray("Cities");
-                if (getData != null && getData.length() > 0) {
 
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressDialogHelper.hideProgressDialog();
-                            Gson gson = new Gson();
-                            EventCitiesList eventCitiesList = gson.fromJson(response.toString(), EventCitiesList.class);
-                            if (eventCitiesList.getEventCities() != null && eventCitiesList.getEventCities().size() > 0) {
-                                totalCount = eventCitiesList.getCount();
-                                isLoadingForFirstTime = false;
-                                updateListAdapter(eventCitiesList.getEventCities());
-                                try {
-                                    checkCurrentCity();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+            try {
+                if (resString.equalsIgnoreCase("Cities")){
+                    JSONArray getData = response.getJSONArray("cities");
+                    if (getData != null && getData.length() > 0) {
+
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialogHelper.hideProgressDialog();
+                                Gson gson = new Gson();
+                                EventCitiesList eventCitiesList = gson.fromJson(response.toString(), EventCitiesList.class);
+                                if (eventCitiesList.getEventCities() != null && eventCitiesList.getEventCities().size() > 0) {
+                                    totalCount = eventCitiesList.getCount();
+                                    isLoadingForFirstTime = false;
+                                    updateListAdapter(eventCitiesList.getEventCities());
+//                                    try {
+//                                        checkCurrentCity();
+//                                    } catch (IOException e) {
+//                                        e.printStackTrace();
+//                                    }
                                 }
                             }
+                        });
+                    } else {
+                        if (eventCitiesArrayList != null) {
+                            eventCitiesArrayList.clear();
+                            eventCitiesAdapter = new EventCitiesAdapter(this, this.eventCitiesArrayList);
+                            loadMoreListView.setAdapter(eventCitiesAdapter);
                         }
-                    });
-                } else {
-                    if (eventCitiesArrayList != null) {
-                        eventCitiesArrayList.clear();
-                        eventCitiesAdapter = new EventCitiesAdapter(this, this.eventCitiesArrayList);
-                        loadMoreListView.setAdapter(eventCitiesAdapter);
                     }
+                } else if (resString.equalsIgnoreCase("Countries")) {
+
+                    JSONArray getData = response.getJSONArray("Countries");
+                    JSONObject userData = getData.getJSONObject(0);
+                    int getLength = getData.length();
+                    String subjectName = null;
+                    Log.d(TAG, "userData dictionary" + userData.toString());
+
+                    String classId = "";
+                    String className = "";
+                    ArrayList<StoreCountry> classesList = new ArrayList<>();
+
+                    for (int i = 0; i < getLength; i++) {
+
+                        classId = getData.getJSONObject(i).getString("id");
+                        className = getData.getJSONObject(i).getString("country_name");
+
+                        classesList.add(new StoreCountry(classId, className));
+                    }
+
+                    //fill data in spinner
+                    ArrayAdapter<StoreCountry> adapter = new ArrayAdapter<StoreCountry>(getApplicationContext(), R.layout.spinner_item_ns, classesList);
+                    spnCountryList.setAdapter(adapter);
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
