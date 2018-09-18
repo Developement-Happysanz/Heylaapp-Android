@@ -279,7 +279,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginTop="@dimen/mainmargin"
                     android:gravity="center"
                     android:text="Select Date Range"
                     android:layout_marginLeft="10dp"

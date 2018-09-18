@@ -152,7 +152,7 @@ public class BookingHistoryListAdapter extends BaseAdapter {
 
             holder.txtEventBookedTime.setText(bookingHistories.get(position).getPlanTime());
             holder.txtEventLocation.setText(bookingHistories.get(position).getEventVenue());
-            holder.txtEventLocation.setText(bookingHistories.get(position).getNumberOfSeats());
+            holder.txtTicketCount.setText(bookingHistories.get(position).getNumberOfSeats());
 
         } catch (final ParseException e) {
             e.printStackTrace();

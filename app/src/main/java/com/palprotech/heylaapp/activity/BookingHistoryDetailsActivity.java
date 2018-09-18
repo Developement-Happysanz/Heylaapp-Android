@@ -43,7 +43,7 @@ import java.util.Locale;
 public class BookingHistoryDetailsActivity extends AppCompatActivity implements IServiceListener, DialogClickListener, AdapterView.OnItemClickListener {
 
     private BookingHistory bookingHistory;
-    private TextView txtEventName, txtEventDate, txtEventTime, txtEventAddress, txtEventAttendees, txtEventTicktClass, txtEventTicketCount;
+    private TextView txtEventName, txtEventDate, txtEventDate1, txtEventDate2, txtEventTime, txtEventAddress, txtEventAttendees, txtEventTicktClass, txtEventTicketCount;
     static String[] suffixes =
             //    0     1     2     3     4     5     6     7     8     9
             {"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th",
@@ -121,6 +121,8 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
 
         txtEventName = findViewById(R.id.txt_event_name);
         txtEventDate = findViewById(R.id.txt_event_booked_date);
+        txtEventDate1 = findViewById(R.id.txt_event_booked_date1);
+        txtEventDate2 = findViewById(R.id.txt_event_booked_date2);
         txtEventTime = findViewById(R.id.txt_event_booked_time);
         txtEventAddress = findViewById(R.id.txt_event_location);
         txtEventAttendees = findViewById(R.id.txt_event_attendees_count);
@@ -129,8 +131,8 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
 
         txtEventName.setText(bookingHistory.getEventName());
         txtEventTime.setText(bookingHistory.getPlanTime());
-        txtEventAddress.setText(bookingHistory.getEventAddress());
-        txtEventDate.setText(bookingHistory.getBookingDate());
+        txtEventAddress.setText(bookingHistory.getEventVenue());
+//        txtEventDate.setText(bookingHistory.getBookingDate());
 
         String bookingDate = HeylaAppHelper.getDate(bookingHistory.getBookingDate());
 
@@ -153,9 +155,13 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
             String dayStr = day + suffixes[day];
 
             if ((bookingDate != null)) {
-                txtEventDate.setText(finalDay + " " + month_name + " " + dayStr + " " + year_name);
+                txtEventDate.setText(" " + month_name );
+                txtEventDate1.setText(" " + dayStr);
+                txtEventDate2.setText(finalDay + " ");
             } else {
                 txtEventDate.setText("N/A");
+                txtEventDate1.setText("N/A");
+                txtEventDate2.setText("N/A");
             }
 
         } catch (final ParseException e) {

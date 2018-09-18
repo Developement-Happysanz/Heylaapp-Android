@@ -797,6 +797,7 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
 
     private void makeSearch(String eventname) {
         PreferenceStorage.IsFilterApply(getActivity(),eventname);
+        PreferenceStorage.saveFilterEventType(getActivity(),"Hotspot");
         startActivity(new Intent(getActivity(), AdvancedFilterResultActivity.class));
     }
 

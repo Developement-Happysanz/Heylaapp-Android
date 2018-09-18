@@ -124,6 +124,9 @@ public class HeylaAppConstants {
     public static final String EVENT_CITY_LIST = "apimain/getEventcities/";
 
     //    Event city list
+    public static final String ALL_EVENT_CITY_LIST = "apimain/selectAllCity/";
+
+    //    Event city list
     public static final String EVENT_ALL_CITY_LIST = "apimain/selectAllCity/";
 
 

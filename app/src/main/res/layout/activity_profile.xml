@@ -293,13 +293,11 @@
 
                             <EditText
                                 android:id="@+id/countryList"
-                                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_weight="0.5"
                                 android:fontFamily="@font/muli"
                                 android:hint="@string/selectcountry"
-                                android:spinnerMode="dropdown"
                                 android:textSize="14sp" />
 
                         </android.support.design.widget.TextInputLayout>
@@ -314,13 +312,11 @@
 
                             <EditText
                                 android:id="@+id/stateList"
-                                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_weight="0.5"
                                 android:fontFamily="@font/muli"
                                 android:hint="@string/selectstate"
-                                android:spinnerMode="dropdown"
                                 android:textSize="14sp" />
                         </android.support.design.widget.TextInputLayout>
 
@@ -341,13 +337,11 @@
 
                             <EditText
                                 android:id="@+id/cityList"
-                                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_weight="0.5"
                                 android:fontFamily="@font/muli"
                                 android:hint="@string/selectcity"
-                                android:spinnerMode="dropdown"
                                 android:textSize="14sp" />
                         </android.support.design.widget.TextInputLayout>
 

@@ -122,6 +122,8 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
             try {
 
                 jsonObject.put(HeylaAppConstants.KEY_EVENT_SEARCH, ""+event);
+                jsonObject.put(HeylaAppConstants.KEY_EVENT_TYPE, PreferenceStorage.getFilterEventType(this));
+                jsonObject.put(HeylaAppConstants.PARAMS_CITY_ID, PreferenceStorage.getEventCityId(this));
 
 
             } catch (JSONException e) {

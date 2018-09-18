@@ -944,6 +944,7 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
 
     private void makeSearch(String eventname) {
         PreferenceStorage.IsFilterApply(getActivity(),eventname);
+        PreferenceStorage.saveFilterEventType(getActivity(),"Popular");
         startActivity(new Intent(getActivity(), AdvancedFilterResultActivity.class));
     }
 

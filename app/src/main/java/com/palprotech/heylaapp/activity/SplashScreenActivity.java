@@ -1,13 +1,16 @@
 package com.palprotech.heylaapp.activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -67,6 +70,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                             Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
                             startActivity(i);
                             finish();
+
                         } else {
                             Intent i = new Intent(SplashScreenActivity.this, WelcomeActivity.class);
                             startActivity(i);

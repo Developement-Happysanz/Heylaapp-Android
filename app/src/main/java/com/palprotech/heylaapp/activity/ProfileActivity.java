@@ -266,22 +266,21 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         if (PreferenceStorage.getUserCountryName(this) != null) {
             country.setText(PreferenceStorage.getUserCountryName(this));
         }
-        country.setOnClickListener(this);
-        country.setFocusable(false);
+//        country.setOnClickListener(this);
         inputState = (TextInputLayout) findViewById(R.id.ti_state);
         state = (EditText) findViewById(R.id.stateList);
         if (PreferenceStorage.getUserStateName(this) != null) {
             state.setText(PreferenceStorage.getUserStateName(this));
         }
-        state.setOnClickListener(this);
-        state.setFocusable(false);
+//        state.setOnClickListener(this);
+//        state.setFocusable(false);
         inputCity = (TextInputLayout) findViewById(R.id.ti_city);
         city = (EditText) findViewById(R.id.cityList);
         if (PreferenceStorage.getEventCityName(this) != null) {
             city.setText(PreferenceStorage.getEventCityName(this));
         }
-        city.setOnClickListener(this);
-        city.setFocusable(false);
+//        city.setOnClickListener(this);
+//        city.setFocusable(false);
         inputPincode = (TextInputLayout) findViewById(R.id.ti_pincode);
         pincode = (EditText) findViewById(R.id.edtPincode);
         if (PreferenceStorage.getUserZipcode(this) != null) {
@@ -391,14 +390,14 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 stateList.clear();
             if (cityList != null)
                 cityList.clear();
-            showCountryList();
+//            showCountryList();
 
         } else if (view == state) {
             if (cityList != null)
                 cityList.clear();
-            showStateList();
+//            showStateList();
         } else if (view == city) {
-            showCityList();
+//            showCityList();
         }
     }
 

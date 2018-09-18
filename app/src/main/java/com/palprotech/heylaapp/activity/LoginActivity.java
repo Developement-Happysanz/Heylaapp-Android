@@ -2,6 +2,7 @@ package com.palprotech.heylaapp.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -10,9 +11,11 @@ import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
@@ -63,6 +66,33 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        if(!checkAutoDT(this)){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Date and Time settings");
+
+            // Setting Dialog Message
+            alertDialog.setMessage("Automatic Date and Time is not enabled. Go to settings and enable to access application.");
+
+            // On pressing the Settings button.
+            alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(Settings.ACTION_DATE_SETTINGS);
+                    startActivity(intent);
+                }
+            });
+
+            // On pressing the cancel button
+            alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            // Showing Alert Message
+            alertDialog.show();
+        }
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
 
@@ -262,6 +292,10 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
                 ex.printStackTrace();
             }
         }
+    }
+
+    public static boolean checkAutoDT(Context c){
+        return Settings.Global.getInt(c.getContentResolver(), Settings.Global.AUTO_TIME, 0) == 1;
     }
 
     @Override

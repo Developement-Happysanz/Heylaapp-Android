@@ -844,6 +844,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
     }
     private void makeSearch(String eventname) {
         PreferenceStorage.IsFilterApply(getActivity(),eventname);
+        PreferenceStorage.saveFilterEventType(getActivity(),"Favourite");
         startActivity(new Intent(getActivity(), AdvancedFilterResultActivity.class));
     }
     public void exitSearch() {

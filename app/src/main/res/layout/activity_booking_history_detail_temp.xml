@@ -160,7 +160,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_alignTop="@+id/txt_event_location"
                 android:layout_alignBottom="@id/txt_event_location"
-                android:src="@drawable/ic_date_event_detail"/>
+                android:src="@drawable/ic_place_black"/>
 
 
             <TextView
@@ -257,7 +257,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="0.5dp"
                 android:layout_weight="0.30"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -289,6 +288,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginStart="0.5dp"
                 android:layout_marginEnd="0.5dp"
                 android:layout_weight="0.30"
                 android:background="@color/white"
