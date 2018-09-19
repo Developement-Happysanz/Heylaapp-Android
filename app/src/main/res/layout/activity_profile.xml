@@ -297,6 +297,7 @@
                                 android:layout_height="50dp"
                                 android:layout_weight="0.5"
                                 android:fontFamily="@font/muli"
+                                android:singleLine="true"
                                 android:hint="@string/selectcountry"
                                 android:textSize="14sp" />
 
@@ -316,6 +317,7 @@
                                 android:layout_height="50dp"
                                 android:layout_weight="0.5"
                                 android:fontFamily="@font/muli"
+                                android:singleLine="true"
                                 android:hint="@string/selectstate"
                                 android:textSize="14sp" />
                         </android.support.design.widget.TextInputLayout>
@@ -341,6 +343,7 @@
                                 android:layout_height="50dp"
                                 android:layout_weight="0.5"
                                 android:fontFamily="@font/muli"
+                                android:singleLine="true"
                                 android:hint="@string/selectcity"
                                 android:textSize="14sp" />
                         </android.support.design.widget.TextInputLayout>

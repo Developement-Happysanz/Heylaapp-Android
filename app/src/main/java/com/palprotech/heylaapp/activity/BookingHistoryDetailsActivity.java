@@ -62,7 +62,7 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
     int totalCount = 0;
     protected boolean isLoadingForFirstTime = true;
     private ImageView ivBack;
-    private TextView attendee;
+    private TextView attendee, totalAmount;
     private LinearLayout attendeeLayout;
 
     @Override
@@ -128,10 +128,12 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
         txtEventAttendees = findViewById(R.id.txt_event_attendees_count);
         txtEventTicktClass = findViewById(R.id.txt_event_booking_plan);
         txtEventTicketCount = findViewById(R.id.txt_event_booking_count);
+        totalAmount = findViewById(R.id.total_amount);
 
         txtEventName.setText(bookingHistory.getEventName());
         txtEventTime.setText(bookingHistory.getPlanTime());
         txtEventAddress.setText(bookingHistory.getEventVenue());
+        totalAmount.setText("Total amount : "+bookingHistory.getTotalAmount());
 //        txtEventDate.setText(bookingHistory.getBookingDate());
 
         String bookingDate = HeylaAppHelper.getDate(bookingHistory.getBookingDate());
