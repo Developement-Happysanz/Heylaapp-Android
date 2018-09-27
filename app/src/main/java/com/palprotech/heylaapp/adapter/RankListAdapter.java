@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.bean.support.Rank;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -68,9 +70,10 @@ public class RankListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.point_table_list_item, parent, false);
 
             holder = new ViewHolder();
-            holder.txtExamSubject = (TextView) convertView.findViewById(R.id.txtExamSubject);
-            holder.txtSubjectTotalMark = (TextView) convertView.findViewById(R.id.txtSubTotalMark);
-            holder.txtSubjectTotalGrade = (TextView) convertView.findViewById(R.id.txtSubTotalGrade);
+            holder.txtUserName = (TextView) convertView.findViewById(R.id.txtExamSubject);
+            holder.txtUserPic = (ImageView) convertView.findViewById(R.id.user_img);
+            holder.txtUserRank = (TextView) convertView.findViewById(R.id.txtSubTotalMark);
+            holder.txtUserPoints = (TextView) convertView.findViewById(R.id.txtSubTotalGrade);
 
             convertView.setTag(holder);
         } else {
@@ -84,10 +87,22 @@ public class RankListAdapter extends BaseAdapter {
         }
 
         Rank ranks = rank.get(position);
+        if(!ranks.getName().isEmpty()){
+            holder.txtUserName.setText(ranks.getName());
+        } else {
+            holder.txtUserName.setText(ranks.getUserName());
+        }
+        holder.txtUserRank.setText(""+(position+1));
+        holder.txtUserPoints.setText(ranks.getTotal_points());
 
-        holder.txtExamSubject.setText(ranks.getUserName());
-        holder.txtSubjectTotalMark.setText(""+(position+1));
-        holder.txtSubjectTotalGrade.setText(ranks.getTotal_points());
+        String url = ranks.getUser_picture();
+
+        if (((url != null) && !(url.isEmpty()))) {
+            Picasso.with(context).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(holder.txtUserPic);
+        }
+        else {
+            String s = "1";
+        }
 
         return convertView;
     }
@@ -119,7 +134,8 @@ public class RankListAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        public TextView txtExamName, txtExamSubject, txtSubjectTotalGrade, txtSubjectTotalMark;
+        public TextView txtUserName, txtUserPoints, txtUserRank;
+        public ImageView txtUserPic;
     }
 
     public boolean ismSearching() {

@@ -1,6 +1,8 @@
 package com.palprotech.heylaapp.activity;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,13 +20,14 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.bean.database.SQLiteHelper;
 import com.palprotech.heylaapp.fcm.MyFirebaseInstanceIDService;
+import com.palprotech.heylaapp.paytm.MainActivityPost;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 /**
  * Created by Admin on 06-10-2017.
  */
 
-public class SplashScreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends Activity {
 
     private static int SPLASH_TIME_OUT = 2000;
     SQLiteHelper database;
@@ -41,6 +44,55 @@ public class SplashScreenActivity extends AppCompatActivity {
         if (GCMKey.equalsIgnoreCase("")) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
             PreferenceStorage.saveGCM(getApplicationContext(), refreshedToken);
+        }
+
+        if(!checkAutoDT(this)){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Date and Time settings");
+
+            // Setting Dialog Message
+            alertDialog.setMessage("Automatic Date and Time is not enabled. Go to settings and enable to access application.");
+
+            // On pressing the Settings button.
+            alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(Settings.ACTION_DATE_SETTINGS);
+                    startActivity(intent);
+                }
+            });
+
+            // On pressing the cancel button
+            alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            // Showing Alert Message
+            alertDialog.show();
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    Intent i = new Intent(SplashScreenActivity.this, MainActivityPost.class);
+                    startActivity(i);
+                    finish();
+
+//                    if (getStatus == 1) {
+//                        Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
+//                        startActivity(i);
+//                        finish();
+//
+//                    } else {
+//                        Intent i = new Intent(SplashScreenActivity.this, WelcomeActivity.class);
+//                        startActivity(i);
+//                        finish();
+//                    }
+                }
+            }, SPLASH_TIME_OUT);
         }
 
         /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
@@ -62,23 +114,11 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             } else {*/
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
 
-                        if (getStatus == 1) {
-                            Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                            startActivity(i);
-                            finish();
-
-                        } else {
-                            Intent i = new Intent(SplashScreenActivity.this, WelcomeActivity.class);
-                            startActivity(i);
-                            finish();
-                        }
-                    }
-                }, SPLASH_TIME_OUT);
 //            }
 //        }
+    }
+    public static boolean checkAutoDT(Context c){
+        return Settings.Global.getInt(c.getContentResolver(), Settings.Global.AUTO_TIME, 0) == 1;
     }
 }

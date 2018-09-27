@@ -39,6 +39,7 @@ public class HeylaAppConstants {
 
     //    SignUp params
     public static final String PARAMS_EMAIL_ID = "email_id";
+    public static final String PARAMS_SOCIAL_IMAGE = "social_img_url";
     public static final String PARAMS_MOBILE_NUMBER = "mobile_no";
     public static final String PARAMS_PASSWORD = "password";
     public static final String PARAMS_GCM_KEY = "gcm_key";

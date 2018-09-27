@@ -42,7 +42,6 @@
 
     </RelativeLayout>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,7 +60,7 @@
                 android:id="@+id/txtExamSubject"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_weight="0.67"
+                android:layout_weight="0.60"
                 android:background="@color/leaderboard_blue"
                 android:gravity="center"
                 android:textSize="18sp"
@@ -95,14 +94,25 @@
         </LinearLayout>
 
 
-        <ListView
-            android:id="@+id/listView_ranks"
+        <ScrollView
+            android:id="@+id/ScrollView01"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/llTitle"
-            android:layout_marginBottom="1dp">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fadeScrollbars="false"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_below="@+id/llTitle">
 
-        </ListView>
+
+            <LinearLayout
+                android:id="@+id/layout_member_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bordergray"
+                android:orientation="vertical" />
+
+        </ScrollView>
 
     </RelativeLayout>
 
