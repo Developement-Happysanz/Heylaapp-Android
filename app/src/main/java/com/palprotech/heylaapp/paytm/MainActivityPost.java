@@ -36,13 +36,13 @@ public class MainActivityPost extends Activity {
     //Test
     TextView order_id_txt;
     EditText order_res;
-    EditText edt_email,edt_mobile,edt_amount;
+    EditText edt_email, edt_mobile, edt_amount;
 
     String url = "https://heylaapp.com/paytm_app/generateChecksum.php";
     Map paramMap = new HashMap();
-    String mid="Vision39039915720958",order_id="",cust_id="CUST12345678",callback="CALLBACK_URL",
-            industry_type="Retail",txn_amount="",checksum="CHECKSUM",mobile="MOBILE_NO",email="EMAIL",channel_id="WAP";
-    String website="APPSTAGING";
+    String mid = "Vision40481418049693", order_id = "", cust_id = "CUST12345678", callback = "CALLBACK_URL",
+            industry_type = "Retail", txn_amount = "", checksum = "CHECKSUM", mobile = "MOBILE_NO", email = "EMAIL", channel_id = "WAP";
+    String website = "APPSTAGING";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +51,9 @@ public class MainActivityPost extends Activity {
         initOrderId();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        edt_email = (EditText)findViewById(R.id.edt_email);
-        edt_mobile = (EditText)findViewById(R.id.edt_mobile);
-        edt_amount = (EditText)findViewById(R.id.edt_amount);
+        edt_email = (EditText) findViewById(R.id.edt_email);
+        edt_mobile = (EditText) findViewById(R.id.edt_mobile);
+        edt_amount = (EditText) findViewById(R.id.edt_amount);
     }
 
     // This is to refresh the order id: Only for the Sample App’s purpose.
@@ -68,7 +68,7 @@ public class MainActivityPost extends Activity {
         Random r = new Random(System.currentTimeMillis());
         orderId = "ORDER" + (1 + r.nextInt(2)) * 10000
                 + r.nextInt(10000);
-        order_id_txt = (TextView)findViewById(R.id.order_id);
+        order_id_txt = (TextView) findViewById(R.id.order_id);
         order_id_txt.setText(orderId);
 
     }
@@ -114,7 +114,7 @@ public class MainActivityPost extends Activity {
 
     private class SendDeviceDetails extends AsyncTask<String, Void, String> {
 
-        String url,data;
+        String url, data;
         PaytmPGService Service;
 
         public SendDeviceDetails(String url, String data, PaytmPGService Service) {
@@ -165,14 +165,14 @@ public class MainActivityPost extends Activity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             Log.e("TAG", result); // this is expecting a response code to be sent from your server upon receiving the POST data
             //String json = (String) myAsyncTask.execute(url).get();
             JSONObject mJsonObject = null;
             try {
-                mJsonObject=new JSONObject(result);
+                mJsonObject = new JSONObject(result);
                 checksum = mJsonObject.getString("CHECKSUMHASH");
-                order_id=mJsonObject.getString("ORDER_ID");
+                order_id = mJsonObject.getString("ORDER_ID");
                 cust_id = mJsonObject.getString("CUST_ID");
                 industry_type = mJsonObject.getString("INDUSTRY_TYPE_ID");
                 channel_id = mJsonObject.getString("CHANNEL_ID");
@@ -189,18 +189,18 @@ public class MainActivityPost extends Activity {
             }
 
             Log.d("after request", "some");
-            callback = ("https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID="+order_id);
-            paramMap.put("MID", "Vision39039915720958");
-            paramMap.put("ORDER_ID", "ORDER45676");
+            callback = ("https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=" + order_id);
+            paramMap.put("MID", "Vision40481418049693");
+            paramMap.put("ORDER_ID", order_id);
             paramMap.put("CUST_ID", "CUST0001453");
-            paramMap.put("CHANNEL_ID","WAP");
-            paramMap.put("INDUSTRY_TYPE_ID","Retail");
-            paramMap.put("TXN_AMOUNT","10.00");
+            paramMap.put("CHANNEL_ID", "WAP");
+            paramMap.put("INDUSTRY_TYPE_ID", "Retail");
+            paramMap.put("TXN_AMOUNT", txn_amount);
             paramMap.put("WEBSITE", "APPSTAGING");
-//            paramMap.put("EMAIL",email);
+//            paramMap.put("EMAIL",email);s
 //            paramMap.put("MOBILE_NO",mobile);
-            paramMap.put("CHECKSUMHASH","DTdIJBgjmW1QEwYXh3QErw4bVjKic2hGhye3U+cIOQVWmjirc0/SXRy41rOGhlCv4SCxGNPcwjuz1f+joEoxWEbCbMp0GboDRRUZC/6Nssc=");
-            paramMap.put("CALLBACK_URL",callback);
+            paramMap.put("CHECKSUMHASH", checksum);
+            paramMap.put("CALLBACK_URL", callback);
 
             PaytmOrder Order = new PaytmOrder(paramMap);
 
@@ -224,16 +224,14 @@ public class MainActivityPost extends Activity {
                         public void onTransactionResponse(Bundle inResponse) {
                             Log.d("LOG", "Payment Transaction :" + inResponse);
                             Toast.makeText(getApplicationContext(), "Payment Transaction response " + inResponse.toString(), Toast.LENGTH_LONG).show();
-                            order_res = (EditText)findViewById(R.id.order_res);
+                            order_res = (EditText) findViewById(R.id.order_res);
                             order_res.setText(inResponse.toString());
 
-                            String response=inResponse.getString("RESPMSG");
-                            if (response.equals("Txn Successful."))
-                            {
-                                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
-                            }else
-                            {
-                                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+                            String response = inResponse.getString("RESPMSG");
+                            if (response.equals("Txn Successful.")) {
+                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                             }
 
                         }
@@ -243,7 +241,7 @@ public class MainActivityPost extends Activity {
 // If network is not
 // available, then this
 // method gets called.
-                            Toast.makeText(getApplicationContext(), "Network" , Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Network", Toast.LENGTH_LONG).show();
 
                         }
 
@@ -256,7 +254,7 @@ public class MainActivityPost extends Activity {
 // proper format. // 3. Server failed to authenticate
 // that client. That is value of payt_STATUS is 2. //
 // Error Message describes the reason for failure.
-                            Toast.makeText(getApplicationContext(), "clientAuthenticationFailed"+inErrorMessage.toString() , Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "clientAuthenticationFailed" + inErrorMessage.toString(), Toast.LENGTH_LONG).show();
 
                         }
 
@@ -264,7 +262,7 @@ public class MainActivityPost extends Activity {
                         public void onErrorLoadingWebPage(int iniErrorCode,
                                                           String inErrorMessage, String inFailingUrl) {
 
-                            Toast.makeText(getApplicationContext(), "onErrorLoadingWebPage"+inErrorMessage.toString() , Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "onErrorLoadingWebPage" + inErrorMessage.toString(), Toast.LENGTH_LONG).show();
 
                         }
 
@@ -294,7 +292,7 @@ public class MainActivityPost extends Activity {
     private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
         boolean first = true;
-        for(Map.Entry<String, String> entry : params.entrySet()){
+        for (Map.Entry<String, String> entry : params.entrySet()) {
             if (first)
                 first = false;
             else

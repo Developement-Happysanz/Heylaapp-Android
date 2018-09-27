@@ -151,27 +151,17 @@
         <Button
 
             android:id="@+id/start_transaction"
-
             android:layout_width="217dp"
-
             android:layout_height="wrap_content"
-
             android:layout_gravity="center"
-
             android:layout_marginTop="10dip"
-
             android:layout_weight="2.05"
-
             android:onClick="onStartTransaction"
-
             android:text="Pay"
-
             android:textSize="16dip"
-
             android:textStyle="bold" />
 
 
     </LinearLayout>
-
 
 </ScrollView>

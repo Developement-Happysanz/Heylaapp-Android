@@ -372,7 +372,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 showOccupationList();
             }
         });
-
     }
 
     @Override
