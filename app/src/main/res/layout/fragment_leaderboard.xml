@@ -175,7 +175,7 @@
                 android:id="@+id/layout_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_below="@+id/booking_layout"
                 android:orientation="horizontal">
 
                 <RelativeLayout
@@ -325,9 +325,9 @@
                 android:id="@+id/layout_two"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/booking_layout"
                 android:weightSum="1"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <RelativeLayout
@@ -479,11 +479,10 @@
                 android:id="@+id/booking_layout"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_below="@id/layout_one"
+                android:layout_below="@id/layout_two"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
                 android:background="@drawable/btn_square_google"
                 android:gravity="center">
 

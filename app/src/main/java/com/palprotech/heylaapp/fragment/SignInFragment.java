@@ -397,6 +397,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                                             try {
                                                 jsonObject.put(HeylaAppConstants.PARAMS_NAME, name);
                                                 jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_ID, email);
+                                                jsonObject.put(HeylaAppConstants.PARAMS_SOCIAL_IMAGE, url);
                                                 jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
                                                 jsonObject.put(HeylaAppConstants.PARAMS_LOGIN_TYPE, "1");
                                                 jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");

@@ -7,4 +7,8 @@
     <item name="my_text_2" type="id" />
     <item name="my_button_1" type="id" />
     <item name="my_time_picker_1" type="id" />
+    <item name="user_name_txt" type="id" />
+    <item name="user_rank_txt" type="id" />
+    <item name="user_points_txt" type="id" />
+    <item name="user_img" type="id" />
 </resources>

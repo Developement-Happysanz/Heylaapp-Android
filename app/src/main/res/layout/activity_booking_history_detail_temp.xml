@@ -44,7 +44,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:background="@color/booking_line"
         android:baselineAligned="false"
         android:weightSum="1"
@@ -120,36 +120,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:fontFamily="@font/muli"
                 android:gravity="center"
-                android:layout_centerHorizontal="true"
                 android:singleLine="false"
                 android:text="Mini Marathon Championship"
                 android:textColor="@color/text_black"
-                android:textStyle="bold"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/ic_time"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:paddingTop="2dp"
-                android:layout_marginLeft="15dp"
-                android:layout_alignTop="@+id/txt_event_booked_time"
                 android:layout_alignBottom="@id/txt_event_booked_time"
-                android:src="@drawable/ic_time_event_detail"/>
+                android:layout_alignTop="@+id/txt_event_booked_time"
+                android:layout_marginLeft="15dp"
+                android:paddingTop="2dp"
+                android:src="@drawable/ic_time_event_detail" />
 
             <TextView
                 android:id="@+id/txt_event_booked_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
                 android:layout_below="@+id/txt_event_name"
+                android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/ic_time"
+                android:ellipsize="end"
                 android:fontFamily="@font/muli"
                 android:singleLine="true"
                 android:text="12:00 PM"
-                android:layout_marginLeft="10dp"
                 android:textColor="@color/text_black"
                 android:textSize="14sp" />
 
@@ -157,47 +157,56 @@
                 android:id="@+id/ic_date"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="15dp"
-                android:layout_alignTop="@+id/txt_event_location"
                 android:layout_alignBottom="@id/txt_event_location"
-                android:src="@drawable/ic_place_black"/>
+                android:layout_alignTop="@+id/txt_event_location"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/ic_place_black" />
 
 
             <TextView
                 android:id="@+id/txt_event_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
                 android:layout_below="@+id/txt_event_booked_time"
-                android:fontFamily="@font/muli"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_toRightOf="@id/ic_date"
-                android:text="12, Mini Marathon Championship, Marathon"
+                android:fontFamily="@font/muli"
+                android:text="Venue"
                 android:textColor="@color/text_black"
                 android:textSize="14sp" />
 
-            <!--<TextView-->
-                <!--android:id="@+id/txt_event_name"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!---->
-                <!--android:fontFamily="@font/muli"-->
-                <!--android:gravity="center"-->
-                <!--android:text="Mini Marathon Championship"-->
-                <!--android:textColor="@color/text_black"-->
-                <!--android:textSize="14sp" />-->
+            <TextView
+                android:id="@+id/total_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total amount :"
+                android:layout_below="@id/txt_event_location"
+                android:layout_alignLeft="@+id/ic_date"
+                android:textColor="@color/text_black"/>
 
             <!--<TextView-->
-                <!--android:id="@+id/txt_event_booked_time"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginStart="15dp"-->
-                <!--android:ellipsize="end"-->
-                <!--android:fontFamily="@font/muli"-->
-                <!--android:singleLine="true"-->
-                <!--android:text="12:00 PM"-->
-                <!--android:textColor="@color/text_black"-->
-                <!--android:textSize="14sp" />-->
+            <!--android:id="@+id/txt_event_name"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!---->
+            <!--android:fontFamily="@font/muli"-->
+            <!--android:gravity="center"-->
+            <!--android:text="Mini Marathon Championship"-->
+            <!--android:textColor="@color/text_black"-->
+            <!--android:textSize="14sp" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/txt_event_booked_time"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="15dp"-->
+            <!--android:ellipsize="end"-->
+            <!--android:fontFamily="@font/muli"-->
+            <!--android:singleLine="true"-->
+            <!--android:text="12:00 PM"-->
+            <!--android:textColor="@color/text_black"-->
+            <!--android:textSize="14sp" />-->
 
         </RelativeLayout>
 
@@ -241,7 +250,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:background="@color/white"
         android:baselineAligned="false"
         android:orientation="horizontal">

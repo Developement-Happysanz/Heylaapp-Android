@@ -71,6 +71,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
         event = PreferenceStorage.getFilterApply(this);
         if(!event.isEmpty()){
             makeSearch(event);
+            PreferenceStorage.IsFilterApply(this, "");
         } else {
             callGetFilterService();
         }

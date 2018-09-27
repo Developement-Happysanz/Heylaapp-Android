@@ -734,7 +734,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 Log.d(TAG, "image Uri is" + mSelectedImageUri);
                 if (mSelectedImageUri != null) {
                     Log.d(TAG, "image URI is" + mSelectedImageUri);
-                    performCrop();
+//                    performCrop();
                     setPic(mSelectedImageUri);
                 }
             }  else if (requestCode == CROP_PIC) {
