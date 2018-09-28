@@ -77,20 +77,16 @@ public class SplashScreenActivity extends Activity {
                 @Override
                 public void run() {
 
-                    Intent i = new Intent(SplashScreenActivity.this, MainActivityPost.class);
-                    startActivity(i);
-                    finish();
+                    if (getStatus == 1) {
+                        Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                        startActivity(i);
+                        finish();
 
-//                    if (getStatus == 1) {
-//                        Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
-//                        startActivity(i);
-//                        finish();
-//
-//                    } else {
-//                        Intent i = new Intent(SplashScreenActivity.this, WelcomeActivity.class);
-//                        startActivity(i);
-//                        finish();
-//                    }
+                    } else {
+                        Intent i = new Intent(SplashScreenActivity.this, WelcomeActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
                 }
             }, SPLASH_TIME_OUT);
         }

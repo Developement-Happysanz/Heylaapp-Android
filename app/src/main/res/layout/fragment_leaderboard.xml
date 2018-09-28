@@ -129,7 +129,7 @@
                     android:gravity="center"
                     android:layout_toEndOf="@id/trophy_text"
                     android:fontFamily="@font/muli"
-                    android:text="11"
+                    android:text="0"
                     android:textColor="@color/text_black"
                     android:textSize="18dp"
                     android:textStyle="bold" />

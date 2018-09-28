@@ -7,13 +7,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.bean.support.Event;
+import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,12 +39,15 @@ public class MainActivityPost extends Activity {
     String orderId;
     //Test
     TextView order_id_txt;
+    private Event event;
     EditText order_res;
-    EditText edt_email, edt_mobile, edt_amount;
+    EditText edt_email, edt_mobile;
+    TextView edt_amount, txtTickets;
+    private ImageView imEventBanner;
 
     String url = "https://heylaapp.com/paytm_app/generateChecksum.php";
     Map paramMap = new HashMap();
-    String mid = "Vision40481418049693", order_id = "", cust_id = "CUST12345678", callback = "CALLBACK_URL",
+    String mid = "Vision39039915720958", order_id = "", cust_id = "CUST12345678", callback = "CALLBACK_URL",
             industry_type = "Retail", txn_amount = "", checksum = "CHECKSUM", mobile = "MOBILE_NO", email = "EMAIL", channel_id = "WAP";
     String website = "APPSTAGING";
 
@@ -49,11 +56,50 @@ public class MainActivityPost extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_paytm);
         initOrderId();
+        event = (Event) getIntent().getSerializableExtra("eventObj");
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         edt_email = (EditText) findViewById(R.id.edt_email);
         edt_mobile = (EditText) findViewById(R.id.edt_mobile);
-        edt_amount = (EditText) findViewById(R.id.edt_amount);
+        edt_amount = (TextView) findViewById(R.id.edt_amount);
+        txtTickets = (TextView) findViewById(R.id.edt_tickets);
+
+        imEventBanner = findViewById(R.id.img_logo);
+        String url = event.getEventBanner();
+        /*if (((url != null) && !(url.isEmpty()))) {
+            Picasso.with(this).load(url).placeholder(R.drawable.event_img).error(R.drawable.event_img).into(imEventBanner);
+        }*/
+
+        final ImageView img = new ImageView(this);
+        Picasso.with(img.getContext())
+                .load(url)
+                .into(img, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        imEventBanner.setBackgroundDrawable(img.getDrawable());
+                    }
+
+                    @Override
+                    public void onError() {
+                    }
+                });
+
+        TextView txtEventName = findViewById(R.id.txt_event_name);
+        txtEventName.setText(event.getEventName());
+        TextView txtEventTime = findViewById(R.id.txt_event_time);
+        txtEventTime.setText(PreferenceStorage.getBookingDate(getApplicationContext()) + "  " + PreferenceStorage.getBookingTime(getApplicationContext()));
+        TextView txtEventPlace = findViewById(R.id.txt_event_location);
+        txtEventPlace.setText(event.getEventVenue());
+        TextView txtTotalTickets = findViewById(R.id.txtTotalTickets);
+        txtTotalTickets.setText(PreferenceStorage.getTotalNoOfTickets(getApplicationContext()) + " Tickets");
+        TextView txtTicketPrice = findViewById(R.id.txtTicketPrice);
+        txtTicketPrice.setText("Rs." + PreferenceStorage.getPaymentAmount(getApplicationContext()));
+        TextView txtTotalPrice = findViewById(R.id.txtTotalPrice);
+        txtTotalPrice.setText("Rs." + PreferenceStorage.getPaymentAmount(getApplicationContext()));
+
+        String orderIdValue = PreferenceStorage.getOrderId(getApplicationContext());
+//        amount.setText(PreferenceStorage.getPaymentAmount(getApplicationContext()));
+//        orderId.setText(orderIdValue);
     }
 
     // This is to refresh the order id: Only for the Sample App’s purpose.
@@ -61,6 +107,8 @@ public class MainActivityPost extends Activity {
     protected void onStart() {
         super.onStart();
         initOrderId();
+        edt_amount.setText(PreferenceStorage.getPaymentAmount(this));
+        txtTickets.setText(PreferenceStorage.getTotalNoOfTickets(this)+" Tickets");
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
@@ -165,7 +213,7 @@ public class MainActivityPost extends Activity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             Log.e("TAG", result); // this is expecting a response code to be sent from your server upon receiving the POST data
             //String json = (String) myAsyncTask.execute(url).get();
             JSONObject mJsonObject = null;
@@ -189,14 +237,14 @@ public class MainActivityPost extends Activity {
             }
 
             Log.d("after request", "some");
-            callback = ("https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=" + order_id);
-            paramMap.put("MID", "Vision40481418049693");
+            callback = ("https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=" + order_id);
+            paramMap.put("MID", "Vision73026199949275");
             paramMap.put("ORDER_ID", order_id);
             paramMap.put("CUST_ID", "CUST0001453");
-            paramMap.put("CHANNEL_ID", "WAP");
-            paramMap.put("INDUSTRY_TYPE_ID", "Retail");
+            paramMap.put("CHANNEL_ID", "APP");
+            paramMap.put("INDUSTRY_TYPE_ID", "Retail109");
             paramMap.put("TXN_AMOUNT", txn_amount);
-            paramMap.put("WEBSITE", "APPSTAGING");
+            paramMap.put("WEBSITE", "APPPROD");
 //            paramMap.put("EMAIL",email);s
 //            paramMap.put("MOBILE_NO",mobile);
             paramMap.put("CHECKSUMHASH", checksum);
@@ -216,22 +264,22 @@ public class MainActivityPost extends Activity {
 // Payment Gateway Activity or may be due to //
 // initialization of webview. // Error Message details
 // the error occurred.
-                            Toast.makeText(getApplicationContext(), "Payment Transaction response " + inErrorMessage.toString(), Toast.LENGTH_LONG).show();
+//                            Toast.makeText(getApplicationContext(), "Payment Transaction response " + inErrorMessage.toString(), Toast.LENGTH_LONG).show();
 
                         }
 
                         @Override
                         public void onTransactionResponse(Bundle inResponse) {
                             Log.d("LOG", "Payment Transaction :" + inResponse);
-                            Toast.makeText(getApplicationContext(), "Payment Transaction response " + inResponse.toString(), Toast.LENGTH_LONG).show();
+//                            Toast.makeText(getApplicationContext(), "Payment Transaction response " + inResponse.toString(), Toast.LENGTH_LONG).show();
                             order_res = (EditText) findViewById(R.id.order_res);
                             order_res.setText(inResponse.toString());
 
                             String response = inResponse.getString("RESPMSG");
                             if (response.equals("Txn Successful.")) {
-                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                             }
 
                         }

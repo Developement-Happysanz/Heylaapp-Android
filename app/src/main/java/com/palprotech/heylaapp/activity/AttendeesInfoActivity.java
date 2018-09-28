@@ -28,6 +28,7 @@ import com.palprotech.heylaapp.ccavenue.activities.InitialScreenActivity;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
+import com.palprotech.heylaapp.paytm.MainActivityPost;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
@@ -118,7 +119,7 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
                     }
                 }
 
-                Intent intent = new Intent(getApplicationContext(), InitialScreenActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivityPost.class);
                 intent.putExtra("eventObj", event);
                 startActivity(intent);
                 finish();
@@ -149,7 +150,7 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
                 updateAttendeesToServer(FullName, EmailId, MobileNo);
             }
 
-            Intent intent = new Intent(getApplicationContext(), InitialScreenActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivityPost.class);
             intent.putExtra("eventObj", event);
             startActivity(intent);
             finish();
