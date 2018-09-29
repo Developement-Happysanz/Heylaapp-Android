@@ -81,8 +81,9 @@ public class StatusActivity extends Activity {
         }
 
         tv4.setText(mainIntent.getStringExtra("transStatus"));
+        String abc = mainIntent.getStringExtra("transStatus");
 
-        switch (tv4.getText().toString()) {
+        switch (abc) {
             case "Transaction Declined!":
                 tv4.setTextColor(getResources().getColor(R.color.failure_txt));
                 Failure.setVisibility(View.VISIBLE);

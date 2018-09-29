@@ -171,6 +171,9 @@ public class HeylaAppConstants {
     //    Event images list
     public static final String EVENT_IMAGES = "apimain/eventImages/";
 
+    //    Event images list
+    public static final String BOOKING_DATA = "paytm_app/TxnStatus.php/";
+
     //    Event popularity
     public static final String EVENT_POPULARITY = "apimain/eventPopularity/";
 

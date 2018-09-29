@@ -1,6 +1,7 @@
 package com.palprotech.heylaapp.paytm;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,13 @@ import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.bean.support.Event;
+import com.palprotech.heylaapp.ccavenue.activities.StatusActivity;
+import com.palprotech.heylaapp.helper.AlertDialogHelper;
+import com.palprotech.heylaapp.helper.ProgressDialogHelper;
+import com.palprotech.heylaapp.interfaces.DialogClickListener;
+import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
+import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
+import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
@@ -34,22 +42,26 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
-public class MainActivityPost extends Activity {
+import static com.google.android.gms.plus.PlusOneDummyView.TAG;
+
+public class MainActivityPost extends Activity implements IServiceListener, DialogClickListener {
 
     String orderId;
-    //Test
+    private ServiceHelper serviceHelper;
+    String status = null;//Test
     TextView order_id_txt;
     private Event event;
     EditText order_res;
     EditText edt_email, edt_mobile;
     TextView edt_amount, txtTickets;
     private ImageView imEventBanner;
-
+    protected ProgressDialogHelper progressDialogHelper;
+    boolean checkRes = false;
     String url = "https://heylaapp.com/paytm_app/generateChecksum.php";
     Map paramMap = new HashMap();
-    String mid = "Vision39039915720958", order_id = "", cust_id = "CUST12345678", callback = "CALLBACK_URL",
-            industry_type = "Retail", txn_amount = "", checksum = "CHECKSUM", mobile = "MOBILE_NO", email = "EMAIL", channel_id = "WAP";
-    String website = "APPSTAGING";
+    String mid = "", order_id = "", cust_id = "CUST12345678", callback = "CALLBACK_URL",
+            industry_type = "", txn_amount = "", checksum = "CHECKSUM", mobile = "MOBILE_NO", email = "EMAIL", channel_id = "";
+    String website = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +70,9 @@ public class MainActivityPost extends Activity {
         initOrderId();
         event = (Event) getIntent().getSerializableExtra("eventObj");
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
+        serviceHelper = new ServiceHelper(this);
+        serviceHelper.setServiceListener(this);
+        progressDialogHelper = new ProgressDialogHelper(this);
         edt_email = (EditText) findViewById(R.id.edt_email);
         edt_mobile = (EditText) findViewById(R.id.edt_mobile);
         edt_amount = (TextView) findViewById(R.id.edt_amount);
@@ -108,7 +122,7 @@ public class MainActivityPost extends Activity {
         super.onStart();
         initOrderId();
         edt_amount.setText(PreferenceStorage.getPaymentAmount(this));
-        txtTickets.setText(PreferenceStorage.getTotalNoOfTickets(this)+" Tickets");
+        txtTickets.setText(PreferenceStorage.getTotalNoOfTickets(this) + " Tickets");
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
@@ -132,8 +146,8 @@ public class MainActivityPost extends Activity {
 //        }
 //        else {
 
-        PaytmPGService Service = PaytmPGService.getStagingService();
-        //PaytmPGService Service = PaytmPGService.getProductionService();
+//        PaytmPGService Service = PaytmPGService.getStagingService();
+        PaytmPGService Service = PaytmPGService.getProductionService();
 
         Log.d("before request", "some");
         String edtemail = edt_email.getText().toString().trim();
@@ -144,10 +158,11 @@ public class MainActivityPost extends Activity {
         JSONObject postData = new JSONObject();
 
         HashMap<String, String> stringHashMap = new HashMap<>();
-        stringHashMap.put("ORDER_ID", orderId);
+        stringHashMap.put("ORDER_ID", PreferenceStorage.getOrderId(this));
         stringHashMap.put("email", edtemail);
         stringHashMap.put("mobile", edtmobile);
         stringHashMap.put("TXN_AMOUNT", edtamount);
+        stringHashMap.put("CUST_ID", PreferenceStorage.getUserId(this));
 
         SendDeviceDetails sendDeviceDetails = null;
         try {
@@ -157,6 +172,56 @@ public class MainActivityPost extends Activity {
             e.printStackTrace();
         }
 //        }
+    }
+
+    private boolean validateSignInResponse(JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(HeylaAppConstants.PARAM_MESSAGE);
+                Log.d(TAG, "status val" + status + "msg" + msg);
+
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        Log.d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                    } else {
+                        signInSuccess = true;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return signInSuccess;
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        progressDialogHelper.hideProgressDialog();
+        if (validateSignInResponse(response)) {
+
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        progressDialogHelper.hideProgressDialog();
+        AlertDialogHelper.showSimpleAlertDialog(this, error);
+    }
+
+    @Override
+    public void onAlertPositiveClicked(int tag) {
+
+    }
+
+    @Override
+    public void onAlertNegativeClicked(int tag) {
+
     }
 
 
@@ -212,53 +277,77 @@ public class MainActivityPost extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
-            super.onPostExecute(result);
+
+            if (checkRes) {
+                String msg = "";
+                JSONObject mJsonObject = null;
+                try {
+                    mJsonObject = new JSONObject(result);
+                    msg = mJsonObject.getString("message");
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+//                    Toast.makeText(getApplicationContext(), status, Toast.LENGTH_SHORT).show();
+                if (msg.equalsIgnoreCase("Success")){
+                    Intent intent = new Intent(getApplicationContext(), StatusActivity.class);
+                    intent.putExtra("transStatus", status);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    AlertDialogHelper.showSimpleAlertDialog(getApplicationContext(), msg);
+                    finish();
+                }
+
+            } else {
+                super.onPostExecute(result);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-            Log.e("TAG", result); // this is expecting a response code to be sent from your server upon receiving the POST data
-            //String json = (String) myAsyncTask.execute(url).get();
-            JSONObject mJsonObject = null;
-            try {
-                mJsonObject = new JSONObject(result);
-                checksum = mJsonObject.getString("CHECKSUMHASH");
-                order_id = mJsonObject.getString("ORDER_ID");
-                cust_id = mJsonObject.getString("CUST_ID");
-                industry_type = mJsonObject.getString("INDUSTRY_TYPE_ID");
-                channel_id = mJsonObject.getString("CHANNEL_ID");
-                txn_amount = mJsonObject.getString("TXN_AMOUNT");
+                Log.e("TAG", result); // this is expecting a response code to be sent from your server upon receiving the POST data
+                //String json = (String) myAsyncTask.execute(url).get();
+                JSONObject mJsonObject = null;
+                try {
+                    mJsonObject = new JSONObject(result);
+                    checksum = mJsonObject.getString("CHECKSUMHASH");
+                    order_id = mJsonObject.getString("ORDER_ID");
+                    cust_id = mJsonObject.getString("CUST_ID");
+                    industry_type = mJsonObject.getString("INDUSTRY_TYPE_ID");
+                    channel_id = mJsonObject.getString("CHANNEL_ID");
+                    txn_amount = mJsonObject.getString("TXN_AMOUNT");
 //                mobile = mJsonObject.getString("MOBILE_NO");
 //                email = mJsonObject.getString("EMAIL");
-                website = mJsonObject.getString("WEBSITE");
-                mid = mJsonObject.getString("MID");
-                callback = mJsonObject.getString("CALLBACK_URL");
+                    website = mJsonObject.getString("WEBSITE");
+                    mid = mJsonObject.getString("MID");
+                    callback = mJsonObject.getString("CALLBACK_URL");
 
-            } catch (JSONException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
 
-            Log.d("after request", "some");
-            callback = ("https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=" + order_id);
-            paramMap.put("MID", "Vision73026199949275");
-            paramMap.put("ORDER_ID", order_id);
-            paramMap.put("CUST_ID", "CUST0001453");
-            paramMap.put("CHANNEL_ID", "APP");
-            paramMap.put("INDUSTRY_TYPE_ID", "Retail109");
-            paramMap.put("TXN_AMOUNT", txn_amount);
-            paramMap.put("WEBSITE", "APPPROD");
+                Log.d("after request", "some");
+//            callback = ("https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=" + order_id);
+                paramMap.put("MID", mid);
+                paramMap.put("ORDER_ID", order_id);
+                paramMap.put("CUST_ID", cust_id);
+                paramMap.put("CHANNEL_ID", channel_id);
+                paramMap.put("INDUSTRY_TYPE_ID", industry_type);
+                paramMap.put("TXN_AMOUNT", txn_amount);
+                paramMap.put("WEBSITE", website);
 //            paramMap.put("EMAIL",email);s
 //            paramMap.put("MOBILE_NO",mobile);
-            paramMap.put("CHECKSUMHASH", checksum);
-            paramMap.put("CALLBACK_URL", callback);
+                paramMap.put("CHECKSUMHASH", checksum);
+                paramMap.put("CALLBACK_URL", callback);
 
-            PaytmOrder Order = new PaytmOrder(paramMap);
+                PaytmOrder Order = new PaytmOrder(paramMap);
 
-            Service.initialize(Order, null);
+                Service.initialize(Order, null);
 
-            Service.startPaymentTransaction(MainActivityPost.this, true, true,
-                    new PaytmPaymentTransactionCallback() {
+                Service.startPaymentTransaction(MainActivityPost.this, true, true,
+                        new PaytmPaymentTransactionCallback() {
 
-                        @Override
-                        public void someUIErrorOccurred(String inErrorMessage) {
+                            @Override
+                            public void someUIErrorOccurred(String inErrorMessage) {
 // Some UI Error Occurred in Payment Gateway Activity.
 // // This may be due to initialization of views in
 // Payment Gateway Activity or may be due to //
@@ -266,35 +355,85 @@ public class MainActivityPost extends Activity {
 // the error occurred.
 //                            Toast.makeText(getApplicationContext(), "Payment Transaction response " + inErrorMessage.toString(), Toast.LENGTH_LONG).show();
 
-                        }
-
-                        @Override
-                        public void onTransactionResponse(Bundle inResponse) {
-                            Log.d("LOG", "Payment Transaction :" + inResponse);
-//                            Toast.makeText(getApplicationContext(), "Payment Transaction response " + inResponse.toString(), Toast.LENGTH_LONG).show();
-                            order_res = (EditText) findViewById(R.id.order_res);
-                            order_res.setText(inResponse.toString());
-
-                            String response = inResponse.getString("RESPMSG");
-                            if (response.equals("Txn Successful.")) {
-//                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
-                            } else {
-//                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                             }
 
-                        }
+                            @Override
+                            public void onTransactionResponse(Bundle inResponse) {
+                                Log.d("LOG", "Payment Transaction :" + inResponse);
+//                            Toast.makeText(getApplicationContext(), "Payment Transaction response " + inResponse.toString(), Toast.LENGTH_LONG).show();
+                                order_res = (EditText) findViewById(R.id.order_res);
+                                order_res.setText(inResponse.toString());
 
-                        @Override
-                        public void networkNotAvailable() {
+                                String response = inResponse.getString("STATUS");
+                                String checksum = inResponse.getString("CHECKSUMHASH");
+                                String orderid = inResponse.getString("ORDERID");
+                                String txnamt = inResponse.getString("TXNAMOUNT");
+                                String txndate = inResponse.getString("TXNDATE");
+                                String mid = inResponse.getString("MID");
+                                String txnid = inResponse.getString("TXNID");
+                                String respcode = inResponse.getString("RESPCODE");
+                                String payment = inResponse.getString("PAYMENTMODE");
+                                String banktxnid = inResponse.getString("BANKTXNID");
+                                String currency = inResponse.getString("CURRENCY");
+                                String gatename = inResponse.getString("GATEWAYNAME");
+                                String respmsg = inResponse.getString("RESPMSG");
+
+                                if (response.equals("TXN_FAILURE")) {
+                                    status = "Transaction Declined!";
+                                } else if (response.equals("TXN_SUCCESS")) {
+                                    status = "Transaction Successful!";
+                                } else if (response.equals("TXN_PENDING")) {
+                                    status = "Transaction Cancelled!";
+                                } else {
+                                    status = "Status Not Known!";
+                                }
+                                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.BOOKING_DATA;
+
+                                PaytmPGService Service = PaytmPGService.getProductionService();
+
+                                JSONObject postData = new JSONObject();
+
+                                HashMap<String, String> stringHashMap = new HashMap<>();
+
+
+                                stringHashMap.put("STATUS", response);
+                                stringHashMap.put("CHECKSUMHASH", checksum);
+                                stringHashMap.put("ORDERID", orderid);
+                                stringHashMap.put("TXNAMOUNT", txnamt);
+                                stringHashMap.put("TXNDATE", txndate);
+                                stringHashMap.put("MID", mid);
+                                stringHashMap.put("TXNID", txnid);
+                                stringHashMap.put("RESPCODE", respcode);
+                                stringHashMap.put("PAYMENTMODE", payment);
+                                stringHashMap.put("BANKTXNID", banktxnid);
+                                stringHashMap.put("CURRENCY", currency);
+                                stringHashMap.put("GATEWAYNAME", gatename);
+                                stringHashMap.put("RESPMSG", respmsg);
+
+                                SendDeviceDetails sendDeviceDetails = null;
+
+                                try {
+                                    checkRes = true;
+                                    sendDeviceDetails = new SendDeviceDetails(url, getPostDataString(stringHashMap), Service);
+                                    sendDeviceDetails.execute();
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            }
+
+                            @Override
+                            public void networkNotAvailable() {
 // If network is not
 // available, then this
 // method gets called.
-                            Toast.makeText(getApplicationContext(), "Network", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Network", Toast.LENGTH_LONG).show();
 
-                        }
+                            }
 
-                        @Override
-                        public void clientAuthenticationFailed(String inErrorMessage) {
+                            @Override
+                            public void clientAuthenticationFailed(String inErrorMessage) {
 // This method gets called if client authentication
 // failed. // Failure may be due to following reasons //
 // 1. Server error or downtime. // 2. Server unable to
@@ -302,38 +441,103 @@ public class MainActivityPost extends Activity {
 // proper format. // 3. Server failed to authenticate
 // that client. That is value of payt_STATUS is 2. //
 // Error Message describes the reason for failure.
-                            Toast.makeText(getApplicationContext(), "clientAuthenticationFailed" + inErrorMessage.toString(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "clientAuthenticationFailed" + inErrorMessage.toString(), Toast.LENGTH_LONG).show();
 
-                        }
+                            }
 
-                        @Override
-                        public void onErrorLoadingWebPage(int iniErrorCode,
-                                                          String inErrorMessage, String inFailingUrl) {
+                            @Override
+                            public void onErrorLoadingWebPage(int iniErrorCode,
+                                                              String inErrorMessage, String inFailingUrl) {
 
-                            Toast.makeText(getApplicationContext(), "onErrorLoadingWebPage" + inErrorMessage.toString(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "onErrorLoadingWebPage" + inErrorMessage.toString(), Toast.LENGTH_LONG).show();
 
-                        }
+                            }
 
-                        // had to be added: NOTE
-                        @Override
-                        public void onBackPressedCancelTransaction() {
-                            Toast.makeText(getApplicationContext(), "onBackPressedCancelTransaction", Toast.LENGTH_LONG).show();
+                            // had to be added: NOTE
+                            @Override
+                            public void onBackPressedCancelTransaction() {
+                                Toast.makeText(getApplicationContext(), "onBackPressedCancelTransaction", Toast.LENGTH_LONG).show();
 
+                                String status = null;
+                                status = "Transaction Cancelled!";
+//                    Toast.makeText(getApplicationContext(), status, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), StatusActivity.class);
+                                intent.putExtra("transStatus", status);
+                                startActivity(intent);
+                                finish();
 // TODO Auto-generated method stub
-                        }
+                            }
 
-                        @Override
-                        public void onTransactionCancel(String inErrorMessage,
-                                                        Bundle inResponse) {
-                            Log.d("LOG", "Payment Transaction Failed "
-                                    + inErrorMessage);
-                            Toast.makeText(getBaseContext(),
-                                    "Payment Transaction Failed ",
-                                    Toast.LENGTH_LONG).show();
-                        }
+                            @Override
+                            public void onTransactionCancel(String inErrorMessage,
+                                                            Bundle inResponse) {
+                                Log.d("LOG", "Payment Transaction Failed "
+                                        + inErrorMessage);
+//                            Toast.makeText(getBaseContext(),
+//                                    "Payment Transaction Failed ",
+//                                    Toast.LENGTH_LONG).show();
 
-                    });
+                                String response = inResponse.getString("STATUS");
+                                String checksum = inResponse.getString("CHECKSUMHASH");
+                                String orderid = inResponse.getString("ORDERID");
+                                String txnamt = inResponse.getString("TXNAMOUNT");
+                                String txndate = inResponse.getString("TXNDATE");
+                                String mid = inResponse.getString("MID");
+                                String txnid = inResponse.getString("TXNID");
+                                String respcode = inResponse.getString("RESPCODE");
+                                String payment = inResponse.getString("PAYMENTMODE");
+                                String banktxnid = inResponse.getString("BANKTXNID");
+                                String currency = inResponse.getString("CURRENCY");
+                                String gatename = inResponse.getString("GATEWAYNAME");
+                                String respmsg = inResponse.getString("RESPMSG");
+
+                                JSONObject jsonObject = new JSONObject();
+                                try {
+
+                                    jsonObject.put("STATUS", response);
+                                    jsonObject.put("CHECKSUMHASH", checksum);
+                                    jsonObject.put("ORDERID", orderid);
+                                    jsonObject.put("TXNAMOUNT", txnamt);
+                                    jsonObject.put("TXNDATE", txndate);
+                                    jsonObject.put("MID", mid);
+                                    jsonObject.put("TXNID", txnid);
+                                    jsonObject.put("RESPCODE", respcode);
+                                    jsonObject.put("PAYMENTMODE", payment);
+                                    jsonObject.put("BANKTXNID", banktxnid);
+                                    jsonObject.put("CURRENCY", currency);
+                                    jsonObject.put("GATEWAYNAME", gatename);
+                                    jsonObject.put("RESPMSG", respmsg);
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.BOOKING_DATA;
+//                            String url = "https://heylaapp.com/paytm_app/TxnStatus.php";
+                                serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+//                            String status = null;
+//                            if (response.equals("TXN_FAILURE")) {
+//                                status = "Transaction Declined!";
+//                            } else if (response.equals("TXN_SUCCESS")) {
+//                                status = "Transaction Successful!";
+//                            } else if (response.equals("TXN_PENDING")) {
+//                                status = "Transaction Cancelled!";
+//                            } else {
+//                                status = "Status Not Known!";
+//                            }
+////                    Toast.makeText(getApplicationContext(), status, Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent(getApplicationContext(), StatusActivity.class);
+//                            intent.putExtra("transStatus", status);
+//                            startActivity(intent);
+//                            finish();
+                            }
+
+                        });
+            }
         }
+
     }
 
 

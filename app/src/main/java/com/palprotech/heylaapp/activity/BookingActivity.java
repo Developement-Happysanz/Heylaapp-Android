@@ -54,7 +54,7 @@ import java.util.Locale;
  * Created by Admin on 09-11-2017.
  */
 
-public class BookingActivity extends AppCompatActivity implements View.OnClickListener, IServiceListener, DialogClickListener, AdapterView.OnItemClickListener {
+public class BookingActivity extends AppCompatActivity implements IServiceListener, View.OnClickListener,  DialogClickListener, AdapterView.OnItemClickListener {
 
     private static final String TAG = BookingActivity.class.getName();
     private Event event;
