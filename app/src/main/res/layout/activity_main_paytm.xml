@@ -160,6 +160,15 @@
     <!---->
     <!---->
     <!---->
+
+    <TextView
+        android:id="@+id/timer_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:textColor="@color/text_black"
+        android:gravity="center"/>
+
     <ScrollView
         android:id="@+id/ScrollView01"
         android:layout_width="match_parent"

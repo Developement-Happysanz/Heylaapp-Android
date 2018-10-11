@@ -33,6 +33,7 @@ import com.palprotech.heylaapp.ccavenue.utilities.ServiceUtility;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
+import com.palprotech.heylaapp.paytm.MainActivityPost;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
@@ -250,7 +251,7 @@ public class BookingActivity extends AppCompatActivity implements IServiceListen
 
                     Double totalRate = noOfTicket * _rate;
 
-                    Intent intent = new Intent(getApplicationContext(), AttendeesInfoActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivityPost.class);
                     intent.putExtra("eventObj", event);
                     PreferenceStorage.saveOrderId(getApplicationContext(), orderId);
                     PreferenceStorage.savePaymentAmount(getApplicationContext(), "" + totalRate);
@@ -464,7 +465,7 @@ public class BookingActivity extends AppCompatActivity implements IServiceListen
                         public void onClick(View v) {
                             // TODO Auto-generated method stub
 //                            viewDateFormat.setBackgroundColor(Color.parseColor("#708090"));
-                            Toast.makeText(getApplicationContext(), functionalDateFormat.getText(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), functionalDateFormat.getText(), Toast.LENGTH_SHORT).show();
                             showDate = functionalDateFormat.getText().toString();
                             viewDateFormat.setBackground(getResources().getDrawable(R.drawable.bg_advanced_filter_properties_filled));
                             viewDateFormat.setTextColor(getResources().getColor(R.color.white));
@@ -603,7 +604,7 @@ public class BookingActivity extends AppCompatActivity implements IServiceListen
                         public void onClick(View v) {
                             // TODO Auto-generated method stub
 //                            viewDateFormat.setBackgroundColor(Color.parseColor("#708090"));
-                            Toast.makeText(getApplicationContext(), viewTimeFormat.getText() + "ID : " + storeTimeId.getText(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), viewTimeFormat.getText() + "ID : " + storeTimeId.getText(), Toast.LENGTH_SHORT).show();
                             showTime = viewTimeFormat.getText().toString();
                             showTimeId = storeTimeId.getText().toString();
                             viewTimeFormat.setTextColor(getResources().getColor(R.color.white));

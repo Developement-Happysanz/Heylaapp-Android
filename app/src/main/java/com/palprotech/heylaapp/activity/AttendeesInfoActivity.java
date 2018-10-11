@@ -119,9 +119,9 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
                     }
                 }
 
-                Intent intent = new Intent(getApplicationContext(), MainActivityPost.class);
-                intent.putExtra("eventObj", event);
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), M.class);
+//                intent.putExtra("eventObj", event);
+//                startActivity(intent);
                 finish();
             }
         } catch (Exception ex) {
@@ -150,9 +150,9 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
                 updateAttendeesToServer(FullName, EmailId, MobileNo);
             }
 
-            Intent intent = new Intent(getApplicationContext(), MainActivityPost.class);
-            intent.putExtra("eventObj", event);
-            startActivity(intent);
+//            Intent intent = new Intent(getApplicationContext(), MainActivityPost.class);
+//            intent.putExtra("eventObj", event);
+//            startActivity(intent);
             finish();
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -41,6 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import static com.google.android.gms.plus.PlusOneDummyView.TAG;
 
@@ -53,7 +55,7 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
     private Event event;
     EditText order_res;
     EditText edt_email, edt_mobile;
-    TextView edt_amount, txtTickets;
+    TextView edt_amount, txtTickets, timerTxt;
     private ImageView imEventBanner;
     protected ProgressDialogHelper progressDialogHelper;
     boolean checkRes = false;
@@ -62,6 +64,7 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
     String mid = "", order_id = "", cust_id = "CUST12345678", callback = "CALLBACK_URL",
             industry_type = "", txn_amount = "", checksum = "CHECKSUM", mobile = "MOBILE_NO", email = "EMAIL", channel_id = "";
     String website = "";
+    Boolean go = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,7 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
         edt_mobile = (EditText) findViewById(R.id.edt_mobile);
         edt_amount = (TextView) findViewById(R.id.edt_amount);
         txtTickets = (TextView) findViewById(R.id.edt_tickets);
+        timerTxt = (TextView) findViewById(R.id.timer_text);
 
         imEventBanner = findViewById(R.id.img_logo);
         String url = event.getEventBanner();
@@ -114,6 +118,33 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
         String orderIdValue = PreferenceStorage.getOrderId(getApplicationContext());
 //        amount.setText(PreferenceStorage.getPaymentAmount(getApplicationContext()));
 //        orderId.setText(orderIdValue);
+
+        startTimer(60000);
+
+    }
+
+    private void startTimer(int noOfMinutes) {
+        CountDownTimer  countDownTimer = new CountDownTimer(noOfMinutes, 1000) {
+            public void onTick(long millisUntilFinished) {
+                long millis = millisUntilFinished;
+                //Convert milliseconds into hour,minute and seconds
+                String hms = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+                timerTxt.setText(hms);//set text
+            }
+            public void onFinish() {
+//                timerTxt.setText("TIME'S UP!!"); //On finish change timer text
+                if (!go){
+                    endAll();
+                }
+            }
+        }.start();
+
+    }
+
+    private void endAll() {
+        AlertDialogHelper.showSimpleAlertDialog(this, "Timeout");
+        Toast.makeText(this, "Timeout", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     // This is to refresh the order id: Only for the Sample App’s purpose.
@@ -147,6 +178,7 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
 //        else {
 
 //        PaytmPGService Service = PaytmPGService.getStagingService();
+        go = true;
         PaytmPGService Service = PaytmPGService.getProductionService();
 
         Log.d("before request", "some");
@@ -293,6 +325,7 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
                 if (msg.equalsIgnoreCase("Success")){
                     Intent intent = new Intent(getApplicationContext(), StatusActivity.class);
                     intent.putExtra("transStatus", status);
+                    intent.putExtra("eventObj", event);
                     startActivity(intent);
                     finish();
                 } else {

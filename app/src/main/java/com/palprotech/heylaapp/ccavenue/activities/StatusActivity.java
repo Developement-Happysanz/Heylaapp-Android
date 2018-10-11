@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.activity.AttendeesInfoActivity;
+import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.ccavenue.utilities.AvenuesParams;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
@@ -24,6 +26,7 @@ import java.util.Locale;
 public class StatusActivity extends Activity {
 
     private TextView tv4, OrderNum, PaymentId, TransactionDate, PaymentAmount, PaymentStatus;
+    private Event event;
     private Button PaymentDone;
     private ImageView Success, Failure, Cancel;
     private RelativeLayout payment, statusBG;
@@ -35,6 +38,7 @@ public class StatusActivity extends Activity {
 
 //		Toast.makeText(getApplicationContext(), "status", Toast.LENGTH_SHORT).show();
         Intent mainIntent = getIntent();
+        event = (Event) getIntent().getSerializableExtra("eventObj");
         tv4 = (TextView) findViewById(R.id.textView1);
         OrderNum = (TextView) findViewById(R.id.txt_ordernum);
         PaymentId = (TextView) findViewById(R.id.txt_payid);
@@ -133,7 +137,15 @@ public class StatusActivity extends Activity {
         PaymentDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if (tv4.getText().equals("Transaction Successful!")){
+                    Intent intent = new Intent(getApplicationContext(), AttendeesInfoActivity.class);
+                    intent.putExtra("eventObj", event);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    finish();
+                }
+
             }
         });
 
