@@ -119,7 +119,7 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
 //        amount.setText(PreferenceStorage.getPaymentAmount(getApplicationContext()));
 //        orderId.setText(orderIdValue);
 
-        startTimer(60000);
+        startTimer(300000);
 
     }
 
