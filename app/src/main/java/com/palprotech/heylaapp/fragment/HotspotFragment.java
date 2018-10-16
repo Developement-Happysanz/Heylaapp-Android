@@ -372,8 +372,8 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
         serviceHelper = new ServiceHelper(getActivity());
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(getActivity());
-//        callGetEventService(1);
-        new GetListItems().execute();
+        callGetEventService(1);
+//        new GetListItems().execute();
     }
 
     private void setUpGoogleMaps() {
