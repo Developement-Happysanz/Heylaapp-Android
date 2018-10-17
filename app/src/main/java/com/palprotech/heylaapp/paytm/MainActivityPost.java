@@ -217,18 +217,7 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
                 if ((status != null)) {
                     if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
-                        if(status.equalsIgnoreCase("Refund")){
-                            JSONObject jsonObject = new JSONObject();
-                            try {
-                                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplication()));
-                                jsonObject.put(HeylaAppConstants.KEY_ORDER_ID, PreferenceStorage.getOrderId(this));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
 
-                            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.REFUND_DATA;
-                            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-                        }
                         signInSuccess = false;
                         Log.d(TAG, "Show error dialog");
                         AlertDialogHelper.showSimpleAlertDialog(this, msg);
@@ -248,7 +237,15 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
-
+            try {
+                if(response.getString("msg").equalsIgnoreCase("Mail Send to Admin")){
+                    go = true;
+                    AlertDialogHelper.showSimpleAlertDialog(this, "Refund Initiated");
+                    finish();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -340,6 +337,17 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
                     intent.putExtra("eventObj", event);
                     startActivity(intent);
                     finish();
+                } else if(msg.equalsIgnoreCase("Refund")){
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplication()));
+                        jsonObject.put(HeylaAppConstants.KEY_ORDER_ID, PreferenceStorage.getOrderId(getApplication()));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.REFUND_DATA;
+                    serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
                 } else {
                     AlertDialogHelper.showSimpleAlertDialog(getApplicationContext(), msg);
                     finish();
