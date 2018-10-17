@@ -217,6 +217,18 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
                 if ((status != null)) {
                     if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        if(status.equalsIgnoreCase("Refund")){
+                            JSONObject jsonObject = new JSONObject();
+                            try {
+                                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplication()));
+                                jsonObject.put(HeylaAppConstants.KEY_ORDER_ID, PreferenceStorage.getOrderId(this));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.REFUND_DATA;
+                            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+                        }
                         signInSuccess = false;
                         Log.d(TAG, "Show error dialog");
                         AlertDialogHelper.showSimpleAlertDialog(this, msg);
