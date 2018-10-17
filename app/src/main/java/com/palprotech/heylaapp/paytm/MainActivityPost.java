@@ -1,6 +1,7 @@
 package com.palprotech.heylaapp.paytm;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -65,6 +66,7 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
             industry_type = "", txn_amount = "", checksum = "CHECKSUM", mobile = "MOBILE_NO", email = "EMAIL", channel_id = "";
     String website = "";
     Boolean go = false;
+    Boolean timerDone = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +121,7 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
 //        amount.setText(PreferenceStorage.getPaymentAmount(getApplicationContext()));
 //        orderId.setText(orderIdValue);
 
-        startTimer(300000);
+        startTimer(180000);
 
     }
 
@@ -133,6 +135,7 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
             }
             public void onFinish() {
 //                timerTxt.setText("TIME'S UP!!"); //On finish change timer text
+                timerDone = true;
                 if (!go){
                     endAll();
                 }
@@ -142,9 +145,22 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
     }
 
     private void endAll() {
-        AlertDialogHelper.showSimpleAlertDialog(this, "Timeout");
-        Toast.makeText(this, "Timeout", Toast.LENGTH_SHORT).show();
-        finish();
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MainActivityPost.this);
+        alertDialogBuilder.setTitle("Timeout!");
+        alertDialogBuilder.setMessage("Booking timeout");
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                finish();
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        alertDialogBuilder.show();
     }
 
     // This is to refresh the order id: Only for the Sample App’s purpose.
@@ -240,8 +256,22 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
             try {
                 if(response.getString("msg").equalsIgnoreCase("Mail Send to Admin")){
                     go = true;
-                    AlertDialogHelper.showSimpleAlertDialog(this, "Refund Initiated");
-                    finish();
+                    android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MainActivityPost.this);
+                    alertDialogBuilder.setTitle("Refund");
+                    alertDialogBuilder.setMessage("Refund Process Initiated");
+                    alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            finish();
+                        }
+                    });
+                    alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+                    alertDialogBuilder.show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -338,16 +368,7 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
                     startActivity(intent);
                     finish();
                 } else if(msg.equalsIgnoreCase("Refund")){
-                    JSONObject jsonObject = new JSONObject();
-                    try {
-                        jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplication()));
-                        jsonObject.put(HeylaAppConstants.KEY_ORDER_ID, PreferenceStorage.getOrderId(getApplication()));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.REFUND_DATA;
-                    serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+                    sendRefundData();
                 } else {
                     AlertDialogHelper.showSimpleAlertDialog(getApplicationContext(), msg);
                     finish();
@@ -440,7 +461,7 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
                                 } else {
                                     status = "Status Not Known!";
                                 }
-                                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.BOOKING_DATA;
+//                                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.BOOKING_DATA;
 
                                 PaytmPGService Service = PaytmPGService.getProductionService();
 
@@ -467,8 +488,10 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
 
                                 try {
                                     checkRes = true;
-                                    sendDeviceDetails = new SendDeviceDetails(url, getPostDataString(stringHashMap), Service);
+                                    String url1 = HeylaAppConstants.BASE_URL + HeylaAppConstants.BOOKING_DATA;
+                                    sendDeviceDetails = new SendDeviceDetails(url1, getPostDataString(stringHashMap), Service);
                                     sendDeviceDetails.execute();
+
                                 } catch (UnsupportedEncodingException e) {
                                     e.printStackTrace();
                                 }
@@ -593,6 +616,18 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
 
     }
 
+    private void sendRefundData(){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplication()));
+            jsonObject.put(HeylaAppConstants.KEY_ORDER_ID, PreferenceStorage.getOrderId(getApplication()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.REFUND_DATA;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
 
     private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
