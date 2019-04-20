@@ -21,6 +21,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -75,7 +76,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements SideMenuView.OnMenuClickListener, LocationListener, View.OnClickListener, ViewPager.OnPageChangeListener, DialogClickListener, IServiceListener {
 
     private static final String TAG = MainActivity.class.getName();
-    private static final int TAG_LOGOUT = 100;
+    private static final int TAG_LOGOUT = 111;
     Toolbar toolbar;
     protected LocationManager locationManager;
     private ViewPager viewPager;
@@ -122,6 +123,11 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
         changeFragment(0);
+        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+
+            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },
+                    TAG_LOGOUT);
+        }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
