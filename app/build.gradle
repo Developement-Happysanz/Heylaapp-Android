@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'heylaapp_alias'
             keyPassword 'Heylaapp@123'
-            storeFile file('D:/HappySanzTech/PalproTech/Heylaapp/app/heylaapp.jks')
+            storeFile file('F:\\StudioProjects\\Heylaapp\\app\\heylaapp.jks')
             storePassword 'Heylaapp@123'
             flavorDimensions "default"
         }
@@ -18,8 +18,8 @@ android {
         applicationId "com.palprotech.heylaapp"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 16
-        versionName "1.0.15"
+        versionCode 20
+        versionName "1.0.19"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }

@@ -31,6 +31,22 @@
           }
         },
         {
+          "client_id": "267044808577-reqdmehidp7mqk55em66na2i2o46ubgh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.palprotech.heylaapp",
+            "certificate_hash": "a012fc28f69844fda1adf3e973c02be9849d4553"
+          }
+        },
+        {
+          "client_id": "267044808577-dh77jmcsmdm721gi0dqbhcu5teno3ac2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.palprotech.heylaapp",
+            "certificate_hash": "d5f5f188ed8df203aa2b9b38dcb546e666af3623"
+          }
+        },
+        {
           "client_id": "267044808577-fi7ue3cog6dthf3vda35kjjcibk87a4j.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -41,20 +57,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "267044808577-fi7ue3cog6dthf3vda35kjjcibk87a4j.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
