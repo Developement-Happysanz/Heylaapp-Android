@@ -143,6 +143,7 @@ public class WishListActivity extends AppCompatActivity implements AdapterView.O
 
         if (checkLoading.equalsIgnoreCase("eventDelete")) {
             progressDialogHelper.hideProgressDialog();
+            loadWishList();
         } else {
 
             mHandler.post(new Runnable() {
@@ -153,7 +154,7 @@ public class WishListActivity extends AppCompatActivity implements AdapterView.O
 
                     Gson gson = new Gson();
                     EventList eventsList = gson.fromJson(response.toString(), EventList.class);
-                    if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
+                    if (eventsList.getEvents() != null && eventsList.getEvents().size() >= 0) {
                         totalCount = eventsList.getCount();
                         isLoadingForFirstTime = false;
                         updateListAdapter(eventsList.getEvents());

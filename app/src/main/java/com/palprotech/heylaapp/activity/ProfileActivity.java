@@ -16,6 +16,7 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -26,6 +27,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -43,6 +45,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.palprotech.heylaapp.BuildConfig;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.bean.support.StoreCity;
 import com.palprotech.heylaapp.bean.support.StoreCountry;
@@ -59,6 +62,7 @@ import com.palprotech.heylaapp.utils.HeylaAppValidator;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.squareup.picasso.Picasso;
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder;
+import com.yalantis.ucrop.UCrop;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -74,8 +78,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -150,6 +156,8 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     boolean newsLetter = false;
     String newsLetterStatus = "N";
 
+    File image = null;
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static boolean checkPermission(final Context context)
     {
@@ -208,12 +216,12 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         });
 
 
-        String url = PreferenceStorage.getUserPicture(this);
 
 
         mProfileImage = (ImageView) findViewById(R.id.profile_img);
         mProfileImage.setOnClickListener(this);
 
+        String url = PreferenceStorage.getUserPicture(this);
         if (((url != null) && !(url.isEmpty()))) {
             Picasso.with(this).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(mProfileImage);
         }
@@ -624,195 +632,142 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         }
     }
 
+    private void openImagesDocument() {
+        Intent pictureIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        pictureIntent.setType("image/*");
+        pictureIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            String[] mimeTypes = new String[]{"image/jpeg", "image/png"};
+            pictureIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+        }
+        startActivityForResult(Intent.createChooser(pictureIntent, "Select Picture"), 2);
+    }
+
     private void openImageIntent() {
-
-// Determine Uri of camera image to save.
-        final File root = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MyDir");
-
-        if (!root.exists()) {
-            if (!root.mkdirs()) {
-                Log.d(TAG, "Failed to create directory for storing images");
-                return;
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Remove Photo", "Cancel"};
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ProfileActivity.this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo")) {
+//                    openCamera();
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+                    Uri f = FileProvider.getUriForFile(ProfileActivity.this,
+                            BuildConfig.APPLICATION_ID + ".provider",
+                            createImageFile());
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, f);
+                    startActivityForResult(intent, 1);
+                } else if (options[item].equals("Choose from Gallery")) {
+                    openImagesDocument();
+                } else if (options[item].equals("Remove Photo")) {
+                    PreferenceStorage.saveUserPicture(ProfileActivity.this, "");
+                    mProfileImage.setBackground(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.ic_default_profile));
+                    mSelectedImageUri = Uri.parse("android.resource://com.palprotech.heylaapp/drawable/ic_default_profile");
+                    mActualFilePath = mSelectedImageUri.getPath();
+                    saveUserImage();
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
             }
-        }
-
-        final String fname = PreferenceStorage.getUserId(this) + ".png";
-        final File sdImageMainDirectory = new File(root.getPath() + File.separator + fname);
-        outputFileUri = Uri.fromFile(sdImageMainDirectory);
-        Log.d(TAG, "camera output Uri" + outputFileUri);
-
-        // Camera.
-        final List<Intent> cameraIntents = new ArrayList<Intent>();
-        final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        final PackageManager packageManager = getPackageManager();
-        final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
-        for (ResolveInfo res : listCam) {
-            final String packageName = res.activityInfo.packageName;
-            final Intent intent = new Intent(captureIntent);
-            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-            intent.setPackage(packageName);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-            cameraIntents.add(intent);
-        }
-
-        // Filesystem.
-        final Intent galleryIntent = new Intent();
-        galleryIntent.setType("image/*");
-        galleryIntent.setAction(Intent.ACTION_PICK);
-
-        // Chooser of filesystem options.
-        final Intent chooserIntent = Intent.createChooser(galleryIntent, "Select Profile Photo");
-
-        // Add the camera options.
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[cameraIntents.size()]));
-
-        startActivityForResult(chooserIntent, REQUEST_IMAGE_GET);
+        });
+        builder.show();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-
-            if (requestCode == REQUEST_IMAGE_GET) {
-                Log.d(TAG, "ONActivity Result");
-                final boolean isCamera;
-                if (data == null) {
-                    Log.d(TAG, "camera is true");
-                    isCamera = true;
-                } else {
-                    final String action = data.getAction();
-                    Log.d(TAG, "camera action is" + action);
-                    if (action == null) {
-                        isCamera = false;
-                    } else {
-                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    }
+            if (requestCode == 1) {
+//                Uri uri = Uri.parse(mActualFilePath);
+//                openCropActivity(uri, uri);
+                final File file = new File(mActualFilePath);
+                try {
+                    InputStream ims = new FileInputStream(file);
+                    mProfileImage.setImageBitmap(BitmapFactory.decodeStream(ims));
+                } catch (FileNotFoundException e) {
+                    return;
                 }
 
-
-                if (isCamera) {
-                    Log.d(TAG, "Add to gallery");
-                    mSelectedImageUri = outputFileUri;
-                    mActualFilePath = outputFileUri.getPath();
-                    galleryAddPic(mSelectedImageUri);
-                } else {
-//                    selectedImageUri = data == null ? null : data.getData();
-//                    mActualFilePath = getRealPathFromURI(this, selectedImageUri);
-//                    Log.d(TAG, "path to image is" + mActualFilePath);
-
-                    if (data != null && data.getData() != null) {
-                        try{
-                            mSelectedImageUri = data.getData();
-                            String[] filePathColumn = {MediaStore.Images.Media.DATA };
-                            Cursor cursor = getContentResolver().query(mSelectedImageUri,
-                                    filePathColumn, null, null, null);
-                            cursor.moveToFirst();
-                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                            mActualFilePath = getRealPathFromURI(this, mSelectedImageUri);
-                            cursor.close();
-
-                            //return Image Path to the Main Activity
-                            Intent returnFromGalleryIntent = new Intent();
-                            returnFromGalleryIntent.putExtra("picturePath",mActualFilePath);
-                            setResult(RESULT_OK,returnFromGalleryIntent);
-                        }catch(Exception e){
-                            e.printStackTrace();
-                            Intent returnFromGalleryIntent = new Intent();
-                            setResult(RESULT_CANCELED, returnFromGalleryIntent);
-                            finish();
-                        }
-                    }else{
-                        Log.i(TAG,"RESULT_CANCELED");
-                        Intent returnFromGalleryIntent = new Intent();
-                        setResult(RESULT_CANCELED, returnFromGalleryIntent);
-                        finish();
-                    }
-                    
+                // ScanFile so it will be appeared on Gallery
+                MediaScannerConnection.scanFile(ProfileActivity.this,
+                        new String[]{mActualFilePath}, null,
+                        new MediaScannerConnection.OnScanCompletedListener() {
+                            public void onScanCompleted(String path, Uri uri) {
+//                                performCrop(uri);
+                                Uri destinationUri = Uri.fromFile(file);  // 3
+                                openCropActivity(uri, destinationUri);
+                            }
+                        });
+            } else if (requestCode == 2) {
+                Uri sourceUri = data.getData(); // 1
+                File file = null; // 2
+                try {
+                    file = getImageFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                Log.d(TAG, "image Uri is" + mSelectedImageUri);
-                if (mSelectedImageUri != null) {
-                    Log.d(TAG, "image URI is" + mSelectedImageUri);
-//                    performCrop();
-                    setPic(mSelectedImageUri);
+                Uri destinationUri = Uri.fromFile(file);  // 3
+                openCropActivity(sourceUri, destinationUri);  // 4
+            } else if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
+                if (data != null) {
+                    Uri uri = UCrop.getOutput(data);
+                    mProfileImage.setImageURI(uri);
+//                    mActualFilePath = uri.getPath();
+                    saveUserImage();
                 }
-            }  else if (requestCode == CROP_PIC) {
-                // get the returned data
-                Bundle extras = data.getExtras();
-                // get the cropped bitmap
-                Bitmap thePic = extras.getParcelable("data");
-                mProfileImage.setImageBitmap(thePic);
             }
-
         }
     }
 
-    private void galleryAddPic(Uri urirequest) {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(urirequest.getPath());
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
+    private File getImageFile() throws IOException {
+        String timeStamp =
+                new SimpleDateFormat("yyyyMMdd_HHmmss",
+                        Locale.getDefault()).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_";
+        File storageDir =
+                getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".png",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        mActualFilePath = image.getAbsolutePath();
+        return image;
     }
 
-    public String getRealPathFromURI(Context context, Uri contentUri) {
-        String result = null;
+    private File createImageFile() {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "PNG_" + timeStamp + "_";
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DCIM), "Camera");
         try {
-            String[] proj = {MediaStore.Images.Media.DATA};
-            CursorLoader loader = new CursorLoader(context, contentUri, proj, null, null, null);
-
-            Cursor cursor = loader.loadInBackground();
-            if (cursor != null) {
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                cursor.moveToFirst();
-                result = cursor.getString(column_index);
-                cursor.close();
-            } else {
-                Log.d(TAG, "cursor is null");
-            }
-        } catch (Exception e) {
-            result = null;
-            Toast.makeText(this, "Was unable to save  image", Toast.LENGTH_SHORT).show();
-
-        } finally {
-            return result;
-        }
-    }
-
-    private void setPic(Uri selectedImageUri) {
-        // Get the dimensions of the View
-        int targetW = mProfileImage.getWidth();
-        int targetH = mProfileImage.getHeight();
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        try {
-            BitmapFactory.decodeStream(this.getContentResolver().openInputStream(selectedImageUri), null, bmOptions);
-        } catch (FileNotFoundException e) {
+            image = File.createTempFile(
+                    imageFileName,  /* prefix */
+                    ".png",         /* suffix */
+                    storageDir      /* directory */
+            );
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
 
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+        // Save a file: path for use with ACTION_VIEW intents
+        mActualFilePath = image.getAbsolutePath();
+        return image;
+    }
 
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-        mSelectedImageUri = selectedImageUri;
 
-        Bitmap bitmap = null;
-        try {
-            bitmap = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(selectedImageUri), null, bmOptions);
-            mProfileImage.setImageBitmap(bitmap);
-            mCurrentUserImageBitmap = bitmap;
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    private void openCropActivity(Uri sourceUri, Uri destinationUri) {
+        UCrop.Options options = new UCrop.Options();
+        options.setCircleDimmedLayer(true);
+        options.setCropFrameColor(ContextCompat.getColor(this, R.color.appColorBase));
+        UCrop.of(sourceUri, destinationUri)
+                .withMaxResultSize(100, 100)
+                .withAspectRatio(5f, 5f)
+                .start(this);
     }
 
     private boolean validateSignInResponse(JSONObject response) {

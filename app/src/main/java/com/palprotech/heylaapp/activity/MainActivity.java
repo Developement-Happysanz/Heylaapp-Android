@@ -601,7 +601,13 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
             }
         }
         else {
-            showSettingsAlert();
+            long currentTime = System.currentTimeMillis();
+            long lastsharedTime = PreferenceStorage.getDailyAskTime(this);
+            if ((currentTime - lastsharedTime) > HeylaAppConstants.TWENTY4HOURS) {
+                Log.d(TAG, "event time elapsed more than 24hrs");
+                showSettingsAlert();
+                PreferenceStorage.saveDailyAsktime(this, currentTime);
+            }
         }
     }
 

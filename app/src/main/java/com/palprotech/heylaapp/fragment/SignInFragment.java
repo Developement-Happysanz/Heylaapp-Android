@@ -320,16 +320,16 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                     PreferenceStorage.saveLoginMode(getActivity(), HeylaAppConstants.NORMAL_SIGNUP);
                     mSelectedLoginMode = HeylaAppConstants.NORMAL_SIGNUP;
                 }
-            } else if (v == forgotPassword) {
+            } if (v == forgotPassword) {
                 Intent homeIntent = new Intent(getActivity(), ForgotPasswordActivity.class);
                 startActivity(homeIntent);
 //                getActivity().finish();
-            } else if (v == btnGoogle) {
+            } if (v == btnGoogle) {
                 PreferenceStorage.saveLoginMode(getActivity(), HeylaAppConstants.GOOGLE_PLUS);
                 mSelectedLoginMode = HeylaAppConstants.GOOGLE_PLUS;
                 signIn();
 //                signOut();
-            } else if (v == btnFacebook) {
+            } if (v == btnFacebook) {
                 FacebookSdk.sdkInitialize(getActivity());
 //                LoginManager.getInstance().logOut();
                 LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "email"));
