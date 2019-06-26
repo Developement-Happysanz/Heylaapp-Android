@@ -160,7 +160,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         if (v == imEventFavourite) {
             if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
                 getWishlistStatus();
-                if (wishliststatus.equalsIgnoreCase("exist")) {
+                if (wishliststatus.equalsIgnoreCase("success")) {
                     imEventFavourite.setImageResource(R.drawable.ic_fav_deselect);
                     removeFromWishlist();
                 } else {

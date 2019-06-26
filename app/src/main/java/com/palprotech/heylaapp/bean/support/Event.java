@@ -15,6 +15,10 @@ public class Event implements Serializable {
     @Expose
     private String id;
 
+    @SerializedName("wishlist_id")
+    @Expose
+    private String wishlistId;
+
     @SerializedName("popularity")
     @Expose
     private String popularity;
@@ -188,6 +192,20 @@ public class Event implements Serializable {
      */
     public void setId(String id) {
         this.id = id;
+    }
+
+    /**
+     * @return The wishlistId
+     */
+    public String getWishlistId() {
+        return wishlistId;
+    }
+
+    /**
+     * @param wishlistId The wishlistId
+     */
+    public void setWishlistId(String wishlistId) {
+        this.wishlistId = wishlistId;
     }
 
     /**
