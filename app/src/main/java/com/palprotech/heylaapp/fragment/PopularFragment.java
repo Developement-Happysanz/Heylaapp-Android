@@ -136,7 +136,7 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
     int pageNumber = 0, totalCount = 0;
 
     TextView all, today, tomo, week, month;
-    String dateType = "";
+    String dateType = "All";
 
     private SearchView mSearchView = null;
 

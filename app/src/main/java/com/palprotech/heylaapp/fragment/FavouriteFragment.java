@@ -131,7 +131,7 @@ public class FavouriteFragment extends Fragment implements AdapterView.OnItemCli
     private LinearLayout layoutFabListView;
 
     TextView all, today, tomo, week, month;
-    String dateType = "";
+    String dateType = "All";
 
     protected ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
