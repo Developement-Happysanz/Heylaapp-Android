@@ -67,20 +67,20 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         if (CommonUtils.isNetworkAvailable(getApplicationContext())) {
             if (v == btnSubmit) {
                 String username = edtEmailOrMobileNo.getText().toString();
-                if ((!HeylaAppValidator.checkNullString(username))) {
+                if ((HeylaAppValidator.checkNullString(username))) {
 
-                    JSONObject jsonObject = new JSONObject();
+
+                    progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
                     try {
+                        JSONObject jsonObject = new JSONObject();
 
                         jsonObject.put(HeylaAppConstants.PARAMS_USERNAME, username);
+                        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.FORGOT_PASSWORD;
+                        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-                    progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-                    String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.FORGOT_PASSWORD;
-                    serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
                 }
             }
         } else {
