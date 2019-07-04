@@ -292,6 +292,7 @@ public class HeylaAppConstants {
     public static final String KEY_LAST_SHARED_TIME = "timeEventShared";
     public static final String KEY_EVENT_SHARED_COUNT = "eventSharedCount";
     public static final String KEY_LAST_LOGIN_TIME = "timeDailyLogin";
+    public static final String KEY_LAST_ASK_TIME = "timeDailyAsk";
 
     //    Service Params
     public static String PARAM_MESSAGE = "msg";

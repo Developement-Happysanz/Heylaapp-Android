@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
@@ -50,6 +51,7 @@ public class WishListActivity extends AppCompatActivity implements AdapterView.O
     Handler mHandler = new Handler();
     private SearchView mSearchView = null;
     private String checkLoading = "events";
+    private boolean click = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,12 +91,15 @@ public class WishListActivity extends AppCompatActivity implements AdapterView.O
         Intent intent = new Intent(this, EventDetailActivity.class);
         intent.putExtra("eventObj", event);
         // intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//        if(!click) {
         startActivity(intent);
+//        }
     }
 
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+        click = true;
         Log.d(TAG, "onEvent list item clicked" + position);
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(WishListActivity.this);
         alertDialogBuilder.setTitle("Delete");
@@ -109,10 +114,14 @@ public class WishListActivity extends AppCompatActivity implements AdapterView.O
                     int actualindex = eventsListAdapter.getActualEventPos(position);
                     Log.d(TAG, "actual index" + actualindex);
                     event = eventsArrayList.get(actualindex);
+                    eventsArrayList.remove(actualindex);
+                    eventsListAdapter.notifyDataSetChanged();
                 } else {
                     event = eventsArrayList.get(position);
+                    eventsArrayList.remove(position);
+                    eventsListAdapter.notifyDataSetChanged();
                 }
-                deleteWishList(event.getId());
+                deleteWishList(event.getWishlistId());
             }
         });
         alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -124,7 +133,7 @@ public class WishListActivity extends AppCompatActivity implements AdapterView.O
         alertDialogBuilder.show();
 
 
-        return false;
+        return true;
     }
 
     @Override
@@ -137,29 +146,62 @@ public class WishListActivity extends AppCompatActivity implements AdapterView.O
 
     }
 
-    @Override
-    public void onResponse(final JSONObject response) {
-        Log.d("ajazFilterresponse : ", response.toString());
+    private boolean validateSignInResponse(final JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(HeylaAppConstants.PARAM_MESSAGE);
+                Log.d(TAG, "status val" + status + "msg" + msg);
 
-        if (checkLoading.equalsIgnoreCase("eventDelete")) {
-            progressDialogHelper.hideProgressDialog();
-        } else {
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        Log.d(TAG, "Show error dialog");
+//                        if (!res.equalsIgnoreCase("reviewList")){
+//                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
+//                        }
 
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    progressDialogHelper.hideProgressDialog();
-//                loadMoreListView.onLoadMoreComplete();
-
-                    Gson gson = new Gson();
-                    EventList eventsList = gson.fromJson(response.toString(), EventList.class);
-                    if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
-                        totalCount = eventsList.getCount();
-                        isLoadingForFirstTime = false;
-                        updateListAdapter(eventsList.getEvents());
+                    } else {
+                        signInSuccess = true;
                     }
                 }
-            });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return signInSuccess;
+    }
+
+    @Override
+    public void onResponse(final JSONObject response) {
+        progressDialogHelper.hideProgressDialog();
+        if (validateSignInResponse(response)) {
+            Log.d("ajazFilterresponse : ", response.toString());
+
+            if (checkLoading.equalsIgnoreCase("eventDelete")) {
+//            loadWishList();
+                Toast.makeText(this, "Wishlist Removed!!", Toast.LENGTH_SHORT).show();
+
+            } else {
+
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+//                        progressDialogHelper.hideProgressDialog();
+//                loadMoreListView.onLoadMoreComplete();
+
+                        Gson gson = new Gson();
+                        EventList eventsList = gson.fromJson(response.toString(), EventList.class);
+                        if (eventsList.getEvents() != null && eventsList.getEvents().size() >= 0) {
+                            totalCount = eventsList.getCount();
+                            isLoadingForFirstTime = false;
+                            updateListAdapter(eventsList.getEvents());
+                        }
+                    }
+                });
+            }
         }
     }
 
@@ -176,59 +218,59 @@ public class WishListActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private void loadWishList() {
-        if (eventsArrayList != null)
+        if (eventsArrayList != null) {
             eventsArrayList.clear();
+            if (CommonUtils.isNetworkAvailable(this)) {
+                JSONObject jsonObject = new JSONObject();
+                try {
 
-        if (CommonUtils.isNetworkAvailable(this)) {
-            JSONObject jsonObject = new JSONObject();
-            try {
-
-                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
-                jsonObject.put(HeylaAppConstants.PARAMS_WISH_LIST_MASTER_ID, "1");
+                    jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
+                    jsonObject.put(HeylaAppConstants.PARAMS_WISH_LIST_MASTER_ID, "1");
 
 
-            } catch (JSONException e) {
-                e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.WISH_LIST;
+                serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+            } else {
+                AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.no_connectivity));
             }
-
-            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.WISH_LIST;
-            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-        } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.no_connectivity));
         }
     }
 
-    protected void updateListAdapter(ArrayList<Event> eventsArrayList) {
-        this.eventsArrayList.addAll(eventsArrayList);
-        if (eventsListAdapter == null) {
-            eventsListAdapter = new EventsListAdapter(this, this.eventsArrayList, className);
-            loadMoreListView.setAdapter(eventsListAdapter);
-        } else {
-            eventsListAdapter.notifyDataSetChanged();
-        }
-    }
-
-    private void deleteWishList(String eventId) {
-        if (CommonUtils.isNetworkAvailable(this)) {
-            checkLoading = "eventDelete";
-            JSONObject jsonObject = new JSONObject();
-            try {
-
-                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
-                jsonObject.put(HeylaAppConstants.PARAMS_WISH_LIST_ID, eventId);
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
+        protected void updateListAdapter (ArrayList < Event > eventsArrayList) {
+            this.eventsArrayList.addAll(eventsArrayList);
+            if (eventsListAdapter == null) {
+                eventsListAdapter = new EventsListAdapter(this, this.eventsArrayList, className);
+                loadMoreListView.setAdapter(eventsListAdapter);
+            } else {
+                eventsListAdapter.notifyDataSetChanged();
             }
-
-            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.WISH_LIST_DELETE;
-            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-        } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.no_connectivity));
         }
-    }
 
-}
+        private void deleteWishList (String eventId){
+            if (CommonUtils.isNetworkAvailable(this)) {
+                checkLoading = "eventDelete";
+                JSONObject jsonObject = new JSONObject();
+                try {
+
+                    jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
+                    jsonObject.put(HeylaAppConstants.PARAMS_WISH_LIST_ID, eventId);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.WISH_LIST_DELETE;
+                serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+            } else {
+                AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.no_connectivity));
+            }
+        }
+
+    }

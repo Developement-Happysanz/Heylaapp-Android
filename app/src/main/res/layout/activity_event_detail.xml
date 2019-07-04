@@ -61,7 +61,7 @@
         android:layout_above="@+id/bookingbar"
         android:layout_below="@id/toolbar_layout">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="false"
@@ -70,7 +70,7 @@
             <RelativeLayout
                 android:id="@+id/banner_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="200dp">
 
                 <ImageView
                     android:id="@+id/event_detail_img"
@@ -102,7 +102,9 @@
                 android:layout_below="@+id/banner_layout"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="-50dp"
+                android:layout_marginTop="180dp"
+                android:elevation="5dp"
+                android:clickable="false"
                 android:background="@drawable/btn_round_nocolor"
                 android:paddingBottom="10dp">
 
@@ -613,7 +615,7 @@
 
             </RelativeLayout>
 
-        </LinearLayout>
+        </FrameLayout>
 
     </ScrollView>
 

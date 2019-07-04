@@ -2,6 +2,7 @@ package com.palprotech.heylaapp.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -90,7 +91,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         String getSocialUrl = PreferenceStorage.getSocialNetworkProfileUrl(getActivity());
         if (((url != null) && !(url.isEmpty()))) {
             Picasso.with(getActivity()).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(userPic);
-        }else if (((getSocialUrl != null) && !(getSocialUrl.isEmpty()))) {
+        } else if (((getSocialUrl != null) && !(getSocialUrl.isEmpty()))) {
             Picasso.with(getActivity()).load(getSocialUrl).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(userPic);
         }
 
@@ -147,47 +148,114 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-         if (view == profile) {
+        if (view == profile) {
             Intent homeIntent = new Intent(getActivity(), ProfileActivity.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
             getActivity().finish();
         } else if (view == login) {
-            Intent homeIntent = new Intent(getActivity(), LoginPointsActivity.class);
+            if (loginPoints.getText().toString().equalsIgnoreCase("(0)")) {
+                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
+                alertDialogBuilder.setTitle("Login Point");
+                alertDialogBuilder.setMessage("No points secured yet");
+                alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        arg0.dismiss();
+                    }
+                });
+                alertDialogBuilder.show();
+            } else {
+                Intent homeIntent = new Intent(getActivity(), LoginPointsActivity.class);
 
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            homeIntent.putExtra("rule_id", "1");
-            startActivity(homeIntent);
+                homeIntent.putExtra("rule_id", "1");
+                startActivity(homeIntent);
 //            getActivity().finish();
+            }
         } else if (view == share) {
-            Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
-//            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            homeIntent.putExtra("rule_id", "2");
-            startActivity(homeIntent);
+            if (sharePoints.getText().toString().equalsIgnoreCase("(0)")) {
+                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
+                alertDialogBuilder.setTitle("Share Point");
+                alertDialogBuilder.setMessage("No points secured yet");
+                alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        arg0.dismiss();
+                    }
+                });
+                alertDialogBuilder.show();
+            } else {
+                Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
+//                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                homeIntent.putExtra("rule_id", "2");
+                startActivity(homeIntent);
 //            getActivity().finish();
+            }
+//
         } else if (view == check_in) {
+            if (checkinPoints.getText().toString().equalsIgnoreCase("(0)")) {
+                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
+                alertDialogBuilder.setTitle("Check In Point");
+                alertDialogBuilder.setMessage("No points secured yet");
+                alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        arg0.dismiss();
+                    }
+                });
+                alertDialogBuilder.show();
+            } else {
+                Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
+                homeIntent.putExtra("rule_id", "3");
+                startActivity(homeIntent);
+            }
 /*            Intent homeIntent = new Intent(getActivity(), EventCheckInPointActivity.class);
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
 //            getActivity().finish();*/
-            Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
-            homeIntent.putExtra("rule_id", "3");
-            startActivity(homeIntent);
 //            getActivity().finish();
         } else if (view == reviews) {
-            Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
+            if (reviewPoints.getText().toString().equalsIgnoreCase("(0)")) {
+                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
+                alertDialogBuilder.setTitle("Review Point");
+                alertDialogBuilder.setMessage("No points secured yet");
+                alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        arg0.dismiss();
+                    }
+                });
+                alertDialogBuilder.show();
+            } else {
+                Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            homeIntent.putExtra("rule_id", "4");
-            startActivity(homeIntent);
+                homeIntent.putExtra("rule_id", "4");
+                startActivity(homeIntent);
 //            getActivity().finish();
+            }
+
         } else if (view == booking) {
-            Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
+            if (bookingPoints.getText().toString().equalsIgnoreCase("(0)")) {
+                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
+                alertDialogBuilder.setTitle("Booking Point");
+                alertDialogBuilder.setMessage("No points secured yet");
+                alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        arg0.dismiss();
+                    }
+                });
+                alertDialogBuilder.show();
+            } else {
+                Intent homeIntent = new Intent(getActivity(), EventSharingPointActivity.class);
 //            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            homeIntent.putExtra("rule_id", "5");
-            startActivity(homeIntent);
+                homeIntent.putExtra("rule_id", "5");
+                startActivity(homeIntent);
 //            getActivity().finish();
+            }
         } else if (view == points) {
-             startActivity(new Intent(getActivity(), PointTableActivity.class));
+            startActivity(new Intent(getActivity(), PointTableActivity.class));
         }
     }
 
@@ -224,15 +292,15 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
             rPoint = getData.getJSONObject(0).getString("review_points");
 
 //            loginCount.setText("(" + lCount + ")");
-            loginPoints.setText("("+lPoint+")");
+            loginPoints.setText("(" + lPoint + ")");
 //            shareCount.setText("(" + sCount + ")");
-            sharePoints.setText("("+sPoint+")");
+            sharePoints.setText("(" + sPoint + ")");
 //            checkinCount.setText("(" + cCount + ")");
-            checkinPoints.setText("("+cPoint+")");
+            checkinPoints.setText("(" + cPoint + ")");
 //            reviewCount.setText("(" + rCount + ")");
-            reviewPoints.setText("("+rPoint+")");
+            reviewPoints.setText("(" + rPoint + ")");
 //            bookingCount.setText("(" + bCount + ")");
-            bookingPoints.setText("("+bPoint+")");
+            bookingPoints.setText("(" + bPoint + ")");
             totalPoints.setText("(" + tPoint + ")");
 
         } catch (JSONException e) {

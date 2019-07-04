@@ -85,7 +85,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     private TextView txtEventReview;
     private TextView txtCheckInEvent;
     private TextView txtBookEvent;
-
+    private TextView txtEventName;
     protected LocationManager locationManager;
     protected LocationListener locationListener;
     protected Context context;
@@ -160,7 +160,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         if (v == imEventFavourite) {
             if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
                 getWishlistStatus();
-                if (wishliststatus.equalsIgnoreCase("exist")) {
+                if (wishliststatus.equalsIgnoreCase("success")) {
                     imEventFavourite.setImageResource(R.drawable.ic_fav_deselect);
                     removeFromWishlist();
                 } else {
@@ -212,6 +212,12 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
                 guestLoginAlert();
             }
         }
+        if (v == txtEventName) {
+
+        }
+        if (v == imEventsView) {
+
+        }
     }
 
     void setUpServices() {
@@ -249,8 +255,9 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 
 //        imEventBanner.setMaxWidth(500);
 //        Event title
-        TextView txtEventName = findViewById(R.id.event_detail_name);
+        txtEventName = findViewById(R.id.event_detail_name);
         txtEventName.setText(event.getEventName());
+        txtEventName.setOnClickListener(this);
 //        Share the event
         imEventShare = findViewById(R.id.share_event);
         imEventShare.setOnClickListener(this);
@@ -260,6 +267,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 //        Event popularity views
         imEventsView = findViewById(R.id.event_views);
         imEventsView.setText("" + event.getPopularity());
+        imEventsView.setOnClickListener(this);
 //        Mark as favourite event
         imEventFavourite = findViewById(R.id.addfav);
         imEventFavourite.setOnClickListener(this);

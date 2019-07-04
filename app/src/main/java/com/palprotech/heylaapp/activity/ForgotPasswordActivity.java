@@ -21,6 +21,7 @@ import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.CommonUtils;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
+import com.palprotech.heylaapp.utils.HeylaAppValidator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,19 +67,21 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         if (CommonUtils.isNetworkAvailable(getApplicationContext())) {
             if (v == btnSubmit) {
                 String username = edtEmailOrMobileNo.getText().toString();
+                if ((HeylaAppValidator.checkNullString(username))) {
 
-                JSONObject jsonObject = new JSONObject();
-                try {
 
-                    jsonObject.put(HeylaAppConstants.PARAMS_USERNAME, username);
+                    progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                    try {
+                        JSONObject jsonObject = new JSONObject();
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                        jsonObject.put(HeylaAppConstants.PARAMS_USERNAME, username);
+                        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.FORGOT_PASSWORD;
+                        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-
-                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.FORGOT_PASSWORD;
-                serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
             }
         } else {
             AlertDialogHelper.showSimpleAlertDialog(getApplicationContext(), "No Network connection available");
