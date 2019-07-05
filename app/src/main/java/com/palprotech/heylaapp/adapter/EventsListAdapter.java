@@ -55,6 +55,7 @@ public class EventsListAdapter extends BaseAdapter {
         transformation = new RoundedTransformationBuilder()
                 .cornerRadiusDp(0)
                 .oval(false)
+
                 .build();
         mSearching = false;
     }
