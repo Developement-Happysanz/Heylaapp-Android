@@ -38,7 +38,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
     protected ListView loadMoreListView;
     View view;
     String className;
-    String event="";
+    String event = "";
     EventsListAdapter eventsListAdapter;
     private ServiceHelper serviceHelper;
     ArrayList<Event> eventsArrayList;
@@ -69,7 +69,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
             }
         });
         event = PreferenceStorage.getFilterApply(this);
-        if(!event.isEmpty()){
+        if (!event.isEmpty()) {
             makeSearch(event);
             PreferenceStorage.IsFilterApply(this, "");
         } else {
@@ -110,6 +110,7 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
         }
 
     }
+
     public void makeSearch(String event) {
         /*if(eventsListAdapter != null){
             eventsListAdapter.clearSearchFlag();
@@ -122,9 +123,11 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
             JSONObject jsonObject = new JSONObject();
             try {
 
-                jsonObject.put(HeylaAppConstants.KEY_EVENT_SEARCH, ""+event);
+                jsonObject.put(HeylaAppConstants.KEY_EVENT_SEARCH, "" + event);
                 jsonObject.put(HeylaAppConstants.KEY_EVENT_TYPE, PreferenceStorage.getFilterEventType(this));
                 jsonObject.put(HeylaAppConstants.PARAMS_CITY_ID, PreferenceStorage.getEventCityId(this));
+                jsonObject.put(HeylaAppConstants.PARAMS_USER_ID, PreferenceStorage.getUserId(this));
+                jsonObject.put(HeylaAppConstants.KEY_USER_TYPE, PreferenceStorage.getUserType(this));
 
 
             } catch (JSONException e) {
@@ -142,56 +145,84 @@ public class AdvancedFilterResultActivity extends AppCompatActivity implements I
 
     @Override
     public void onResponse(final JSONObject response) {
-        if(advSearch.equalsIgnoreCase("Adv")){
-            Log.d("ajazFilterresponse : ", response.toString());
+        progressDialogHelper.hideProgressDialog();
+        if (validateResponse(response)) {
+            if (advSearch.equalsIgnoreCase("Adv")) {
+                Log.d("ajazFilterresponse : ", response.toString());
 
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    progressDialogHelper.hideProgressDialog();
+//            mHandler.post(new Runnable() {
+//                @Override
+//                public void run() {
 //                loadMoreListView.onLoadMoreComplete();
 
-                    Gson gson = new Gson();
-                    EventList eventsList = gson.fromJson(response.toString(), EventList.class);
-                    if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
-                        totalCount = eventsList.getCount();
-                        isLoadingForFirstTime = false;
-                        updateListAdapter(eventsList.getEvents());
-                    }
+                Gson gson = new Gson();
+                EventList eventsList = gson.fromJson(response.toString(), EventList.class);
+                if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
+                    totalCount = eventsList.getCount();
+                    isLoadingForFirstTime = false;
+                    updateListAdapter(eventsList.getEvents());
                 }
-            });
-        } else if(advSearch.equalsIgnoreCase("Sea")){
-            Log.d("ajazFilterresponse : ", response.toString());
+//                }
+//            });
+            } else if (advSearch.equalsIgnoreCase("Sea")) {
+                Log.d("ajazFilterresponse : ", response.toString());
 
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    progressDialogHelper.hideProgressDialog();
+//            mHandler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    progressDialogHelper.hideProgressDialog();
 //                loadMoreListView.onLoadMoreComplete();
 
-                    Gson gson = new Gson();
-                    EventList eventsList = gson.fromJson(response.toString(), EventList.class);
-                    if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
-                        totalCount = eventsList.getCount();
-                        isLoadingForFirstTime = false;
-                        updateListAdapter(eventsList.getEvents());
-                    }
+                Gson gson = new Gson();
+                EventList eventsList = gson.fromJson(response.toString(), EventList.class);
+                if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
+                    totalCount = eventsList.getCount();
+                    isLoadingForFirstTime = false;
+                    updateListAdapter(eventsList.getEvents());
                 }
-            });
+//                }
+//            });
+            }
         }
 
     }
 
     @Override
     public void onError(final String error) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                progressDialogHelper.hideProgressDialog();
+//        mHandler.post(new Runnable() {
+//            @Override
+//            public void run() {
+        progressDialogHelper.hideProgressDialog();
 //                loadMoreListView.onLoadMoreComplete();
-                AlertDialogHelper.showSimpleAlertDialog(AdvancedFilterResultActivity.this, error);
+        AlertDialogHelper.showSimpleAlertDialog(AdvancedFilterResultActivity.this, error);
+//            }
+//        });
+    }
+
+    private boolean validateResponse(JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(HeylaAppConstants.PARAM_MESSAGE);
+                Log.d(TAG, "status val" + status + "msg" + msg);
+
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        Log.d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                    } else {
+                        signInSuccess = true;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
+        }
+        return signInSuccess;
     }
 
     @Override

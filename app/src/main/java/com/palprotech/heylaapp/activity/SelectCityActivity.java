@@ -71,7 +71,7 @@ public class SelectCityActivity extends AppCompatActivity implements LocationLis
     protected LocationManager locationManager;
     RelativeLayout location;
     protected Double latitude, longitude;
-    String address ="", resString = "", storeCountryId = "";
+    String address = "", resString = "", storeCountryId = "";
     TextView loc;
 
     @Override
@@ -90,7 +90,9 @@ public class SelectCityActivity extends AppCompatActivity implements LocationLis
         loadMoreListView.setOnItemClickListener(this);
         eventCitiesArrayList = new ArrayList<>();
 
-        GetEventCountries();
+//        GetEventCountries();
+
+        GetEventCities();
 
         spnCountryList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -120,7 +122,9 @@ public class SelectCityActivity extends AppCompatActivity implements LocationLis
 
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put(HeylaAppConstants.KEY_EVENT_COUNTRY_ID, storeCountryId);
+//                jsonObject.put(HeylaAppConstants.KEY_EVENT_COUNTRY_ID, storeCountryId);
+//                jsonObject.put(HeylaAppConstants.KEY_EVENT_COUNTRY_ID, "99");
+                jsonObject.put(HeylaAppConstants.KEY_EVENT_COUNTRY_ID, "195");
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -160,6 +164,31 @@ public class SelectCityActivity extends AppCompatActivity implements LocationLis
         }
     }
 
+    private void sendSelectedCity(EventCities eventCities) {
+
+        resString = "select";
+
+        if (CommonUtils.isNetworkAvailable(this)) {
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+                jsonObject.put(HeylaAppConstants.PARAMS_CITY_ID, PreferenceStorage.getUserId(getApplicationContext()));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_COUNTRY_LIST;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+        }
+    }
+
     @Override
     public void onClick(View v) {
         if (v == location) {
@@ -174,7 +203,7 @@ public class SelectCityActivity extends AppCompatActivity implements LocationLis
         if (validateSignInResponse(response)) {
 
             try {
-                if (resString.equalsIgnoreCase("Cities")){
+                if (resString.equalsIgnoreCase("Cities")) {
                     JSONArray getData = response.getJSONArray("cities");
                     if (getData != null && getData.length() > 0) {
 
@@ -226,6 +255,15 @@ public class SelectCityActivity extends AppCompatActivity implements LocationLis
                     //fill data in spinner
                     ArrayAdapter<StoreCountry> adapter = new ArrayAdapter<StoreCountry>(getApplicationContext(), R.layout.spinner_item_ns, classesList);
                     spnCountryList.setAdapter(adapter);
+                } else if (resString.equalsIgnoreCase("select")) {
+
+//                    Toast.makeText(getApplicationContext(), "You are in now " + eventCities.getCityName(), Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(this, SetUpPreferenceActivity.class);
+//        intent.putExtra("eventObj", eventCities);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
                 }
 
             } catch (JSONException e) {
@@ -307,13 +345,8 @@ public class SelectCityActivity extends AppCompatActivity implements LocationLis
         }
         PreferenceStorage.saveEventCityId(getApplicationContext(), eventCities.getId());
         PreferenceStorage.saveEventCityName(getApplicationContext(), eventCities.getCityName());
-        Toast.makeText(getApplicationContext(), "You are in now " + eventCities.getCityName(), Toast.LENGTH_LONG).show();
+        sendSelectedCity(eventCities);
 
-        Intent intent = new Intent(this, SetUpPreferenceActivity.class);
-//        intent.putExtra("eventObj", eventCities);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
     }
 
     private void checkCurrentCity() throws IOException {
@@ -346,8 +379,7 @@ public class SelectCityActivity extends AppCompatActivity implements LocationLis
 
             address = addresses.get(0).getLocality(); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
             loc.setText(address);
-        }
-        else {
+        } else {
             showSettingsAlert();
         }
     }

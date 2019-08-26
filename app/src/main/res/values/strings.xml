@@ -70,6 +70,7 @@
     <string name="err_pincode">Enter valid pincode number</string>
     <string name="err_empty_password">Enter valid password</string>
     <string name="err_min_pass_length">Short passwords are easy to guess! Try one with at least 6 characters&#8230;</string>
+    <string name="forgot_text">We can help! All you need to do is enter your E-Mail and follow the instructions or enter your number and wait for the otp!</string>
 
     <!--Dialog Fragment-->
     <string name="alert_button_ok">OK</string>
@@ -151,5 +152,9 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="feedback">Enter your feedback</string>
+
+    <string name="empty_err">"Field cannot be empty"</string>
+
 
 </resources>

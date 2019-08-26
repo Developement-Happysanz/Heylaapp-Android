@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/background_grey">
+    android:background="@color/background_grey"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -45,15 +45,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="10dp"
-        android:background="@color/background_grey">
+        android:layout_gravity="center_vertical">
 
         <LinearLayout
             android:id="@+id/llTitle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="2dp"
+            android:visibility="gone"
             android:layout_marginTop="2dp">
 
             <TextView
@@ -93,6 +92,15 @@
 
         </LinearLayout>
 
+<!--        <ListView-->
+<!--            android:id="@+id/listView_ranks"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:dividerHeight="1dp"-->
+<!--            android:divider="@color/text_gray">-->
+
+<!--        </ListView>-->
+
 
         <ScrollView
             android:id="@+id/ScrollView01"
@@ -109,7 +117,6 @@
                 android:id="@+id/layout_member_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/bordergray"
                 android:orientation="vertical" />
 
         </ScrollView>

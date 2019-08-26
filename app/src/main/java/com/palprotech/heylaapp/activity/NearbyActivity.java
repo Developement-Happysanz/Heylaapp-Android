@@ -15,15 +15,19 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -119,6 +123,7 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
     private TextView mTotalEventCount = null;
     private ImageView imgFiller;
     private String eventType;
+    private RelativeLayout mainl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -157,21 +162,51 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
         });
     }
 
-    private void closeSubMenusFab() {
-        layoutFabListView.setVisibility(View.INVISIBLE);
-        layoutFabMapview.setVisibility(View.INVISIBLE);
-        fabView.setImageResource(R.drawable.ic_plus);
-        fabExpanded = false;
-    }
+//    private void closeSubMenusFab() {
+//        layoutFabListView.setVisibility(View.INVISIBLE);
+//        layoutFabMapview.setVisibility(View.INVISIBLE);
+//        fabView.setImageResource(R.drawable.ic_plus);
+//        fabExpanded = false;
+//    }
+//
+//    //Opens FAB submenus
+//    private void openSubMenusFab() {
+//        layoutFabListView.setVisibility(View.VISIBLE);
+//        layoutFabMapview.setVisibility(View.VISIBLE);
+////        Change settings icon to 'X' icon
+//        fabView.setImageResource(R.drawable.ic_close);
+//        fabExpanded = true;
+//    }
+//closes FAB submenus
+private void closeSubMenusFab() {
+    layoutFabListView.setVisibility(View.INVISIBLE);
+//    layoutFabNearby.setVisibility(View.INVISIBLE);
+    layoutFabMapview.setVisibility(View.INVISIBLE);
+    fabView.setImageResource(R.drawable.ic_plus_icon);
+    mainl.setForeground(ContextCompat.getDrawable(this, R.color.transparent) );
+    fabExpanded = false;
+//    Animation show_fab_1 = AnimationUtils.loadAnimation(this, R.anim.fab_show);
+//    Animation hide_fab_1 = AnimationUtils.loadAnimation(this, R.anim.fab_hide);
+//
+//    layoutFabListView.startAnimation(hide_fab_1);
+//    layoutFabMapview.startAnimation(hide_fab_1);
+}
 
     //Opens FAB submenus
     private void openSubMenusFab() {
         layoutFabListView.setVisibility(View.VISIBLE);
         layoutFabMapview.setVisibility(View.VISIBLE);
+        mainl.setForeground(ContextCompat.getDrawable(this, R.color.light_line_color) );
 //        Change settings icon to 'X' icon
-        fabView.setImageResource(R.drawable.ic_close);
+        fabView.setImageResource(R.drawable.ic_cross_icon);
         fabExpanded = true;
+//        Animation show_fab_1 = AnimationUtils.loadAnimation(this, R.anim.fab_show);
+//        Animation hide_fab_1 = AnimationUtils.loadAnimation(this, R.anim.fab_hide);
+//
+//        layoutFabListView.startAnimation(show_fab_1);
+//        layoutFabMapview.startAnimation(show_fab_1);
     }
+
 
     public void callGetFilterService(int kms) {
         /*if(eventsListAdapter != null){
@@ -305,6 +340,7 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
         layoutFabMapview = (LinearLayout) findViewById(R.id.layoutFabMapView);
 
         fabView = (FloatingActionButton) findViewById(R.id.viewOptions);
+        mainl = (RelativeLayout) findViewById(R.id.layout);
 
         fabView.setOnClickListener(new View.OnClickListener() {
             @Override

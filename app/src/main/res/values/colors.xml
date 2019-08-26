@@ -6,6 +6,7 @@
 
     <!--App base color-->
     <color name="appColorBase">#468DCB</color>
+    <color name="appColorTrans">#94020507</color>
 
     <!--Login Module-->
     <color name="text_black">#000000</color>
@@ -15,7 +16,7 @@
     <color name="temp">#7e000000</color>
     <color name="bordergray">#c9c9c9</color>
     <color name="eventListbg">#dedbdb</color>
-    <color name="light_line_color">#f9f9f9</color>
+    <color name="light_line_color">#8BF9F9F9</color>
     <color name="half_transparent">#1e468dcb</color>
     <color name="background_grey">#e5e6e9</color>
     <color name="trans">#01ffffff</color>
@@ -82,6 +83,15 @@
     <color name="leaderboard_booking">#ee7f22</color>
 
     <color name="booking_line">#faa433</color>
+    <color name="Free">#48a847</color>
+    <color name="Paid">#d02d27</color>
+    <color name="text_color">#414142</color>
+    <color name="ticket_booked">#009444</color>
+    <color name="ticket_cancel">#ed1c24</color>
+    <color name="lstview">#48a847</color>
+    <color name="map_view">#d02d27</color>
+    <color name="Nearby">#f68725</color>
+
 
 
 </resources>

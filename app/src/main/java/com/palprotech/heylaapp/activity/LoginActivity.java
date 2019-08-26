@@ -43,6 +43,7 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 /**
  * Created by Narendar on 06/10/17.
@@ -94,29 +95,32 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
             alertDialog.show();
         }
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        IMEINo = String.valueOf(generateRandom(12));
 
-            TelephonyManager tm = (TelephonyManager)
-                    getSystemService(Context.TELEPHONY_SERVICE);
-            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
-                    == PackageManager.PERMISSION_DENIED) {
 
-                Log.d("permission", "permission denied to SEND_SMS - requesting it");
-                String[] permissions = {Manifest.permission.READ_PHONE_STATE};
-
-                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
-            }
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                IMEINo = tm.getImei();
-            } else {
-                if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
-                        == PackageManager.PERMISSION_DENIED) {
-                    IMEINo = "";
-                } else {
-                    IMEINo = tm.getDeviceId();
-                }
-            }
-        }
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+//
+//            TelephonyManager tm = (TelephonyManager)
+//                    getSystemService(Context.TELEPHONY_SERVICE);
+//            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
+//                    == PackageManager.PERMISSION_DENIED) {
+//
+//                Log.d("permission", "permission denied to SEND_SMS - requesting it");
+//                String[] permissions = {Manifest.permission.READ_PHONE_STATE};
+//
+//                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
+//            }
+//            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                IMEINo = tm.getImei();
+//            } else {
+//                if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
+//                        == PackageManager.PERMISSION_DENIED) {
+//                    IMEINo = "";
+//                } else {
+//                    IMEINo = tm.getDeviceId();
+//                }
+//            }
+//        }
 
         /*if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             TelephonyManager tm = (TelephonyManager)
@@ -223,6 +227,15 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
         }
     }
 
+    public static long generateRandom(int length) {
+        Random random = new Random();
+        char[] digits = new char[length];
+        digits[0] = (char) (random.nextInt(9) + '1');
+        for (int i = 1; i < length; i++) {
+            digits[i] = (char) (random.nextInt(10) + '0');
+        }
+        return Long.parseLong(new String(digits));
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

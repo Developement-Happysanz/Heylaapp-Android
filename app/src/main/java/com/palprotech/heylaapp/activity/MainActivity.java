@@ -1,7 +1,6 @@
 package com.palprotech.heylaapp.activity;
 
 import android.Manifest;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +19,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -35,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.adapter.SideMenuAdapterTemp;
@@ -44,6 +45,7 @@ import com.palprotech.heylaapp.bean.support.EventCitiesListAll;
 import com.palprotech.heylaapp.customview.SideDrawerLayout;
 import com.palprotech.heylaapp.customview.SideDrawerToggle;
 import com.palprotech.heylaapp.customview.SideMenuView;
+import com.palprotech.heylaapp.fragment.AllFragment;
 import com.palprotech.heylaapp.fragment.FavouriteFragment;
 import com.palprotech.heylaapp.fragment.HotspotFragment;
 import com.palprotech.heylaapp.fragment.LeaderboardFragment;
@@ -72,7 +74,6 @@ import java.util.List;
 import java.util.Locale;
 
 
-
 public class MainActivity extends AppCompatActivity implements SideMenuView.OnMenuClickListener, LocationListener, View.OnClickListener, ViewPager.OnPageChangeListener, DialogClickListener, IServiceListener {
 
     private static final String TAG = MainActivity.class.getName();
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
     private String isMenuEnable = "yes";
-
+    String res = "";
     //Linear layout holding the Save submenu
     private LinearLayout layoutFabMapview;
 
@@ -116,6 +117,13 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
         initToolBar();
+//        View logoView = getToolbarLogoIcon(toolbar);
+//        logoView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
@@ -123,9 +131,9 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
         changeFragment(0);
-        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
                     TAG_LOGOUT);
         }
 
@@ -140,17 +148,22 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
 //                                fabView.setVisibility(View.VISIBLE);
                                 break;
 
-                            case R.id.action_popular:
+                            case R.id.action_all:
                                 changeFragment(1);
 //                                fabView.setVisibility(View.VISIBLE);
                                 break;
-                            case R.id.action_hotspot:
+
+                            case R.id.action_popular:
                                 changeFragment(2);
+//                                fabView.setVisibility(View.VISIBLE);
+                                break;
+                            case R.id.action_hotspot:
+                                changeFragment(3);
 //                                fabView.setVisibility(View.VISIBLE);
                                 break;
                             case R.id.action_leaderboard:
                                 if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
-                                    changeFragment(3);
+                                    changeFragment(4);
                                 } else {
                                     android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MainActivity.this);
                                     alertDialogBuilder.setTitle("Login");
@@ -202,6 +215,25 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
 
     }
 
+    public static View getToolbarLogoIcon(Toolbar toolbar) {
+        //check if contentDescription previously was set
+        boolean hadContentDescription = android.text.TextUtils.isEmpty(toolbar.getLogoDescription());
+        String contentDescription = String.valueOf(!hadContentDescription ? toolbar.getLogoDescription() : "logoContentDescription");
+        toolbar.setLogoDescription(contentDescription);
+        ArrayList<View> potentialViews = new ArrayList<View>();
+        //find the view based on it's content description, set programatically or with android:contentDescription
+        toolbar.findViewsWithText(potentialViews, contentDescription, View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION);
+        //Nav icon is always instantiated at this point because calling setLogoDescription ensures its existence
+        View logoIcon = null;
+        if (potentialViews.size() > 0) {
+            logoIcon = potentialViews.get(0);
+        }
+        //Clear content description if not previously present
+        if (hadContentDescription)
+            toolbar.setLogoDescription(null);
+        return logoIcon;
+    }
+
     public void doLogout() {
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(this);
@@ -238,22 +270,27 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
     private void changeFragment(int position) {
 
         Fragment newFragment = null;
-
         if (position == 0) {
             checkPointSearch = 0;
             newFragment = new FavouriteFragment();
         } else if (position == 1) {
+            newFragment = new AllFragment();
             checkPointSearch = 1;
-            newFragment = new PopularFragment();
         } else if (position == 2) {
             checkPointSearch = 2;
-            newFragment = new HotspotFragment();
+            newFragment = new PopularFragment();
+
         } else if (position == 3) {
+            checkPointSearch = 3;
+            newFragment = new HotspotFragment();
+        }
+        else if (position == 4) {
             newFragment = new LeaderboardFragment();
             isMenuEnable = "no";
         }
 
-        getFragmentManager().beginTransaction().replace(
+
+        getSupportFragmentManager().beginTransaction().replace(
                 R.id.fragmentContainer, newFragment)
                 .commit();
     }
@@ -477,31 +514,39 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
             try {
-                JSONArray getData = response.getJSONArray("Cities");
-                if (getData != null && getData.length() > 0) {
+                if (res.equalsIgnoreCase("city") ) {
+                    JSONArray getData = response.getJSONArray("Cities");
+                    if (getData != null && getData.length() > 0) {
 
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressDialogHelper.hideProgressDialog();
-                            Gson gson = new Gson();
-                            EventCitiesListAll eventCitiesList = gson.fromJson(response.toString(), EventCitiesListAll.class);
-                            if (eventCitiesList.getEventCities() != null && eventCitiesList.getEventCities().size() > 0) {
-                                totalCount = eventCitiesList.getCount();
-                                isLoadingForFirstTime = false;
-                                updateListAdapter(eventCitiesList.getEventCities());
-                                try {
-                                    checkCurrentCity();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialogHelper.hideProgressDialog();
+                                Gson gson = new Gson();
+                                EventCitiesListAll eventCitiesList = gson.fromJson(response.toString(), EventCitiesListAll.class);
+                                if (eventCitiesList.getEventCities() != null && eventCitiesList.getEventCities().size() > 0) {
+                                    totalCount = eventCitiesList.getCount();
+                                    isLoadingForFirstTime = false;
+                                    updateListAdapter(eventCitiesList.getEventCities());
+//                                try {
+////                                    checkCurrentCity();
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
                                 }
                             }
+                        });
+                    } else {
+                        if (eventCitiesArrayList != null) {
+                            eventCitiesArrayList.clear();
                         }
-                    });
-                } else {
-                    if (eventCitiesArrayList != null) {
-                        eventCitiesArrayList.clear();
                     }
+                    profileInfo();
+                } else if (res.equalsIgnoreCase("info") ) {
+                    JSONObject getData = response.getJSONObject("userData");
+                    PreferenceStorage.saveUserPicture(this, getData.getString("picture_url"));
+                }else if (res.equalsIgnoreCase("login") ) {
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -530,6 +575,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
     }
 
     private void dailyLoginActivity() {
+        res = "login";
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         System.out.println(dateFormat.format(date));
@@ -548,6 +594,24 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
 
         progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_ACTIVITY;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void profileInfo() {
+        res = "info";
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_INFO;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
@@ -577,30 +641,29 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
             addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
             String address = addresses.get(0).getLocality(); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-            if (!(address.equals(selectCity))) {
-                for (int i = 0; i < eventCitiesArrayList.size(); i++)
-                    if(address.equals(eventCitiesArrayList.get(i).getCityName())){
-                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MainActivity.this);
-                        alertDialogBuilder.setTitle("City change");
-                        alertDialogBuilder.setMessage("New events are available for "+address+" would you like to change city?");
-                        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                Intent homeIntent = new Intent(getApplicationContext(), SelectCityActivity.class);
-                                startActivity(homeIntent);
-                            }
-                        });
-                        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                        alertDialogBuilder.show();
-                    }
-            }
-        }
-        else {
+//            if (!(address.equals(selectCity))) {
+//                for (int i = 0; i < eventCitiesArrayList.size(); i++)
+//                    if(address.equals(eventCitiesArrayList.get(i).getCityName())){
+//                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MainActivity.this);
+//                        alertDialogBuilder.setTitle("City change");
+//                        alertDialogBuilder.setMessage("New events are available for "+address+" would you like to change city?");
+//                        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface arg0, int arg1) {
+//                                Intent homeIntent = new Intent(getApplicationContext(), SelectCityActivity.class);
+//                                startActivity(homeIntent);
+//                            }
+//                        });
+//                        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        });
+//                        alertDialogBuilder.show();
+//                    }
+//            }
+        } else {
             long currentTime = System.currentTimeMillis();
             long lastsharedTime = PreferenceStorage.getDailyAskTime(this);
             if ((currentTime - lastsharedTime) > HeylaAppConstants.TWENTY4HOURS) {
@@ -660,7 +723,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
     }
 
     private void GetEventCities() {
-
+        res = "city";
         if (CommonUtils.isNetworkAvailable(this)) {
 
             JSONObject jsonObject = new JSONObject();
@@ -785,6 +848,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
     public void startPersonDetailsActivity(long id) {
         Intent homeIntent = new Intent(getApplicationContext(), ProfileActivity.class);
         startActivityForResult(homeIntent, 0);
+        finish();
     }
 
 }

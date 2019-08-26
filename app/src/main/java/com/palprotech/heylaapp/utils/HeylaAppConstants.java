@@ -8,8 +8,8 @@ public class HeylaAppConstants {
 
     //    URLS
     //    BASE URL
-//    public static final String BASE_URL = "https://heylaapp.com/testing/";
-    public static final String BASE_URL = "https://heylaapp.com/";
+    public static final String BASE_URL = "https://heylaapp.com/testing/";
+//    public static final String BASE_URL = "https://heylaapp.com/";
 
     //    SignIn
     public static final String SIGN_IN = "apimain/login/";
@@ -145,6 +145,12 @@ public class HeylaAppConstants {
 
     //    User activity
     public static final String USER_ACTIVITY = "apimain/userActivity/";
+
+    //    User activity
+    public static final String USER_INFO = "apimain/profileDetails";
+
+    //    User activity
+    public static final String USER_NOTIFICATION = "apimain/updateNotification";
 
     //    User activity Parms
     public static final String PARAMS_DATE = "date";
@@ -282,6 +288,9 @@ public class HeylaAppConstants {
     // Wish list delete
     public static final String WISH_LIST_DELETE = "apimain/deleteWishList/";
 
+    // Feedback
+    public static final String SEND_FEEDBACK = "apimain/user_feedback";
+
     // Wish list delete params
     public static final String PARAMS_WISH_LIST_ID = "wishlist_id";
 
@@ -327,6 +336,9 @@ public class HeylaAppConstants {
     //    Shared Event Country Id
     public static final String KEY_EVENT_COUNTRY_ID = "country_id";
 
+    //    STAUS
+    public static final String KEY_NOTIFICATION_STATUS  = "status";
+
     //    Shared Event Date Id
     public static final String KEY_DATE_TYPE = "day_type";
 
@@ -340,6 +352,7 @@ public class HeylaAppConstants {
 
     //Profile
     public static final String KEY_USER_EMAIL_ID = "email_id";
+    public static final String KEY_USER_EMAIL = "email";
     public static final String KEY_USER_BIRTHDAY = "birthday";
     public static final String KEY_USER_OCCUPATION = "occupation";
     public static final String KEY_USER_GENDER = "gender";

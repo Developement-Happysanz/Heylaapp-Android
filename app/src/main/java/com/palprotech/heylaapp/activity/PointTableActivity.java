@@ -60,7 +60,7 @@ public class PointTableActivity extends AppCompatActivity implements IServiceLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_point_table);
 //        loadMoreListView = (ListView) findViewById(R.id.listView_ranks);
-        layout_all = findViewById(R.id.layout_member_list);
+        layout_all = (LinearLayout) findViewById(R.id.layout_member_list);
         rankArrayList = new ArrayList<>();
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
@@ -130,13 +130,13 @@ public class PointTableActivity extends AppCompatActivity implements IServiceLis
     public void onResponse(final JSONObject response) {
         if (validateSignInResponse(response)) {
             Log.d("ajazFilterresponse : ", response.toString());
-            try {
-                String totalMark = response.getString("user_points");
-                txtTotal.setText(totalMark);
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+//            try {
+//                String totalMark = response.getString("user_points");
+//                txtTotal.setText(totalMark);
+//
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//            }
 
             mHandler.post(new Runnable() {
                 @Override
@@ -212,9 +212,9 @@ public class PointTableActivity extends AppCompatActivity implements IServiceLis
             for (int c1 = 0; c1 < memberCount; c1++) {
 
                 RelativeLayout cell = new RelativeLayout(this);
-                cell.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 150));
+                cell.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 120));
                 cell.setPadding(0, 0, 0, 0);
-                cell.setBackgroundColor(Color.parseColor("#c9c9c9"));
+                cell.setBackgroundColor(Color.parseColor("#e5e6e9"));
 
 //                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 100);
 //                params.setMargins(01, 01, 0, 01);
@@ -226,25 +226,37 @@ public class PointTableActivity extends AppCompatActivity implements IServiceLis
 //                params2.setMargins(01, 01, 0, 01);
 
 
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 150);
-                params.setMargins(0,2,0,1);
-                params.addRule(RelativeLayout.LEFT_OF, R.id.user_points_txt);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 120);
+                params.setMargins(0,0,0,0);
+
+                if(c1 == 0) {
+                    params.addRule(RelativeLayout.LEFT_OF, R.id.crown);
+                } else {
+                    params.addRule(RelativeLayout.LEFT_OF, R.id.user_points_txt);
+                }
                 params.addRule(RelativeLayout.RIGHT_OF, R.id.user_img);
 
 
-                RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(160, 150);
-                params1.setMargins(2, 2, 2, 1);
-                params1.addRule(RelativeLayout.LEFT_OF, R.id.user_rank_txt);
+                RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(160, 120);
+                params1.setMargins(0, 0, 0, 0);
+//                params1.addRule(RelativeLayout.LEFT_OF, R.id.user_rank_txt);
+                params1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 
 
-                RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(160, 150);
-                params2.setMargins(0, 2, 2, 1);
-                params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(100, 120);
+                params2.setMargins(0, 0, 0, 0);
+                params2.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 
-                RelativeLayout.LayoutParams imgParams = new RelativeLayout.LayoutParams(100, 150);
-                imgParams.setMargins(2,2,0,1);
+                RelativeLayout.LayoutParams imgParams = new RelativeLayout.LayoutParams(100, 120);
+                imgParams.addRule(RelativeLayout.RIGHT_OF, R.id.user_rank_txt);
+                imgParams.setMargins(0,0,0,0);
+
+
+                RelativeLayout.LayoutParams crownParams = new RelativeLayout.LayoutParams(100, ViewGroup.LayoutParams.MATCH_PARENT);
+                crownParams.addRule(RelativeLayout.LEFT_OF, R.id.user_points_txt);
+                crownParams.setMargins(0,0,0,0);
 //                params.addRule(RelativeLayout.LEFT_OF, R.id.user_name_txt);
-                imgParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+//                imgParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 
 //                TextView title = new TextView(this);
 //                title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -264,10 +276,10 @@ public class PointTableActivity extends AppCompatActivity implements IServiceLis
                 line1.setHint("User Name");
                 line1.requestFocusFromTouch();
                 line1.setTextSize(14.0f);
-                line1.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                line1.setBackgroundColor(Color.parseColor("#e5e6e9"));
 //                line1.setSingleLine(true);
                 line1.setTextColor(Color.parseColor("#000000"));
-                line1.setGravity(Gravity.CENTER);
+                line1.setGravity(Gravity.CENTER_VERTICAL);
                 line1.setPadding(15, 0, 15, 0);
                 line1.setLayoutParams(params);
 
@@ -284,7 +296,7 @@ public class PointTableActivity extends AppCompatActivity implements IServiceLis
                 line2.setAllCaps(true);
                 line2.setGravity(Gravity.CENTER);
                 line2.setSingleLine(true);
-                line2.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                line2.setBackgroundColor(Color.parseColor("#e5e6e9"));
                 line2.setTextColor(Color.parseColor("#000000"));
                 line2.setPadding(15, 0, 15, 0);
                 line2.setLayoutParams(params1);
@@ -295,7 +307,7 @@ public class PointTableActivity extends AppCompatActivity implements IServiceLis
 
 
                 line3.setId(R.id.user_rank_txt);
-                line3.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                line3.setBackgroundColor(Color.parseColor("#e5e6e9"));
                 line3.requestFocusFromTouch();
                 line3.setTextSize(14.0f);
                 line3.setAllCaps(true);
@@ -319,7 +331,7 @@ public class PointTableActivity extends AppCompatActivity implements IServiceLis
                     Picasso.with(getApplicationContext()).load("123").placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(line4);
                 }
 
-                line4.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                line4.setBackgroundColor(Color.parseColor("#e5e6e9"));
                 line4.requestFocusFromTouch();
                 line4.setPadding(0, 25, 0, 25);
                 line4.setLayoutParams(imgParams);
@@ -331,10 +343,19 @@ public class PointTableActivity extends AppCompatActivity implements IServiceLis
 //                border.setHeight(1);
 //                border.setBackgroundColor(Color.BLACK);
 
+                ImageView crown = new ImageView(this);
+                crown.setLayoutParams(crownParams);
+                crown.setId(R.id.crown);
+                crown.setImageResource(R.drawable.ic_points_ranking);
+                crown.setPadding(50, 0, 0, 10);
+
+                cell.addView(line4);
                 cell.addView(line1);
                 cell.addView(line2);
                 cell.addView(line3);
-                cell.addView(line4);
+                if(c1 == 0) {
+                    cell.addView(crown);
+                }
 //                cell.addView(border);
 
                 layout_all.addView(cell);

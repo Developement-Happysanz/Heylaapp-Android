@@ -160,8 +160,8 @@ public class WishListActivity extends AppCompatActivity implements AdapterView.O
                         signInSuccess = false;
                         Log.d(TAG, "Show error dialog");
 //                        if (!res.equalsIgnoreCase("reviewList")){
-//                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
 //                        }
+                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
 
                     } else {
                         signInSuccess = true;

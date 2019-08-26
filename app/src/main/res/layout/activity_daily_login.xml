@@ -21,8 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:minHeight="60dp"
-            android:paddingEnd="15dp"
             android:paddingStart="10dp"
+            android:paddingEnd="15dp"
             android:src="@drawable/ic_arrow_back_white_24dp" />
 
         <TextView
@@ -42,9 +42,9 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_daily_point_semicircle">
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/appColorBase">
 
         <TextView
             android:id="@+id/daily_point_title_text"
@@ -55,42 +55,54 @@
             android:background="@drawable/btn_round_nocolor"
             android:fontFamily="@font/muli"
             android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingEnd="20dp"
             android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="5dp"
             android:text="DAILY POINTS"
             android:textColor="@color/text_black"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/daily_point_text"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_below="@+id/daily_point_title_text"
-            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/muli"
             android:gravity="center"
             android:paddingBottom="5dp"
             android:text="Total Login Points"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:layout_alignTop="@+id/daily_point_text"
+            android:layout_alignBottom="@+id/daily_point_text"
+            android:layout_toLeftOf="@+id/daily_point"
+            android:src="@drawable/ic_leaderboard" />
 
         <TextView
             android:id="@+id/daily_point"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/daily_point_text"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="100dp"
-            android:layout_marginStart="100dp"
+            android:layout_alignTop="@+id/daily_point_text"
+            android:layout_alignBottom="@+id/daily_point_text"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
             android:fontFamily="@font/muli"
             android:gravity="center"
             android:paddingBottom="5dp"
-            android:text="0"
+            android:text="9999999999"
+            android:maxLength="6"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="25sp" />
 
     </RelativeLayout>
 
@@ -278,9 +290,9 @@
                 android:id="@+id/third_set"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/second_set"
-                android:layout_alignStart="@+id/second_set"
                 android:layout_below="@+id/second_set"
+                android:layout_alignStart="@+id/second_set"
+                android:layout_alignEnd="@+id/second_set"
                 android:layout_centerHorizontal="true"
                 android:gravity="center">
 

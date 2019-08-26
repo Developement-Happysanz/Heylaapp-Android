@@ -3,7 +3,7 @@ package com.palprotech.heylaapp.fragment;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -16,6 +16,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,10 +24,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -125,6 +129,7 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
     private FloatingActionButton fabView;
     //Linear layout holding the Save submenu
     private LinearLayout layoutFabMapview;
+    private RelativeLayout mainl;
 
     //Linear layout holding the Edit submenu
     private LinearLayout layoutFabNearby;
@@ -174,6 +179,7 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
         layoutFabListView = (LinearLayout) rootView.findViewById(R.id.layoutFabListView);
         layoutFabNearby = (LinearLayout) rootView.findViewById(R.id.layoutFabNearby);
         layoutFabMapview = (LinearLayout) rootView.findViewById(R.id.layoutFabMapView);
+        mainl = (RelativeLayout) rootView.findViewById(R.id.layout);
 
         mMapIcon = BitmapDescriptorFactory.fromResource(R.drawable.location_dot_img);
 
@@ -448,8 +454,21 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
         layoutFabListView.setVisibility(View.INVISIBLE);
         layoutFabNearby.setVisibility(View.INVISIBLE);
         layoutFabMapview.setVisibility(View.INVISIBLE);
-        fabView.setImageResource(R.drawable.ic_plus);
+        layoutFabListView.setFocusable(false);
+        layoutFabNearby.setFocusable(false);
+        layoutFabMapview.setFocusable(false);
+        layoutFabListView.setClickable(false);
+        layoutFabNearby.setClickable(false);
+        layoutFabMapview.setClickable(false);
+        fabView.setImageResource(R.drawable.ic_plus_icon);
+        mainl.setForeground(ContextCompat.getDrawable(getActivity(), R.color.transparent) );
         fabExpanded = false;
+//        Animation show_fab_1 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab_show);
+//        Animation hide_fab_1 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab_hide);
+//
+//        layoutFabListView.startAnimation(hide_fab_1);
+//        layoutFabNearby.startAnimation(hide_fab_1);
+//        layoutFabMapview.startAnimation(hide_fab_1);
     }
 
     //Opens FAB submenus
@@ -457,9 +476,22 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
         layoutFabListView.setVisibility(View.VISIBLE);
         layoutFabNearby.setVisibility(View.VISIBLE);
         layoutFabMapview.setVisibility(View.VISIBLE);
+        layoutFabListView.setFocusable(true);
+        layoutFabNearby.setFocusable(true);
+        layoutFabMapview.setFocusable(true);
+        layoutFabListView.setClickable(true);
+        layoutFabNearby.setClickable(true);
+        layoutFabMapview.setClickable(true);
+        mainl.setForeground(ContextCompat.getDrawable(getActivity(), R.color.light_line_color) );
 //        Change settings icon to 'X' icon
-        fabView.setImageResource(R.drawable.ic_close);
+        fabView.setImageResource(R.drawable.ic_cross_icon);
         fabExpanded = true;
+//        Animation show_fab_1 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab_show);
+//        Animation hide_fab_1 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab_hide);
+//
+//        layoutFabListView.startAnimation(show_fab_1);
+//        layoutFabNearby.startAnimation(show_fab_1);
+//        layoutFabMapview.startAnimation(show_fab_1);
     }
 
     @Override

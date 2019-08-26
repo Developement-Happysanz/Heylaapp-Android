@@ -1,77 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
     android:layout_marginBottom="30dp"
-    android:background="@color/white"
+    android:background="@drawable/shadow_round"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical"
     android:padding="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow_round">
 
-        <ImageView
-            android:id="@+id/img_logo"
+        <android.support.v7.widget.CardView
+            android:id="@+id/img_logo_layout"
             android:layout_width="match_parent"
             android:layout_height="190dp"
-            android:layout_gravity="center_vertical" />
+            app:cardCornerRadius="5dp">
 
-        <TextView
-            android:id="@+id/ad_name"
-            android:layout_width="match_parent"
-            android:layout_height="190dp"
-            android:gravity="end|top"
-            android:padding="5dp"
-            android:text="Promoted"
-            android:textColor="@color/white"
-            android:background="@color/temp"
-            android:visibility="gone"
-            android:layout_centerInParent="true" />
+            <ImageView
+                android:id="@+id/img_logo"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/shadow_round" />
+
+            <TextView
+                android:id="@+id/ad_name"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:layout_centerInParent="true"
+                android:background="@color/temp"
+                android:gravity="end|top"
+                android:padding="5dp"
+                android:text="Promoted"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+        </android.support.v7.widget.CardView>
+
 
         <LinearLayout
             android:id="@+id/nor_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/img_logo"
+            android:layout_below="@+id/img_logo_layout"
             android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_gravity="bottom"
-                android:gravity="center"
                 android:background="@color/white">
 
                 <TextView
                     android:id="@+id/txt_event_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="5dp"
                     android:layout_above="@+id/txt_event_date"
-                    android:layout_toLeftOf="@+id/txt_event_price"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="5dp"
+                    android:paddingTop="5dp"
                     android:ellipsize="end"
-                    android:singleLine="true"
-                    android:textStyle="bold"
                     android:fontFamily="@font/muli"
+                    android:singleLine="true"
                     android:text="Mini Marathon Championship"
                     android:textColor="@color/text_black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
 
                 <TextView
                     android:id="@+id/txt_event_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:fontFamily="@font/muli"
                     android:layout_alignLeft="@+id/txt_event_name"
-                    android:singleLine="true"
-                    android:textColorHint="@color/text_black"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/muli"
                     android:hint="25"
+                    android:singleLine="true"
                     android:textColor="@color/text_black"
+                    android:textColorHint="@color/text_black"
                     android:textSize="12sp" />
 
 
@@ -91,15 +104,19 @@
                     android:id="@+id/txt_event_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/Paid"
                     android:fontFamily="@font/muli"
-                    android:textStyle="bold"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
                     android:singleLine="true"
                     android:text="Paid"
-                    android:textColor="@color/appColorBase"
-                    android:textSize="14sp" />
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/event_paid_btn"

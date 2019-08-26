@@ -1,6 +1,6 @@
 package com.palprotech.heylaapp.fragment;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;

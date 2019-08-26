@@ -33,7 +33,7 @@
             android:gravity="center"
             android:minHeight="?attr/actionBarSize"
             android:paddingLeft="10dp"
-            android:text="Select City"
+            android:text="Select Region"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -53,6 +53,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/muli"
+            android:visibility="gone"
             android:overlapAnchor="false"
             android:nextFocusDown="@+id/section_list_spinner"
             android:spinnerMode="dropdown"
@@ -113,17 +114,53 @@
             <!--android:textSize="16sp"-->
             <!--android:textStyle="bold" />-->
 
+        <ImageView
+            android:id="@+id/loc_pin"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:layout_toLeftOf="@+id/loc_text"
+            android:src="@drawable/ic_singapore_pin"/>
+
+        <TextView
+            android:id="@+id/loc_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_alignTop="@id/loc_pin"
+            android:layout_alignBottom="@id/loc_pin"
+            android:text="Singapore"
+            android:fontFamily="@font/muli"
+            android:textColor="@color/text_black"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/loc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/text_black"
+            android:fontFamily="@font/muli"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/loc_pin"
+            android:text="Event Locations"
+            android:textSize="18sp"/>
+
         <ListView
             android:id="@+id/listView_events"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/app_logo_color"
-            android:layout_below="@+id/country_list_spinner"
+            android:layout_below="@+id/loc"
             android:divider="@color/background_grey"
-            android:dividerHeight="2dp"
+            android:dividerHeight="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/muli"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp">
+            android:paddingEnd="10dp">
 
         </ListView>
 
@@ -141,7 +178,7 @@
             android:layout_height="150dp"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
-            android:background="@drawable/select_citybg" />
+            android:background="@drawable/selectarea_bg" />
 
     </RelativeLayout>
 

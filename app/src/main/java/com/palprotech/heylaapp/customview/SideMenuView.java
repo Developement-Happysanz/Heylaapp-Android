@@ -486,6 +486,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                 @Override
                 public void onClick(View v) {
                     Intent homeIntent = new Intent(context, BlogViewActivity.class);
+                    homeIntent.putExtra("pageval", "blog");
                     context.startActivity(homeIntent);
                 }
             });

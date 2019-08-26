@@ -62,6 +62,7 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Random;
 
 public class SignInFragment extends Fragment implements View.OnClickListener, IServiceListener, DialogClickListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -96,29 +97,31 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
         rootView = inflater.inflate(R.layout.fragment_sign_in, container, false);
 
         initializeViews();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        IMEINo = String.valueOf(generateRandom(12));
 
-            TelephonyManager tm = (TelephonyManager)
-                    getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE)
-                    == PackageManager.PERMISSION_DENIED) {
-
-                Log.d("permission", "permission denied to SEND_SMS - requesting it");
-                String[] permissions = {Manifest.permission.READ_PHONE_STATE};
-
-                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
-            }
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                IMEINo = tm.getImei();
-            } else {
-                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE)
-                        == PackageManager.PERMISSION_DENIED) {
-                    IMEINo = "";
-                } else {
-                    IMEINo = tm.getDeviceId();
-                }
-            }
-        }
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+//
+//            TelephonyManager tm = (TelephonyManager)
+//                    getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+//            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE)
+//                    == PackageManager.PERMISSION_DENIED) {
+//
+//                Log.d("permission", "permission denied to SEND_SMS - requesting it");
+//                String[] permissions = {Manifest.permission.READ_PHONE_STATE};
+//
+//                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
+//            }
+//            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                IMEINo = tm.getImei();
+//            } else {
+//                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE)
+//                        == PackageManager.PERMISSION_DENIED) {
+//                    IMEINo = "";
+//                } else {
+//                    IMEINo = tm.getDeviceId();
+//                }
+//            }
+//        }
 
         return rootView;
     }
@@ -357,7 +360,15 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
             AlertDialogHelper.showSimpleAlertDialog(getActivity(), "No Network connection available");
         }
     }
-
+    public static long generateRandom(int length) {
+        Random random = new Random();
+        char[] digits = new char[length];
+        digits[0] = (char) (random.nextInt(9) + '1');
+        for (int i = 1; i < length; i++) {
+            digits[i] = (char) (random.nextInt(10) + '0');
+        }
+        return Long.parseLong(new String(digits));
+    }
     // Login with facebook
     private void initFacebook() {
         Log.d(TAG, "Initializing facebook");

@@ -4,6 +4,7 @@ package com.palprotech.heylaapp.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -152,10 +153,14 @@ public class EventsListAdapter extends BaseAdapter {
             holder.txtPrice.setText(paidBtnVal);
             if (paidBtnVal.equalsIgnoreCase("invite")) {
                 holder.paidBtn.setTextColor(context.getResources().getColor(R.color.white)); //Blue
+                holder.txtPrice.setBackgroundColor(ContextCompat.getColor(context, R.color.Paid));
             } else if (paidBtnVal.equalsIgnoreCase("free")) {
                 holder.paidBtn.setTextColor(context.getResources().getColor(R.color.white)); //Green
+                holder.txtPrice.setText(paidBtnVal);
+                holder.txtPrice.setBackgroundColor(ContextCompat.getColor(context, R.color.Free));
             } else if (paidBtnVal.equalsIgnoreCase("paid")) {
                 holder.paidBtn.setTextColor(context.getResources().getColor(R.color.white)); //rounder_button
+                holder.txtPrice.setBackgroundColor(ContextCompat.getColor(context, R.color.Paid));
             }
         }
 

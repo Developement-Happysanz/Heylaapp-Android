@@ -20,6 +20,11 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="MySwitchTheme" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/appColorBase</item>
+
+    </style>
+
     <style name="AppThemeNoActionBarLogin" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

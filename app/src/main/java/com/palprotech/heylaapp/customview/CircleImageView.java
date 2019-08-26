@@ -32,7 +32,7 @@ public class CircleImageView extends AppCompatImageView {
 
     private static final int DEFAULT_BORDER_WIDTH = 8;
     private static final int DEFAULT_BORDER_COLOR = Color.WHITE;
-    private static final int DEFAULT_FILL_COLOR = Color.BLACK;
+    private final int DEFAULT_FILL_COLOR = getResources().getColor(R.color.transparent);
     private static final boolean DEFAULT_BORDER_OVERLAY = false;
 
     private final RectF mDrawableRect = new RectF();

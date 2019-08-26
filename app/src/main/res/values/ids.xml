@@ -11,4 +11,5 @@
     <item name="user_rank_txt" type="id" />
     <item name="user_points_txt" type="id" />
     <item name="user_img" type="id" />
+    <item name="crown" type="id" />
 </resources>

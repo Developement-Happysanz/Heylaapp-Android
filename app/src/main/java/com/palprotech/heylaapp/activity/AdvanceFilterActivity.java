@@ -300,6 +300,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                             } else {
                                 Log.e("Close", "Close");
                                 ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
+                                ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
                             }
                         }
 
@@ -576,6 +577,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                 findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                 ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
+                ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
 
                 singleDate = "";
                 todayPressed = false;
@@ -627,6 +629,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                 findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                 ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
+                ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
                 singleDate = "";
                 todayPressed = false;
                 datePressed = false;

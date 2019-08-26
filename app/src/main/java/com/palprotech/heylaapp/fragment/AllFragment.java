@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -13,14 +15,22 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -39,6 +49,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.activity.AdvanceFilterActivity;
+import com.palprotech.heylaapp.activity.AdvancedFilterResultActivity;
 import com.palprotech.heylaapp.activity.EventDetailActivity;
 import com.palprotech.heylaapp.activity.NearbyActivity;
 import com.palprotech.heylaapp.adapter.EventsListAdapter;
@@ -56,14 +68,15 @@ import com.palprotech.heylaapp.utils.PreferenceStorage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AllFragment extends android.app.Fragment implements AdapterView.OnItemClickListener, IServiceListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
+public class AllFragment extends Fragment implements AdapterView.OnItemClickListener, IServiceListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
-    private static final String TAG = AllFragment.class.getName();
 
+    private static final String TAG = FavouriteFragment.class.getName();
     private String listFlag = null;
     String className;
     private View rootView;
@@ -72,7 +85,6 @@ public class AllFragment extends android.app.Fragment implements AdapterView.OnI
     GoogleApiClient mGoogleApiClient = null;
     private boolean mMapLoaded = false;
     Location mLastLocation = null;
-
     private List<Marker> mAddedMarkers = new ArrayList<Marker>();
     private HashMap<LatLng, Event> mDisplayedEvents = new HashMap<LatLng, Event>();
     private boolean mAddddLocations = true;
@@ -113,13 +125,13 @@ public class AllFragment extends android.app.Fragment implements AdapterView.OnI
     private FloatingActionButton fabView;
     //Linear layout holding the Save submenu
     private LinearLayout layoutFabMapview;
-
+    private RelativeLayout mainl;
     //Linear layout holding the Edit submenu
     private LinearLayout layoutFabNearby;
     private LinearLayout layoutFabListView;
 
     TextView all, today, tomo, week, month;
-    String dateType = "";
+    String dateType = "All";
 
     protected ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
@@ -127,6 +139,14 @@ public class AllFragment extends android.app.Fragment implements AdapterView.OnI
     int pageNumber = 0, totalCount = 0;
 
     private SearchView mSearchView = null;
+
+    public static FavouriteFragment newInstance(int position) {
+        FavouriteFragment frag = new FavouriteFragment();
+        Bundle b = new Bundle();
+        b.putInt("position", position);
+        frag.setArguments(b);
+        return frag;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -157,6 +177,122 @@ public class AllFragment extends android.app.Fragment implements AdapterView.OnI
         layoutFabListView = (LinearLayout) rootView.findViewById(R.id.layoutFabListView);
         layoutFabNearby = (LinearLayout) rootView.findViewById(R.id.layoutFabNearby);
         layoutFabMapview = (LinearLayout) rootView.findViewById(R.id.layoutFabMapView);
+        mainl = (RelativeLayout) rootView.findViewById(R.id.layout);
+
+        all = (TextView) rootView.findViewById(R.id.txt_all);
+        all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateType = "All";
+                all.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                all.setTextColor(getResources().getColor(R.color.white));
+                today.setBackgroundColor(getResources().getColor(R.color.white));
+                today.setTextColor(getResources().getColor(R.color.appColorBase));
+                tomo.setBackgroundColor(getResources().getColor(R.color.white));
+                tomo.setTextColor(getResources().getColor(R.color.appColorBase));
+                week.setBackgroundColor(getResources().getColor(R.color.white));
+                week.setTextColor(getResources().getColor(R.color.appColorBase));
+                month.setBackgroundColor(getResources().getColor(R.color.white));
+                month.setTextColor(getResources().getColor(R.color.appColorBase));
+                eventsArrayList.clear();
+                makeEventListServiceCall();
+                if (eventsListAdapter != null) {
+                    eventsListAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        today = (TextView) rootView.findViewById(R.id.txt_today);
+        today.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateType = "Today";
+                all.setBackgroundColor(getResources().getColor(R.color.white));
+                all.setTextColor(getResources().getColor(R.color.appColorBase));
+                today.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                today.setTextColor(getResources().getColor(R.color.white));
+                tomo.setBackgroundColor(getResources().getColor(R.color.white));
+                tomo.setTextColor(getResources().getColor(R.color.appColorBase));
+                week.setBackgroundColor(getResources().getColor(R.color.white));
+                week.setTextColor(getResources().getColor(R.color.appColorBase));
+                month.setBackgroundColor(getResources().getColor(R.color.white));
+                month.setTextColor(getResources().getColor(R.color.appColorBase));
+                eventsArrayList.clear();
+                makeEventListServiceCall();
+                if (eventsListAdapter != null) {
+                    eventsListAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        tomo = (TextView) rootView.findViewById(R.id.txt_tomo);
+        tomo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateType = "Tomorrow";
+                all.setBackgroundColor(getResources().getColor(R.color.white));
+                all.setTextColor(getResources().getColor(R.color.appColorBase));
+                today.setBackgroundColor(getResources().getColor(R.color.white));
+                today.setTextColor(getResources().getColor(R.color.appColorBase));
+                tomo.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                tomo.setTextColor(getResources().getColor(R.color.white));
+                week.setBackgroundColor(getResources().getColor(R.color.white));
+                week.setTextColor(getResources().getColor(R.color.appColorBase));
+                month.setBackgroundColor(getResources().getColor(R.color.white));
+                month.setTextColor(getResources().getColor(R.color.appColorBase));
+                eventsArrayList.clear();
+                makeEventListServiceCall();
+                if (eventsListAdapter != null) {
+                    eventsListAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        week = (TextView) rootView.findViewById(R.id.txt_week);
+        week.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateType = "Week";
+                all.setBackgroundColor(getResources().getColor(R.color.white));
+                all.setTextColor(getResources().getColor(R.color.appColorBase));
+                today.setBackgroundColor(getResources().getColor(R.color.white));
+                today.setTextColor(getResources().getColor(R.color.appColorBase));
+                tomo.setBackgroundColor(getResources().getColor(R.color.white));
+                tomo.setTextColor(getResources().getColor(R.color.appColorBase));
+                week.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                week.setTextColor(getResources().getColor(R.color.white));
+                month.setBackgroundColor(getResources().getColor(R.color.white));
+                month.setTextColor(getResources().getColor(R.color.appColorBase));
+                eventsArrayList.clear();
+                makeEventListServiceCall();
+                if (eventsListAdapter != null) {
+                    eventsListAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        month = (TextView) rootView.findViewById(R.id.txt_month);
+        month.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateType = "Month";
+                all.setBackgroundColor(getResources().getColor(R.color.white));
+                all.setTextColor(getResources().getColor(R.color.appColorBase));
+                today.setBackgroundColor(getResources().getColor(R.color.white));
+                today.setTextColor(getResources().getColor(R.color.appColorBase));
+                tomo.setBackgroundColor(getResources().getColor(R.color.white));
+                tomo.setTextColor(getResources().getColor(R.color.appColorBase));
+                week.setBackgroundColor(getResources().getColor(R.color.white));
+                week.setTextColor(getResources().getColor(R.color.appColorBase));
+                month.setBackgroundColor(getResources().getColor(R.color.appColorBase));
+                month.setTextColor(getResources().getColor(R.color.white));
+                eventsArrayList.clear();
+                makeEventListServiceCall();
+                if (eventsListAdapter != null) {
+                    eventsListAdapter.notifyDataSetChanged();
+                }
+            }
+        });
 
         mMapIcon = BitmapDescriptorFactory.fromResource(R.drawable.location_dot_img);
 
@@ -217,42 +353,96 @@ public class AllFragment extends android.app.Fragment implements AdapterView.OnI
         return rootView;
     }
 
-    public void callGetEventService(int position) {
-        Log.d(TAG, "fetch event list" + position);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        if (isLoadingForFirstTime) {
-            Log.d(TAG, "Loading for the first time");
-            if (eventsArrayList != null)
-                eventsArrayList.clear();
 
-            if (CommonUtils.isNetworkAvailable(getActivity())) {
-                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-                makeEventListServiceCall();
-            } else {
-                AlertDialogHelper.showSimpleAlertDialog(getActivity(), getString(R.string.no_connectivity));
-            }
-        } else {
-            Log.d(TAG, "Do nothing");
+        inflater.inflate(R.menu.menu_landing, menu);
+        SearchManager searchManager =
+                (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
+        mSearchView =
+                (SearchView) menu.findItem(R.id.action_search_view).getActionView();
+        mSearchView.setIconifiedByDefault(true);
+        mSearchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+        AutoCompleteTextView searchTextView = (AutoCompleteTextView) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        try {
+            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            mCursorDrawableRes.setAccessible(true);
+            mCursorDrawableRes.set(searchTextView, R.drawable.cursor); //This sets the cursor resource ID to 0 or @null which will make it visible on white background
+        } catch (Exception e) {
         }
+
+        mSearchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Search button clicked");
+            }
+        });
+
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                Log.d(TAG, "Query submitted with String:" + s);
+//                int currentpage = viewPager.getCurrentItem();
+//                Log.d(TAG, "current item is" + currentpage);
+
+                if (s != null) {
+                    makeSearch(s);
+                }
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+
+        });
+
+        mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+
+            @Override
+            public boolean onClose() {
+                Log.d(TAG, "searchView closed");
+
+//                exitSearch();
+
+                return false;
+            }
+        });
+
+        mSearchView.setQueryHint("Search Event name");
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
-    private void makeEventListServiceCall() {
-        JSONObject jsonObject = new JSONObject();
-        try {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        //Workaround for SearchView close listener
+        switch (item.getItemId()) {
+            case R.id.action_filter:
+                //ajaz
+                // Toast.makeText(this, "advance filter clicked", Toast.LENGTH_SHORT).show();
+//                Context appContext = this;
 
-            jsonObject.put(HeylaAppConstants.KEY_EVENT_TYPE, "General");
-            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getActivity()));
-            jsonObject.put(HeylaAppConstants.KEY_USER_TYPE, PreferenceStorage.getUserType(getActivity()));
-            jsonObject.put(HeylaAppConstants.KEY_EVENT_CITY_ID, PreferenceStorage.getEventCityId(getActivity()));
-            jsonObject.put(HeylaAppConstants.KEY_DATE_TYPE, dateType);
+                startActivity(new Intent(getActivity(), AdvanceFilterActivity.class));
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
-        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_LIST;
-        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+        // return super.onOptionsItemSelected(item);
     }
 
     protected void initializeViews() {
@@ -293,6 +483,116 @@ public class AllFragment extends android.app.Fragment implements AdapterView.OnI
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+    }
+
+    public void callGetEventService(int position) {
+        Log.d(TAG, "fetch event list" + position);
+
+        if (isLoadingForFirstTime) {
+            Log.d(TAG, "Loading for the first time");
+            if (eventsArrayList != null)
+                eventsArrayList.clear();
+
+            if (CommonUtils.isNetworkAvailable(getActivity())) {
+                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                makeEventListServiceCall();
+            } else {
+                AlertDialogHelper.showSimpleAlertDialog(getActivity(), getString(R.string.no_connectivity));
+            }
+        } else {
+            Log.d(TAG, "Do nothing");
+        }
+    }
+
+    private void makeEventListServiceCall() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_EVENT_TYPE, "All");
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getActivity()));
+            jsonObject.put(HeylaAppConstants.KEY_USER_TYPE, PreferenceStorage.getUserType(getActivity()));
+            jsonObject.put(HeylaAppConstants.KEY_EVENT_CITY_ID, PreferenceStorage.getEventCityId(getActivity()));
+            jsonObject.put(HeylaAppConstants.KEY_DATE_TYPE, dateType);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.EVENT_LIST;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    //closes FAB submenus
+    private void closeSubMenusFab() {
+        layoutFabListView.setVisibility(View.INVISIBLE);
+        layoutFabNearby.setVisibility(View.INVISIBLE);
+        layoutFabMapview.setVisibility(View.INVISIBLE);
+        layoutFabListView.setFocusable(false);
+        layoutFabNearby.setFocusable(false);
+        layoutFabMapview.setFocusable(false);
+        layoutFabListView.setClickable(false);
+        layoutFabNearby.setClickable(false);
+        layoutFabMapview.setClickable(false);
+        fabView.setImageResource(R.drawable.ic_plus_icon);
+        mainl.setForeground(ContextCompat.getDrawable(getActivity(), R.color.transparent) );
+        fabExpanded = false;
+//        Animation show_fab_1 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab_show);
+//        Animation hide_fab_1 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab_hide);
+//
+//        layoutFabListView.startAnimation(hide_fab_1);
+//        layoutFabNearby.startAnimation(hide_fab_1);
+//        layoutFabMapview.startAnimation(hide_fab_1);
+    }
+
+    //Opens FAB submenus
+    private void openSubMenusFab() {
+        layoutFabListView.setVisibility(View.VISIBLE);
+        layoutFabNearby.setVisibility(View.VISIBLE);
+        layoutFabMapview.setVisibility(View.VISIBLE);
+        layoutFabListView.setFocusable(true);
+        layoutFabNearby.setFocusable(true);
+        layoutFabMapview.setFocusable(true);
+        layoutFabListView.setClickable(true);
+        layoutFabNearby.setClickable(true);
+        layoutFabMapview.setClickable(true);
+        mainl.setForeground(ContextCompat.getDrawable(getActivity(), R.color.light_line_color) );
+//        Change settings icon to 'X' icon
+        fabView.setImageResource(R.drawable.ic_cross_icon);
+        fabExpanded = true;
+//        Animation show_fab_1 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab_show);
+//        Animation hide_fab_1 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab_hide);
+//
+//        layoutFabListView.startAnimation(show_fab_1);
+//        layoutFabNearby.startAnimation(show_fab_1);
+//        layoutFabMapview.startAnimation(show_fab_1);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume called");
+        mMapView.onResume();
+
+        if ((mGoogleApiClient != null) && !mGoogleApiClient.isConnected()) {
+            Log.d(TAG, "make api connect");
+            mGoogleApiClient.connect();
+
+        } else {
+            Log.e(TAG, "googleapi is null");
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
     }
 
     private void performSlideLeftAnimation() {
@@ -369,6 +669,12 @@ public class AllFragment extends android.app.Fragment implements AdapterView.OnI
         anim.start();
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "Activity created");
+    }
+
     private void showMapsView() {
 
         if (mMapView.getVisibility() == View.VISIBLE) {
@@ -419,27 +725,171 @@ public class AllFragment extends android.app.Fragment implements AdapterView.OnI
         }
     }
 
-    //closes FAB submenus
-    private void closeSubMenusFab() {
-        layoutFabListView.setVisibility(View.INVISIBLE);
-        layoutFabNearby.setVisibility(View.INVISIBLE);
-        layoutFabMapview.setVisibility(View.INVISIBLE);
-        fabView.setImageResource(R.drawable.ic_plus);
-        fabExpanded = false;
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d(TAG, "onEvent list item clicked" + position);
+        Event event = null;
+        if ((eventsListAdapter != null) && (eventsListAdapter.ismSearching())) {
+            Log.d(TAG, "while searching");
+            int actualindex = eventsListAdapter.getActualEventPos(position);
+            Log.d(TAG, "actual index" + actualindex);
+            event = eventsArrayList.get(actualindex);
+        } else {
+            event = eventsArrayList.get(position);
+        }
+
+        Intent intent = new Intent(getActivity(), EventDetailActivity.class);
+        intent.putExtra("eventObj", event);
+        intent.putExtra("eventType", "General");
+        startActivity(intent);
     }
 
-    //Opens FAB submenus
-    private void openSubMenusFab() {
-        layoutFabListView.setVisibility(View.VISIBLE);
-        layoutFabNearby.setVisibility(View.VISIBLE);
-        layoutFabMapview.setVisibility(View.VISIBLE);
-//        Change settings icon to 'X' icon
-        fabView.setImageResource(R.drawable.ic_close);
-        fabExpanded = true;
+    private boolean validateSignInResponse(JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(HeylaAppConstants.PARAM_MESSAGE);
+                Log.d(TAG, "status val" + status + "msg" + msg);
+
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        Log.d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(getActivity(), msg);
+
+                    } else {
+                        signInSuccess = true;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return signInSuccess;
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onResponse(JSONObject response) {
+        progressDialogHelper.hideProgressDialog();
+        if (validateSignInResponse(response)) {
+            LoadListView(response);
+        }
+    }
+
+    private void LoadListView(JSONObject response) {
+
+
+        Gson gson = new Gson();
+        EventList eventsList = gson.fromJson(response.toString(), EventList.class);
+        if (eventsList != null) {
+            Log.d(TAG, "fetched all event list count" + eventsList.getCount());
+        }
+
+        int totalNearbyCount = 0;
+        if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
+            if (mLastLocation != null) {
+                Log.d(TAG, "Location is set");
+                ArrayList<Event> mNearbyLIst = new ArrayList<Event>();
+                Location temEventLoc = new Location("temp");
+                //Only add those locations which are within 35km
+                int i = 0;
+                for (Event event : eventsList.getEvents()) {
+                    //Testing. remove later
+                    if (latitude.get(i) != null) {
+                        event.setEventLatitude(latitude.get(i));
+                    }
+                    if (longitude.get(i) != null) {
+                        event.setEventLongitude(longitude.get(i));
+                    }
+                    //end of testing
+                    mTotalReceivedEvents++;
+
+                    if ((event.getEventLatitude() != null) && (event.getEventLongitude() != null)) {
+                        temEventLoc.setLatitude(Double.parseDouble(event.getEventLatitude()));
+                        temEventLoc.setLongitude(Double.parseDouble(event.getEventLongitude()));
+                        float distance = mLastLocation.distanceTo(temEventLoc);
+                        Log.d(TAG, "calculated distance is" + distance);
+                        if (distanceFlag == 2) {
+                            if (distance < (5 * 1000)) {
+                                mNearbyLIst.add(event);
+                            }
+                        } else {
+                            mNearbyLIst.add(event);
+                        }
+                    }
+                    i++;
+
+                }
+                totalNearbyCount = mNearbyLIst.size();
+                Log.d(TAG, "Total event close by 35km " + totalNearbyCount);
+                isLoadingForFirstTime = false;
+                totalCount = eventsList.getCount();
+                updateListAdapter(mNearbyLIst);
+                if (mTotalReceivedEvents < totalCount) {
+                    Log.d(TAG, "fetch remaining events");
+                    if (eventsArrayList.size() < 10) {
+
+                        pageNumber = (mTotalReceivedEvents / 10) + 1;
+
+                        Log.d(TAG, "Page number" + pageNumber);
+                        makeEventListServiceCall();
+                    }
+                } else {
+                    Log.d(TAG, "Total received count greater than total count");
+                }
+            } else {
+
+                isLoadingForFirstTime = false;
+                totalCount = eventsList.getCount();
+                updateListAdapter(eventsList.getEvents());
+            }
+        }
+        // Updates the location and zoom of the MapView
+
+    }
+
+    protected void updateListAdapter(ArrayList<Event> eventsArrayList) {
+        this.eventsArrayList.clear();
+        this.eventsArrayList.addAll(eventsArrayList);
+
+        if (eventsListAdapter == null) {
+            eventsListAdapter = new EventsListAdapter(getActivity(), this.eventsArrayList, className);
+            loadMoreListView.setAdapter(eventsListAdapter);
+        } else {
+            eventsListAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void searchForEvent(String eventname) {
+        Log.d(TAG, "searchevent called");
+        if (eventsListAdapter != null) {
+            eventsListAdapter.startSearch(eventname);
+            eventsListAdapter.notifyDataSetChanged();
+            loadMoreListView.invalidateViews();
+        }
+    }
+
+    private void makeSearch(String eventname) {
+        PreferenceStorage.IsFilterApply(getActivity(), eventname);
+        PreferenceStorage.saveFilterEventType(getActivity(), "All");
+        startActivity(new Intent(getActivity(), AdvancedFilterResultActivity.class));
+    }
+
+    public void exitSearch() {
+        Log.d(TAG, "exit event called");
+        if (eventsListAdapter != null) {
+            eventsListAdapter.exitSearch();
+            eventsListAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        if (totalCount > 0) {
+
+        }
 
     }
 
@@ -565,141 +1015,4 @@ public class AllFragment extends android.app.Fragment implements AdapterView.OnI
         }
     }
 
-    private boolean validateSignInResponse(JSONObject response) {
-        boolean signInSuccess = false;
-        if ((response != null)) {
-            try {
-                String status = response.getString("status");
-                String msg = response.getString(HeylaAppConstants.PARAM_MESSAGE);
-                Log.d(TAG, "status val" + status + "msg" + msg);
-
-                if ((status != null)) {
-                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
-                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
-                        signInSuccess = false;
-                        Log.d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(getActivity(), msg);
-
-                    } else {
-                        signInSuccess = true;
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return signInSuccess;
-    }
-
-    @Override
-    public void onResponse(JSONObject response) {
-        progressDialogHelper.hideProgressDialog();
-        if (validateSignInResponse(response)) {
-            LoadListView(response);
-        }
-    }
-
-    private void LoadListView(JSONObject response) {
-
-
-        Gson gson = new Gson();
-        EventList eventsList = gson.fromJson(response.toString(), EventList.class);
-        if (eventsList != null) {
-            Log.d(TAG, "fetched all event list count" + eventsList.getCount());
-        }
-
-        int totalNearbyCount = 0;
-        if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
-            if (mLastLocation != null) {
-                Log.d(TAG, "Location is set");
-                ArrayList<Event> mNearbyLIst = new ArrayList<Event>();
-                Location temEventLoc = new Location("temp");
-                //Only add those locations which are within 35km
-                int i = 0;
-                for (Event event : eventsList.getEvents()) {
-                    //Testing. remove later
-                    if (latitude.get(i) != null) {
-                        event.setEventLatitude(latitude.get(i));
-                    }
-                    if (longitude.get(i) != null) {
-                        event.setEventLongitude(longitude.get(i));
-                    }
-                    //end of testing
-                    mTotalReceivedEvents++;
-
-                    if ((event.getEventLatitude() != null) && (event.getEventLongitude() != null)) {
-                        temEventLoc.setLatitude(Double.parseDouble(event.getEventLatitude()));
-                        temEventLoc.setLongitude(Double.parseDouble(event.getEventLongitude()));
-                        float distance = mLastLocation.distanceTo(temEventLoc);
-                        Log.d(TAG, "calculated distance is" + distance);
-                        if (distanceFlag == 2) {
-                            if (distance < (5 * 1000)) {
-                                mNearbyLIst.add(event);
-                            }
-                        } else {
-                            mNearbyLIst.add(event);
-                        }
-                    }
-                    i++;
-
-                }
-                totalNearbyCount = mNearbyLIst.size();
-                Log.d(TAG, "Total event close by 35km " + totalNearbyCount);
-                isLoadingForFirstTime = false;
-                totalCount = eventsList.getCount();
-                updateListAdapter(mNearbyLIst);
-                if (mTotalReceivedEvents < totalCount) {
-                    Log.d(TAG, "fetch remaining events");
-                    if (eventsArrayList.size() < 10) {
-
-                        pageNumber = (mTotalReceivedEvents / 10) + 1;
-
-                        Log.d(TAG, "Page number" + pageNumber);
-                        makeEventListServiceCall();
-                    }
-                } else {
-                    Log.d(TAG, "Total received count greater than total count");
-                }
-            } else {
-
-                isLoadingForFirstTime = false;
-                totalCount = eventsList.getCount();
-                updateListAdapter(eventsList.getEvents());
-            }
-        }
-
-    }
-
-    protected void updateListAdapter (ArrayList <Event> eventsArrayList) {
-        this.eventsArrayList.addAll(eventsArrayList);
-
-        if (eventsListAdapter == null) {
-            eventsListAdapter = new EventsListAdapter(getActivity(), this.eventsArrayList, className);
-            loadMoreListView.setAdapter(eventsListAdapter);
-        } else {
-            eventsListAdapter.notifyDataSetChanged();
-        }
-    }
-
-    public void searchForEvent(String eventname) {
-        Log.d(TAG, "searchevent called");
-        if (eventsListAdapter != null) {
-            eventsListAdapter.startSearch(eventname);
-            eventsListAdapter.notifyDataSetChanged();
-            loadMoreListView.invalidateViews();
-        }
-    }
-
-    public void exitSearch() {
-        Log.d(TAG, "exit event called");
-        if (eventsListAdapter != null) {
-            eventsListAdapter.exitSearch();
-            eventsListAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void onError(String error) {
-
-    }
 }

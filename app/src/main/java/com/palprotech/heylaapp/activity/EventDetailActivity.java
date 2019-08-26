@@ -6,14 +6,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
@@ -27,13 +31,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.adapter.ReviewAdapter;
@@ -103,7 +113,20 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     ArrayList<Review> reviewArrayList;
     TextView viewMore;
     Button writeReview;
+    View abc;
 
+
+    private ArrayList<String> permissionsToRequest;
+    private ArrayList<String> permissionsRejected = new ArrayList<>();
+    private ArrayList<String> permissions = new ArrayList<>();
+    // integer for permissions results request
+    private static final int ALL_PERMISSIONS_RESULT = 1011;
+    private FusedLocationProviderClient fusedLocationClient;
+
+    private GoogleApiClient googleApiClient;
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private LocationRequest locationRequest;
+    private static final long UPDATE_INTERVAL = 5000, FASTEST_INTERVAL = 5000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,8 +142,8 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         event = (Event) getIntent().getSerializableExtra("eventObj");
         eventType = event.getHotspotStatus();
         setUpServices();
-        getWishlistStatus();
         setUpUI();
+        getWishlistStatus();
     }
 
     @Override
@@ -159,9 +182,10 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         }
         if (v == imEventFavourite) {
             if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
-                getWishlistStatus();
-                if (wishliststatus.equalsIgnoreCase("success")) {
-                    imEventFavourite.setImageResource(R.drawable.ic_fav_deselect);
+//                getWishlistStatus();
+                if (wishliststatus.equalsIgnoreCase("Already Added") ||
+                        wishliststatus.equalsIgnoreCase("Wishlist Added")) {
+                    imEventFavourite.setImageResource(R.drawable.ic_fav_unselect);
                     removeFromWishlist();
                 } else {
                     imEventFavourite.setImageResource(R.drawable.ic_fav_select);
@@ -253,6 +277,20 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
                     }
                 });
 
+        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        permissionsToRequest = permissionsToRequest(permissions);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (permissionsToRequest.size() > 0) {
+                requestPermissions(permissionsToRequest.toArray(
+                        new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
+            }
+        }
+
+        abc = (View) findViewById(R.id.map);
+        abc.setFocusable(false);
 //        imEventBanner.setMaxWidth(500);
 //        Event title
         txtEventName = findViewById(R.id.event_detail_name);
@@ -266,7 +304,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         imEventQuestionAnswer.setOnClickListener(this);
 //        Event popularity views
         imEventsView = findViewById(R.id.event_views);
-        imEventsView.setText("" + event.getPopularity());
+        imEventsView.setText(event.getPopularity() + " views");
         imEventsView.setOnClickListener(this);
 //        Mark as favourite event
         imEventFavourite = findViewById(R.id.addfav);
@@ -319,8 +357,13 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         txtOrganiserName.setText(event.getContactPerson());
 //        Event organiser mobile number - primary and secondary
         TextView txtOrganiserMobileNumber = findViewById(R.id.organisermobiletxt);
-        String eventOrganiserContactNumber = event.getPrimaryContactNo() + ", " + event.getSecondaryContactNo();
-        txtOrganiserMobileNumber.setText(eventOrganiserContactNumber);
+        if (!event.getSecondaryContactNo().isEmpty()) {
+            String eventOrganiserContactNumber = event.getPrimaryContactNo() + ", " + event.getSecondaryContactNo();
+            txtOrganiserMobileNumber.setText(eventOrganiserContactNumber);
+        } else {
+            String eventOrganiserContactNumber = event.getPrimaryContactNo();
+            txtOrganiserMobileNumber.setText(eventOrganiserContactNumber);
+        }
 //        Event organiser contact emailId
         TextView txtOrganiserEmailId = findViewById(R.id.organisermailtxt);
         txtOrganiserEmailId.setText(event.getContactMail());
@@ -345,6 +388,26 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         writeReview = findViewById(R.id.write_review);
         writeReview.setOnClickListener(this);
         updateEventViews();
+    }
+
+    private ArrayList<String> permissionsToRequest(ArrayList<String> wantedPermissions) {
+        ArrayList<String> result = new ArrayList<>();
+
+        for (String perm : wantedPermissions) {
+            if (!hasPermission(perm)) {
+                result.add(perm);
+            }
+        }
+
+        return result;
+    }
+
+    private boolean hasPermission(String permission) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+        }
+
+        return true;
     }
 
     private void updateEventViews() {
@@ -443,36 +506,115 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     }
 
     private void checkdistance() {
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+//        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//            return;
+//        }
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+//        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//
+//        if (location != null) {
+//
+//            longitude = location.getLongitude();
+//            latitude = location.getLatitude();
+//            longitude1 = Double.parseDouble(event.getEventLongitude());
+//            latitude1 = Double.parseDouble(event.getEventLatitude());
+//            if (distance(latitude, longitude, latitude1, longitude1) < 0.1) {
+//                Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString() + "\nGet ready for the fun! ", Toast.LENGTH_LONG).show();
+//                sendCheckinStatus();
+//            } else {
+//                Toast.makeText(getApplicationContext(), "Try again at - " + event.getEventName().toString() + "\nOnce you reached! ", Toast.LENGTH_LONG).show();
+//            }
+//        } else {
+//            showSettingsAlert();
+//        }
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//        startLocationUpdates();
 
-        if (location != null) {
+        // Permissions ok, we get last location
+//        location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+//        if (location != null) {
+//            locationTv.setText("Latitude : " + location.getLatitude() + "\nLongitude : " + location.getLongitude());
+//        }
 
-            longitude = location.getLongitude();
-            latitude = location.getLatitude();
-            longitude1 = Double.parseDouble(event.getEventLongitude());
-            latitude1 = Double.parseDouble(event.getEventLatitude());
-            if (distance(latitude, longitude, latitude1, longitude1) < 0.1) {
-                Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString() + "\nGet ready for the fun! ", Toast.LENGTH_LONG).show();
-                sendCheckinStatus();
-            } else {
-                Toast.makeText(getApplicationContext(), "Try again at - " + event.getEventName().toString() + "\nOnce you reached! ", Toast.LENGTH_LONG).show();
-            }
-        } else {
-            showSettingsAlert();
-        }
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+
+                            longitude = location.getLongitude();
+                            latitude = location.getLatitude();
+                            longitude1 = Double.parseDouble(event.getEventLongitude());
+                            latitude1 = Double.parseDouble(event.getEventLatitude());
+                            if (distance(latitude, longitude, latitude1, longitude1) < 0.1) {
+                                Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString() + "\nGet ready for the fun! ", Toast.LENGTH_LONG).show();
+                                sendCheckinStatus();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Try again at - " + event.getEventName().toString() + "\nOnce you reached! ", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            showSettingsAlert();
+                        }
+                    }
+                });
+
+
     }
+
+//    private void startLocationUpdates() {
+//        locationRequest = new LocationRequest();
+//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+//        locationRequest.setInterval(UPDATE_INTERVAL);
+//        locationRequest.setFastestInterval(FASTEST_INTERVAL);
+//
+//        if (ActivityCompat.checkSelfPermission(this,
+//                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+//                && ActivityCompat.checkSelfPermission(this,
+//                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            Toast.makeText(this, "You need to enable permissions to display location !", Toast.LENGTH_SHORT).show();
+//        }
+//
+////        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+//
+//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+//        fusedLocationClient.getLastLocation()
+//                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+//                    @Override
+//                    public void onSuccess(Location location) {
+//                        // Got last known location. In some rare situations this can be null.
+//                        if (location != null) {
+//
+//                            longitude = location.getLongitude();
+//                            latitude = location.getLatitude();
+//                            longitude1 = Double.parseDouble(event.getEventLongitude());
+//                            latitude1 = Double.parseDouble(event.getEventLatitude());
+//                            if (distance(latitude, longitude, latitude1, longitude1) < 0.1) {
+//                                Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString() + "\nGet ready for the fun! ", Toast.LENGTH_LONG).show();
+//                                sendCheckinStatus();
+//                            } else {
+//                                Toast.makeText(getApplicationContext(), "Try again at - " + event.getEventName().toString() + "\nOnce you reached! ", Toast.LENGTH_LONG).show();
+//                            }
+//                        } else {
+//                            showSettingsAlert();
+//                        }
+//                    }
+//                });
+//    }
 
     private double distance(double lat1, double lng1, double lat2, double lng2) {
 
@@ -597,21 +739,33 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
         if (validateSignInResponse(response)) {
             try {
                 if (res.equalsIgnoreCase("wishlistStatus")) {
-                    wishliststatus = response.getString("status");
-                    wishlist_id = response.getString("wishlist_id");
-                    if (wishliststatus.equalsIgnoreCase("success")) {
+                    wishliststatus = response.getString("msg");
+                    if (wishliststatus.equalsIgnoreCase("Already Added") ||
+                            wishliststatus.equalsIgnoreCase("Wishlist Added")) {
                         imEventFavourite.setImageResource(R.drawable.ic_fav_select);
+                        wishlist_id = response.getString("wishlist_id");
                     } else {
-                        imEventFavourite.setImageResource(R.drawable.ic_fav_deselect);
+                        imEventFavourite.setImageResource(R.drawable.ic_fav_unselect);
                     }
                     loadReviewList();
                 } else if (res.equalsIgnoreCase("wishlistADD")) {
-                    wishliststatus = response.getString("status");
-                    Toast.makeText(this, "Wishlist Updated!!", Toast.LENGTH_SHORT).show();
+                    wishliststatus = response.getString("msg");
+                    if (wishliststatus.equalsIgnoreCase("Wishlist Deleted")) {
+                        imEventFavourite.setImageResource(R.drawable.ic_fav_unselect);
+                    } else {
+                        wishlist_id = response.getString("wishlist_id");
+                        imEventFavourite.setImageResource(R.drawable.ic_fav_select);
+                    }
+                    Toast.makeText(this, "Wishlist Added!!", Toast.LENGTH_SHORT).show();
 
                 } else if (res.equalsIgnoreCase("wishlistDEL")) {
-                    wishliststatus = response.getString("status");
-                    Toast.makeText(this, "Wishlist Updated!!", Toast.LENGTH_SHORT).show();
+                    wishliststatus = response.getString("msg");
+                    if (wishliststatus.equalsIgnoreCase("Wishlist Deleted")) {
+                        imEventFavourite.setImageResource(R.drawable.ic_fav_unselect);
+                    } else {
+                        imEventFavourite.setImageResource(R.drawable.ic_fav_select);
+                    }
+                    Toast.makeText(this, "Wishlist Deleted!!", Toast.LENGTH_SHORT).show();
                 } else if (res.equalsIgnoreCase("reviewList")) {
                     JSONArray getData = response.getJSONArray("Reviewdetails");
                     if (getData != null && getData.length() > 0) {

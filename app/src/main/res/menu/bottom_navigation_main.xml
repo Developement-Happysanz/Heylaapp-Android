@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/action_favorites"
         android:enabled="true"
@@ -8,11 +9,20 @@
         android:icon="@drawable/ic_home_white"
         android:title="Favourites"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_all"
+        android:enabled="true"
+        android:fontFamily="@font/muli"
+        android:icon="@drawable/ic_home_white"
+        android:title="All"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/action_popular"
         android:enabled="true"
         android:fontFamily="@font/muli"
-        android:icon="@drawable/ic_popular_white"
+        android:icon="@drawable/ic_popular_icon"
         android:title="Popular"
         app:showAsAction="always" />
     <item
@@ -26,7 +36,7 @@
         android:id="@+id/action_leaderboard"
         android:enabled="true"
         android:fontFamily="@font/muli"
-        android:icon="@drawable/ic_leaderboard_white"
+        android:icon="@drawable/ic_leaderboard"
         android:title="Leaderboard"
         app:showAsAction="always" />
 </menu>

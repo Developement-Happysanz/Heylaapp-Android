@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -95,7 +96,9 @@ import java.util.Locale;
  */
 
 public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener, View.OnClickListener, IServiceListener, DialogClickListener, com.tsongkha.spinnerdatepicker.DatePickerDialog.OnDateSetListener {
-    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
+    public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 12;
+    public static final int MY_PERMISSIONS_REQUEST_CAM = 123;
     private static final String TAG = ProfileActivity.class.getName();
 
     private List<String> mOccupationList = new ArrayList<String>();
@@ -158,38 +161,38 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
     File image = null;
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public static boolean checkPermission(final Context context)
-    {
-        int currentAPIVersion = Build.VERSION.SDK_INT;
-        if(currentAPIVersion>=android.os.Build.VERSION_CODES.M)
-        {
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-                    alertBuilder.setCancelable(true);
-                    alertBuilder.setTitle("Permission necessary");
-                    alertBuilder.setMessage("External storage permission is necessary");
-                    alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-                        public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                        }
-                    });
-                    AlertDialog alert = alertBuilder.create();
-                    alert.show();
-
-                } else {
-                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return true;
-        }
-    }
+//    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+//    public static boolean checkPermission(final Context context)
+//    {
+//        int currentAPIVersion = Build.VERSION.SDK_INT;
+//        if(currentAPIVersion>=android.os.Build.VERSION_CODES.M)
+//        {
+//            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+//                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+//                    alertBuilder.setCancelable(true);
+//                    alertBuilder.setTitle("Permission necessary");
+//                    alertBuilder.setMessage("External storage permission is necessary");
+//                    alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//                        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+//                        }
+//                    });
+//                    AlertDialog alert = alertBuilder.create();
+//                    alert.show();
+//
+//                } else {
+//                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+//                }
+//                return false;
+//            } else {
+//                return true;
+//            }
+//        } else {
+//            return true;
+//        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -390,8 +393,28 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 saveProfile();
             }
         } else if (view == mProfileImage) {
-            checkPermission(this);
-            openImageIntent();
+//            checkPermission(this);
+//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+//                    == PackageManager.PERMISSION_DENIED) {
+//
+//                Log.d("permission", "permission denied to SEND_SMS - requesting it");
+//                String[] permissions = {Manifest.permission.CAMERA};
+//
+//                ActivityCompat.requestPermissions(ProfileActivity.this, permissions, MY_PERMISSIONS_REQUEST_CAM);
+//
+//            }
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_DENIED) {
+
+                Log.d("permission", "permission denied to SEND_SMS - requesting it");
+                String[] perm = {Manifest.permission.READ_EXTERNAL_STORAGE};
+
+                ActivityCompat.requestPermissions(ProfileActivity.this, perm, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+
+            }
+            else {
+                openImageIntent();
+            }
         } else if (view == country) {
             if (stateList != null)
                 stateList.clear();
@@ -407,6 +430,105 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 //            showCityList();
         }
     }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode,
+//                                           String[] permissions, int[] grantResults) {
+//        if (requestCode == MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE) {
+//
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//
+//                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+//                openImageIntent();
+//            } else {
+//
+//                Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show();
+//
+//            }
+//
+//        }
+//    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 123:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_DENIED) {
+
+                        Log.d("permission", "permission denied to SEND_SMS - requesting it");
+                        String[] perm = {Manifest.permission.READ_EXTERNAL_STORAGE};
+
+                        ActivityCompat.requestPermissions(ProfileActivity.this, perm, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+
+                    } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_DENIED) {
+
+                        Log.d("permission", "permission denied to SEND_SMS - requesting it");
+                        String[] perm = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+                        ActivityCompat.requestPermissions(ProfileActivity.this, perm, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+
+                    } else {
+                        openImageIntent();
+                    }
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                break;
+
+            case 1:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_DENIED) {
+
+                        Log.d("permission", "permission denied to SEND_SMS - requesting it");
+                        String[] perm = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+                        ActivityCompat.requestPermissions(ProfileActivity.this, perm, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+
+                    } else {
+                        openImageIntent();
+                    }
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                break;
+
+            case 12:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    openImageIntent();
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                break;
+
+            default:
+                openImageIntent();
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
+
 
     void saveProfile() {
         mProgressDialog = new ProgressDialog(this);

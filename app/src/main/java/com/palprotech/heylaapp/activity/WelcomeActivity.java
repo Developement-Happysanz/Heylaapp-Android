@@ -46,12 +46,11 @@ public class WelcomeActivity extends AppCompatActivity {
     private TextView[] dots;
     private int[] layouts;
     private Button btnSkip, btnNext;
-    private static String[] PERMISSIONS_ALL = {Manifest.permission.READ_CONTACTS,
-            Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CALENDAR,
-            Manifest.permission.WRITE_CALENDAR, Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CALL_PHONE,
-            Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+//    private static String[] PERMISSIONS_ALL = { Manifest.permission.READ_CALENDAR,
+//            Manifest.permission.WRITE_CALENDAR, Manifest.permission.ACCESS_FINE_LOCATION,
+//            Manifest.permission.ACCESS_COARSE_LOCATION,
+//            Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
     private static final int REQUEST_PERMISSION_All = 111;
     SQLiteHelper database;
     private static final int PERMISSION_REQUEST_CODE = 1;
@@ -70,17 +69,17 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         }
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-
-            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
-                    == PackageManager.PERMISSION_DENIED) {
-
-                Log.d("permission", "permission denied to SEND_SMS - requesting it");
-                String[] permissions = {Manifest.permission.READ_PHONE_STATE};
-
-                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
-            }
-        }
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+//
+//            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
+//                    == PackageManager.PERMISSION_DENIED) {
+//
+//                Log.d("permission", "permission denied to SEND_SMS - requesting it");
+//                String[] permissions = {Manifest.permission.READ_PHONE_STATE};
+//
+//                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
+//            }
+//        }
 
         // Checking for first time launch - before calling setContentView()
         boolean haspreferences = PreferenceStorage.isFirstTimeLaunch(getApplicationContext());
@@ -150,20 +149,17 @@ public class WelcomeActivity extends AppCompatActivity {
 
         boolean requestPermission = PermissionUtil.requestAllPermissions(this);
 
-        if (requestPermission == true) {
-
-            Log.i(TAG,
-                    "Displaying contacts permission rationale to provide additional context.");
-
-            // Display a SnackBar with an explanation and a button to trigger the request.
-
-            ActivityCompat
-                    .requestPermissions(this, PERMISSIONS_ALL,
-                            REQUEST_PERMISSION_All);
-        } else {
-
-            ActivityCompat.requestPermissions(this, PERMISSIONS_ALL, REQUEST_PERMISSION_All);
-        }
+//        if (requestPermission) {
+//
+//            Log.i(TAG,
+//                    "Displaying contacts permission rationale to provide additional context.");
+//
+//            // Display a SnackBar with an explanation and a button to trigger the request.
+//
+//            ActivityCompat.requestPermissions(this, PERMISSIONS_ALL, REQUEST_PERMISSION_All);
+//        } else {
+//            ActivityCompat.requestPermissions(this, PERMISSIONS_ALL, REQUEST_PERMISSION_All);
+//        }
     }
 
     private void addBottomDots(int currentPage) {

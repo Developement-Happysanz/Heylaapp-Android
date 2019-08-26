@@ -13,6 +13,7 @@
         android:gravity="center">
 
         <RelativeLayout
+            android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="5dp">
@@ -41,8 +42,10 @@
                 android:id="@+id/current_view_layout"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_alignParentTop="true"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -154,11 +157,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="?attr/actionBarSize"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/sampleViewChanger"
@@ -167,10 +166,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
             android:fontFamily="@font/muli" />
-        
+
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
             android:orientation="vertical">
 
             <LinearLayout
@@ -179,16 +179,20 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_marginEnd="18dp"
+                android:visibility="gone"
                 android:layout_marginRight="28dp"
+                android:clickable="false"
+                android:focusable="false"
                 android:gravity="center"
                 android:orientation="horizontal">
-                
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Map View"
                     android:background="@drawable/attendees_temp_bg"
                     android:gravity="center"
+                    android:elevation="6dp"
                     android:padding="5dp"
                     android:textColor="@color/text_black"
                     android:layout_marginRight="10dp"/>
@@ -197,9 +201,10 @@
                     android:id="@+id/fabMapView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_floating_sub_two"
-                    android:background="@color/ticket_yellow"
-                    app:backgroundTint="@color/ticket_yellow"
+                    android:elevation="6dp"
+                    android:src="@drawable/ic_map_view"
+                    android:background="@color/leaderboard_checkin"
+                    app:backgroundTint="@color/leaderboard_checkin"
                     app:fabSize="mini" />
 
             </LinearLayout>
@@ -213,6 +218,9 @@
                 android:layout_marginRight="18dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                android:clickable="false"
+                android:focusable="false"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -223,6 +231,7 @@
                     android:background="@drawable/attendees_temp_bg"
                     android:gravity="center"
                     android:padding="5dp"
+                    android:elevation="6dp"
                     android:textColor="@color/text_black"
                     android:layout_marginRight="10dp"/>
 
@@ -230,9 +239,10 @@
                     android:id="@+id/fabListView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_floating_sub_one"
-                    android:background="@color/ticket_yellow"
-                    app:backgroundTint="@color/ticket_yellow"
+                    android:background="@color/success_txt"
+                    android:elevation="6dp"
+                    android:src="@drawable/ic_list_view"
+                    app:backgroundTint="@color/success_txt"
                     app:fabSize="mini" />
 
             </LinearLayout>
@@ -246,7 +256,10 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="10dp"
                 android:background="@color/transparent"
+                android:clickable="false"
+                android:focusable="false"
                 android:gravity="center"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -256,6 +269,7 @@
                     android:background="@drawable/attendees_temp_bg"
                     android:gravity="center"
                     android:padding="5dp"
+                    android:elevation="6dp"
                     android:textColor="@color/text_black"
                     android:layout_marginRight="10dp"/>
 
@@ -263,7 +277,8 @@
                     android:id="@+id/fabNearby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_floating_sub_three"
+                    android:src="@drawable/ic_nearby_icon"
+                    android:elevation="6dp"
                     android:background="@color/ticket_yellow"
                     app:backgroundTint="@color/ticket_yellow"
                     app:fabSize="mini" />
@@ -274,13 +289,14 @@
                 android:id="@+id/viewOptions"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
+                app:useCompatPadding="true"
+                android:padding="5dp"
                 android:layout_gravity="bottom|end"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@color/ticket_yellow"
-                android:src="@drawable/ic_plus"
-                app:backgroundTint="@color/ticket_yellow" />
-            
+                android:elevation="12dp"
+                app:fabSize="normal"
+                android:src="@drawable/ic_plus_icon"
+                app:backgroundTint="@color/white" />
+
         </LinearLayout>
 
     </FrameLayout>

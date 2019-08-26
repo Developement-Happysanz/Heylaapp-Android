@@ -70,38 +70,64 @@ public class RankListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.point_table_list_item, parent, false);
 
             holder = new ViewHolder();
-            holder.txtUserName = (TextView) convertView.findViewById(R.id.txtExamSubject);
+            holder.txtUserName = (TextView) convertView.findViewById(R.id.user_name);
             holder.txtUserPic = (ImageView) convertView.findViewById(R.id.user_img);
-            holder.txtUserRank = (TextView) convertView.findViewById(R.id.txtSubTotalMark);
-            holder.txtUserPoints = (TextView) convertView.findViewById(R.id.txtSubTotalGrade);
+            holder.lead = (ImageView) convertView.findViewById(R.id.leader);
+            holder.txtUserRank = (TextView) convertView.findViewById(R.id.rank);
+            holder.txtUserPoints = (TextView) convertView.findViewById(R.id.total_points);
+
+            Rank ranks = rank.get(position);
+            if(!ranks.getName().isEmpty()){
+                holder.txtUserName.setText(ranks.getName());
+            } else {
+                holder.txtUserName.setText(ranks.getUserName());
+            }
+            holder.txtUserRank.setText(""+(position+1));
+            holder.txtUserPoints.setText(ranks.getTotal_points());
+            if (position == 0) {
+                holder.lead.setVisibility(View.VISIBLE);
+            } else {
+                holder.lead.setVisibility(View.GONE);
+            }
+            String url = ranks.getUser_picture();
+
+            if (((url != null) && !(url.isEmpty()))) {
+                Picasso.with(context).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(holder.txtUserPic);
+            }
+            else {
+                String s = "1";
+            }
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
+            Rank ranks = rank.get(position);
+            if(!ranks.getName().isEmpty()){
+                holder.txtUserName.setText(ranks.getName());
+            } else {
+                holder.txtUserName.setText(ranks.getUserName());
+            }
+            holder.txtUserRank.setText(""+(position+1));
+            holder.txtUserPoints.setText(ranks.getTotal_points());
+            if (position == 0) {
+                holder.lead.setVisibility(View.VISIBLE);
+            } else {
+                holder.lead.setVisibility(View.GONE);
+            }
+            String url = ranks.getUser_picture();
+
+            if (((url != null) && !(url.isEmpty()))) {
+                Picasso.with(context).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(holder.txtUserPic);
+            }
+            else {
+                String s = "1";
+            }
         }
 
         if (mSearching) {
             position = mValidSearchIndices.get(position);
         } else {
             Log.d("Event List Adapter", "getview pos called" + position);
-        }
-
-        Rank ranks = rank.get(position);
-        if(!ranks.getName().isEmpty()){
-            holder.txtUserName.setText(ranks.getName());
-        } else {
-            holder.txtUserName.setText(ranks.getUserName());
-        }
-        holder.txtUserRank.setText(""+(position+1));
-        holder.txtUserPoints.setText(ranks.getTotal_points());
-
-        String url = ranks.getUser_picture();
-
-        if (((url != null) && !(url.isEmpty()))) {
-            Picasso.with(context).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(holder.txtUserPic);
-        }
-        else {
-            String s = "1";
         }
 
         return convertView;
@@ -135,7 +161,7 @@ public class RankListAdapter extends BaseAdapter {
 
     public class ViewHolder {
         public TextView txtUserName, txtUserPoints, txtUserRank;
-        public ImageView txtUserPic;
+        public ImageView txtUserPic, lead;
     }
 
     public boolean ismSearching() {
