@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.activity.NearbyActivity;
 import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.ccavenue.activities.StatusActivity;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
@@ -45,10 +46,11 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import static com.google.android.gms.plus.PlusOneDummyView.TAG;
+//import static com.google.android.gms.plus.PlusOneDummyView.TAG;
 
 public class MainActivityPost extends Activity implements IServiceListener, DialogClickListener {
 
+    private static final String TAG = MainActivityPost.class.getName();
     String orderId;
     private ServiceHelper serviceHelper;
     String status = null;//Test
@@ -91,18 +93,18 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
         }*/
 
         final ImageView img = new ImageView(this);
-        Picasso.with(img.getContext())
-                .load(url)
-                .into(img, new com.squareup.picasso.Callback() {
-                    @Override
-                    public void onSuccess() {
-                        imEventBanner.setBackgroundDrawable(img.getDrawable());
-                    }
-
-                    @Override
-                    public void onError() {
-                    }
-                });
+//        Picasso.get().load(url)
+//                .into(img, new com.squareup.picasso.Callback() {
+//                    @Override
+//                    public void onSuccess() {
+//                        imEventBanner.setBackgroundDrawable(img.getDrawable());
+//                    }
+//
+//                    @Override
+//                    public void onError() {
+//                    }
+//                });
+        Picasso.get().load(url).fit().placeholder(R.drawable.heyla_logo_transparent).error(R.drawable.heyla_logo_transparent).into(imEventBanner);
 
         TextView txtEventName = findViewById(R.id.txt_event_name);
         txtEventName.setText(event.getEventName());

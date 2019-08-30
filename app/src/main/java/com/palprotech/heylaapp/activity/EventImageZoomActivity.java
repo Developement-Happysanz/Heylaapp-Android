@@ -22,7 +22,7 @@ public class EventImageZoomActivity extends AppCompatActivity {
         eventPicture = (EventPicture) getIntent().getSerializableExtra("eventObj");
         String url = eventPicture.getEventBanner();
         if (((url != null) && !(url.isEmpty()))) {
-            Picasso.with(this).load(url).error(R.drawable.event_img).into(touchZoom);
+            Picasso.get().load(url).error(R.drawable.event_img).into(touchZoom);
         }
     }
 }

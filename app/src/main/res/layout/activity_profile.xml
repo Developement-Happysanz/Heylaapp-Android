@@ -382,7 +382,7 @@
                     android:layout_marginStart="10dp"
                     android:buttonTint="@color/appColorBase"
                     android:fontFamily="@font/muli"
-                    android:text="@string/subscribe" />
+                    android:text="@string/recieve_notification" />
 
                 <Button
                     android:id="@+id/saveprofile"

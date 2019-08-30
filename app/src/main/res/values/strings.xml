@@ -13,16 +13,17 @@
 
     <string name="guest">GUEST LOGIN</string>
     <string name="signup">Sign Up</string>
-    <string name="login">SIGN IN</string>
+    <string name="login">Sign In</string>
     <string name="send">Send</string>
     <string name="confirm">Confirm</string>
     <string name="submit">Submit</string>
+    <string name="verify">Verify</string>
     <string name="signup_promt">Login using</string>
     <string name="email">Email (Optional)</string>
     <string name="password">Password</string>
     <string name="mobileno">Mobile Number</string>
-    <string name="username">Username*</string>
-    <string name="usernameormail">Username/Email/Mobile number</string>
+    <string name="username">Username</string>
+    <string name="usernameormail">Username/Email ID/Mobile Number</string>
     <string name="new_mobile_number">Mobile Number</string>
     <string name="newpassword">New Password</string>
     <string name="remember">Remember me</string>
@@ -30,13 +31,13 @@
     <string name="forgot">Forgot password?</string>
     <string name="verificationcode">Verification Code</string>
     <string name="mobile_number">New Mobile Number</string>
-    <string name="verificationcodeforforgotpassword">Enter Your OTP</string>
-    <string name="mailormobile">Enter registered email or mobile number</string>
+    <string name="verificationcodeforforgotpassword">Enter the OTP you have just received</string>
+    <string name="mailormobile">Email ID/Mobile Number</string>
     <string name="didntrecievecode">Didn\'t receive the code?\t</string>
     <string name="entercodetxt">Enter the verification code \nsent to your mobile</string>
-    <string name="no_connectivity">Please check your internet connectivity and try again.</string>
+    <string name="no_connectivity">Please check your internet connectivity and try again</string>
     <string name="resend">Resend now</string>
-    <string name="resend_otp">Resend OTP?</string>
+    <string name="resend_otp">Resend OTP</string>
     <string name="changenumber">Change number</string>
     <string name="error_occured">Failed to connect to the server. Please try again.</string>
 
@@ -46,7 +47,7 @@
     <string name="open_location_settings">Open location manager</string>
     <string name="Cancel">Cancel</string>
     <string name="get_started">Get Started</string>
-    <string name="select_preference">Select Category</string>
+    <string name="select_preference">Choose your preferences</string>
 
     <!--App Intro Screen-->
     <string name="next">NEXT</string>
@@ -54,23 +55,25 @@
     <string name="start">DIVE IN</string>
 
     <string name="slide_1_title">Explore</string>
-    <string name="slide_1_desc">Explore with just a tap,\nThere\'s something for everyone.</string>
+    <string name="slide_1_desc">Explore with just a few taps.\nThere\'s something for everyone.</string>
 
     <string name="slide_2_title">Engage</string>
-    <string name="slide_2_desc">Click. Engage. Escape. into\nthe World of Events</string>
+    <string name="slide_2_desc">Click, engage, escape into\nthe world of events</string>
 
     <string name="slide_3_title">Experience</string>
-    <string name="slide_3_desc">Unfolding new experiences,\nSee the world around you in a new way.</string>
+    <string name="slide_3_desc">Unfold new experiences \nwith the stages of the city-state</string>
 
     <!--Sign Up -->
     <string name="err_email">Enter valid email address</string>
     <string name="err_name">Enter valid name</string>
     <string name="err_username">Enter valid username</string>
+    <string name="err_empty_username">Username can\'t be empty</string>
     <string name="err_mobile">Enter valid mobile phone number</string>
     <string name="err_pincode">Enter valid pincode number</string>
-    <string name="err_empty_password">Enter valid password</string>
-    <string name="err_min_pass_length">Short passwords are easy to guess! Try one with at least 6 characters&#8230;</string>
-    <string name="forgot_text">We can help! All you need to do is enter your E-Mail and follow the instructions or enter your number and wait for the otp!</string>
+    <string name="err_empty_password">Give a new password to reset!</string>
+    <string name="err_empty_password_login">Password can\'t be empty</string>
+    <string name="err_min_pass_length">Short passwords are easy to guess! Try one with at least 6 characters</string>
+    <string name="forgot_text">Please enter your registered email ID or mobile number to reset your password</string>
 
     <!--Dialog Fragment-->
     <string name="alert_button_ok">OK</string>
@@ -81,18 +84,19 @@
     <string name="progress_loading">Loading&#8230;</string>
 
     <!--Profile-->
-    <string name="name">Name*</string>
+    <string name="name">Name</string>
     <string name="gender">Gender</string>
     <string name="occupation">Occupation</string>
-    <string name="birthday">Birthday</string>
-    <string name="address1">Address Line 1</string>
-    <string name="address2">Address Line 2</string>
+    <string name="birthday">DOB</string>
+    <string name="address1">Address (Line 1)</string>
+    <string name="address2">Address (Line 2)</string>
     <string name="address3">Landmark (Optional)</string>
     <string name="selectcountry">Country</string>
     <string name="selectstate">State</string>
     <string name="selectcity">City</string>
     <string name="pincode">Pincode</string>
     <string name="subscribe">Subscribe to Newsletter</string>
+    <string name="recieve_notification">Notification</string>
     <string name="save">Save</string>
 
     <!--CCAvenue-->
@@ -152,7 +156,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="feedback">Enter your feedback</string>
+    <string name="feedback">What\'s troubling your experience?</string>
 
     <string name="empty_err">"Field cannot be empty"</string>
 

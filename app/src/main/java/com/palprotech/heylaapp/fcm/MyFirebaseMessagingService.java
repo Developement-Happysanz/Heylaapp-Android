@@ -1,9 +1,11 @@
 package com.palprotech.heylaapp.fcm;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -24,6 +26,7 @@ import org.json.JSONObject;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
+    public static final String NOTIFICATION_CHANNEL_ID = "10001";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -65,6 +68,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
+        {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.BLUE);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            assert notificationManager != null;
+            notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
 
         notificationManager.notify(0, notificationBuilder.build());
     }
@@ -85,19 +100,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String imageUrl = data.getString("image");
 
             //creating MyNotificationManager object
-            MyNotificationManager mNotificationManager = new MyNotificationManager(getApplicationContext());
-
+//            MyNotificationManager mNotificationManager = new MyNotificationManager(getApplicationContext());
+            NotificationHelper mNotificationManager = new NotificationHelper(getApplicationContext());
             //creating an intent for the notification
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
             //if there is no image
             if(imageUrl.equals("null")){
                 //displaying small notification
-                mNotificationManager.showSmallNotification(title, message, intent);
+//                mNotificationManager.showSmallNotification(title, message, intent);
+                mNotificationManager.createNotification(title, message);
             }else{
                 //if there is an image
                 //displaying a big notification
-                mNotificationManager.showBigNotification(title, message, imageUrl, intent);
+//                mNotificationManager.showBigNotification(title, message, imageUrl, intent);
+                mNotificationManager.showBigNotification(title, message, imageUrl);
             }
         } catch (JSONException e) {
             Log.e(TAG, "Json Exception: " + e.getMessage());

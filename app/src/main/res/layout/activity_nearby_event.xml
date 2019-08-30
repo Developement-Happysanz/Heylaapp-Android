@@ -39,7 +39,7 @@
         android:gravity="center_vertical|left"
         android:minHeight="60dp"
         android:padding="5dp"
-        android:text="Nearby"
+        android:text="Find Nearby Events"
         android:textColor="@color/white"
         android:textSize="@dimen/actionbarTextSize"
         android:textStyle="bold" />
@@ -62,7 +62,7 @@
             android:gravity="center"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="Select Nearby Distance"
+            android:text="Select a radius"
             android:textColor="@color/text_black"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -91,7 +91,8 @@
             android:gravity="center"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text=" Nearby Events"
+            android:text="Nearby Events"
+            android:visibility="gone"
             android:textColor="@color/text_black"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -143,153 +144,154 @@
                     android:src="@drawable/select_citybg" />
 
             </RelativeLayout>
+
         </RelativeLayout>
 
-        <FrameLayout
-            android:id="@+id/fabFrame"
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fabFrame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/sampleViewChanger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/muli" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/sampleViewChanger"
+            <LinearLayout
+                android:id="@+id/layoutFabMapView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
-                android:fontFamily="@font/muli" />
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="18dp"
+                android:layout_marginRight="28dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="bottom"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/layoutFabMapView"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginEnd="18dp"
-                    android:layout_marginRight="28dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/attendees_temp_bg"
+                    android:elevation="6dp"
                     android:gravity="center"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/attendees_temp_bg"
-                        android:elevation="6dp"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:text="Map View"
-                        android:textColor="@color/text_black" />
-
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/fabMapView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/leaderboard_checkin"
-                        android:elevation="6dp"
-                        android:src="@drawable/ic_map_view"
-                        app:backgroundTint="@color/leaderboard_checkin"
-                        app:fabSize="mini" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutFabListView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="18dp"
-                    android:layout_marginRight="18dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/attendees_temp_bg"
-                        android:elevation="6dp"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:text="List View"
-                        android:textColor="@color/text_black" />
-
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/fabListView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/success_txt"
-                        android:elevation="6dp"
-                        android:src="@drawable/ic_list_view"
-                        app:backgroundTint="@color/success_txt"
-                        app:fabSize="mini" />
-
-                </LinearLayout>
-
-                <!--<LinearLayout-->
-                <!--android:id="@+id/layoutFabNearby"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="bottom|end"-->
-                <!--android:layout_marginEnd="18dp"-->
-                <!--android:layout_marginRight="8dp"-->
-                <!--android:layout_marginBottom="10dp"-->
-                <!--android:background="@color/transparent"-->
-                <!--android:gravity="center"-->
-                <!--android:visibility="gone"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="Nearby View"-->
-                <!--android:background="@drawable/attendees_temp_bg"-->
-                <!--android:gravity="center"-->
-                <!--android:padding="5dp"-->
-                <!--android:elevation="6dp"-->
-                <!--android:textColor="@color/text_black"-->
-                <!--android:layout_marginRight="10dp"/>-->
-
-                <!--<android.support.design.widget.FloatingActionButton-->
-                <!--android:id="@+id/fabNearby"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:src="@drawable/ic_nearby_icon"-->
-                <!--android:elevation="6dp"-->
-                <!--android:background="@color/ticket_yellow"-->
-                <!--app:backgroundTint="@color/ticket_yellow"-->
-                <!--app:fabSize="mini" />-->
-
-                <!--</LinearLayout>-->
+                    android:padding="5dp"
+                    android:text="Map View"
+                    android:textColor="@color/text_black" />
 
                 <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/viewOptions"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_gravity="bottom|end"
-                    android:elevation="12dp"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_plus_icon"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="normal"
-                    app:useCompatPadding="true" />
+                    android:id="@+id/fabMapView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/leaderboard_checkin"
+                    android:elevation="6dp"
+                    android:src="@drawable/ic_map_view"
+                    app:backgroundTint="@color/leaderboard_checkin"
+                    app:fabSize="mini" />
 
             </LinearLayout>
 
-        </FrameLayout>
+            <LinearLayout
+                android:id="@+id/layoutFabListView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginRight="18dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/attendees_temp_bg"
+                    android:elevation="6dp"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="List View"
+                    android:textColor="@color/text_black" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fabListView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/success_txt"
+                    android:elevation="6dp"
+                    android:src="@drawable/ic_list_view"
+                    app:backgroundTint="@color/success_txt"
+                    app:fabSize="mini" />
+
+            </LinearLayout>
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/layoutFabNearby"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="bottom|end"-->
+            <!--android:layout_marginEnd="18dp"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:background="@color/transparent"-->
+            <!--android:gravity="center"-->
+            <!--android:visibility="gone"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Nearby View"-->
+            <!--android:background="@drawable/attendees_temp_bg"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="5dp"-->
+            <!--android:elevation="6dp"-->
+            <!--android:textColor="@color/text_black"-->
+            <!--android:layout_marginRight="10dp"/>-->
+
+            <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:id="@+id/fabNearby"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/ic_nearby_icon"-->
+            <!--android:elevation="6dp"-->
+            <!--android:background="@color/ticket_yellow"-->
+            <!--app:backgroundTint="@color/ticket_yellow"-->
+            <!--app:fabSize="mini" />-->
+
+            <!--</LinearLayout>-->
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/viewOptions"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="bottom|end"
+                android:elevation="12dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_plus_icon"
+                app:backgroundTint="@color/white"
+                app:fabSize="normal"
+                app:useCompatPadding="true" />
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </RelativeLayout>

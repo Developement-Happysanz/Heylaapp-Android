@@ -117,7 +117,7 @@
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
-                    android:text="Total Points"
+                    android:text="Total Points Earned"
                     android:textColor="@color/text_black"
                     android:textSize="18dp"
                     android:textStyle="bold" />
@@ -126,9 +126,11 @@
                     android:id="@+id/total_points"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/trophy_text"
-                    android:layout_alignBottom="@id/trophy_text"
+                    android:layout_alignStart="@+id/trophy_text"
+                    android:layout_alignEnd="@+id/trophy_text"
+                    android:layout_below="@id/trophy_text"
                     android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_toEndOf="@id/trophy_text"
                     android:fontFamily="@font/muli"
                     android:gravity="center"
@@ -209,7 +211,8 @@
                         android:fontFamily="@font/muli"
                         android:layout_marginStart="20dp"
                         android:gravity="center"
-                        android:text="Login"
+                        android:padding="5dp"
+                        android:text="Logins"
                         android:textColor="@color/text_black"
                         android:textSize="16sp" />
 
@@ -281,7 +284,7 @@
                         android:fontFamily="@font/muli"
                         android:layout_marginStart="20dp"
                         android:gravity="center"
-                        android:text="Share"
+                        android:text="Sharing Events"
                         android:textColor="@color/text_black"
                         android:textSize="16sp" />
 
@@ -368,7 +371,7 @@
                         android:fontFamily="@font/muli"
                         android:gravity="center"
                         android:paddingStart="5dp"
-                        android:text="Check-In"
+                        android:text="Event Check-ins"
                         android:textColor="@color/text_black"
                         android:textSize="16sp" />
 
@@ -441,7 +444,7 @@
                         android:layout_toRightOf="@id/review_img"
                         android:fontFamily="@font/muli"
                         android:paddingStart="5dp"
-                        android:text="Review"
+                        android:text="Event Reviews"
                         android:textColor="@color/text_black"
                         android:textSize="16sp" />
 
@@ -518,7 +521,7 @@
                     android:layout_toRightOf="@id/booking_img"
                     android:fontFamily="@font/muli"
                     android:padding="5dp"
-                    android:text="Booking"
+                    android:text="Bookings"
                     android:textColor="@color/text_black"
                     android:textSize="16sp" />
 

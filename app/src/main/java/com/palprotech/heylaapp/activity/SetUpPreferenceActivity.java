@@ -73,7 +73,7 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
         toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
         setSupportActionBar(toolbar);
         TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        mTitle.setText("Select Category");
+        mTitle.setText(R.string.select_preference);
 
         txtGetStarted = (TextView) findViewById(R.id.text_getStarted);
         txtGetStarted.setOnClickListener(this);

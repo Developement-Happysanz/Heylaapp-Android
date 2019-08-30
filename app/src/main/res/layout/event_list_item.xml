@@ -108,14 +108,15 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="5dp"
-                    android:background="@color/Paid"
+                    android:background="@drawable/btn_paid"
                     android:fontFamily="@font/muli"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
+                    android:paddingBottom="2dp"
                     android:singleLine="true"
                     android:text="Paid"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <Button

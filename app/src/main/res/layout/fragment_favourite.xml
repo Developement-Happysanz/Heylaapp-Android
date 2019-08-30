@@ -150,6 +150,71 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/user_alert"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:elevation="12sp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Explore Heyla"
+            android:gravity="center"
+            android:textSize="22sp"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/text_black"
+            android:fontFamily="@font/muli"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="0.5">
+
+                <TextView
+                    android:id="@+id/skip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/skip"
+                    android:padding="10dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:textColor="@color/text_black"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="0.5">
+
+                <Button
+                    android:id="@+id/start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start"
+                    android:padding="10dp"
+                    android:textStyle="bold"
+                    android:background="@drawable/btn_round_color"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
     <FrameLayout
         android:id="@+id/fabFrame"
         android:layout_width="wrap_content"
@@ -192,7 +257,7 @@
                     android:text="Map View"
                     android:background="@drawable/attendees_temp_bg"
                     android:gravity="center"
-                    android:elevation="6dp"
+                    
                     android:padding="5dp"
                     android:textColor="@color/text_black"
                     android:layout_marginRight="10dp"/>
@@ -201,7 +266,7 @@
                     android:id="@+id/fabMapView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:elevation="6dp"
+                    
                     android:src="@drawable/ic_map_view"
                     android:background="@color/leaderboard_checkin"
                     app:backgroundTint="@color/leaderboard_checkin"
@@ -231,7 +296,7 @@
                     android:background="@drawable/attendees_temp_bg"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:elevation="6dp"
+                    
                     android:textColor="@color/text_black"
                     android:layout_marginRight="10dp"/>
 
@@ -240,7 +305,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/success_txt"
-                    android:elevation="6dp"
+                    
                     android:src="@drawable/ic_list_view"
                     app:backgroundTint="@color/success_txt"
                     app:fabSize="mini" />
@@ -265,11 +330,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nearby View"
+                    android:text="Nearby Events"
                     android:background="@drawable/attendees_temp_bg"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:elevation="6dp"
+                    
                     android:textColor="@color/text_black"
                     android:layout_marginRight="10dp"/>
 
@@ -278,7 +343,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_nearby_icon"
-                    android:elevation="6dp"
+                    
                     android:background="@color/ticket_yellow"
                     app:backgroundTint="@color/ticket_yellow"
                     app:fabSize="mini" />
@@ -292,7 +357,6 @@
                 app:useCompatPadding="true"
                 android:padding="5dp"
                 android:layout_gravity="bottom|end"
-                android:elevation="12dp"
                 app:fabSize="normal"
                 android:src="@drawable/ic_plus_icon"
                 app:backgroundTint="@color/white" />

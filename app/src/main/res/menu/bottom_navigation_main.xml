@@ -11,20 +11,21 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/action_all"
-        android:enabled="true"
-        android:fontFamily="@font/muli"
-        android:icon="@drawable/ic_home_white"
-        android:title="All"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/action_popular"
         android:enabled="true"
         android:fontFamily="@font/muli"
         android:icon="@drawable/ic_popular_icon"
         android:title="Popular"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_all"
+        android:enabled="true"
+        android:fontFamily="@font/muli"
+        android:icon="@drawable/ic_all_events"
+        android:title="All"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/action_hotspot"
         android:enabled="true"

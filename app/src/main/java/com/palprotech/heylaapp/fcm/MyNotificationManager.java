@@ -32,6 +32,7 @@ public class MyNotificationManager {
     public static final int ID_SMALL_NOTIFICATION = 235;
 
     private Context mCtx;
+    private String mStr = "";
 
     public MyNotificationManager(Context mCtx) {
         this.mCtx = mCtx;
@@ -52,7 +53,7 @@ public class MyNotificationManager {
         bigPictureStyle.setBigContentTitle(title);
         bigPictureStyle.setSummaryText(Html.fromHtml(message).toString());
         bigPictureStyle.bigPicture(getBitmapFromURL(url));
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mCtx);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mCtx, mStr);
         Notification notification;
         notification = mBuilder.setSmallIcon(R.mipmap.ic_launcher).setTicker(title).setWhen(0)
                 .setAutoCancel(true)
@@ -83,7 +84,7 @@ public class MyNotificationManager {
                 );
 
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mCtx);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mCtx, mStr);
         Notification notification;
         notification = mBuilder.setSmallIcon(R.mipmap.ic_launcher).setTicker(title).setWhen(0)
                 .setAutoCancel(true)

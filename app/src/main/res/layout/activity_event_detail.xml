@@ -620,7 +620,7 @@
                         android:layout_marginLeft="100dp"
                         android:layout_marginRight="100dp"
                         android:layout_marginTop="20dp"
-                        android:background="@color/text_black"
+                        android:background="@drawable/btn_black"
                         android:text="Write Review"
                         android:textAllCaps="false"
                         android:textColor="@color/white"

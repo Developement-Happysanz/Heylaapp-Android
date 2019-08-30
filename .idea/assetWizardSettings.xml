@@ -21,11 +21,8 @@
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="autoMirrored" value="true" />
                             <entry key="color" value="ffffff" />
-                            <entry key="height" value="50" />
-                            <entry key="outputName" value="ic_booking_lead" />
-                            <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\Admin\Dropbox\Heyla Mobile App\3. App Screens\Version 1.2 (Aug 2019)\Icons\Android\booking_led.svg" />
-                            <entry key="width" value="50" />
+                            <entry key="outputName" value="ic_user_guide_sidemenu" />
+                            <entry key="sourceFile" value="C:\Users\Admin\Dropbox\Heyla Mobile App\3. App Screens\Version 1.2 (Aug 2019)\Icons\Android\user_guide_sidemenu.svg" />
                           </map>
                         </option>
                       </PersistentState>

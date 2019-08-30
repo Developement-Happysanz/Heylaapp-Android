@@ -86,13 +86,13 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         }
         userPic = rootView.findViewById(R.id.leaderboard_profile_img);
         profile = rootView.findViewById(R.id.edit_profile);
-        profile.setOnClickListener(this);
+//        profile.setOnClickListener(this);
         String url = PreferenceStorage.getUserPicture(getActivity());
         String getSocialUrl = PreferenceStorage.getSocialNetworkProfileUrl(getActivity());
         if (((url != null) && !(url.isEmpty()))) {
-            Picasso.with(getActivity()).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(userPic);
+            Picasso.get().load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(userPic);
         } else if (((getSocialUrl != null) && !(getSocialUrl.isEmpty()))) {
-            Picasso.with(getActivity()).load(getSocialUrl).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(userPic);
+            Picasso.get().load(getSocialUrl).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(userPic);
         }
 
         login = rootView.findViewById(R.id.login_layout);
@@ -149,10 +149,10 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View view) {
         if (view == profile) {
-            Intent homeIntent = new Intent(getActivity(), ProfileActivity.class);
-            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(homeIntent);
-            getActivity().finish();
+//            Intent homeIntent = new Intent(getActivity(), ProfileActivity.class);
+//            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            startActivity(homeIntent);
+//            getActivity().finish();
         } else if (view == login) {
             if (loginPoints.getText().toString().equalsIgnoreCase("(0)")) {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
@@ -194,7 +194,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
             }
 //
         } else if (view == check_in) {
-            if (checkinPoints.getText().toString().equalsIgnoreCase("(0)")) {
+            if (checkinPoints.getText().toString().equalsIgnoreCase("0")) {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
                 alertDialogBuilder.setTitle("Check In Point");
                 alertDialogBuilder.setMessage("No points secured yet");

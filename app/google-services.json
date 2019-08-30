@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "267044808577-dh77jmcsmdm721gi0dqbhcu5teno3ac2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.palprotech.heylaapp",
+            "certificate_hash": "d5f5f188ed8df203aa2b9b38dcb546e666af3623"
+          }
+        },
+        {
+          "client_id": "267044808577-reqdmehidp7mqk55em66na2i2o46ubgh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.palprotech.heylaapp",
+            "certificate_hash": "a012fc28f69844fda1adf3e973c02be9849d4553"
+          }
+        },
+        {
           "client_id": "267044808577-fsg3mnh1r4pth9tee3s90tap4fkr1gia.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -28,22 +44,6 @@
           "android_info": {
             "package_name": "com.palprotech.heylaapp",
             "certificate_hash": "0359e7dc48fefeb14bc7b8d941c6ca08301ad167"
-          }
-        },
-        {
-          "client_id": "267044808577-reqdmehidp7mqk55em66na2i2o46ubgh.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.palprotech.heylaapp",
-            "certificate_hash": "a012fc28f69844fda1adf3e973c02be9849d4553"
-          }
-        },
-        {
-          "client_id": "267044808577-dh77jmcsmdm721gi0dqbhcu5teno3ac2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.palprotech.heylaapp",
-            "certificate_hash": "d5f5f188ed8df203aa2b9b38dcb546e666af3623"
           }
         },
         {

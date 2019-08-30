@@ -92,7 +92,7 @@ public class RankListAdapter extends BaseAdapter {
             String url = ranks.getUser_picture();
 
             if (((url != null) && !(url.isEmpty()))) {
-                Picasso.with(context).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(holder.txtUserPic);
+                Picasso.get().load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(holder.txtUserPic);
             }
             else {
                 String s = "1";
@@ -117,7 +117,7 @@ public class RankListAdapter extends BaseAdapter {
             String url = ranks.getUser_picture();
 
             if (((url != null) && !(url.isEmpty()))) {
-                Picasso.with(context).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(holder.txtUserPic);
+                Picasso.get().load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(holder.txtUserPic);
             }
             else {
                 String s = "1";

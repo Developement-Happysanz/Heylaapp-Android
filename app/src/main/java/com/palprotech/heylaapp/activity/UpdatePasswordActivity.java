@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
@@ -148,6 +149,7 @@ public class UpdatePasswordActivity extends AppCompatActivity implements View.On
         if (validateSignInResponse(response)) {
             Intent homeIntent = new Intent(getApplicationContext(), LoginActivity.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            Toast.makeText(this, "Your password has been reset successfully", Toast.LENGTH_SHORT).show();
             startActivity(homeIntent);
             this.finish();
         }

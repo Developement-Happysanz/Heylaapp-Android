@@ -175,8 +175,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_marginEnd="18dp"
-                android:layout_marginRight="28dp"
                 android:visibility="gone"
+                android:layout_marginRight="28dp"
                 android:clickable="false"
                 android:focusable="false"
                 android:gravity="center"
@@ -188,7 +188,7 @@
                     android:text="Map View"
                     android:background="@drawable/attendees_temp_bg"
                     android:gravity="center"
-                    android:elevation="6dp"
+                    
                     android:padding="5dp"
                     android:textColor="@color/text_black"
                     android:layout_marginRight="10dp"/>
@@ -197,7 +197,7 @@
                     android:id="@+id/fabMapView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:elevation="6dp"
+                    
                     android:src="@drawable/ic_map_view"
                     android:background="@color/leaderboard_checkin"
                     app:backgroundTint="@color/leaderboard_checkin"
@@ -212,11 +212,11 @@
                 android:layout_gravity="bottom|end"
                 android:layout_marginEnd="18dp"
                 android:layout_marginRight="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:visibility="gone"
                 android:clickable="false"
                 android:focusable="false"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -227,7 +227,7 @@
                     android:background="@drawable/attendees_temp_bg"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:elevation="6dp"
+                    
                     android:textColor="@color/text_black"
                     android:layout_marginRight="10dp"/>
 
@@ -236,7 +236,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/success_txt"
-                    android:elevation="6dp"
+                    
                     android:src="@drawable/ic_list_view"
                     app:backgroundTint="@color/success_txt"
                     app:fabSize="mini" />
@@ -249,23 +249,23 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_marginEnd="18dp"
-                android:visibility="gone"
-                android:clickable="false"
-                android:focusable="false"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="10dp"
                 android:background="@color/transparent"
+                android:clickable="false"
+                android:focusable="false"
                 android:gravity="center"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nearby View"
+                    android:text="Nearby Events"
                     android:background="@drawable/attendees_temp_bg"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:elevation="6dp"
+                    
                     android:textColor="@color/text_black"
                     android:layout_marginRight="10dp"/>
 
@@ -274,7 +274,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_nearby_icon"
-                    android:elevation="6dp"
+                    
                     android:background="@color/ticket_yellow"
                     app:backgroundTint="@color/ticket_yellow"
                     app:fabSize="mini" />
@@ -288,7 +288,6 @@
                 app:useCompatPadding="true"
                 android:padding="5dp"
                 android:layout_gravity="bottom|end"
-                android:elevation="6dp"
                 app:fabSize="normal"
                 android:src="@drawable/ic_plus_icon"
                 app:backgroundTint="@color/white" />

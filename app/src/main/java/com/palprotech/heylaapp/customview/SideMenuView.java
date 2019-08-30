@@ -30,11 +30,13 @@ import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.BlogViewActivity;
 import com.palprotech.heylaapp.activity.BookingHistoryActivity;
 import com.palprotech.heylaapp.activity.MenuActivity;
+import com.palprotech.heylaapp.activity.NotificationActivity;
 import com.palprotech.heylaapp.activity.ProfileActivity;
 import com.palprotech.heylaapp.activity.SelectCityActivity;
 import com.palprotech.heylaapp.activity.SetUpPreferenceActivity;
 import com.palprotech.heylaapp.activity.SettingsActivity;
 import com.palprotech.heylaapp.activity.SplashScreenActivity;
+import com.palprotech.heylaapp.activity.UserGuideActivity;
 import com.palprotech.heylaapp.activity.WishListActivity;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.squareup.picasso.Picasso;
@@ -358,8 +360,8 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
      */
     private class MenuViewHolder {
         private LinearLayout mMenuOptions;
-        private RelativeLayout vBooking, vCategory, vChangeCity, vWishList, vShare, vAboutUs, vRateUs, vSignOut, vSettings, vProfile;
-        private ImageView mMenuBackground, vUserImage;
+        private RelativeLayout vBooking, vCategory, vChangeCity, vWishList, vShare, vAboutUs, vRateUs, vSignOut, vSettings, vProfile, vUserGuide;
+        private ImageView mMenuBackground, vUserImage, vNotification;
         private ViewGroup mMenuHeader;
         private ViewGroup mMenuFooter;
         private TextView profileName, userName;
@@ -380,9 +382,9 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
             String url = PreferenceStorage.getUserPicture(context);
             String getSocialUrl = PreferenceStorage.getSocialNetworkProfileUrl(context);
             if (((url != null) && !(url.isEmpty()))) {
-                Picasso.with(context).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(vUserImage);
+                Picasso.get().load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(vUserImage);
             } else if (((getSocialUrl != null) && !(getSocialUrl.isEmpty()))) {
-                Picasso.with(context).load(getSocialUrl).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(vUserImage);
+                Picasso.get().load(getSocialUrl).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(vUserImage);
             }
             userName = rootView.findViewById(R.id.user_name);
             userName.setText(PreferenceStorage.getEventCityName(context));
@@ -418,6 +420,14 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                         });
                         alertDialogBuilder.show();
                     }
+                }
+            });
+            this.vNotification = (ImageView) rootView.findViewById(R.id.notification_img);
+            this.vNotification.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent homeIntent = new Intent(context, NotificationActivity.class);
+                    context.startActivity(homeIntent);
                 }
             });
             this.vCategory = (RelativeLayout) rootView.findViewById(R.id.category_img);
@@ -487,6 +497,14 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                 public void onClick(View v) {
                     Intent homeIntent = new Intent(context, BlogViewActivity.class);
                     homeIntent.putExtra("pageval", "blog");
+                    context.startActivity(homeIntent);
+                }
+            });
+            this.vUserGuide = (RelativeLayout) rootView.findViewById(R.id.user_guide_layout);
+            this.vUserGuide.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent homeIntent = new Intent(context, UserGuideActivity.class);
                     context.startActivity(homeIntent);
                 }
             });

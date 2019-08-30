@@ -45,17 +45,18 @@ public class BlogViewActivity extends AppCompatActivity {
                 }
             });
         }
-//        else if (page.equalsIgnoreCase("setting_report")) {
-//            wb.loadUrl("https://www.heylaapp.com/blog/");
-//            wb.setWebViewClient(new WebViewClient(){
-//
-//                @Override
-//                public boolean shouldOverrideUrlLoading(WebView view, String url){
-//                    view.loadUrl(url);
-//                    return true;
-//                }
-//            });
-//        }
+        else if (page.equalsIgnoreCase("setting_payment")) {
+            title.setText("Payment Policy");
+            wb.loadUrl("https://www.heylaapp.com/payment/");
+            wb.setWebViewClient(new WebViewClient(){
+
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url){
+                    view.loadUrl(url);
+                    return true;
+                }
+            });
+        }
         else if (page.equalsIgnoreCase("setting_privacy")) {
             title.setText("Privacy Policy");
             wb.loadUrl("https://www.heylaapp.com/privacy/");

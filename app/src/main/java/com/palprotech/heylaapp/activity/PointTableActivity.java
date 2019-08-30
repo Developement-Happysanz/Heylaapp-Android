@@ -326,9 +326,9 @@ public class PointTableActivity extends AppCompatActivity implements IServiceLis
 
                 line4.setId(R.id.user_img);
                 if (((url != null) && !(url.isEmpty()))) {
-                    Picasso.with(getApplicationContext()).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(line4);
+                    Picasso.get().load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(line4);
                 } else {
-                    Picasso.with(getApplicationContext()).load("123").placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(line4);
+                    Picasso.get().load("123").placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(line4);
                 }
 
                 line4.setBackgroundColor(Color.parseColor("#e5e6e9"));

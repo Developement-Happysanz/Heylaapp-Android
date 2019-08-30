@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/appColorBase"
+            android:minHeight="60dp" />
+
+        <ImageView
+            android:id="@+id/back_res"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:minHeight="60dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="10dp"
+            android:src="@drawable/ic_arrow_back_white_24dp" />
+
+        <TextView
+            android:id="@+id/tvtitletext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/muli"
+            android:gravity="center_vertical|left"
+            android:minHeight="60dp"
+            android:layout_toRightOf="@+id/back_res"
+            android:padding="5dp"
+            android:text="Notification"
+            android:textColor="@color/white"
+            android:textSize="@dimen/actionbarTextSize"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/no_notification_layout"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/bell"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_notificationpage_bell"/>
+
+        <TextView
+            android:id="@+id/dont"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Don't miss out!"
+            android:textColor="@color/appColorBase"
+            android:textSize="22sp"
+            android:padding="10dp"
+            android:layout_below="@id/bell"
+            android:fontFamily="@font/muli"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/enable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enable push notification to stay updated on new events"
+            android:textSize="18sp"
+            android:padding="20dp"
+            android:layout_below="@id/dont"
+            android:fontFamily="@font/muli"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/noti_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="0dp"
+        android:divider="@color/text_gray"/>
+
+
+</LinearLayout>

@@ -33,7 +33,7 @@
             android:gravity="center"
             android:minHeight="?attr/actionBarSize"
             android:paddingLeft="10dp"
-            android:text="Select Region"
+            android:text="Select Area"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -119,6 +119,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:padding="10dp"
+            android:visibility="gone"
             android:layout_toLeftOf="@+id/loc_text"
             android:src="@drawable/ic_singapore_pin"/>
 
@@ -126,11 +127,13 @@
             android:id="@+id/loc_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:layout_alignTop="@id/loc_pin"
             android:layout_alignBottom="@id/loc_pin"
-            android:text="Singapore"
+            android:text="Explore events in and around \n the Lion City"
             android:fontFamily="@font/muli"
             android:textColor="@color/text_black"
             android:textStyle="bold"
@@ -145,7 +148,8 @@
             android:fontFamily="@font/muli"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:layout_below="@id/loc_pin"
+            android:visibility="gone"
+            android:layout_below="@id/loc_text"
             android:text="Event Locations"
             android:textSize="18sp"/>
 

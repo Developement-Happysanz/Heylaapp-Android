@@ -111,7 +111,7 @@ public class PreferenceListAdapter extends RecyclerView.Adapter<PreferenceListAd
 
         //imageLoader.displayImage(events.get(position).getEventLogo(), holder.imageView, AppController.getInstance().getLogoDisplayOptions());
         if (HeylaAppValidator.checkNullString(categoryArrayList.get(position).getImgPath())) {
-            Picasso.with(this.context).load(categoryArrayList.get(position).getImgPath()).fit().transform(this.transformation).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(holder.mImageView);
+            Picasso.get().load(categoryArrayList.get(position).getImgPath()).fit().transform(this.transformation).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(holder.mImageView);
         } else {
             holder.mImageView.setImageResource(R.drawable.ic_default_profile);
         }

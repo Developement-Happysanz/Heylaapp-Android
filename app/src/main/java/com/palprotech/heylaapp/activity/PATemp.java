@@ -210,7 +210,7 @@ public class PATemp extends AppCompatActivity implements AdapterView.OnItemSelec
         mProfileImage.setOnClickListener(this);
 
         if (((url != null) && !(url.isEmpty()))) {
-            Picasso.with(this).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(mProfileImage);
+            Picasso.get().load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(mProfileImage);
         }
         setupUI(findViewById(R.id.scrollID));
         inputName = (TextInputLayout) findViewById(R.id.ti_name);

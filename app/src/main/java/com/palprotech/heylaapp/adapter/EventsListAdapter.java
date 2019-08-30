@@ -165,7 +165,7 @@ public class EventsListAdapter extends BaseAdapter {
         }
 
         if (HeylaAppValidator.checkNullString(events.get(position).getEventBanner())) {
-            Picasso.with(this.context).load(events.get(position).getEventBanner()).fit().transform(this.transformation).placeholder(R.drawable.heyla_logo_transparent).error(R.drawable.heyla_logo_transparent).into(holder.imageView);
+            Picasso.get().load(events.get(position).getEventBanner()).fit().transform(this.transformation).placeholder(R.drawable.heyla_logo_transparent).error(R.drawable.heyla_logo_transparent).into(holder.imageView);
         } else {
             holder.imageView.setImageResource(R.drawable.heyla_logo_transparent);
         }

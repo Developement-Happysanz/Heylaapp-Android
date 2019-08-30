@@ -54,6 +54,7 @@ import com.palprotech.heylaapp.bean.support.EventList;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.LocationHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
+import com.palprotech.heylaapp.interfaces.DialogClickListener;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.CommonUtils;
@@ -72,7 +73,7 @@ import java.util.List;
  */
 
 public class NearbyActivity extends AppCompatActivity implements IServiceListener, AdapterView.OnItemClickListener, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.OnConnectionFailedListener, DialogClickListener,
         LocationListener, OnMapReadyCallback {
 
     private static final String TAG = NearbyActivity.class.getName();
@@ -134,7 +135,7 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
         mMapView.onCreate(savedInstanceState);
         iniView();
 
-        callGetFilterService(35);
+//        callGetFilterService(35);
 
         layoutFabMapview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,7 +163,7 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
         });
     }
 
-//    private void closeSubMenusFab() {
+    //    private void closeSubMenusFab() {
 //        layoutFabListView.setVisibility(View.INVISIBLE);
 //        layoutFabMapview.setVisibility(View.INVISIBLE);
 //        fabView.setImageResource(R.drawable.ic_plus);
@@ -178,25 +179,25 @@ public class NearbyActivity extends AppCompatActivity implements IServiceListene
 //        fabExpanded = true;
 //    }
 //closes FAB submenus
-private void closeSubMenusFab() {
-    layoutFabListView.setVisibility(View.INVISIBLE);
+    private void closeSubMenusFab() {
+        layoutFabListView.setVisibility(View.INVISIBLE);
 //    layoutFabNearby.setVisibility(View.INVISIBLE);
-    layoutFabMapview.setVisibility(View.INVISIBLE);
-    fabView.setImageResource(R.drawable.ic_plus_icon);
-    mainl.setForeground(ContextCompat.getDrawable(this, R.color.transparent) );
-    fabExpanded = false;
+        layoutFabMapview.setVisibility(View.INVISIBLE);
+        fabView.setImageResource(R.drawable.ic_plus_icon);
+        mainl.setForeground(ContextCompat.getDrawable(this, R.color.transparent));
+        fabExpanded = false;
 //    Animation show_fab_1 = AnimationUtils.loadAnimation(this, R.anim.fab_show);
 //    Animation hide_fab_1 = AnimationUtils.loadAnimation(this, R.anim.fab_hide);
 //
 //    layoutFabListView.startAnimation(hide_fab_1);
 //    layoutFabMapview.startAnimation(hide_fab_1);
-}
+    }
 
     //Opens FAB submenus
     private void openSubMenusFab() {
         layoutFabListView.setVisibility(View.VISIBLE);
         layoutFabMapview.setVisibility(View.VISIBLE);
-        mainl.setForeground(ContextCompat.getDrawable(this, R.color.light_line_color) );
+        mainl.setForeground(ContextCompat.getDrawable(this, R.color.light_line_color));
 //        Change settings icon to 'X' icon
         fabView.setImageResource(R.drawable.ic_cross_icon);
         fabExpanded = true;
@@ -246,29 +247,56 @@ private void closeSubMenusFab() {
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
+    private boolean validateSignInResponse(JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(HeylaAppConstants.PARAM_MESSAGE);
+                Log.d(TAG, "status val" + status + "msg" + msg);
+
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        Log.d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                    } else {
+                        signInSuccess = true;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return signInSuccess;
+    }
+
     @Override
     public void onResponse(final JSONObject response) {
         Log.d("ajazFilterresponse : ", response.toString());
+        progressDialogHelper.hideProgressDialog();
+        if (validateSignInResponse(response)) {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    // loadMoreListView.onLoadMoreComplete();
 
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                progressDialogHelper.hideProgressDialog();
-                // loadMoreListView.onLoadMoreComplete();
-
-                Gson gson = new Gson();
-                EventList eventsList = gson.fromJson(response.toString(), EventList.class);
-                if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
-                    totalCount = eventsList.getCount();
-                    //isLoadingForFirstTime = false;
-                    if (totalCount != 0) {
-                        imgMapbg.setVisibility(View.GONE);
+                    Gson gson = new Gson();
+                    EventList eventsList = gson.fromJson(response.toString(), EventList.class);
+                    if (eventsList.getEvents() != null && eventsList.getEvents().size() > 0) {
+                        totalCount = eventsList.getCount();
+                        //isLoadingForFirstTime = false;
+                        if (totalCount != 0) {
+                            imgMapbg.setVisibility(View.GONE);
+                        }
+                        imgFiller.setVisibility(View.GONE);
+                        updateListAdapter(eventsList.getEvents());
                     }
-                    imgFiller.setVisibility(View.GONE);
-                    updateListAdapter(eventsList.getEvents());
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override
@@ -285,7 +313,13 @@ private void closeSubMenusFab() {
     }
 
     protected void updateListAdapter(ArrayList<Event> eventsArrayList) {
-        mTotalEventCount.setText(Integer.toString(eventsArrayList.size()) + " Nearby Events");
+        if (eventsArrayList.size() == 1) {
+            mTotalEventCount.setText(Integer.toString(eventsArrayList.size()) + " Nearby Event");
+            mTotalEventCount.setVisibility(View.VISIBLE);
+        } else {
+            mTotalEventCount.setText(Integer.toString(eventsArrayList.size()) + " Nearby Events");
+            mTotalEventCount.setVisibility(View.VISIBLE);
+        }
         this.eventsArrayList.addAll(eventsArrayList);
         if (eventsListAdapter == null) {
             eventsListAdapter = new EventsListAdapter(this, this.eventsArrayList, className);
@@ -472,29 +506,29 @@ private void closeSubMenusFab() {
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-/*
-             * Google Play services can resolve some errors it detects.
-             * If the error has a resolution, try sending an Intent to
-             * start a Google Play services activity that can resolve
-             * error.
-             */
+        /*
+         * Google Play services can resolve some errors it detects.
+         * If the error has a resolution, try sending an Intent to
+         * start a Google Play services activity that can resolve
+         * error.
+         */
         if (connectionResult.hasResolution()) {
             try {
                 // Start an Activity that tries to resolve the error
                 connectionResult.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
-                    /*
-                     * Thrown if Google Play services canceled the original
-                     * PendingIntent
-                     */
+                /*
+                 * Thrown if Google Play services canceled the original
+                 * PendingIntent
+                 */
             } catch (IntentSender.SendIntentException e) {
                 // Log the error
                 e.printStackTrace();
             }
         } else {
-                /*
-                 * If no resolution is available, display a dialog to the
-                 * user with the error.
-                 */
+            /*
+             * If no resolution is available, display a dialog to the
+             * user with the error.
+             */
             Log.e("Error", "Location services connection failed with code " + connectionResult.getErrorCode());
         }
     }
@@ -770,5 +804,15 @@ private void closeSubMenusFab() {
         } catch (SecurityException e) {
 
         }
+    }
+
+    @Override
+    public void onAlertPositiveClicked(int tag) {
+
+    }
+
+    @Override
+    public void onAlertNegativeClicked(int tag) {
+
     }
 }

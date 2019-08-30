@@ -26,6 +26,22 @@ public class PreferenceStorage {
     }
     /*End*/
 
+    /*To check user guide to launch*/
+    public static void setFirstTimeUser(Context context, boolean isFirstTime) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(HeylaAppConstants.IS_FIRST_TIME_USER, isFirstTime);
+        editor.apply();
+    }
+
+    public static boolean isFirstTimeUser(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        return sharedPreferences.getBoolean(HeylaAppConstants.IS_FIRST_TIME_USER, true);
+    }
+    /*End*/
+
     /*To save FCM key locally*/
     public static void saveGCM(Context context, String gcmId) {
         SharedPreferences sharedPreferences = PreferenceManager

@@ -17,6 +17,6 @@
         android:textSize="18sp"
         android:fontFamily="@font/muli"
         android:textStyle="bold"
-        android:text="Select Category" />
+        android:text="@string/select_preference" />
 
 </android.support.v7.widget.Toolbar>

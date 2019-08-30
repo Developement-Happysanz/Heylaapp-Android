@@ -81,6 +81,8 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    AlertDialogHelper.showSimpleAlertDialog(getApplicationContext(), "Email ID/Mobile number is mandatory");
                 }
             }
         } else {
@@ -155,7 +157,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface arg0, int arg1) {*/
-                    Toast.makeText(getApplicationContext(), "Activation Link sent to your email.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "We have mailed you a link to reset your password", Toast.LENGTH_LONG).show();
                     Intent homeIntent = new Intent(getApplicationContext(), LoginActivity.class);
                     homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     homeIntent.putExtra("mobile_no", edtEmailOrMobileNo.getText().toString());

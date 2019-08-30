@@ -25,6 +25,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+//import androidx.fragment.app.Fragment;
+
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -333,9 +335,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                 signIn();
 //                signOut();
             } if (v == btnFacebook) {
-                FacebookSdk.sdkInitialize(getActivity());
+//                FacebookSdk.sdkInitialize(getActivity());
 //                LoginManager.getInstance().logOut();
-                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "email"));
+                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "user_friends", "email"));
                 initFacebook();
                 PreferenceStorage.saveLoginMode(getActivity(), HeylaAppConstants.FACEBOOK);
                 mSelectedLoginMode = HeylaAppConstants.FACEBOOK;
@@ -444,11 +446,11 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
 
     private boolean validateFields() {
         if (!HeylaAppValidator.checkNullString(this.edtUsername.getText().toString().trim())) {
-            edtUsername.setError(getString(R.string.err_email));
+            edtUsername.setError(getString(R.string.err_empty_username));
             requestFocus(edtUsername);
             return false;
         } else if (!HeylaAppValidator.checkNullString(this.edtPassword.getText().toString().trim())) {
-            edtPassword.setError(getString(R.string.err_empty_password));
+            edtPassword.setError(getString(R.string.err_empty_password_login));
             requestFocus(edtPassword);
             return false;
         } else if (!HeylaAppValidator.checkStringMinLength(6, this.edtPassword.getText().toString().trim())) {

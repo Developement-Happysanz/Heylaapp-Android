@@ -44,18 +44,19 @@ public class InitialScreenActivity extends Activity {
         }*/
 
         final ImageView img = new ImageView(this);
-        Picasso.with(img.getContext())
-                .load(url)
-                .into(img, new com.squareup.picasso.Callback() {
-                    @Override
-                    public void onSuccess() {
-                        imEventBanner.setBackgroundDrawable(img.getDrawable());
-                    }
-
-                    @Override
-                    public void onError() {
-                    }
-                });
+//        Picasso.with(img.getContext())
+//                .load(url)
+//                .into(img, new com.squareup.picasso.Callback() {
+//                    @Override
+//                    public void onSuccess() {
+//                        imEventBanner.setBackgroundDrawable(img.getDrawable());
+//                    }
+//
+//                    @Override
+//                    public void onError() {
+//                    }
+//                });
+        Picasso.get().load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(imEventBanner);
 
         TextView txtEventName = findViewById(R.id.txt_event_name);
         txtEventName.setText(event.getEventName());

@@ -291,6 +291,12 @@ public class HeylaAppConstants {
     // Feedback
     public static final String SEND_FEEDBACK = "apimain/user_feedback";
 
+    // Notification
+    public static final String VIEW_NOTIFICATION = "apimain/view_notification";
+
+    // Notification
+    public static final String NOTIFICATION_STATUS = "apimain/new_notification";
+
     // Wish list delete params
     public static final String PARAMS_WISH_LIST_ID = "wishlist_id";
 
@@ -308,6 +314,7 @@ public class HeylaAppConstants {
 
     //     Shared preferences file name
     public static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
+    public static final String IS_FIRST_TIME_USER = "IsFirstTimeuser";
 
     //    Shared FCM ID
     public static final String KEY_FCM_ID = "fcm_id";

@@ -149,12 +149,12 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
                                 break;
 
                             case R.id.action_all:
-                                changeFragment(1);
+                                changeFragment(2);
 //                                fabView.setVisibility(View.VISIBLE);
                                 break;
 
                             case R.id.action_popular:
-                                changeFragment(2);
+                                changeFragment(1);
 //                                fabView.setVisibility(View.VISIBLE);
                                 break;
                             case R.id.action_hotspot:
@@ -274,11 +274,11 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
             checkPointSearch = 0;
             newFragment = new FavouriteFragment();
         } else if (position == 1) {
-            newFragment = new AllFragment();
+            newFragment = new PopularFragment();
             checkPointSearch = 1;
         } else if (position == 2) {
             checkPointSearch = 2;
-            newFragment = new PopularFragment();
+            newFragment = new AllFragment();
 
         } else if (position == 3) {
             checkPointSearch = 3;
@@ -423,6 +423,9 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
                 Context appContext = this;
 
                 startActivity(new Intent(MainActivity.this, AdvanceFilterActivity.class));
+
+            case R.id.notification_img:
+                startActivity(new Intent(MainActivity.this, NotificationActivity.class));
 
             default:
                 return super.onOptionsItemSelected(item);

@@ -28,6 +28,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -53,6 +54,8 @@ import com.palprotech.heylaapp.activity.AdvanceFilterActivity;
 import com.palprotech.heylaapp.activity.AdvancedFilterResultActivity;
 import com.palprotech.heylaapp.activity.EventDetailActivity;
 import com.palprotech.heylaapp.activity.NearbyActivity;
+import com.palprotech.heylaapp.activity.NotificationActivity;
+import com.palprotech.heylaapp.activity.UserGuideActivity;
 import com.palprotech.heylaapp.adapter.EventsListAdapter;
 import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.bean.support.EventList;
@@ -140,6 +143,13 @@ public class AllFragment extends Fragment implements AdapterView.OnItemClickList
 
     private SearchView mSearchView = null;
 
+    private RelativeLayout userGuide;
+    private TextView skip;
+    private Button explore;
+    private String res = "";
+    private String userid = "";
+    private int ab;
+
     public static FavouriteFragment newInstance(int position) {
         FavouriteFragment frag = new FavouriteFragment();
         Bundle b = new Bundle();
@@ -158,6 +168,38 @@ public class AllFragment extends Fragment implements AdapterView.OnItemClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_favourite, container, false);
+
+
+        userGuide = rootView.findViewById(R.id.user_alert);
+        explore = rootView.findViewById(R.id.start);
+        explore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(rootView.getContext(), UserGuideActivity.class);
+                startActivity(i);
+            }
+        });
+        skip = rootView.findViewById(R.id.skip);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userGuide.setVisibility(View.GONE);
+                explore.setVisibility(View.GONE);
+                skip.setVisibility(View.GONE);
+            }
+        });
+        if (PreferenceStorage.isFirstTimeUser(rootView.getContext())) {
+            userGuide.setVisibility(View.VISIBLE);
+            explore.setVisibility(View.VISIBLE);
+            skip.setVisibility(View.VISIBLE);
+            PreferenceStorage.setFirstTimeUser(rootView.getContext(), false);
+        } else {
+            userGuide.setVisibility(View.GONE);
+            explore.setVisibility(View.GONE);
+            skip.setVisibility(View.GONE);
+        }
+
+
         TransPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         isFirstRunLocation = TransPrefs.getBoolean("isFirstRunLocation", true);
         isFirstRunNearby = TransPrefs.getBoolean("isFirstRunNearby", true);
@@ -419,7 +461,9 @@ public class AllFragment extends Fragment implements AdapterView.OnItemClickList
         });
 
         mSearchView.setQueryHint("Search Event name");
-
+        if (ab != 0) {
+            menu.getItem(2).setIcon(ContextCompat.getDrawable(rootView.getContext(), R.drawable.ic_notification_red));
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -438,11 +482,30 @@ public class AllFragment extends Fragment implements AdapterView.OnItemClickList
 
                 startActivity(new Intent(getActivity(), AdvanceFilterActivity.class));
 
+            case R.id.notification_img:
+                startActivity(new Intent(getActivity(), NotificationActivity.class));
+
             default:
                 return super.onOptionsItemSelected(item);
         }
 
         // return super.onOptionsItemSelected(item);
+    }
+
+    private void getNotificationStatus() {
+        res = "notification";
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, userid);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.NOTIFICATION_STATUS;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
     protected void initializeViews() {
@@ -505,11 +568,13 @@ public class AllFragment extends Fragment implements AdapterView.OnItemClickList
     }
 
     private void makeEventListServiceCall() {
+        res = "event";
         JSONObject jsonObject = new JSONObject();
+        userid = PreferenceStorage.getUserId(getActivity());
         try {
 
             jsonObject.put(HeylaAppConstants.KEY_EVENT_TYPE, "All");
-            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getActivity()));
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, userid);
             jsonObject.put(HeylaAppConstants.KEY_USER_TYPE, PreferenceStorage.getUserType(getActivity()));
             jsonObject.put(HeylaAppConstants.KEY_EVENT_CITY_ID, PreferenceStorage.getEventCityId(getActivity()));
             jsonObject.put(HeylaAppConstants.KEY_DATE_TYPE, dateType);
@@ -774,7 +839,17 @@ public class AllFragment extends Fragment implements AdapterView.OnItemClickList
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
-            LoadListView(response);
+            if (res.equalsIgnoreCase("event")) {
+                LoadListView(response);
+                getNotificationStatus();
+            } else if (res.equalsIgnoreCase("notification")) {
+                try {
+                    int ab = response.getInt("New_notification");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

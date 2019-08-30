@@ -142,6 +142,10 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
 
     private SearchView mSearchView = null;
 
+    private String res = "";
+    private String userid = "";
+    private int ab;
+
     public static HotspotFragment newInstance(int position) {
         HotspotFragment frag = new HotspotFragment();
         Bundle b = new Bundle();
@@ -357,9 +361,27 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
             }
         });
 
-        mSearchView.setQueryHint("Search Event name");
-
+        mSearchView.setQueryHint("Search events");
+        if (ab != 0) {
+            menu.getItem(2).setIcon(ContextCompat.getDrawable(rootView.getContext(), R.drawable.ic_notification_red));
+        }
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    private void getNotificationStatus() {
+        res = "notification";
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, userid);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.NOTIFICATION_STATUS;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
     protected void initializeViews() {
@@ -759,11 +781,13 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
     }
 
     private void makeEventListServiceCall() {
+        res = "event";
         JSONObject jsonObject = new JSONObject();
+        userid = PreferenceStorage.getUserId(getActivity());
         try {
 
             jsonObject.put(HeylaAppConstants.KEY_EVENT_TYPE, "Hotspot");
-            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getActivity()));
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, userid);
             jsonObject.put(HeylaAppConstants.KEY_USER_TYPE, PreferenceStorage.getUserType(getActivity()));
             jsonObject.put(HeylaAppConstants.KEY_EVENT_CITY_ID, PreferenceStorage.getEventCityId(getActivity()));
 
@@ -778,7 +802,17 @@ public class HotspotFragment extends Fragment implements AdapterView.OnItemClick
 
     @Override
     public void onResponse(JSONObject response) {
-        LoadListView(response);
+        if (res.equalsIgnoreCase("event")) {
+            LoadListView(response);
+            getNotificationStatus();
+        } else if (res.equalsIgnoreCase("notification")) {
+            try {
+                int ab = response.getInt("New_notification");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void LoadListView(JSONObject response) {

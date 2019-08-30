@@ -226,7 +226,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
         String url = PreferenceStorage.getUserPicture(this);
         if (((url != null) && !(url.isEmpty()))) {
-            Picasso.with(this).load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(mProfileImage);
+            Picasso.get().load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(mProfileImage);
         }
         setupUI(findViewById(R.id.scrollID));
         inputName = (TextInputLayout) findViewById(R.id.ti_name);
@@ -768,7 +768,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     private void openImageIntent() {
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Remove Photo", "Cancel"};
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ProfileActivity.this);
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Change Profile Picture");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
@@ -790,6 +790,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                     mActualFilePath = mSelectedImageUri.getPath();
                     saveUserImage();
                 } else if (options[item].equals("Cancel")) {
+
                     dialog.dismiss();
                 }
             }

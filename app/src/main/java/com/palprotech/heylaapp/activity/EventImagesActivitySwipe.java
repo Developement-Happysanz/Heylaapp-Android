@@ -257,7 +257,7 @@ public class EventImagesActivitySwipe extends AppCompatActivity implements View.
 
     private void setImageInFlipr(String imgUrl) {
         TouchImageView imageview = new TouchImageView(EventImagesActivitySwipe.this);
-        Picasso.with(this).load(imgUrl).into(imageview);
+        Picasso.get().load(imgUrl).into(imageview);
         aViewFlipper.addView(imageview);
     }
 

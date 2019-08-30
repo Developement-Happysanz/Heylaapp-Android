@@ -33,7 +33,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     private static final String TAG = EventReviewAddActivity.class.getName();
     private ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
-    TextView profile, privacyPoclicy, changeNumber, reportProblem, aboutUs;
+    TextView profile, privacyPoclicy, paymentPolicy, reportProblem, aboutUs, termsConditions;
     ImageView ivBack;
     String res = "";
     Switch aSwitch;
@@ -107,6 +107,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         reportProblem = findViewById(R.id.report_problem_settings);
         reportProblem.setOnClickListener(this);
 
+        paymentPolicy = findViewById(R.id.payment_policy_settings);
+        paymentPolicy.setOnClickListener(this);
+
+        termsConditions = findViewById(R.id.terms_settings);
+        termsConditions.setOnClickListener(this);
+
         aboutUs = findViewById(R.id.about_us);
         aboutUs.setOnClickListener(this);
 
@@ -143,6 +149,16 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             newI.putExtra("pageval", "setting_about");
             startActivity(newI);
 //            startActivity(new Intent(SettingsActivity.this, ChangeNumberActivity.class));
+        } else if (view == paymentPolicy) {
+            Intent newI = new Intent(new Intent(SettingsActivity.this, BlogViewActivity.class));
+            newI.putExtra("pageval", "setting_payment");
+            startActivity(newI);
+//            startActivity(new Intent(SettingsActivity.this, ChangeNumberActivity.class));
+        } else if (view == termsConditions) {
+            Intent newI = new Intent(new Intent(SettingsActivity.this, BlogViewActivity.class));
+            newI.putExtra("pageval", "setting_terms");
+            startActivity(newI);
+//            startActivity(new Intent(SettingsActivity.this, ChangeNumberActivity.class));
         } else if (view == reportProblem) {
             Intent newI = new Intent(new Intent(SettingsActivity.this, FeedbackActivity.class));
             newI.putExtra("pageval", "setting_report");
@@ -176,7 +192,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                         aSwitch.setChecked(true);
                     }
                 } else {
-                    Toast.makeText(this, "Notification", Toast.LENGTH_SHORT).show();
+                    if (aSwitch.isChecked()){
+                        Toast.makeText(this, "Push notification enabled", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Push notification disabled", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         } catch (JSONException e) {

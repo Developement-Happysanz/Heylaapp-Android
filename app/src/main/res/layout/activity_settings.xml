@@ -59,7 +59,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Basic"
+                    android:text="App Settings"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginTop="20dp"
@@ -84,7 +84,7 @@
                         android:layout_marginLeft="15dp"
                         android:padding="10dp"
 
-                        android:text="Profile Settings"
+                        android:text="Profile"
                         android:fontFamily="@font/muli"
                         android:textColor="@color/text_black"
                         android:textSize="16sp" />
@@ -143,13 +143,34 @@
                     android:background="@drawable/btn_square_settings">
 
                     <TextView
+                        android:id="@+id/about_us"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:padding="10dp"
+                        android:text="About Heyla"
+                        android:fontFamily="@font/muli"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="-1dp"
+                    android:background="@drawable/btn_square_settings">
+
+                    <TextView
                         android:id="@+id/report_problem_settings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:padding="10dp"
                         android:fontFamily="@font/muli"
-                        android:text="Report a Problem"
+                        android:text="Send us a feedback"
                         android:textColor="@color/text_black"
                         android:textSize="16sp" />
 
@@ -176,6 +197,26 @@
 
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="-1dp"
+                    android:background="@drawable/btn_square_settings">
+
+                    <TextView
+                        android:id="@+id/payment_policy_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:padding="10dp"
+                        android:fontFamily="@font/muli"
+                        android:text="Payment Policy"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -186,17 +227,18 @@
                     android:background="@drawable/btn_square_settings">
 
                     <TextView
-                        android:id="@+id/about_us"
+                        android:id="@+id/terms_settings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:padding="10dp"
-                        android:text="About us"
                         android:fontFamily="@font/muli"
-                        android:textColor="@color/appColorBase"
+                        android:text="Terms and Conditions"
+                        android:textColor="@color/text_black"
                         android:textSize="16sp" />
 
                 </RelativeLayout>
+
 
                 <ImageView
                     android:layout_width="125dp"
