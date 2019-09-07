@@ -96,6 +96,10 @@ public class FeedbackActivity extends AppCompatActivity implements DialogClickLi
             name.setError(getString(R.string.err_name));
             requestFocus(name);
             return false;
+        } else if (!HeylaAppValidator.isEmailValid(this.email.getText().toString().trim())) {
+            email.setError(getString(R.string.err_email));
+            requestFocus(email);
+            return false;
         } else if (!HeylaAppValidator.checkNullString(this.feedback.getText().toString().trim())) {
             feedback.setError(getString(R.string.empty));
             requestFocus(feedback);

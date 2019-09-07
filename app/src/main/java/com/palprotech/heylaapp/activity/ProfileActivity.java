@@ -228,7 +228,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         if (((url != null) && !(url.isEmpty()))) {
             Picasso.get().load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(mProfileImage);
         }
-        setupUI(findViewById(R.id.scrollID));
+//        setupUI(findViewById(R.id.scrollID));
         inputName = (TextInputLayout) findViewById(R.id.ti_name);
         name = (EditText) findViewById(R.id.edtName);
         if (PreferenceStorage.getFullName(this) != null) {
@@ -1344,34 +1344,34 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         return true;
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
-    }
-
-    public void setupUI(View view) {
-
-        // Set up touch listener for non-text box views to hide keyboard.
-        if (!(view instanceof EditText)) {
-            view.setOnTouchListener(new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    hideSoftKeyboard(ProfileActivity.this);
-                    return false;
-                }
-            });
-        }
-
-        //If a layout container, iterate over children and seed recursion.
-        if (view instanceof ViewGroup) {
-            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-                View innerView = ((ViewGroup) view).getChildAt(i);
-                setupUI(innerView);
-            }
-        }
-    }
+//    public static void hideSoftKeyboard(Activity activity) {
+//        InputMethodManager inputMethodManager =
+//                (InputMethodManager) activity.getSystemService(
+//                        Activity.INPUT_METHOD_SERVICE);
+//        inputMethodManager.hideSoftInputFromWindow(
+//                activity.getCurrentFocus().getWindowToken(), 0);
+//    }
+//
+//    public void setupUI(View view) {
+//
+//        // Set up touch listener for non-text box views to hide keyboard.
+//        if (!(view instanceof EditText)) {
+//            view.setOnTouchListener(new View.OnTouchListener() {
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    hideSoftKeyboard(ProfileActivity.this);
+//                    return false;
+//                }
+//            });
+//        }
+//
+//        //If a layout container, iterate over children and seed recursion.
+//        if (view instanceof ViewGroup) {
+//            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+//                View innerView = ((ViewGroup) view).getChildAt(i);
+//                setupUI(innerView);
+//            }
+//        }
+//    }
 
     @Override
     public void onAlertPositiveClicked(int tag) {

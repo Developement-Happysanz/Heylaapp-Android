@@ -43,8 +43,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -66,7 +69,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
     AlertDialog.Builder builder;
     StringBuilder sb = null, sb1 = null;
-
+    private AlertDialog ddialog = null;
     private List<String> eventTypeList = new ArrayList<String>();
     private ArrayAdapter<String> eventTypeAdapter = null;
 
@@ -605,6 +608,19 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     }
                 });
                 mFromDatePickerDialog.show();
+                String fromDt = ((Button) findViewById(R.id.btnfrom)).getText().toString();
+                if (!fromDt.isEmpty()) {
+                    DatePicker dP = mFromDatePickerDialog.getDatePicker();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    Date date = null;
+                    try {
+                        date = sdf.parse(fromDt);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    long millis = date.getTime();
+                    dP.setMaxDate(millis);
+                }
             }
         });
 
@@ -654,6 +670,21 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     }
                 });
                 dpd.show();
+                String fromDt = ((Button) findViewById(R.id.btnfrom)).getText().toString();
+                if (!fromDt.isEmpty()) {
+                    DatePicker dP = dpd.getDatePicker();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    Date date = null;
+                    try {
+                        date = sdf.parse(fromDt);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    long millis = date.getTime();
+                    dP.setMinDate(millis - 1000);
+                }
+
+
             }
         });
     }
@@ -728,7 +759,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         }
     }
 
-    private void showPreferenceList() {
+    private void createPreferenceList() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(AdvanceFilterActivity.this);
         sb = new StringBuilder();
@@ -736,7 +767,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
         sb1.append(" ");
         // String array for alert dialog multi choice items
 
-        final AlertDialog dialog = new AlertDialog.Builder(this)
+        ddialog = new AlertDialog.Builder(this)
                 .setTitle("Select Preference")
                 .setAdapter(mPreferenceAdapter, null)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -767,9 +798,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 .setNegativeButton("Cancel", null)
                 .create();
 
-        dialog.getListView().setItemsCanFocus(false);
-        dialog.getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        dialog.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ddialog.getListView().setItemsCanFocus(false);
+        ddialog.getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        ddialog.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
@@ -778,7 +809,10 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
             }
         });
 
-        dialog.show();
+    }
+
+    private void showPreferenceList() {
+        ddialog.show();
     }
 
     private void GetEventCities() {
@@ -919,6 +953,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                         PreferenceList.add(category.getCategory());
                         PreferenceIdList.add(category.getId());
                     }
+                    createPreferenceList();
                     GetEventCities();
 
                 } else if (checkState.equalsIgnoreCase("city")) {

@@ -37,7 +37,7 @@
             android:minHeight="50dp"
             android:layout_toRightOf="@+id/back_res"
             android:padding="5dp"
-            android:text="Event Detail"
+            android:text="Event Details"
             android:textColor="@color/white"
             android:textSize="@dimen/actionbarTextSize"
             android:textStyle="bold"/>
@@ -71,11 +71,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bookingbar"
+        android:descendantFocusability="blocksDescendants"
         android:layout_below="@id/toolbar_layout">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
             android:clickable="false"
             android:orientation="vertical">
 
@@ -108,7 +110,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/eventimglayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/banner_layout"
@@ -205,7 +206,6 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:id="@+id/timeimg"
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:src="@drawable/ic_time_event_detail" />
@@ -267,7 +267,6 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:id="@+id/dateimg"
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:src="@drawable/ic_date_event_detail" />
@@ -363,7 +362,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/muli"
-                        android:text="Event Detail"
+                        android:text="Description"
                         android:textColor="@color/text_black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -399,6 +398,9 @@
                     android:layout_below="@+id/two_line"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="10dp"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:descendantFocusability="blocksDescendants"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/btn_round_nocolor"
                     android:orientation="vertical">
@@ -494,17 +496,19 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/mob"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/muli"
-                            android:text="Mobile"
+                            android:text="Mobile Number"
                             android:textColor="@color/text_black" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="125dp"
                             android:fontFamily="@font/muli"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@+id/mob"
                             android:text=":"
                             android:textColor="@color/text_black" />
 
@@ -512,34 +516,27 @@
                             android:id="@+id/organisermobiletxt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="130dp"
+                            android:layout_toRightOf="@+id/mob"
+                            android:layout_marginLeft="20dp"
                             android:fontFamily="@font/muli"
                             android:text="9999999999"
                             android:textColor="@color/text_black" />
 
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/organisermail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignEnd="@+id/organiser_name"
-                        android:layout_alignStart="@+id/organiser_name"
-                        android:layout_below="@+id/organisermobile"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="horizontal">
-
                         <TextView
+                            android:id="@+id/mm"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/muli"
-                            android:text="Email"
+                            android:layout_below="@+id/mob"
+                            android:text="Email ID"
                             android:textColor="@color/text_black" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="125dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_toRightOf="@+id/mob"
+                            android:layout_alignTop="@+id/mm"
                             android:fontFamily="@font/muli"
                             android:text=":"
                             android:textColor="@color/text_black" />
@@ -548,12 +545,14 @@
                             android:id="@+id/organisermailtxt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="130dp"
-                            android:fontFamily="@font/muli"
+                            android:layout_marginStart="20dp"
+                            android:layout_alignTop="@+id/mm"
+                            android:layout_toRightOf="@+id/mob"                            android:fontFamily="@font/muli"
                             android:text="9999999999"
                             android:textColor="@color/text_black" />
 
                     </RelativeLayout>
+
                 </RelativeLayout>
 
                 <TextView
@@ -566,7 +565,6 @@
                     android:background="@color/text_gray" />
 
                 <LinearLayout
-                    android:id="@+id/five"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/four_line"
@@ -581,7 +579,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/muli"
-                        android:text="Review"
+                        android:text="Reviews"
                         android:textColor="@color/text_black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -610,7 +608,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:gravity="right"
-                        android:text="View More"
+                        android:text="More Reviews"
                         android:textColor="@color/colorAccent" />
 
                     <Button
@@ -621,7 +619,7 @@
                         android:layout_marginRight="100dp"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/btn_black"
-                        android:text="Write Review"
+                        android:text="Write a review"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
@@ -692,7 +690,7 @@
             android:gravity="center"
             android:paddingEnd="5dp"
             android:paddingStart="5dp"
-            android:text="Book tickets"
+            android:text="Book Tickets"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold" />

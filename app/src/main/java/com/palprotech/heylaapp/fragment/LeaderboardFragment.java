@@ -156,8 +156,8 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         } else if (view == login) {
             if (loginPoints.getText().toString().equalsIgnoreCase("(0)")) {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
-                alertDialogBuilder.setTitle("Login Point");
-                alertDialogBuilder.setMessage("No points secured yet");
+                alertDialogBuilder.setTitle("Daily Login");
+                alertDialogBuilder.setMessage("No points earned yet");
                 alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
@@ -176,8 +176,8 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         } else if (view == share) {
             if (sharePoints.getText().toString().equalsIgnoreCase("(0)")) {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
-                alertDialogBuilder.setTitle("Share Point");
-                alertDialogBuilder.setMessage("No points secured yet");
+                alertDialogBuilder.setTitle("Sharing Events");
+                alertDialogBuilder.setMessage("No points earned yet");
                 alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
@@ -194,10 +194,10 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
             }
 //
         } else if (view == check_in) {
-            if (checkinPoints.getText().toString().equalsIgnoreCase("0")) {
+            if (checkinPoints.getText().toString().equalsIgnoreCase("(0)")) {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
-                alertDialogBuilder.setTitle("Check In Point");
-                alertDialogBuilder.setMessage("No points secured yet");
+                alertDialogBuilder.setTitle("Event Check-ins");
+                alertDialogBuilder.setMessage("No points earned yet");
                 alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
@@ -218,8 +218,8 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         } else if (view == reviews) {
             if (reviewPoints.getText().toString().equalsIgnoreCase("(0)")) {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
-                alertDialogBuilder.setTitle("Review Point");
-                alertDialogBuilder.setMessage("No points secured yet");
+                alertDialogBuilder.setTitle("Event Reviews");
+                alertDialogBuilder.setMessage("No points earned yet");
                 alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
@@ -238,8 +238,8 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         } else if (view == booking) {
             if (bookingPoints.getText().toString().equalsIgnoreCase("(0)")) {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
-                alertDialogBuilder.setTitle("Booking Point");
-                alertDialogBuilder.setMessage("No points secured yet");
+                alertDialogBuilder.setTitle("Event Bookings");
+                alertDialogBuilder.setMessage("No points earned yet");
                 alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {

@@ -34,7 +34,6 @@
 
 
         <RelativeLayout
-            android:id="@+id/name_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -198,7 +197,6 @@
                             android:src="@drawable/ic_menu_change_city" />
 
                         <TextView
-                            android:id="@+id/change_city_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/change_city"
@@ -258,7 +256,6 @@
                             android:src="@drawable/ic_menu_share_app" />
 
                         <TextView
-                            android:id="@+id/share_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/share"
@@ -288,7 +285,6 @@
                             android:src="@drawable/ic_menu_rate" />
 
                         <TextView
-                            android:id="@+id/rate_us_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/rate_us"
@@ -318,7 +314,6 @@
                             android:src="@drawable/ic_blog" />
 
                         <TextView
-                            android:id="@+id/about_us_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/about_us"
@@ -349,7 +344,6 @@
                             android:src="@drawable/ic_menu_setting" />
 
                         <TextView
-                            android:id="@+id/settings_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/settings"
@@ -380,7 +374,6 @@
                             android:src="@drawable/ic_user_guide_sidemenu" />
 
                         <TextView
-                            android:id="@+id/user_guide_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/user_guide"
@@ -410,7 +403,6 @@
                             android:src="@drawable/ic_menu_signout" />
 
                         <TextView
-                            android:id="@+id/sign_out_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/sign_out"

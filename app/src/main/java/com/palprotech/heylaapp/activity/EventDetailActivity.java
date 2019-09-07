@@ -20,6 +20,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -68,6 +69,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import okhttp3.internal.Version;
+
+import static android.text.Layout.JUSTIFICATION_MODE_INTER_WORD;
 
 /**
  * Created by Narendar on 03/11/17.
@@ -127,6 +132,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private LocationRequest locationRequest;
     private static final long UPDATE_INTERVAL = 5000, FASTEST_INTERVAL = 5000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -290,8 +296,6 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
             }
         }
 
-        abc = (View) findViewById(R.id.map);
-        abc.setFocusable(false);
 //        imEventBanner.setMaxWidth(500);
 //        Event title
         txtEventName = findViewById(R.id.event_detail_name);
@@ -346,6 +350,14 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 //        Event details
         TextView txtEventDetails = findViewById(R.id.eventdetailtxt);
         txtEventDetails.setText(event.getDescription());
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+//            txtEventDetails.setText(Html.fromHtml(event.getDescription(),Html.FROM_HTML_MODE_LEGACY));
+//        } else {
+//            txtEventDetails.setText(Html.fromHtml(event.getDescription()));
+//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            txtEventDetails.setJustificationMode(JUSTIFICATION_MODE_INTER_WORD);
+        }
 //        Event venue mapview
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -563,10 +575,10 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
                             longitude1 = Double.parseDouble(event.getEventLongitude());
                             latitude1 = Double.parseDouble(event.getEventLatitude());
                             if (distance(latitude, longitude, latitude1, longitude1) < 0.1) {
-                                Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString() + "\nGet ready for the fun! ", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString(), Toast.LENGTH_LONG).show();
                                 sendCheckinStatus();
                             } else {
-                                Toast.makeText(getApplicationContext(), "Try again at - " + event.getEventName().toString() + "\nOnce you reached! ", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Please check-in once you've reached " + event.getEventName().toString(), Toast.LENGTH_LONG).show();
                             }
                         } else {
                             showSettingsAlert();

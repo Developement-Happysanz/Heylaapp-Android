@@ -8,10 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
     <style name="AppFullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
@@ -92,12 +88,6 @@
 
 
         <item name="android:textSize">@dimen/event_title_text_size</item>
-    </style>
-
-    <style name="ThemeOverlay.MyApp.BroadActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <!-- Parent theme sets colorControlNormal to textColorPrimary. -->
-        <item name="titleTextColor">@color/appColorBase</item>
-
     </style>
 
     <style name="spinner_style">

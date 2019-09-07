@@ -34,7 +34,7 @@
             android:minHeight="60dp"
             android:layout_toRightOf="@+id/back_res"
             android:padding="5dp"
-            android:text="Status"
+            android:text="Booking Status"
             android:textColor="@color/white"
             android:textSize="@dimen/actionbarTextSize"
             android:textStyle="bold"/>
@@ -43,7 +43,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/status_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -82,7 +81,7 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/text_view_primary"
             android:layout_width="238dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/status_img_layout"
@@ -93,6 +92,20 @@
             android:text=""
             android:textColor="@color/success_txt"
             android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="238dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_primary"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/muli"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/success_txt"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -107,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:fontFamily="@font/muli"
-                android:text="Order number        :"
+                android:text="Order ID                 :"
                 android:textColor="@color/text_black"
                 android:textSize="16sp" />
 
@@ -162,7 +175,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="25dp"
-                android:layout_toRightOf="@+id/ordernum"
+                android:layout_toRightOf="@+id/transdate"
                 android:fontFamily="@font/muli"
                 android:hint="Order number"
                 android:textColor="@color/text_black"
@@ -187,7 +200,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/transdate"
                 android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@+id/ordernum"
+                android:layout_toRightOf="@+id/transdate"
                 android:fontFamily="@font/muli"
                 android:hint="Order number"
                 android:textColor="@color/text_black"
@@ -199,7 +212,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/payamt"
                 android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@+id/ordernum"
+                android:layout_toRightOf="@+id/transdate"
                 android:fontFamily="@font/muli"
                 android:hint="Order number"
                 android:textColor="@color/text_black"
@@ -211,7 +224,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/paystatus"
                 android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@+id/ordernum"
+                android:layout_toRightOf="@+id/transdate"
                 android:fontFamily="@font/muli"
                 android:hint="Order number"
                 android:textColor="@color/text_black"

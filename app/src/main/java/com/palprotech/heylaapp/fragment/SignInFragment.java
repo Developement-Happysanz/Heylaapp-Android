@@ -454,7 +454,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
             requestFocus(edtPassword);
             return false;
         } else if (!HeylaAppValidator.checkStringMinLength(6, this.edtPassword.getText().toString().trim())) {
-            edtPassword.setError(getString(R.string.err_min_pass_length));
+            edtPassword.setError(getString(R.string.err_password));
             requestFocus(edtPassword);
             return false;
         } else {

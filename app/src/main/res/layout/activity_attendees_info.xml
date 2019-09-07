@@ -35,7 +35,7 @@
             android:minHeight="60dp"
             android:layout_toRightOf="@+id/back_res"
             android:padding="5dp"
-            android:text="Attendees"
+            android:text="Event Attendees"
             android:textColor="@color/white"
             android:textSize="@dimen/actionbarTextSize"
             android:textStyle="bold"/>
@@ -43,7 +43,6 @@
     </RelativeLayout>
 
     <ScrollView
-        android:id="@+id/ScrollView01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"

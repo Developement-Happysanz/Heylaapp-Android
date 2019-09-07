@@ -35,7 +35,7 @@
             android:minHeight="60dp"
             android:layout_toRightOf="@+id/back_res"
             android:padding="5dp"
-            android:text="Review"
+            android:text="Review This Event"
             android:textColor="@color/white"
             android:textSize="@dimen/actionbarTextSize"
             android:textStyle="bold"/>
@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/muli"
-                android:hint="Give your Comments"
+                android:hint="Share your experience"
                 android:minHeight="50dp"
                 android:maxLength="250"
                 android:gravity="top"

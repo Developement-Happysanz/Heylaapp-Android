@@ -88,83 +88,22 @@ public class NotificationListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        NotificationListAdapter.ViewHolder holder;
+        ViewHolder holder;
 
         if (convertView == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             convertView = inflater.inflate(R.layout.notification_list_item, parent, false);
 
-            holder = new NotificationListAdapter.ViewHolder();
+            holder = new ViewHolder();
             holder.txtEventName = (TextView) convertView.findViewById(R.id.txt_event_name);
             holder.txtDate = (TextView) convertView.findViewById(R.id.txt_event_date);
             holder.imageView = (ImageView) convertView.findViewById(R.id.img_logo);
             holder.txtEventDetail = convertView.findViewById(R.id.txt_event_detail);
 
-            holder.txtEventName.setText(notificationArrayList.get(position).getTemplate_name());
-            holder.txtEventName.setText(notificationArrayList.get(position).getTemplate_name());
-            holder.txtEventName.setText(notificationArrayList.get(position).getTemplate_name());
-
-            holder.txtEventName.setText(notificationArrayList.get(position).getTemplate_name());
-
-            if (HeylaAppValidator.checkNullString(notificationArrayList.get(position).getTemplate_pic())) {
-                Picasso.get().load(notificationArrayList.get(position).getTemplate_pic()).fit().transform(this.transformation).placeholder(R.drawable.heyla_logo_transparent).error(R.drawable.heyla_logo_transparent).into(holder.imageView);
-            } else {
-                holder.imageView.setVisibility(View.GONE);
-            }
-            String start = HeylaAppHelper.getDate(notificationArrayList.get(position).getCreated_at());
-
-            try {
-                DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
-                Date date = (Date) formatter.parse(start);
-                SimpleDateFormat event_date = new SimpleDateFormat("dd MMM yyyy");
-                String date_name = event_date.format(date.getTime());
-                if ((start != null) ) {
-                    holder.txtDate.setText(date_name);
-                } else {
-                    holder.txtDate.setText("N/A");
-                }
-            } catch (final ParseException e) {
-                e.printStackTrace();
-            }
-            holder.txtEventDetail.setText(notificationArrayList.get(position).getTemplate_content());
 
             convertView.setTag(holder);
         } else {
-            holder = (NotificationListAdapter.ViewHolder) convertView.getTag();
-
-            holder.txtEventName = (TextView) convertView.findViewById(R.id.txt_event_name);
-            holder.txtDate = (TextView) convertView.findViewById(R.id.txt_event_date);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.img_logo);
-            holder.txtEventDetail = convertView.findViewById(R.id.txt_event_detail);
-
-            holder.txtEventName.setText(notificationArrayList.get(position).getTemplate_name());
-            holder.txtEventName.setText(notificationArrayList.get(position).getTemplate_name());
-            holder.txtEventName.setText(notificationArrayList.get(position).getTemplate_name());
-
-            holder.txtEventName.setText(notificationArrayList.get(position).getTemplate_name());
-
-            if (HeylaAppValidator.checkNullString(notificationArrayList.get(position).getTemplate_pic())) {
-                Picasso.get().load(notificationArrayList.get(position).getTemplate_pic()).fit().transform(this.transformation).placeholder(R.drawable.heyla_logo_transparent).error(R.drawable.heyla_logo_transparent).into(holder.imageView);
-            } else {
-                holder.imageView.setVisibility(View.GONE);
-            }
-            String start = HeylaAppHelper.getDate(notificationArrayList.get(position).getCreated_at());
-
-            try {
-                DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
-                Date date = (Date) formatter.parse(start);
-                SimpleDateFormat event_date = new SimpleDateFormat("dd MMM yyyy");
-                String date_name = event_date.format(date.getTime());
-                if ((start != null) ) {
-                    holder.txtDate.setText(date_name);
-                } else {
-                    holder.txtDate.setText("N/A");
-                }
-            } catch (final ParseException e) {
-                e.printStackTrace();
-            }
-            holder.txtEventDetail.setText(notificationArrayList.get(position).getTemplate_content());
-
+            holder = (ViewHolder) convertView.getTag();
         }
 
         if (mSearching) {
@@ -174,6 +113,30 @@ public class NotificationListAdapter extends BaseAdapter {
         } else {
             Log.d("Event List Adapter", "getview pos called" + position);
         }
+
+        holder.txtEventName.setText(notificationArrayList.get(position).getTemplate_name());
+
+        if (HeylaAppValidator.checkNullString(notificationArrayList.get(position).getTemplate_pic())) {
+            Picasso.get().load(notificationArrayList.get(position).getTemplate_pic()).fit().transform(this.transformation).placeholder(R.drawable.heyla_logo_transparent).error(R.drawable.heyla_logo_transparent).into(holder.imageView);
+        } else {
+            holder.imageView.setVisibility(View.GONE);
+        }
+        String start = HeylaAppHelper.getDate(notificationArrayList.get(position).getCreated_at());
+
+        try {
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
+            Date date = (Date) formatter.parse(start);
+            SimpleDateFormat event_date = new SimpleDateFormat("dd MMM yyyy");
+            String date_name = event_date.format(date.getTime());
+            if ((start != null) ) {
+                holder.txtDate.setText(date_name);
+            } else {
+                holder.txtDate.setText("N/A");
+            }
+        } catch (final ParseException e) {
+            e.printStackTrace();
+        }
+        holder.txtEventDetail.setText(notificationArrayList.get(position).getTemplate_content());
 
         return convertView;
     }

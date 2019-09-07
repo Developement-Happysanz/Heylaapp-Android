@@ -77,23 +77,23 @@ public class EventSharingPointActivity extends AppCompatActivity implements View
         switch (Integer.parseInt(ruleId)) {
             case 1:
                 strip.setBackgroundColor(getResources().getColor(R.color.leaderboard_login));
-                titleView.setText("Daily Login");
+                titleView.setText("User Logins");
                 break;
             case 2:
                 strip.setBackgroundColor(getResources().getColor(R.color.leaderboard_share));
-                titleView.setText("Share");
+                titleView.setText("Events Shared");
                 break;
             case 3:
                 strip.setBackgroundColor(getResources().getColor(R.color.leaderboard_checkin));
-                titleView.setText("Check-In");
+                titleView.setText("Event Check-Ins");
                 break;
             case 4:
                 strip.setBackgroundColor(getResources().getColor(R.color.leaderboard_review));
-                titleView.setText("Review");
+                titleView.setText("Event Reviews");
                 break;
             case 5:
                 strip.setBackgroundColor(getResources().getColor(R.color.leaderboard_booking));
-                titleView.setText("Booking");
+                titleView.setText("Event Bookings");
                 break;
             default:
                 break;

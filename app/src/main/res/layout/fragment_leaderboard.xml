@@ -19,7 +19,6 @@
             android:gravity="top|center">
 
             <Button
-                android:id="@+id/follow"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
@@ -177,7 +176,6 @@
             android:layout_below="@+id/user_point_info">
 
             <LinearLayout
-                android:id="@+id/layout_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/booking_layout"
@@ -230,8 +228,7 @@
                     <!--android:textSize="16sp" />-->
 
                     <ImageView
-                    android:id="@+id/login_star"
-                    android:layout_width="30dp"
+                        android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignBottom="@id/login_text"
                     android:layout_alignParentEnd="true"
@@ -302,8 +299,7 @@
                     <!--android:textSize="16sp" />-->
 
                     <ImageView
-                    android:id="@+id/share_star"
-                    android:layout_width="30dp"
+                        android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignBottom="@id/sharing_text"
                     android:layout_alignParentEnd="true"
@@ -389,7 +385,6 @@
                     <!--android:textSize="16sp" />-->
 
                     <ImageView
-                        android:id="@+id/check_in_star"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignTop="@id/check_in_text"
@@ -462,7 +457,6 @@
                     <!--android:textSize="16sp" />-->
 
                     <ImageView
-                        android:id="@+id/review_star"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignTop="@id/review_text"
@@ -539,7 +533,6 @@
                 <!--android:textSize="16sp" />-->
 
                 <ImageView
-                    android:id="@+id/booking_star"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignTop="@+id/booking_star_count"

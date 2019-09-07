@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/bordergray">
@@ -185,7 +184,6 @@
         <!---->
         <!---->
         <ScrollView
-            android:id="@+id/ScrollView01"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbarbase"
@@ -291,7 +289,6 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/timeimg"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:src="@drawable/ic_time_event_detail" />
@@ -525,7 +522,6 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/nextButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"

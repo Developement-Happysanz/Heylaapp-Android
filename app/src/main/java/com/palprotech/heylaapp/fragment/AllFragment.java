@@ -6,6 +6,7 @@ import android.animation.PropertyValuesHolder;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -53,8 +54,10 @@ import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.AdvanceFilterActivity;
 import com.palprotech.heylaapp.activity.AdvancedFilterResultActivity;
 import com.palprotech.heylaapp.activity.EventDetailActivity;
+import com.palprotech.heylaapp.activity.MainActivity;
 import com.palprotech.heylaapp.activity.NearbyActivity;
 import com.palprotech.heylaapp.activity.NotificationActivity;
+import com.palprotech.heylaapp.activity.SplashScreenActivity;
 import com.palprotech.heylaapp.activity.UserGuideActivity;
 import com.palprotech.heylaapp.adapter.EventsListAdapter;
 import com.palprotech.heylaapp.bean.support.Event;
@@ -481,16 +484,37 @@ public class AllFragment extends Fragment implements AdapterView.OnItemClickList
 //                Context appContext = this;
 
                 startActivity(new Intent(getActivity(), AdvanceFilterActivity.class));
+                break;
 
             case R.id.notification_img:
-                startActivity(new Intent(getActivity(), NotificationActivity.class));
+//                if (userid.equalsIgnoreCase("1")) {
+                    startActivity(new Intent(getActivity(), NotificationActivity.class));
+//                } else {
+//                    android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
+//                    alertDialogBuilder.setTitle("Login");
+//                    alertDialogBuilder.setMessage("Log in to Access");
+//                    alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface arg0, int arg1) {
+//                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//                            sharedPreferences.edit().clear().apply();
+//
+//                            Intent homeIntent = new Intent(getActivity(), SplashScreenActivity.class);
+//                            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                            getActivity().startActivity(homeIntent);
+//
+//                        }
+//                    });
+//                }
+                break;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
 
-        // return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
+
 
     private void getNotificationStatus() {
         res = "notification";
@@ -600,7 +624,7 @@ public class AllFragment extends Fragment implements AdapterView.OnItemClickList
         layoutFabNearby.setClickable(false);
         layoutFabMapview.setClickable(false);
         fabView.setImageResource(R.drawable.ic_plus_icon);
-        mainl.setForeground(ContextCompat.getDrawable(getActivity(), R.color.transparent) );
+        mainl.setForeground(ContextCompat.getDrawable(getActivity(), R.color.transparent));
         fabExpanded = false;
 //        Animation show_fab_1 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab_show);
 //        Animation hide_fab_1 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab_hide);
@@ -621,7 +645,7 @@ public class AllFragment extends Fragment implements AdapterView.OnItemClickList
         layoutFabListView.setClickable(true);
         layoutFabNearby.setClickable(true);
         layoutFabMapview.setClickable(true);
-        mainl.setForeground(ContextCompat.getDrawable(getActivity(), R.color.light_line_color) );
+        mainl.setForeground(ContextCompat.getDrawable(getActivity(), R.color.light_line_color));
 //        Change settings icon to 'X' icon
         fabView.setImageResource(R.drawable.ic_cross_icon);
         fabExpanded = true;

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_grey"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -42,7 +43,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/no_notification_layout"
         android:layout_width="match_parent"
         android:gravity="center"
         android:visibility="gone"
@@ -69,7 +69,6 @@
             android:gravity="center"/>
 
         <TextView
-            android:id="@+id/enable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Enable push notification to stay updated on new events"
@@ -82,12 +81,28 @@
 
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/noti_list"
+<!--    <ListView-->
+<!--        android:id="@+id/noti_list"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:dividerHeight="10dp"-->
+<!--        android:padding="10dp"-->
+<!--        android:background="@color/background_grey"-->
+<!--        android:divider="@color/background_grey"/>-->
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:dividerHeight="0dp"
-        android:divider="@color/text_gray"/>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/noti_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/shadow_round"/>
+
+    </ScrollView>
+
 
 
 </LinearLayout>

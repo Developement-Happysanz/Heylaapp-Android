@@ -9,17 +9,13 @@
 
     <!--Login Screen-->
     <string name="facebook_app_id">323262168628257</string>
-    <string name="fb_login_protocol_scheme">fb323262168628257</string>
 
-    <string name="guest">GUEST LOGIN</string>
     <string name="signup">Sign Up</string>
     <string name="login">Sign In</string>
-    <string name="send">Send</string>
     <string name="confirm">Confirm</string>
     <string name="submit">Submit</string>
     <string name="verify">Verify</string>
-    <string name="signup_promt">Login using</string>
-    <string name="email">Email (Optional)</string>
+    <string name="email">Email ID(Optional)</string>
     <string name="password">Password</string>
     <string name="mobileno">Mobile Number</string>
     <string name="username">Username</string>
@@ -32,7 +28,6 @@
     <string name="verificationcode">Verification Code</string>
     <string name="mobile_number">New Mobile Number</string>
     <string name="verificationcodeforforgotpassword">Enter the OTP you have just received</string>
-    <string name="mailormobile">Email ID/Mobile Number</string>
     <string name="didntrecievecode">Didn\'t receive the code?\t</string>
     <string name="entercodetxt">Enter the verification code \nsent to your mobile</string>
     <string name="no_connectivity">Please check your internet connectivity and try again</string>
@@ -40,8 +35,6 @@
     <string name="resend_otp">Resend OTP</string>
     <string name="changenumber">Change number</string>
     <string name="error_occured">Failed to connect to the server. Please try again.</string>
-
-    <string name="google_maps_key">AIzaSyAIzZ7X2BP_NlmTCPLqcpOetJpfVWKOY5k</string>
 
     <string name="gps_network_not_enabled">Enable GPS</string>
     <string name="open_location_settings">Open location manager</string>
@@ -64,12 +57,12 @@
     <string name="slide_3_desc">Unfold new experiences \nwith the stages of the city-state</string>
 
     <!--Sign Up -->
-    <string name="err_email">Enter valid email address</string>
+    <string name="err_email">Enter valid email ID</string>
     <string name="err_name">Enter valid name</string>
     <string name="err_username">Enter valid username</string>
+    <string name="err_password">Enter valid password</string>
     <string name="err_empty_username">Username can\'t be empty</string>
     <string name="err_mobile">Enter valid mobile phone number</string>
-    <string name="err_pincode">Enter valid pincode number</string>
     <string name="err_empty_password">Give a new password to reset!</string>
     <string name="err_empty_password_login">Password can\'t be empty</string>
     <string name="err_min_pass_length">Short passwords are easy to guess! Try one with at least 6 characters</string>
@@ -95,43 +88,21 @@
     <string name="selectstate">State</string>
     <string name="selectcity">City</string>
     <string name="pincode">Pincode</string>
-    <string name="subscribe">Subscribe to Newsletter</string>
     <string name="recieve_notification">Notification</string>
     <string name="save">Save</string>
 
     <!--CCAvenue-->
 
     <string name="access_code">Access Code</string>
-    <string name="pay_opt">Payment Option</string>
-    <string name="card_type">Card Type</string>
-    <string name="pay_button">Pay</string>
-    <string name="pay_now_button">Pay Now</string>
-    <string name="next_button">Next</string>
+    <string name="pay_now_button">Pay</string>
     <!--<string name="name">Name</string>-->
-    <string name="address">Address</string>
-    <string name="country">Country</string>
-    <string name="billingAddress">Billing Address</string>
-    <string name="deliveryAddress">Delivery Address</string>
-    <string name="state">State</string>
-    <string name="city">City</string>
-    <string name="zip">Zip</string>
-    <string name="tel">Telephone</string>
     <!--<string name="email">Email Id</string>-->
     <string name="merchant_id">Merchant Id</string>
     <string name="currency">Currency</string>
     <string name="amount">Amount</string>
     <string name="redirect_url">Redirect Url</string>
     <string name="cancel_url">Cancel Url</string>
-    <string name="card_number">Card Number</string>
-    <string name="card_cvv">Card CVV</string>
-    <string name="expiry_month">Expiry Month</string>
-    <string name="expiry_year">Expiry Year</string>
-    <string name="card_details">Card Details</string>
-    <string name="issuing_bank">Issuing Bank</string>
     <string name="rsa_url">RSA Key Url</string>
-    <string name="customer_identifier">Customer Identifier</string>
-    <string name="emi_banks">EMI Banks</string>
-    <string name="emi_card_name">Card Name</string>
 
 
     <string-array name="nearby_distance">
@@ -157,8 +128,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="feedback">What\'s troubling your experience?</string>
-
-    <string name="empty_err">"Field cannot be empty"</string>
+    <string name="feedback_new">How was your experience with Heyla?</string>
 
 
 </resources>

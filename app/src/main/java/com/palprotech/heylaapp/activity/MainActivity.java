@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
 
     int checkPointSearch = 0;
     protected Double latitude, longitude;
+    String userId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -283,8 +284,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
         } else if (position == 3) {
             checkPointSearch = 3;
             newFragment = new HotspotFragment();
-        }
-        else if (position == 4) {
+        } else if (position == 4) {
             newFragment = new LeaderboardFragment();
             isMenuEnable = "no";
         }
@@ -409,30 +409,51 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
         return true;
     }*/
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        //Workaround for SearchView close listener
-        switch (item.getItemId()) {
-            case R.id.action_filter:
-                //ajaz
-                // Toast.makeText(this, "advance filter clicked", Toast.LENGTH_SHORT).show();
-                Context appContext = this;
-
-                startActivity(new Intent(MainActivity.this, AdvanceFilterActivity.class));
-
-            case R.id.notification_img:
-                startActivity(new Intent(MainActivity.this, NotificationActivity.class));
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-        // return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//        //Workaround for SearchView close listener
+//        switch (item.getItemId()) {
+//            case R.id.action_filter:
+//                //ajaz
+//                // Toast.makeText(this, "advance filter clicked", Toast.LENGTH_SHORT).show();
+//                Context appContext = this;
+//
+//                startActivity(new Intent(MainActivity.this, AdvanceFilterActivity.class));
+//                break;
+//
+//            case R.id.notification_img:
+//                if (userId.equalsIgnoreCase("1")) {
+//                    startActivity(new Intent(MainActivity.this, NotificationActivity.class));
+//                } else {
+//                    android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getApplicationContext());
+//                    alertDialogBuilder.setTitle("Login");
+//                    alertDialogBuilder.setMessage("Log in to Access");
+//                    alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface arg0, int arg1) {
+//                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//                            sharedPreferences.edit().clear().apply();
+////        TwitterUtil.getInstance().resetTwitterRequestToken();
+//
+//                            Intent homeIntent = new Intent(getApplicationContext(), SplashScreenActivity.class);
+//                            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                            getApplicationContext().startActivity(homeIntent);
+//
+//                        }
+//                    });
+//                }
+//                break;
+//
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     public void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
@@ -517,7 +538,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
             try {
-                if (res.equalsIgnoreCase("city") ) {
+                if (res.equalsIgnoreCase("city")) {
                     JSONArray getData = response.getJSONArray("Cities");
                     if (getData != null && getData.length() > 0) {
 
@@ -545,10 +566,10 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
                         }
                     }
                     profileInfo();
-                } else if (res.equalsIgnoreCase("info") ) {
+                } else if (res.equalsIgnoreCase("info")) {
                     JSONObject getData = response.getJSONObject("userData");
                     PreferenceStorage.saveUserPicture(this, getData.getString("picture_url"));
-                }else if (res.equalsIgnoreCase("login") ) {
+                } else if (res.equalsIgnoreCase("login")) {
 
                 }
             } catch (JSONException e) {
@@ -730,8 +751,9 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
         if (CommonUtils.isNetworkAvailable(this)) {
 
             JSONObject jsonObject = new JSONObject();
+            userId = PreferenceStorage.getUserId(this);
             try {
-                jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+                jsonObject.put(HeylaAppConstants.KEY_USER_ID, userId);
 
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -10,14 +10,12 @@
 
     <!--Login Module-->
     <color name="text_black">#000000</color>
-    <color name="eventDetail">#2d2d2d</color>
     <color name="white">#ffffff</color>
     <color name="transparent">#00000000</color>
     <color name="temp">#7e000000</color>
     <color name="bordergray">#c9c9c9</color>
     <color name="eventListbg">#dedbdb</color>
     <color name="light_line_color">#8BF9F9F9</color>
-    <color name="half_transparent">#1e468dcb</color>
     <color name="background_grey">#e5e6e9</color>
     <color name="trans">#01ffffff</color>
     <color name="facebook_blue">#475993</color>
@@ -57,24 +55,11 @@
         <item>@color/dot_light_screen3</item>
     </array>
 
-    <color name="default_selected">#468dcb</color>
-    <color name="default_selected_text">#FFFFFF</color>
-    <color name="default_base">#FFFFFF</color>
-    <color name="default_base_text">#000000</color>
-    <color name="button_bg_green">#40C491</color>
-
     <!-- dots active colors -->
-    <color name="success">#93c757</color>
-    <color name="failure">#e11f26</color>
-    <color name="cancel">#f15528</color>
 
     <color name="success_txt">#8dc63f</color>
     <color name="failure_txt">#ef3736</color>
     <color name="cancel_txt">#faa433</color>
-
-    <color name="success_new_bg">#BCDFB6</color>
-    <color name="failure_new_bg">#EF9C9D</color>
-    <color name="cancel_new_bg">#F0CA9E</color>
 
     <color name="leaderboard_login">#8dc63f</color>
     <color name="leaderboard_share">#444da1</color>
@@ -85,13 +70,6 @@
     <color name="booking_line">#faa433</color>
     <color name="Free">#48a847</color>
     <color name="Paid">#d02d27</color>
-    <color name="text_color">#414142</color>
-    <color name="ticket_booked">#009444</color>
-    <color name="ticket_cancel">#ed1c24</color>
-    <color name="lstview">#48a847</color>
-    <color name="map_view">#d02d27</color>
-    <color name="Nearby">#f68725</color>
-
 
 
 </resources>

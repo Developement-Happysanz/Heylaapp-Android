@@ -27,7 +27,6 @@
                 map:cameraTargetLng="78.3984375" />
 
             <TextView
-                android:id="@+id/no_home_events"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -159,6 +158,7 @@
         android:background="@color/white">
 
         <TextView
+            android:id="@+id/exp_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Explore Heyla"
@@ -170,11 +170,23 @@
             android:fontFamily="@font/muli"
             android:textStyle="bold"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Learn about Heyla app to make the most of it"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:layout_below="@id/exp_title"
+            android:layout_marginTop="0dp"
+            android:textColor="@color/text_black"
+            android:fontFamily="@font/muli"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="20dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -187,9 +199,10 @@
                     android:id="@+id/skip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/skip"
+                    android:text="Skip"
                     android:padding="10dp"
                     android:textStyle="bold"
+                    android:textAllCaps="false"
                     android:layout_gravity="center"
                     android:textColor="@color/text_black"/>
 
@@ -206,6 +219,7 @@
                     android:layout_height="wrap_content"
                     android:text="Start"
                     android:padding="10dp"
+                    android:textAllCaps="false"
                     android:textStyle="bold"
                     android:background="@drawable/btn_round_color"
                     android:textColor="@color/white"/>
@@ -216,7 +230,6 @@
     </RelativeLayout>
 
     <FrameLayout
-        android:id="@+id/fabFrame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -225,7 +238,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/sampleViewChanger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -263,7 +275,6 @@
                     android:layout_marginRight="10dp"/>
 
                 <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabMapView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     
@@ -301,7 +312,6 @@
                     android:layout_marginRight="10dp"/>
 
                 <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabListView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/success_txt"
@@ -339,7 +349,6 @@
                     android:layout_marginRight="10dp"/>
 
                 <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabNearby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_nearby_icon"

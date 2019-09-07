@@ -6,6 +6,7 @@ import android.animation.PropertyValuesHolder;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -22,6 +23,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -49,9 +51,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.activity.AdvanceFilterActivity;
 import com.palprotech.heylaapp.activity.AdvancedFilterResultActivity;
 import com.palprotech.heylaapp.activity.EventDetailActivity;
 import com.palprotech.heylaapp.activity.NearbyActivity;
+import com.palprotech.heylaapp.activity.NotificationActivity;
+import com.palprotech.heylaapp.activity.SplashScreenActivity;
 import com.palprotech.heylaapp.adapter.EventsListAdapter;
 import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.bean.support.EventList;
@@ -485,7 +490,50 @@ public class PopularFragment extends Fragment implements AdapterView.OnItemClick
         }
         super.onCreateOptionsMenu(menu, inflater);
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        //Workaround for SearchView close listener
+        switch (item.getItemId()) {
+            case R.id.action_filter:
+                //ajaz
+                // Toast.makeText(this, "advance filter clicked", Toast.LENGTH_SHORT).show();
+//                Context appContext = this;
 
+                startActivity(new Intent(getActivity(), AdvanceFilterActivity.class));
+                break;
+
+            case R.id.notification_img:
+//                if (userid.equalsIgnoreCase("1")) {
+                startActivity(new Intent(getActivity(), NotificationActivity.class));
+//                } else {
+//                    android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
+//                    alertDialogBuilder.setTitle("Login");
+//                    alertDialogBuilder.setMessage("Log in to Access");
+//                    alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface arg0, int arg1) {
+//                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//                            sharedPreferences.edit().clear().apply();
+//
+//                            Intent homeIntent = new Intent(getActivity(), SplashScreenActivity.class);
+//                            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                            getActivity().startActivity(homeIntent);
+//
+//                        }
+//                    });
+//                }
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     private void getNotificationStatus() {
         res = "notification";
         JSONObject jsonObject = new JSONObject();

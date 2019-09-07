@@ -7,20 +7,20 @@
         android:id="@+id/action_search_view"
         android:fontFamily="@font/muli"
         android:icon="@drawable/ic_search"
-        android:title="event name"
+        android:title="Search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_filter"
         android:fontFamily="@font/muli"
         android:icon="@drawable/ic_advance_filter"
-        android:title="event name"
+        android:title="Advance Search"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/notification_img"
         android:icon="@drawable/ic_notification"
-        android:title="event name"
+        android:title="Notification"
         app:showAsAction="ifRoom" />
 
 

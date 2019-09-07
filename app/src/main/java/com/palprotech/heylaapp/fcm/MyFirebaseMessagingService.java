@@ -15,6 +15,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.MainActivity;
+import com.palprotech.heylaapp.activity.NotificationActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,13 +53,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     //This method is only generating push notification
     //It is same as we did in earlier posts
     private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, NotificationActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Firebase Push Notification")
                 .setContentText(messageBody)
@@ -103,7 +104,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //            MyNotificationManager mNotificationManager = new MyNotificationManager(getApplicationContext());
             NotificationHelper mNotificationManager = new NotificationHelper(getApplicationContext());
             //creating an intent for the notification
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), NotificationActivity.class);
 
             //if there is no image
             if(imageUrl.equals("null")){

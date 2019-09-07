@@ -23,7 +23,7 @@
         android:enabled="true"
         android:fontFamily="@font/muli"
         android:icon="@drawable/ic_all_events"
-        android:title="All"
+        android:title="All Events"
         app:showAsAction="always" />
 
     <item
@@ -31,7 +31,7 @@
         android:enabled="true"
         android:fontFamily="@font/muli"
         android:icon="@drawable/ic_hotspot_white"
-        android:title="Hotspot"
+        android:title="Hotspots"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_leaderboard"

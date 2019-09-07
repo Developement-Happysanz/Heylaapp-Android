@@ -56,7 +56,6 @@
             android:layout_marginTop="2dp">
 
             <TextView
-                android:id="@+id/txtExamSubject"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="0.60"
@@ -69,7 +68,6 @@
 
 
             <TextView
-                android:id="@+id/txtSubTotalGrade"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/leaderboard_blue"
@@ -80,7 +78,6 @@
                 android:textColor="@color/white" />
 
             <TextView
-                android:id="@+id/txtSubTotalMark"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/leaderboard_blue"
@@ -103,7 +100,6 @@
 
 
         <ScrollView
-            android:id="@+id/ScrollView01"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

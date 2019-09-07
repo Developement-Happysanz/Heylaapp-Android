@@ -48,7 +48,6 @@
         android:textSize="@dimen/actionbarTextSize" />-->
 
     <ScrollView
-        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar">
@@ -187,7 +186,6 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/ti_select_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ti_preference_category">
@@ -377,7 +375,6 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/twobtn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:gravity="center"

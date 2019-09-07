@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.activity.AttendeesInfoActivity;
 import com.palprotech.heylaapp.activity.NearbyActivity;
 import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.ccavenue.activities.StatusActivity;
@@ -113,11 +114,11 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
         TextView txtEventPlace = findViewById(R.id.txt_event_location);
         txtEventPlace.setText(event.getEventVenue());
         TextView txtTotalTickets = findViewById(R.id.txtTotalTickets);
-        txtTotalTickets.setText(PreferenceStorage.getTotalNoOfTickets(getApplicationContext()) + " Tickets");
+        txtTotalTickets.setText(PreferenceStorage.getTotalNoOfTickets(getApplicationContext()));
         TextView txtTicketPrice = findViewById(R.id.txtTicketPrice);
-        txtTicketPrice.setText("Rs." + PreferenceStorage.getPaymentAmount(getApplicationContext()));
+        txtTicketPrice.setText("S$" + PreferenceStorage.getPaymentAmount(getApplicationContext()));
         TextView txtTotalPrice = findViewById(R.id.txtTotalPrice);
-        txtTotalPrice.setText("Rs." + PreferenceStorage.getPaymentAmount(getApplicationContext()));
+        txtTotalPrice.setText("S$" + PreferenceStorage.getPaymentAmount(getApplicationContext()));
 
         String orderIdValue = PreferenceStorage.getOrderId(getApplicationContext());
 //        amount.setText(PreferenceStorage.getPaymentAmount(getApplicationContext()));
@@ -372,7 +373,9 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
                 } else if(msg.equalsIgnoreCase("Refund")){
                     sendRefundData();
                 } else {
-                    AlertDialogHelper.showSimpleAlertDialog(getApplicationContext(), msg);
+                    AlertDialogHelper.showSimpleAlertDialog(MainActivityPost.this, msg);
+                    Intent intent = new Intent(getApplicationContext(), AttendeesInfoActivity.class);
+                    intent.putExtra("eventObj", event);
                     finish();
                 }
 

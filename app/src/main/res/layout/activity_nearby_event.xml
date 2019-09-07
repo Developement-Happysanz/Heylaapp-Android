@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/event_detail_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -150,7 +149,6 @@
     </RelativeLayout>
 
     <FrameLayout
-        android:id="@+id/fabFrame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -159,7 +157,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/sampleViewChanger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -195,7 +192,6 @@
                     android:textColor="@color/text_black" />
 
                 <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabMapView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/leaderboard_checkin"
@@ -231,7 +227,6 @@
                     android:textColor="@color/text_black" />
 
                 <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabListView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/success_txt"

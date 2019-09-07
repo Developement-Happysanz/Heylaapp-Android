@@ -11,10 +11,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.MainActivity;
+import com.palprotech.heylaapp.activity.NotificationActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,18 +40,18 @@ public class NotificationHelper {
     public void createNotification(String title, String message)
     {
         /**Creates an explicit intent for an Activity in your app**/
-        Intent resultIntent = new Intent(mContext , MainActivity.class);
+        Intent resultIntent = new Intent(mContext , NotificationActivity.class);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         PendingIntent resultPendingIntent = PendingIntent.getActivity(mContext,
                 0 /* Request code */, resultIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-        mBuilder = new NotificationCompat.Builder(mContext);
+        mBuilder = new NotificationCompat.Builder(mContext, NOTIFICATION_CHANNEL_ID);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setAutoCancel(false)
+                .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_notificationfav_icon)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher))
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
@@ -74,7 +76,7 @@ public class NotificationHelper {
     }
 
     public void showBigNotification(String title, String message, String url) {
-        Intent resultIntent = new Intent(mContext , MainActivity.class);
+        Intent resultIntent = new Intent(mContext , NotificationActivity.class);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         PendingIntent resultPendingIntent = PendingIntent.getActivity(mContext,
@@ -85,11 +87,12 @@ public class NotificationHelper {
         bigPictureStyle.setSummaryText(Html.fromHtml(message).toString());
         bigPictureStyle.bigPicture(getBitmapFromURL(url));
 
-        mBuilder = new NotificationCompat.Builder(mContext);
+        mBuilder = new NotificationCompat.Builder(mContext, NOTIFICATION_CHANNEL_ID);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setAutoCancel(false)
+                .setColor(ContextCompat.getColor(mContext, R.color.appColorBase))
+                .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_notificationfav_icon)
                 .setStyle(bigPictureStyle)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher))

@@ -25,7 +25,7 @@ import java.util.Locale;
 
 public class StatusActivity extends Activity {
 
-    private TextView tv4, OrderNum, PaymentId, TransactionDate, PaymentAmount, PaymentStatus;
+    private TextView tv4, OrderNum, PaymentId, TransactionDate, PaymentAmount, PaymentStatus, TextPrim;
     private Event event;
     private Button PaymentDone;
     private ImageView Success, Failure, Cancel;
@@ -40,6 +40,7 @@ public class StatusActivity extends Activity {
         Intent mainIntent = getIntent();
         event = (Event) getIntent().getSerializableExtra("eventObj");
         tv4 = (TextView) findViewById(R.id.textView1);
+        TextPrim = (TextView) findViewById(R.id.text_view_primary);
         OrderNum = (TextView) findViewById(R.id.txt_ordernum);
         PaymentId = (TextView) findViewById(R.id.txt_payid);
         TransactionDate = (TextView) findViewById(R.id.txt_transdate);
@@ -90,9 +91,11 @@ public class StatusActivity extends Activity {
         switch (abc) {
             case "Transaction Declined!":
                 tv4.setTextColor(getResources().getColor(R.color.failure_txt));
+                tv4.setText("Transaction Failed!");
                 Failure.setVisibility(View.VISIBLE);
                 Success.setVisibility(View.INVISIBLE);
                 Cancel.setVisibility(View.INVISIBLE);
+                TextPrim.setText("Aw!");
                 PaymentStatus.setText("Failed");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);
@@ -107,11 +110,12 @@ public class StatusActivity extends Activity {
                 Success.setVisibility(View.VISIBLE);
                 Failure.setVisibility(View.INVISIBLE);
                 Cancel.setVisibility(View.INVISIBLE);
+                TextPrim.setText("Yay!");
                 PaymentStatus.setText("Success");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);
                 TransactionDate.setText(getTransactionDate);
-                PaymentDone.setText("Done");
+                PaymentDone.setText("Ok");
                 PaymentDone.setBackgroundColor(getResources().getColor(R.color.success_txt));
 //                statusBG.setBackgroundColor(getResources().getColor(R.color.success_new_bg));
 //                payment.setBackground(getResources().getDrawable(R.drawable.payment_status_success));
@@ -121,11 +125,12 @@ public class StatusActivity extends Activity {
                 Cancel.setVisibility(View.VISIBLE);
                 Success.setVisibility(View.INVISIBLE);
                 Failure.setVisibility(View.INVISIBLE);
-                PaymentStatus.setText("Canceled");
+                PaymentStatus.setText("Cancelled");
+                TextPrim.setText("Aw!");
                 OrderNum.setText(getOrderId);
                 PaymentAmount.setText(getPaymentAmount);
                 TransactionDate.setText(getTransactionDate);
-                PaymentDone.setText("Ok");
+                PaymentDone.setText("Back to events");
                 PaymentDone.setBackgroundColor(getResources().getColor(R.color.cancel_txt));
 //                statusBG.setBackgroundColor(getResources().getColor(R.color.cancel_new_bg));
 //                payment.setBackground(getResources().getDrawable(R.drawable.payment_status_cancel));

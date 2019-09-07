@@ -104,7 +104,6 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/start_transaction"
             android:layout_width="217dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -170,7 +169,6 @@
         android:gravity="center"/>
 
     <ScrollView
-        android:id="@+id/ScrollView01"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbarbase"
@@ -276,7 +274,6 @@
                             android:gravity="center">
 
                             <ImageView
-                                android:id="@+id/timeimg"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:src="@drawable/ic_time_event_detail" />
@@ -331,9 +328,9 @@
                         android:background="@color/white"
                         android:fontFamily="@font/muli"
                         android:gravity="center_vertical"
-                        android:text="TOTAL TICKETS"
+                        android:text="1"
                         android:textColor="@color/text_black"
-                        android:textSize="14sp" />
+                        android:textSize="22sp" />
 
                 </LinearLayout>
 
@@ -357,7 +354,7 @@
                         android:background="@color/white"
                         android:fontFamily="@font/muli"
                         android:gravity="center_vertical"
-                        android:text="Subtotal"
+                        android:text="Payment"
                         android:textColor="@color/text_black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -365,6 +362,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_marginBottom="8dp">
 
                         <TextView
@@ -373,7 +371,7 @@
                             android:background="@color/white"
                             android:fontFamily="@font/muli"
                             android:gravity="center_vertical"
-                            android:text="Internet handling fees"
+                            android:text="Internet Handling Fee"
                             android:textColor="@color/text_black"
                             android:textSize="14sp" />
 
@@ -393,6 +391,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_marginBottom="8dp">
 
                         <TextView
@@ -421,6 +420,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_marginBottom="8dp">
 
                         <TextView
@@ -486,7 +486,7 @@
                             android:background="@color/white"
                             android:fontFamily="@font/muli"
                             android:gravity="center_vertical"
-                            android:text="Total Price"
+                            android:text="Total"
                             android:textColor="@color/appColorBase"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -510,7 +510,6 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/nextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

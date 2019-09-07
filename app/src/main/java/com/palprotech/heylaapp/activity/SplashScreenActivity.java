@@ -16,10 +16,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.bean.database.SQLiteHelper;
-import com.palprotech.heylaapp.fcm.MyFirebaseInstanceIDService;
 import com.palprotech.heylaapp.paytm.MainActivityPost;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
@@ -42,8 +43,16 @@ public class SplashScreenActivity extends Activity {
         final int getStatus = database.appInfoCheck();
         String GCMKey = PreferenceStorage.getGCM(getApplicationContext());
         if (GCMKey.equalsIgnoreCase("")) {
-            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            PreferenceStorage.saveGCM(getApplicationContext(), refreshedToken);
+//            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(SplashScreenActivity.this, new OnSuccessListener<InstanceIdResult>() {
+                @Override
+                public void onSuccess(InstanceIdResult instanceIdResult) {
+                    String newToken = instanceIdResult.getToken();
+                    Log.e("newToken", newToken);
+                    PreferenceStorage.saveGCM(getApplicationContext(), newToken);
+                }
+            });
+//            PreferenceStorage.saveGCM(getApplicationContext(), refreshedToken);
         }
 
         if(!checkAutoDT(this)){

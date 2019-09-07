@@ -26,7 +26,6 @@
                 map:cameraTargetLng="78.3984375" />
 
             <TextView
-                android:id="@+id/no_home_events"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -147,7 +146,6 @@
     </RelativeLayout>
 
     <FrameLayout
-        android:id="@+id/fabFrame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -156,7 +154,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/sampleViewChanger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -194,7 +191,6 @@
                     android:layout_marginRight="10dp"/>
 
                 <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabMapView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     
@@ -232,7 +228,6 @@
                     android:layout_marginRight="10dp"/>
 
                 <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabListView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/success_txt"
@@ -270,7 +265,6 @@
                     android:layout_marginRight="10dp"/>
 
                 <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabNearby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_nearby_icon"
