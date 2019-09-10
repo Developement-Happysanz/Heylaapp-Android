@@ -7,7 +7,7 @@ import android.support.v4.app.ActivityCompat;
 
 public abstract class PermissionUtil {
 
-    public static boolean verifyPermissions(int[] grantResults) {
+    /*public static boolean verifyPermissions(int[] grantResults) {
         // At least one result must be checked.
         if(grantResults.length < 1){
             return false;
@@ -52,6 +52,6 @@ public abstract class PermissionUtil {
             requestPermission =  true;
         }
         return requestPermission;
-    }
+    }*/
 
 }

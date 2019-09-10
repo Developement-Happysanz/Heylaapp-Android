@@ -188,7 +188,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
         }
 
 
-        permissions.add(Manifest.permission.SEND_SMS);
+        /*permissions.add(Manifest.permission.SEND_SMS);
 
         permissionsToRequest = permissionsToRequest(permissions);
 
@@ -197,7 +197,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
                 requestPermissions(permissionsToRequest.toArray(
                         new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
             }
-        }
+        }*/
 
     }
 
