@@ -1,13 +1,17 @@
 package com.palprotech.heylaapp.fragment;
 
-import android.app.AlertDialog;
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +35,8 @@ import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -79,7 +85,11 @@ public class SignUpFragment extends Fragment implements View.OnClickListener, IS
         serviceHelper = new ServiceHelper(getActivity());
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(getActivity());
+
+
     }
+
+
 
     @Override
     public void onClick(View v) {

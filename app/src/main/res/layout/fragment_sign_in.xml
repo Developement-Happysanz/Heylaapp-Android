@@ -129,6 +129,7 @@
                 android:fontFamily="@font/muli"
                 android:paddingEnd="8dp"
                 android:text="Facebook"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
@@ -144,7 +145,7 @@
                 android:drawableLeft="@drawable/ic_btn_google_light_normal_ios"
                 android:gravity="center"
                 android:paddingEnd="8dp"
-                android:text="Google"
+                android:text="Login using Google"
                 android:textSize="14sp" />
 
         </LinearLayout>

@@ -330,7 +330,7 @@
                         android:paddingBottom="2dp"
                         android:paddingEnd="15dp"
                         android:singleLine="true"
-                        android:text="Paid"
+                        android:text="Free"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:textStyle="bold" />

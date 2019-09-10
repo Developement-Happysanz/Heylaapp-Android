@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
@@ -43,6 +44,7 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -57,7 +59,10 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
     private ProgressDialogHelper progressDialogHelper;
     TextView txtGuestLogin;
     private ServiceHelper serviceHelper;
-    private static final int PERMISSION_REQUEST_CODE = 1;
+    private ArrayList<String> permissionsToRequest;
+    private ArrayList<String> permissionsRejected = new ArrayList<>();
+    private ArrayList<String> permissions = new ArrayList<>();
+    private static final int ALL_PERMISSIONS_RESULT = 1011;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,50 +101,6 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
         }
 
         IMEINo = String.valueOf(generateRandom(12));
-
-
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-//
-//            TelephonyManager tm = (TelephonyManager)
-//                    getSystemService(Context.TELEPHONY_SERVICE);
-//            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
-//                    == PackageManager.PERMISSION_DENIED) {
-//
-//                Log.d("permission", "permission denied to SEND_SMS - requesting it");
-//                String[] permissions = {Manifest.permission.READ_PHONE_STATE};
-//
-//                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
-//            }
-//            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                IMEINo = tm.getImei();
-//            } else {
-//                if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
-//                        == PackageManager.PERMISSION_DENIED) {
-//                    IMEINo = "";
-//                } else {
-//                    IMEINo = tm.getDeviceId();
-//                }
-//            }
-//        }
-
-        /*if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            TelephonyManager tm = (TelephonyManager)
-                    getSystemService(Context.TELEPHONY_SERVICE);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            IMEINo = tm.getImei();
-        } else {
-            TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            IMEINo = telephonyManager.getDeviceId();
-        }*/
 
         if (PreferenceStorage.getUserId(getApplicationContext()) != null && HeylaAppValidator.checkNullString(PreferenceStorage.getUserId(getApplicationContext()))) {
             String city = PreferenceStorage.getEventCityName(getApplicationContext());
@@ -224,6 +185,72 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
             } catch (NoSuchAlgorithmException e) {
 
             }
+        }
+
+
+        permissions.add(Manifest.permission.SEND_SMS);
+
+        permissionsToRequest = permissionsToRequest(permissions);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (permissionsToRequest.size() > 0) {
+                requestPermissions(permissionsToRequest.toArray(
+                        new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
+            }
+        }
+
+    }
+
+    private ArrayList<String> permissionsToRequest(ArrayList<String> wantedPermissions) {
+        ArrayList<String> result = new ArrayList<>();
+
+        for (String perm : wantedPermissions) {
+            if (!hasPermission(perm)) {
+                result.add(perm);
+            }
+        }
+
+        return result;
+    }
+
+    private boolean hasPermission(String permission) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+        }
+
+        return true;
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case ALL_PERMISSIONS_RESULT:
+                for (String perm : permissionsToRequest) {
+                    if (!hasPermission(perm)) {
+                        permissionsRejected.add(perm);
+                    }
+                }
+
+                if (permissionsRejected.size() > 0) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
+                            new AlertDialog.Builder(LoginActivity.this).
+                                    setMessage("This permission is mandatory to send OTP.").
+                                    setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                requestPermissions(permissionsRejected.
+                                                        toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
+                                            }
+                                        }
+                                    }).setNegativeButton("Cancel", null).create().show();
+
+                            return;
+                        }
+                    }
+                }
+
+                break;
         }
     }
 

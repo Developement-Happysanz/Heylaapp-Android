@@ -18,6 +18,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -119,7 +120,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     TextView viewMore;
     Button writeReview;
     View abc;
-
+    TextView evetPrice;
 
     private ArrayList<String> permissionsToRequest;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
@@ -147,6 +148,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 
         event = (Event) getIntent().getSerializableExtra("eventObj");
         eventType = event.getHotspotStatus();
+
         setUpServices();
         setUpUI();
         getWishlistStatus();
@@ -190,7 +192,8 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
             if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
 //                getWishlistStatus();
                 if (wishliststatus.equalsIgnoreCase("Already Added") ||
-                        wishliststatus.equalsIgnoreCase("Wishlist Added")) {
+                        wishliststatus.equalsIgnoreCase("Wishlist Added") ||
+                        wishliststatus.equalsIgnoreCase("Event added to wish list")) {
                     imEventFavourite.setImageResource(R.drawable.ic_fav_unselect);
                     removeFromWishlist();
                 } else {
@@ -293,6 +296,20 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
             if (permissionsToRequest.size() > 0) {
                 requestPermissions(permissionsToRequest.toArray(
                         new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
+            }
+        }
+
+        evetPrice = findViewById(R.id.txt_event_price);
+        String paidBtnVal = event.getEventType();
+        if (paidBtnVal != null) {
+            evetPrice.setText(paidBtnVal);
+            evetPrice.setTextColor(ContextCompat.getColor(this, R.color.white)); //Blue
+            if (paidBtnVal.equalsIgnoreCase("invite")) {
+                evetPrice.setBackground(ContextCompat.getDrawable(this, R.drawable.btn_paid));
+            } else if (paidBtnVal.equalsIgnoreCase("free")) {
+                evetPrice.setBackground(ContextCompat.getDrawable(this, R.drawable.btn_free));
+            } else if (paidBtnVal.equalsIgnoreCase("paid")) {
+                evetPrice.setBackground(ContextCompat.getDrawable(this, R.drawable.btn_paid));
             }
         }
 
@@ -754,7 +771,8 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
                 if (res.equalsIgnoreCase("wishlistStatus")) {
                     wishliststatus = response.getString("msg");
                     if (wishliststatus.equalsIgnoreCase("Already Added") ||
-                            wishliststatus.equalsIgnoreCase("Wishlist Added")) {
+                            wishliststatus.equalsIgnoreCase("Wishlist Added") ||
+                            wishliststatus.equalsIgnoreCase("Event added to wish list")) {
                         imEventFavourite.setImageResource(R.drawable.ic_fav_select);
                         wishlist_id = response.getString("wishlist_id");
                     } else {
@@ -769,7 +787,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
                         wishlist_id = response.getString("wishlist_id");
                         imEventFavourite.setImageResource(R.drawable.ic_fav_select);
                     }
-                    Toast.makeText(this, "Wishlist Added!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Event added to wish list", Toast.LENGTH_SHORT).show();
 
                 } else if (res.equalsIgnoreCase("wishlistDEL")) {
                     wishliststatus = response.getString("msg");
@@ -778,7 +796,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
                     } else {
                         imEventFavourite.setImageResource(R.drawable.ic_fav_select);
                     }
-                    Toast.makeText(this, "Wishlist Deleted!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, wishliststatus, Toast.LENGTH_SHORT).show();
                 } else if (res.equalsIgnoreCase("reviewList")) {
                     JSONArray getData = response.getJSONArray("Reviewdetails");
                     if (getData != null && getData.length() > 0) {

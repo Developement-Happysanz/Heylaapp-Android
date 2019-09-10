@@ -1087,7 +1087,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         .spinnerTheme(R.style.NumberPickerStyle)
                         .showTitle(true)
                         .showDaySpinner(true)
-                        .defaultDate(2018, 0, 1)
+//                        .defaultDate(2018, 0, 1)
                         .maxDate(year1, month1, day1)
                         .minDate(1900, 0, 1)
                         .build()

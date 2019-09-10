@@ -101,30 +101,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
         initializeViews();
         IMEINo = String.valueOf(generateRandom(12));
 
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-//
-//            TelephonyManager tm = (TelephonyManager)
-//                    getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-//            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE)
-//                    == PackageManager.PERMISSION_DENIED) {
-//
-//                Log.d("permission", "permission denied to SEND_SMS - requesting it");
-//                String[] permissions = {Manifest.permission.READ_PHONE_STATE};
-//
-//                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
-//            }
-//            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                IMEINo = tm.getImei();
-//            } else {
-//                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE)
-//                        == PackageManager.PERMISSION_DENIED) {
-//                    IMEINo = "";
-//                } else {
-//                    IMEINo = tm.getDeviceId();
-//                }
-//            }
-//        }
-
         return rootView;
     }
 
@@ -163,7 +139,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
 
         }
 
-        FacebookSdk.sdkInitialize(getActivity());
         callbackManager = CallbackManager.Factory.create();
 
         // [START configure_signin]
@@ -337,7 +312,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
             } if (v == btnFacebook) {
 //                FacebookSdk.sdkInitialize(getActivity());
 //                LoginManager.getInstance().logOut();
-                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "user_friends", "email"));
+                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email"));
                 initFacebook();
                 PreferenceStorage.saveLoginMode(getActivity(), HeylaAppConstants.FACEBOOK);
                 mSelectedLoginMode = HeylaAppConstants.FACEBOOK;
@@ -434,6 +409,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                     @Override
                     public void onCancel() {
                         // App code
+                        Log.e(TAG, "" );
                     }
 
                     @Override

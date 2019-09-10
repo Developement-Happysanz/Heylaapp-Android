@@ -151,16 +151,17 @@ public class EventsListAdapter extends BaseAdapter {
         String paidBtnVal = event.getEventType();
         if (paidBtnVal != null) {
             holder.txtPrice.setText(paidBtnVal);
+            holder.paidBtn.setTextColor(context.getResources().getColor(R.color.white)); //Blue
+            holder.txtPrice.setTextColor(ContextCompat.getColor(context, R.color.white)); //Blue
             if (paidBtnVal.equalsIgnoreCase("invite")) {
-                holder.paidBtn.setTextColor(context.getResources().getColor(R.color.white)); //Blue
                 holder.txtPrice.setBackgroundColor(ContextCompat.getColor(context, R.color.Paid));
+                holder.txtPrice.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_paid));
             } else if (paidBtnVal.equalsIgnoreCase("free")) {
-                holder.paidBtn.setTextColor(context.getResources().getColor(R.color.white)); //Green
-                holder.txtPrice.setText(paidBtnVal);
-                holder.txtPrice.setBackgroundColor(ContextCompat.getColor(context, R.color.Free));
+                holder.txtPrice.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_free));
+
             } else if (paidBtnVal.equalsIgnoreCase("paid")) {
-                holder.paidBtn.setTextColor(context.getResources().getColor(R.color.white)); //rounder_button
-                holder.txtPrice.setBackgroundColor(ContextCompat.getColor(context, R.color.Paid));
+                holder.txtPrice.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_paid));
+
             }
         }
 

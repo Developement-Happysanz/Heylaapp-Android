@@ -63,7 +63,8 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
     private ImageView imEventBanner;
     protected ProgressDialogHelper progressDialogHelper;
     boolean checkRes = false;
-    String url = "https://heylaapp.com/paytm_app/generateChecksum.php";
+//    String url = "https://heylaapp.com/paytm_app/generateChecksum.php";
+    String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.CHECKSUM;
     Map paramMap = new HashMap();
     String mid = "", order_id = "", cust_id = "CUST12345678", callback = "CALLBACK_URL",
             industry_type = "", txn_amount = "", checksum = "CHECKSUM", mobile = "MOBILE_NO", email = "EMAIL", channel_id = "";

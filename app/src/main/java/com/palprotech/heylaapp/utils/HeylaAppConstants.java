@@ -8,8 +8,9 @@ public class HeylaAppConstants {
 
     //    URLS
     //    BASE URL
-    public static final String BASE_URL = "https://heylaapp.com/testing/";
-//    public static final String BASE_URL = "https://heylaapp.com/";
+//    public static final String BASE_URL = "https://heylaapp.com/testing/";
+//    public static final String BASE_URL = "https://heylaapp.sg/demo/";
+    public static final String BASE_URL = "https://heylaapp.com/";
 
     //    SignIn
     public static final String SIGN_IN = "apimain/login/";
@@ -179,6 +180,9 @@ public class HeylaAppConstants {
 
     //    Event images list
     public static final String BOOKING_DATA = "paytm_app/TxnStatus.php/";
+
+    //    Event images list
+    public static final String CHECKSUM = "paytm_app/generateChecksum.php/";
 
     public static final String REFUND_DATA = "apimain/refund_request/";
 

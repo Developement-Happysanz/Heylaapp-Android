@@ -50,6 +50,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Narendar on 16/11/17.
@@ -608,19 +609,19 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     }
                 });
                 mFromDatePickerDialog.show();
-                String fromDt = ((Button) findViewById(R.id.btnfrom)).getText().toString();
-                if (!fromDt.isEmpty()) {
-                    DatePicker dP = mFromDatePickerDialog.getDatePicker();
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                    Date date = null;
-                    try {
-                        date = sdf.parse(fromDt);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    long millis = date.getTime();
-                    dP.setMaxDate(millis);
-                }
+//                String fromDt = ((Button) findViewById(R.id.btnfrom)).getText().toString();
+//                if (!fromDt.isEmpty()) {
+//                    DatePicker dP = mFromDatePickerDialog.getDatePicker();
+//                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.UK);
+//                    Date date = null;
+//                    try {
+//                        date = sdf.parse(fromDt);
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//                    long millis = date.getTime();
+//                    dP.setMaxDate(millis);
+//                }
             }
         });
 
@@ -670,19 +671,19 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     }
                 });
                 dpd.show();
-                String fromDt = ((Button) findViewById(R.id.btnfrom)).getText().toString();
-                if (!fromDt.isEmpty()) {
-                    DatePicker dP = dpd.getDatePicker();
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                    Date date = null;
-                    try {
-                        date = sdf.parse(fromDt);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    long millis = date.getTime();
-                    dP.setMinDate(millis - 1000);
-                }
+//                String fromDt = ((Button) findViewById(R.id.btnfrom)).getText().toString();
+//                if (!fromDt.isEmpty()) {
+//                    DatePicker dP = dpd.getDatePicker();
+//                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.UK);
+//                    Date date = null;
+//                    try {
+//                        date = sdf.parse(fromDt);
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//                    long millis = date.getTime();
+//                    dP.setMinDate(millis - 1000);
+//                }
 
 
             }
@@ -995,7 +996,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     startRange = Double.parseDouble(maxRange);
                     int endPoint = (int) startRange;
                     etPriceList.setMax(endPoint);
-                    endRangeText.setText("Rs."+ endPoint);
+                    endRangeText.setText("S$"+ endPoint);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -161,6 +161,7 @@
                 android:minHeight="60dp"
                 android:paddingEnd="15dp"
                 android:paddingStart="10dp"
+                android:visibility="gone"
                 android:src="@drawable/ic_arrow_back_white_24dp" />
 
             <TextView
@@ -169,6 +170,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/muli"
                 android:gravity="center_vertical|left"
+                android:layout_centerHorizontal="true"
                 android:minHeight="60dp"
                 android:layout_toRightOf="@+id/back_res"
                 android:padding="5dp"

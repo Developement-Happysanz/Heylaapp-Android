@@ -25,8 +25,6 @@ import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.CommonUtils;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
-import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
-import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,7 +49,6 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
 
-    SmsVerifyCatcher smsVerifyCatcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,48 +68,6 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
 
-        smsVerifyCatcher = new SmsVerifyCatcher(this, new OnSmsCatchListener<String>() {
-            @Override
-            public void onSmsCatch(String message) {
-                String code = parseCode(message);//Parse verification code
-                checkVerify = "Confirm";
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, PreferenceStorage.getMobileNo(getApplicationContext()));
-                    jsonObject.put(HeylaAppConstants.PARAMS_OTP, code);
-                    jsonObject.put(HeylaAppConstants.PARAMS_REQUEST_MODE, "1");
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.MOBILE_NUMBER_VERIFY;
-                serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-            }
-        });
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        smsVerifyCatcher.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        smsVerifyCatcher.onStop();
-    }
-
-    /**
-     * need for Android 6 real time permissions
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private String parseCode(String message) {

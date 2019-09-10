@@ -64,7 +64,8 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
     private ImageView ivBack;
     private TextView attendee, totalAmount;
     private LinearLayout attendeeLayout;
-
+    boolean showalert = false;
+    String alertMsg = "";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +90,11 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
         attendee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               attendeeLayout.setVisibility(View.VISIBLE);
+                if (showalert) {
+                    AlertDialogHelper.showSimpleAlertDialog(getApplicationContext(), alertMsg);
+                } else {
+                    attendeeLayout.setVisibility(View.VISIBLE);
+                }
             }
         });
         ivBack = findViewById(R.id.back_res);
@@ -243,8 +248,9 @@ public class BookingHistoryDetailsActivity extends AppCompatActivity implements 
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         Log.d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
-
+//                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                        showalert = true;
+                        alertMsg = msg;
                     } else {
                         signInSuccess = true;
                     }

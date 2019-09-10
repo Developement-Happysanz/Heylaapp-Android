@@ -44,7 +44,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:background="@color/booking_line"
         android:baselineAligned="false"
         android:weightSum="1"
@@ -183,6 +183,7 @@
                 android:text="Total amount :"
                 android:layout_below="@id/txt_event_location"
                 android:layout_alignLeft="@+id/ic_date"
+                android:layout_marginBottom="10dp"
                 android:textColor="@color/text_black"/>
 
             <!--<TextView-->
