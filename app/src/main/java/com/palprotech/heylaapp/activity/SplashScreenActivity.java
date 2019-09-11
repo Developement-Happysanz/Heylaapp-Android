@@ -99,29 +99,6 @@ public class SplashScreenActivity extends Activity {
                 }
             }, SPLASH_TIME_OUT);
         }
-
-        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-
-            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
-                    == PackageManager.PERMISSION_DENIED) {
-
-                *//*Log.d("permission", "permission denied to SEND_SMS - requesting it");
-                String[] permissions = {Manifest.permission.READ_PHONE_STATE};
-
-                requestPermissions(permissions, PERMISSION_REQUEST_CODE);*//*
-
-                *//*SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-                sharedPreferences.edit().clear().apply();*//*
-
-                Intent i = new Intent(SplashScreenActivity.this, WelcomeActivity.class);
-                startActivity(i);
-                finish();
-
-            } else {*/
-
-
-//            }
-//        }
     }
     public static boolean checkAutoDT(Context c){
         return Settings.Global.getInt(c.getContentResolver(), Settings.Global.AUTO_TIME, 0) == 1;

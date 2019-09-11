@@ -65,21 +65,9 @@ public class WelcomeActivity extends AppCompatActivity {
 
         if (prefFirstTime.runTheFirstTime("FirstTimePermit")) {
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                requestAllPermissions();
+//                requestAllPermissions();
             }
         }
-
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-//
-//            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
-//                    == PackageManager.PERMISSION_DENIED) {
-//
-//                Log.d("permission", "permission denied to SEND_SMS - requesting it");
-//                String[] permissions = {Manifest.permission.READ_PHONE_STATE};
-//
-//                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
-//            }
-//        }
 
         // Checking for first time launch - before calling setContentView()
         boolean haspreferences = PreferenceStorage.isFirstTimeLaunch(getApplicationContext());
@@ -145,7 +133,7 @@ public class WelcomeActivity extends AppCompatActivity {
         });
     }
 
-    private void requestAllPermissions() {
+    /*private void requestAllPermissions() {
 
         boolean requestPermission = PermissionUtil.requestAllPermissions(this);
 
@@ -160,7 +148,7 @@ public class WelcomeActivity extends AppCompatActivity {
 //        } else {
 //            ActivityCompat.requestPermissions(this, PERMISSIONS_ALL, REQUEST_PERMISSION_All);
 //        }
-    }
+    }*/
 
     private void addBottomDots(int currentPage) {
         dots = new TextView[layouts.length];
