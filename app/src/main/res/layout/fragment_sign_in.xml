@@ -129,7 +129,6 @@
                 android:fontFamily="@font/muli"
                 android:paddingEnd="8dp"
                 android:text="Facebook"
-                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 

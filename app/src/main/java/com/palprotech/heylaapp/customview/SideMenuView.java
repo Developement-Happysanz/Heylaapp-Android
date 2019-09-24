@@ -1,5 +1,6 @@
 package com.palprotech.heylaapp.customview;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,7 +26,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.palprotech.heylaapp.BuildConfig;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.BlogViewActivity;
 import com.palprotech.heylaapp.activity.BookingHistoryActivity;
@@ -48,7 +51,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class SideMenuView extends RelativeLayout implements View.OnClickListener{
     private static final String TAG_FOOTER = "footer";
     private static final String TAG_HEADER = "header";
-
+    private ViewGroup vg;
     @DrawableRes
     private static final int DEFAULT_DRAWABLE_ATTRIBUTE_VALUE = 0b11111111111111110010101111001111;
     @LayoutRes
@@ -367,16 +370,21 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
         private TextView profileName, userName;
 
         MenuViewHolder(ViewGroup rootView, final Context context) {
+            vg = rootView;
             this.mMenuOptions = (LinearLayout) rootView.findViewById(R.id.side_view_menu_options_layout);
             this.mMenuBackground = (ImageView) rootView.findViewById(R.id.side_view_menu_background);
             this.mMenuHeader = (ViewGroup) rootView.findViewById(R.id.side_view_menu_header_layout);
             this.mMenuFooter = (ViewGroup) rootView.findViewById(R.id.side_view_menu_footer_layout);
 
             profileName = (TextView) rootView.findViewById(R.id.profile_name);
-            if(PreferenceStorage.getFullName(context).equalsIgnoreCase("")){
-                profileName.setText("Guest User");
+            if (PreferenceStorage.getUserType(context).equalsIgnoreCase("1")) {
+                if(PreferenceStorage.getFullName(context).equalsIgnoreCase("")){
+                    profileName.setText("");
+                } else {
+                    profileName.setText(PreferenceStorage.getFullName(context));
+                }
             } else {
-                profileName.setText(PreferenceStorage.getFullName(context));
+                profileName.setText("Guest User");
             }
             vUserImage = (ImageView) rootView.findViewById(R.id.profile_img);
             String url = PreferenceStorage.getUserPicture(context);
@@ -550,6 +558,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                     Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.palprotech.heylaapp&hl=en");
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     context.startActivity(intent);
+//                    gogogo();
                 }
             });
             this.vSignOut = (RelativeLayout) rootView.findViewById(R.id.sign_out_img);
@@ -615,6 +624,22 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                     }
                 }
             });
+        }
+    }
+
+    private void gogogo() {
+        Uri uri = Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        // To count with Play market backstack, After pressing back button,
+        // to taken back to our application, we need to add following flags to intent.
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK | Intent.FLAG_ACTIVITY_NEW_TASK );
+        try {
+            getApplicationContext().startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            getApplicationContext().startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName())));
         }
     }
 

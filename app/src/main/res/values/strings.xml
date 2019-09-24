@@ -11,6 +11,7 @@
     <string name="facebook_app_id">323262168628257</string>
     <string name="fb_login_protocol_scheme">fb323262168628257</string>
 
+
     <string name="signup">Sign Up</string>
     <string name="login">Sign In</string>
     <string name="confirm">Confirm</string>
@@ -61,6 +62,7 @@
     <string name="err_email">Enter valid email ID</string>
     <string name="err_name">Enter valid name</string>
     <string name="err_username">Enter valid username</string>
+    <string name="err_min_username_length">Enter an username with at least 4 characters</string>
     <string name="err_password">Enter valid password</string>
     <string name="err_empty_username">Username can\'t be empty</string>
     <string name="err_mobile">Enter valid mobile phone number</string>
@@ -89,7 +91,8 @@
     <string name="selectstate">State</string>
     <string name="selectcity">City</string>
     <string name="pincode">Pincode</string>
-    <string name="recieve_notification">Notification</string>
+<!--    <string name="recieve_notification">Notification</string>-->
+    <string name="recieve_notification">Newsletter</string>
     <string name="save">Save</string>
 
     <!--CCAvenue-->

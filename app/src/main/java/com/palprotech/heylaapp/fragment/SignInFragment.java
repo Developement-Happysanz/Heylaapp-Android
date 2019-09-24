@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 //import androidx.fragment.app.Fragment;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -224,15 +225,16 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                         "\nFamily Name :" + acct.getFamilyName() +
                         "\n Given Name :" + acct.getGivenName() +
                         "\n ID :" + acct.getId() + "\n Image URL :" + acct.getPhotoUrl();
-                String newOk = okSet;
+                String name = ""+acct.getDisplayName();
+                String mail = ""+acct.getEmail();
                 String photoUrl = "" + acct.getPhotoUrl();
                 PreferenceStorage.saveSocialNetworkProfilePic(getActivity(), photoUrl);
 
                 String GCMKey = PreferenceStorage.getGCM(getContext());
                 JSONObject jsonObject = new JSONObject();
                 try {
-                    jsonObject.put(HeylaAppConstants.PARAMS_NAME, acct.getDisplayName());
-                    jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_ID, acct.getEmail());
+                    jsonObject.put(HeylaAppConstants.PARAMS_NAME, name);
+                    jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_ID, mail);
                     jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
                     jsonObject.put(HeylaAppConstants.PARAMS_LOGIN_TYPE, "1");
                     jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
@@ -312,7 +314,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
             } if (v == btnFacebook) {
 //                FacebookSdk.sdkInitialize(getActivity());
 //                LoginManager.getInstance().logOut();
-                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email"));
+                LoginManager.getInstance().logInWithReadPermissions(SignInFragment.this, (Arrays.asList("public_profile", "user_friends","user_birthday","user_about_me","email")));
+//                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email"));
                 initFacebook();
                 PreferenceStorage.saveLoginMode(getActivity(), HeylaAppConstants.FACEBOOK);
                 mSelectedLoginMode = HeylaAppConstants.FACEBOOK;
@@ -349,75 +352,67 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
     // Login with facebook
     private void initFacebook() {
         Log.d(TAG, "Initializing facebook");
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        Log.d(TAG, "facebook Login Registration success");
-                        // App code
-                        GraphRequest request = GraphRequest.newMeRequest(
-                                loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                                    @Override
-                                    public void onCompleted(JSONObject me, GraphResponse response) {
-                                        if (response.getError() != null) {
-                                            // handle error
-                                        } else {
-                                            String email = me.optString("email");
-                                            String id = me.optString("id");
-                                            String name = me.optString("name");
-                                            String gender = me.optString("gender");
-                                            String birthday = me.optString("birthday");
-                                            Log.d(TAG, "facebook gender" + gender + "birthday" + birthday);
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // Retrieving access token using the LoginResult
+                AccessToken accessToken = loginResult.getAccessToken();
+                GraphRequest request = GraphRequest.newMeRequest( accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject me, GraphResponse response) {
+                                if (response.getError() != null) {
+                                    // handle error
+                                } else {
+                                    String email = me.optString("email");
+                                    String id = me.optString("id");
+                                    String name = me.optString("name");
+                                    String gender = me.optString("gender");
+                                    String birthday = me.optString("birthday");
+                                    Log.d(TAG, "facebook gender" + gender + "birthday" + birthday);
 //                                            PreferenceStorage.saveUserEmail(getActivity(), email);
 //                                            PreferenceStorage.saveUserName(getActivity(), name);
-                                            String url = "https://graph.facebook.com/" + id + "/picture?type=large";
-                                            Log.d(TAG, "facebook birthday" + birthday);
-                                            PreferenceStorage.saveSocialNetworkProfilePic(getActivity(), url);
-                                            if (gender != null) {
+                                    String url = "https://graph.facebook.com/" + id + "/picture?type=large";
+                                    Log.d(TAG, "facebook birthday" + birthday);
+                                    PreferenceStorage.saveSocialNetworkProfilePic(getActivity(), url);
+                                    if (gender != null) {
 //                                                PreferenceStorage.saveUserGender(getActivity(), gender);
-                                            }
-                                            if (birthday != null) {
-//                                                PreferenceStorage.saveUserBirthday(getActivity(), birthday);
-                                            }
-                                            // send email and id to your web server
-                                            String GCMKey = PreferenceStorage.getGCM(getContext());
-                                            JSONObject jsonObject = new JSONObject();
-                                            try {
-                                                jsonObject.put(HeylaAppConstants.PARAMS_NAME, name);
-                                                jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_ID, email);
-                                                jsonObject.put(HeylaAppConstants.PARAMS_SOCIAL_IMAGE, url);
-                                                jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
-                                                jsonObject.put(HeylaAppConstants.PARAMS_LOGIN_TYPE, "1");
-                                                jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-
-                                            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-                                            String serverURL = HeylaAppConstants.BASE_URL + HeylaAppConstants.FB_GPLUS_LOGIN;
-                                            serviceHelper.makeGetServiceCall(jsonObject.toString(), serverURL);
-                                        }
                                     }
-                                });
-                        Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id,email,name,link,birthday,gender");
-                        request.setParameters(parameters);
-                        request.executeAsync();
+                                    if (birthday != null) {
+//                                                PreferenceStorage.saveUserBirthday(getActivity(), birthday);
+                                    }
+                                    // send email and id to your web server
+                                    String GCMKey = PreferenceStorage.getGCM(getContext());
+                                    JSONObject jsonObject = new JSONObject();
+                                    try {
+                                        jsonObject.put(HeylaAppConstants.PARAMS_NAME, name);
+                                        jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_ID, email);
+                                        jsonObject.put(HeylaAppConstants.PARAMS_SOCIAL_IMAGE, url);
+                                        jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
+                                        jsonObject.put(HeylaAppConstants.PARAMS_LOGIN_TYPE, "1");
+                                        jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
 
-                    }
+                                    progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                                    String serverURL = HeylaAppConstants.BASE_URL + HeylaAppConstants.FB_GPLUS_LOGIN;
+                                    serviceHelper.makeGetServiceCall(jsonObject.toString(), serverURL);
+                                }
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,email,name,link,birthday,gender");
+                request.setParameters(parameters);
+                request.executeAsync();
 
-                    @Override
-                    public void onCancel() {
-                        // App code
-                        Log.e(TAG, "" );
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        // App code
-                        Log.e(TAG, "" + exception.toString());
-                    }
-                });
+            }
+            @Override
+            public void onCancel() {
+            }
+            @Override
+            public void onError(FacebookException error) {
+            }
+        });
     }
 
     private boolean validateFields() {

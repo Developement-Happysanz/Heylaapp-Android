@@ -382,6 +382,7 @@
                     android:layout_marginStart="10dp"
                     android:buttonTint="@color/appColorBase"
                     android:fontFamily="@font/muli"
+                    android:visibility="gone"
                     android:text="@string/recieve_notification" />
 
                 <Button

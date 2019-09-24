@@ -35,6 +35,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBenqrVYiC6PDp0PO3pJg8ROcGK-m9oTgI" />

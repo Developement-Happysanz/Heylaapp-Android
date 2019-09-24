@@ -37,6 +37,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     ImageView ivBack;
     String res = "";
     Switch aSwitch;
+    boolean firsttime = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -191,12 +192,18 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     } else {
                         aSwitch.setChecked(true);
                     }
-                } else {
-                    if (aSwitch.isChecked()){
-                        Toast.makeText(this, "Push notification enabled", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(this, "Push notification disabled", Toast.LENGTH_SHORT).show();
-                    }
+                } if (res.equalsIgnoreCase("noti")) {
+//                    if (aSwitch.isChecked()){
+//                        if (!firsttime) {
+//                            Toast.makeText(this, "Push notification enabled", Toast.LENGTH_SHORT).show();
+//                        }
+//                        firsttime = false;
+//                    } else {
+//                        if (!firsttime) {
+//                            Toast.makeText(this, "Push notification disabled", Toast.LENGTH_SHORT).show();
+//                        }
+//                        firsttime = false;
+//                    }
                 }
             }
         } catch (JSONException e) {

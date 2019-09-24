@@ -1,6 +1,7 @@
 package com.palprotech.heylaapp.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -171,19 +172,33 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
                 }
             });
 
+//            try {
+//                PackageInfo info = getPackageManager().getPackageInfo(
+//                        "com.palprotech.heylaapp",
+//                        PackageManager.GET_SIGNATURES);
+//                for (Signature signature : info.signatures) {
+//                    MessageDigest md = MessageDigest.getInstance("SHA");
+//                    md.update(signature.toByteArray());
+//                    Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//                }
+//            } catch (PackageManager.NameNotFoundException e) {
+//
+//            } catch (NoSuchAlgorithmException e) {
+//
+//            }
             try {
-                PackageInfo info = getPackageManager().getPackageInfo(
-                        "com.palprotech.heylaapp",
-                        PackageManager.GET_SIGNATURES);
-                for (Signature signature : info.signatures) {
-                    MessageDigest md = MessageDigest.getInstance("SHA");
-                    md.update(signature.toByteArray());
-                    Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                if(Build.VERSION.SDK_INT >= 28) {
+                    @SuppressLint("WrongConstant") final PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNING_CERTIFICATES);
+                    final Signature[] signatures = packageInfo.signingInfo.getApkContentsSigners();
+                    final MessageDigest md = MessageDigest.getInstance("SHA");
+                    for (Signature signature : signatures) {
+                        md.update(signature.toByteArray());
+                        final String signatureBase64 = new String(Base64.encode(md.digest(), Base64.DEFAULT));
+                        Log.d("KeyHash", signatureBase64);
+                    }
                 }
-            } catch (PackageManager.NameNotFoundException e) {
-
-            } catch (NoSuchAlgorithmException e) {
-
+            } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
             }
         }
 
@@ -268,7 +283,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
     public boolean onTouchEvent(MotionEvent event) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.
                 INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(), 0);
         return true;
     }
 

@@ -251,7 +251,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textSize="14sp"
-                    android:text="Version 1.2.1134"/>
+                    android:text="Version 1.0.264"/>
 
             </LinearLayout>
 

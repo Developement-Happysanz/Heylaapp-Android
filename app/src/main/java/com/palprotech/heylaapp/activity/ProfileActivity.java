@@ -198,14 +198,32 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        setUI();
-    }
-
-    void setUI() {
-
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
+        profileInfo();
+        setUI();
+    }
+
+    private void profileInfo() {
+        checkInternalState = "info";
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_INFO;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    void setUI() {
 
 //        Bundle extras = getIntent().getExtras();
 //        checkProfileState = extras.getString("profile_state");
@@ -225,8 +243,11 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         mProfileImage.setOnClickListener(this);
 
         String url = PreferenceStorage.getUserPicture(this);
+        String getSocialUrl = PreferenceStorage.getSocialNetworkProfileUrl(this);
         if (((url != null) && !(url.isEmpty()))) {
             Picasso.get().load(url).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(mProfileImage);
+        } else if (((getSocialUrl != null) && !(getSocialUrl.isEmpty()))) {
+            Picasso.get().load(getSocialUrl).placeholder(R.drawable.ic_default_profile).error(R.drawable.ic_default_profile).into(mProfileImage);
         }
 //        setupUI(findViewById(R.id.scrollID));
         inputName = (TextInputLayout) findViewById(R.id.ti_name);
@@ -710,6 +731,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                             String successVal = resp.getString("status");
 
                             mUpdatedImageUrl = resp.getString("picture_url");
+                            PreferenceStorage.saveUserPicture(getApplicationContext(), mUpdatedImageUrl);
 
                             Log.d(TAG, "updated image url is" + mUpdatedImageUrl);
                             if (successVal.equalsIgnoreCase("success")) {
@@ -947,7 +969,107 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                         finish();
                     }
                 }
-                else if (checkInternalState.equalsIgnoreCase("country")) {
+                else if (checkInternalState.equalsIgnoreCase("info")) {
+                    JSONObject userData = response.getJSONObject("userData");
+                    String userId = userData.getString("user_id");
+                    String userName = userData.getString("user_name");
+                    String mobileNo = userData.getString("mobile_no");
+                    String emailId = userData.getString("email_id");
+                    String fullName = userData.getString("full_name");
+                    String birthDate = userData.getString("birth_date");
+                    String gender = userData.getString("gender");
+                    String occupation = userData.getString("occupation");
+                    String addressLine1 = userData.getString("address_line_1");
+                    String addressLine2 = userData.getString("address_line_2");
+                    String addressLine3 = userData.getString("address_line_3");
+                    String countryId = userData.getString("country_id");
+                    String countryName = userData.getString("country_name");
+                    String stateId = userData.getString("state_id");
+                    String stateName = userData.getString("state_name");
+                    String cityId = userData.getString("city_id");
+                    String cityName = userData.getString("city_name");
+                    String zip = userData.getString("zip");
+                    String pictureUrl = userData.getString("picture_url");
+                    String newsLetterStatus = userData.getString("newsletter_status");
+                    String emailVerifyStatus = userData.getString("email_verify_status");
+                    String userRole = userData.getString("user_role");
+                    String userRoleName = userData.getString("user_role_name");
+                    String referralCode = userData.getString("referal_code");
+
+                    if ((userId != null) && !(userId.isEmpty()) && !userId.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserId(this, userId);
+                    }
+                    if ((userName != null) && !(userName.isEmpty()) && !userName.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUsername(this, userName);
+                    }
+                    if ((mobileNo != null) && !(mobileNo.isEmpty()) && !mobileNo.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveMobileNo(this, mobileNo);
+                    }
+                    if ((emailId != null) && !(emailId.isEmpty()) && !emailId.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveEmailId(this, emailId);
+                    }
+                    if ((fullName != null) && !(fullName.isEmpty()) && !fullName.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveFullName(this, fullName);
+                    }
+                    if ((birthDate != null) && !(birthDate.isEmpty()) && !birthDate.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserBirthday(this, birthDate);
+                    }
+                    if ((gender != null) && !(gender.isEmpty()) && !gender.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserGender(this, gender);
+                    }
+                    if ((occupation != null) && !(occupation.isEmpty()) && !occupation.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserOccupation(this, occupation);
+                    }
+                    if ((addressLine1 != null) && !(addressLine1.isEmpty()) && !addressLine1.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserAddressLine1(this, addressLine1);
+                    }
+                    if ((addressLine2 != null) && !(addressLine2.isEmpty()) && !addressLine2.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserAddressLine2(this, addressLine2);
+                    }
+                    if ((addressLine3 != null) && !(addressLine3.isEmpty()) && !addressLine3.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserAddressLine3(this, addressLine3);
+                    }
+                    if ((countryId != null) && !(countryId.isEmpty()) && !countryId.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserCountryId(this, countryId);
+                    }
+                    if ((countryName != null) && !(countryName.isEmpty()) && !countryName.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserCountryName(this, countryName);
+                    }
+                    if ((stateId != null) && !(stateId.isEmpty()) && !stateId.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserStateId(this, stateId);
+                    }
+                    if ((stateName != null) && !(stateName.isEmpty()) && !stateName.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserStateName(this, stateName);
+                    }
+                    if ((cityId != null) && !(cityId.isEmpty()) && !cityId.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserCityId(this, cityId);
+                    }
+                    if ((cityName != null) && !(cityName.isEmpty()) && !cityName.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserCityName(this, cityName);
+                    }
+                    if ((zip != null) && !(zip.isEmpty()) && !zip.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserZipCode(this, zip);
+                    }
+                    if ((pictureUrl != null) && !(pictureUrl.isEmpty()) && !pictureUrl.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserPicture(this, pictureUrl);
+                    }
+                    if ((newsLetterStatus != null) && !(newsLetterStatus.isEmpty()) && !newsLetterStatus.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserNewsLetterStatus(this, newsLetterStatus);
+                    }
+                    if ((emailVerifyStatus != null) && !(emailVerifyStatus.isEmpty()) && !emailVerifyStatus.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserEmailVerifyStatus(this, emailVerifyStatus);
+                    }
+                    if ((userRole != null) && !(userRole.isEmpty()) && !userRole.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserRole(this, userRole);
+                    }
+                    if ((userRoleName != null) && !(userRoleName.isEmpty()) && !userRoleName.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserRoleName(this, userRoleName);
+                    }
+                    if ((referralCode != null) && !(referralCode.isEmpty()) && !referralCode.equalsIgnoreCase("null")) {
+                        PreferenceStorage.saveUserReferralCode(this, referralCode);
+                    }
+
+                }else if (checkInternalState.equalsIgnoreCase("country")) {
 
                     JSONArray getData = response.getJSONArray("Countries");
                     int getLength = getData.length();
@@ -1322,7 +1444,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             requestFocus(username);
             return false;
         } else if (!HeylaAppValidator.checkStringMinLength(4, this.username.getText().toString().trim())) {
-            inputUsername.setError(getString(R.string.err_username));
+            inputUsername.setError(getString(R.string.err_min_username_length));
             requestFocus(username);
             return false;
         } else {

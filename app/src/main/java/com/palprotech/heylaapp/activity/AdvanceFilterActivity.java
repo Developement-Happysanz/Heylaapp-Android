@@ -460,7 +460,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                         PreferenceStorage.saveFilterPreference(this, "");
                     }
                     startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
-                } else if (fromdate.trim().length() > 0 || todate.trim().length() > 0) {
+                } else if (!fromdate.equalsIgnoreCase("DD-MM-YYYY") || !todate.equalsIgnoreCase("DD-MM-YYYY")) {
                     singleDate = "";
                     PreferenceStorage.saveFilterSingleDate(this, singleDate);
 
@@ -488,7 +488,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                         startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
                     }
 
-                } else if (!city.equalsIgnoreCase("Select Your City") || !eventCategoryStr.equalsIgnoreCase("Select Category")) {
+                } else if (!city.isEmpty() || !eventCategoryStr.isEmpty()) {
                     singleDate = "";
                     PreferenceStorage.saveFilterSingleDate(this, singleDate);
                     if (!city.equalsIgnoreCase("Select Your City")) {
@@ -506,7 +506,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     }
                     startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
                 } else {
-                    Toast.makeText(AdvanceFilterActivity.this, "select any criteria", Toast.LENGTH_SHORT).show();
+                    AlertDialogHelper.showSimpleAlertDialog(this, "Select at least one criteria");
                 }
 
                 break;

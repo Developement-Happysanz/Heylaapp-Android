@@ -145,7 +145,9 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
                         switch (item.getItemId()) {
 
                             case R.id.action_favorites:
-                                changeFragment(0);
+//                                changeFragment(0);
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
 //                                fabView.setVisibility(View.VISIBLE);
                                 break;
 
