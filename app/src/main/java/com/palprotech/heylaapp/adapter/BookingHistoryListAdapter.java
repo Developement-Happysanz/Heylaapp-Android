@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
@@ -16,7 +14,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.app.AppController;
 import com.palprotech.heylaapp.bean.support.BookingHistory;
-import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.helper.HeylaAppHelper;
 import com.squareup.picasso.Transformation;
 
@@ -27,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import static android.support.v4.util.Preconditions.checkArgument;
+import static androidx.core.util.Preconditions.checkArgument;
 
 /**
  * Created by Admin on 26-12-2017.

@@ -10,6 +10,8 @@
     <!--Login Screen-->
     <string name="facebook_app_id">323262168628257</string>
     <string name="fb_login_protocol_scheme">fb323262168628257</string>
+<!--    <string name="facebook_app_id">1166380566904530</string>-->
+<!--    <string name="fb_login_protocol_scheme">fb1166380566904530</string>-->
 
 
     <string name="signup">Sign Up</string>
@@ -20,6 +22,7 @@
     <string name="email">Email ID(Optional)</string>
     <string name="password">Password</string>
     <string name="mobileno">Mobile Number</string>
+    <string name="mobileno_or_email">Mobile Number/Email ID</string>
     <string name="username">Username</string>
     <string name="usernameormail">Username/Email ID/Mobile Number</string>
     <string name="new_mobile_number">Mobile Number</string>
@@ -69,7 +72,7 @@
     <string name="err_empty_password">Give a new password to reset!</string>
     <string name="err_empty_password_login">Password can\'t be empty</string>
     <string name="err_min_pass_length">Short passwords are easy to guess! Try one with at least 6 characters</string>
-    <string name="forgot_text">Please enter your registered email ID or mobile number to reset your password</string>
+    <string name="forgot_text">Please enter your registered mobile number to reset your password</string>
 
     <!--Dialog Fragment-->
     <string name="alert_button_ok">OK</string>

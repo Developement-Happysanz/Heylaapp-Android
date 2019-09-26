@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/eventListbg">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
                 android:background="@color/white"
                 android:layout_below="@id/date_range_layout">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/ti_event_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -149,9 +149,9 @@
                         android:fontFamily="@font/muli"
                         android:hint="Event Type"
                         android:textSize="14sp" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/ti_event_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -166,9 +166,9 @@
                         android:hint="Event Category"
                         android:textSize="14sp" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/ti_preference_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -183,9 +183,9 @@
                         android:hint="Preference"
                         android:textSize="14sp" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ti_preference_category">
@@ -199,7 +199,7 @@
                         android:hint="Area"
                         android:textSize="14sp" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             </RelativeLayout>
 

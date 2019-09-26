@@ -1,10 +1,5 @@
 package com.palprotech.heylaapp.utils;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-
 public abstract class PermissionUtil {
 
     /*public static boolean verifyPermissions(int[] grantResults) {

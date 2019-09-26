@@ -7,13 +7,15 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.annotation.StringRes;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.graphics.drawable.DrawerArrowDrawable;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.annotation.StringRes;
+import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -86,7 +88,7 @@ public class SideDrawerToggle implements DrawerLayout.DrawerListener {
     /**
      * Construct a new SideDrawerToggle.
      * <p>
-     * <p>The given {@link Activity} will be linked to the specified {@link android.support.v4.widget.DrawerLayout} and
+     * <p>The given {@link Activity} will be linked to the specified {@link DrawerLayout} and
      * its Actionbar's Up button will be set to a custom drawable.
      * <p>This drawable shows a Hamburger icon when drawer is closed and an arrow when drawer
      * is open. It animates between these two states as the drawer opens.</p>
@@ -111,7 +113,7 @@ public class SideDrawerToggle implements DrawerLayout.DrawerListener {
     /**
      * Construct a new SideDrawerToggle with a Toolbar.
      * <p>
-     * The given {@link Activity} will be linked to the specified {@link android.support.v4.widget.DrawerLayout} and
+     * The given {@link Activity} will be linked to the specified {@link DrawerLayout} and
      * the Toolbar's navigation icon will be set to a custom drawable. Using this constructor
      * will set Toolbar's navigation click listener to toggle the drawer when it is clicked.
      * <p>
@@ -133,8 +135,8 @@ public class SideDrawerToggle implements DrawerLayout.DrawerListener {
      *                                  for accessibility
      */
     public SideDrawerToggle(Activity activity, SideDrawerLayout SideDrawerLayout,
-                           Toolbar toolbar, @StringRes int openDrawerContentDescRes,
-                           @StringRes int closeDrawerContentDescRes) {
+                            Toolbar toolbar, @StringRes int openDrawerContentDescRes,
+                            @StringRes int closeDrawerContentDescRes) {
         this(activity, toolbar, SideDrawerLayout, null, openDrawerContentDescRes,
                 closeDrawerContentDescRes);
     }
@@ -182,7 +184,7 @@ public class SideDrawerToggle implements DrawerLayout.DrawerListener {
      * Synchronize the state of the drawer indicator/affordance with the linked DrawerLayout.
      * <p>
      * <p>This should be called from your <code>Activity</code>'s
-     * {@link Activity#onPostCreate(android.os.Bundle) onPostCreate} method to synchronize after
+     * {@link Activity onPostCreate(android.os.Bundle) onPostCreate} method to synchronize after
      * the DrawerLayout's instance state has been restored, and any other time when the state
      * may have diverged in such a way that the SideDrawerToggle was not notified.
      * (For example, if you stop forwarding appropriate drawer events for a period of time.)</p>

@@ -1,6 +1,7 @@
 package com.palprotech.heylaapp.interfaces;
 
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import org.joda.time.LocalDate;
 

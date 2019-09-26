@@ -19,11 +19,12 @@ import com.palprotech.heylaapp.R;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import androidx.multidex.MultiDexApplication;
 
 //import com.facebook.FacebookSdk;
 
 
-public class AppController extends android.support.multidex.MultiDexApplication  {
+public class AppController extends MultiDexApplication  {
 
     public static final String TAG = AppController.class
             .getSimpleName();

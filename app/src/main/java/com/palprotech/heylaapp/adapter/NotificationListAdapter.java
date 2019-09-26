@@ -2,23 +2,18 @@ package com.palprotech.heylaapp.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.app.AppController;
-import com.palprotech.heylaapp.bean.support.Event;
 import com.palprotech.heylaapp.bean.support.Notification;
 import com.palprotech.heylaapp.helper.HeylaAppHelper;
 import com.palprotech.heylaapp.utils.HeylaAppValidator;

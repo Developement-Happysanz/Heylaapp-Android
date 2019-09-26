@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -251,7 +251,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textSize="14sp"
-                    android:text="Version 1.0.264"/>
+                    android:text="Version 1.0.2751"/>
 
             </LinearLayout>
 

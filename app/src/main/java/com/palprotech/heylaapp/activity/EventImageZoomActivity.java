@@ -1,7 +1,8 @@
 package com.palprotech.heylaapp.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.bean.support.EventPicture;

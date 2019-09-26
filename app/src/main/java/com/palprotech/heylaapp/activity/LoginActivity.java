@@ -1,6 +1,5 @@
 package com.palprotech.heylaapp.activity;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,18 +7,10 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -27,9 +18,14 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.adapter.LoginAdapter;
-import com.palprotech.heylaapp.bean.database.SQLiteHelper;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;

@@ -6,13 +6,15 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.IntDef;
-import android.support.annotation.LayoutRes;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.ViewDragHelper;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.LayoutRes;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MotionEventCompat;
+import androidx.core.view.ViewCompat;
+import androidx.customview.widget.ViewDragHelper;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;

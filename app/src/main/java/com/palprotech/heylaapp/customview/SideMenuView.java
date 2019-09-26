@@ -10,11 +10,12 @@ import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.LayoutRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -26,13 +27,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.palprotech.heylaapp.BuildConfig;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.BlogViewActivity;
 import com.palprotech.heylaapp.activity.BookingHistoryActivity;
-import com.palprotech.heylaapp.activity.MenuActivity;
 import com.palprotech.heylaapp.activity.NotificationActivity;
 import com.palprotech.heylaapp.activity.ProfileActivity;
 import com.palprotech.heylaapp.activity.SelectCityActivity;
@@ -44,7 +48,6 @@ import com.palprotech.heylaapp.activity.WishListActivity;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.squareup.picasso.Picasso;
 
-import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 
@@ -52,6 +55,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
     private static final String TAG_FOOTER = "footer";
     private static final String TAG_HEADER = "header";
     private ViewGroup vg;
+    private GoogleSignInClient mGoogleSignInClient;
     @DrawableRes
     private static final int DEFAULT_DRAWABLE_ATTRIBUTE_VALUE = 0b11111111111111110010101111001111;
     @LayoutRes
@@ -575,6 +579,15 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                             sharedPreferences.edit().clear().apply();
 //        TwitterUtil.getInstance().resetTwitterRequestToken();
 
+                            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                    .requestEmail()
+                                    .build();
+                            // Build a GoogleSignInClient with the options specified by gso.
+                            LoginManager.getInstance().logOut();
+                            mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gso);
+                            mGoogleSignInClient.signOut();
+
+
                             Intent homeIntent = new Intent(context, SplashScreenActivity.class);
                             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(homeIntent);
@@ -624,22 +637,6 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                     }
                 }
             });
-        }
-    }
-
-    private void gogogo() {
-        Uri uri = Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
-        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-        // To count with Play market backstack, After pressing back button,
-        // to taken back to our application, we need to add following flags to intent.
-        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
-                Intent.FLAG_ACTIVITY_MULTIPLE_TASK | Intent.FLAG_ACTIVITY_NEW_TASK );
-        try {
-            getApplicationContext().startActivity(goToMarket);
-        } catch (ActivityNotFoundException e) {
-            getApplicationContext().startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName())));
         }
     }
 

@@ -1,14 +1,13 @@
 package com.palprotech.heylaapp.activity;
 
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
@@ -24,11 +23,9 @@ import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.bean.support.Event;
-import com.palprotech.heylaapp.ccavenue.activities.InitialScreenActivity;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
-import com.palprotech.heylaapp.paytm.MainActivityPost;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
