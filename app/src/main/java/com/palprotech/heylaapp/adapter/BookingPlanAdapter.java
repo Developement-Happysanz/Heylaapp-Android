@@ -97,7 +97,7 @@ public class BookingPlanAdapter extends BaseAdapter {
         BookPlan plan = bookPlan.get(position);
 
         holder.txtPlanName.setText(bookPlan.get(position).getPlanName());
-        holder.txtPlanRate.setText("Rs : "+bookPlan.get(position).getSeatRate());
+        holder.txtPlanRate.setText("S$ : "+bookPlan.get(position).getSeatRate());
 
 
 

@@ -586,7 +586,6 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
                             longitude1 = Double.parseDouble(event.getEventLongitude());
                             latitude1 = Double.parseDouble(event.getEventLatitude());
                             if (distance(latitude, longitude, latitude1, longitude1) < 0.1) {
-                                Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString(), Toast.LENGTH_LONG).show();
                                 sendCheckinStatus();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Please check-in once you've reached " + event.getEventName().toString(), Toast.LENGTH_LONG).show();
@@ -661,6 +660,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     }
 
     private void sendCheckinStatus() {
+        res = "sendCheck";
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         System.out.println(dateFormat.format(date));
@@ -745,6 +745,9 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 //                        if (!res.equalsIgnoreCase("reviewList")){
 //                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
 //                        }
+                        if (res.equalsIgnoreCase("sendCheck")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                        }
 
                     } else {
                         signInSuccess = true;
@@ -791,6 +794,8 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
                         imEventFavourite.setImageResource(R.drawable.ic_fav_select);
                     }
                     Toast.makeText(this, wishliststatus, Toast.LENGTH_SHORT).show();
+                }else if (res.equalsIgnoreCase("sendCheck")) {
+                    Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString(), Toast.LENGTH_LONG).show();
                 } else if (res.equalsIgnoreCase("reviewList")) {
                     JSONArray getData = response.getJSONArray("Reviewdetails");
                     if (getData != null && getData.length() > 0) {

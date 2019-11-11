@@ -152,7 +152,7 @@ public class BookingActivity extends AppCompatActivity implements IServiceListen
                 result.setText(String.valueOf(setTicketCount));
                 totalCount = setTicketCount;
                 double TotalAmountForPlan = setTicketCount * Double.parseDouble(rate);
-                bookNow.setText("Pay - Rs : " + TotalAmountForPlan + "/-");
+                bookNow.setText("Pay - S$ : " + TotalAmountForPlan + "/-");
             }
 
             if (setTicketCount == 0) {

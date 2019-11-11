@@ -20,6 +20,7 @@
     <string name="submit">Submit</string>
     <string name="verify">Verify</string>
     <string name="email">Email ID(Optional)</string>
+    <string name="email_mandatory">Email ID</string>
     <string name="password">Password</string>
     <string name="mobileno">Mobile Number</string>
     <string name="mobileno_or_email">Mobile Number/Email ID</string>

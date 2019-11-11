@@ -628,9 +628,9 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 jsonObject.put(HeylaAppConstants.PARAMS_ADDRESS_LINE_1, addressLineOne);
                 jsonObject.put(HeylaAppConstants.PARAMS_ADDRESS_LINE_2, addressLineTwo);
                 jsonObject.put(HeylaAppConstants.PARAMS_ADDRESS_LINE_3, landMark);
-                jsonObject.put(HeylaAppConstants.PARAMS_COUNTRY_ID, country);
-                jsonObject.put(HeylaAppConstants.PARAMS_STATE_ID, state);
-                jsonObject.put(HeylaAppConstants.PARAMS_CITY_ID, city);
+                jsonObject.put(HeylaAppConstants.PARAMS_COUNTRY_ID, countryName);
+                jsonObject.put(HeylaAppConstants.PARAMS_STATE_ID, stateName);
+                jsonObject.put(HeylaAppConstants.PARAMS_CITY_ID, cityName);
                 jsonObject.put(HeylaAppConstants.PARAMS_ZIP_CODE, pinCode);
                 jsonObject.put(HeylaAppConstants.PARAMS_NEWS_LETTER, newsLetterStatus);
 
