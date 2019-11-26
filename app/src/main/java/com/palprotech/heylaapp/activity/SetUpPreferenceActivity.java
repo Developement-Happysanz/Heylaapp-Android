@@ -328,7 +328,15 @@ public class SetUpPreferenceActivity extends AppCompatActivity implements IServi
     @Override
     public void onClick(View v) {
         if (v == txtGetStarted) {
-            if (selectedList.size() >= 1) {
+            int totalAmount = 0;
+            for (int i = 0; i < selectedList.size(); i++) {
+                String totalprice = selectedList.get(i).getCategoryPreference();
+                if (totalprice.equalsIgnoreCase("Y")) {
+                    totalAmount = +1;
+                }
+            }
+
+            if (totalAmount >= 1) {
 
                 setPreferences();
             } else {

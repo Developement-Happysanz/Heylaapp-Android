@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        if(!checkAutoDT(this)){
+        if (!checkAutoDT(this)) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
             // Setting Dialog Title
@@ -220,6 +220,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
 
         return true;
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -268,7 +269,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
     public boolean onTouchEvent(MotionEvent event) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.
                 INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(new View(this).getWindowToken(), 0);
         return true;
     }
 
@@ -334,7 +335,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
         }
     }
 
-    public static boolean checkAutoDT(Context c){
+    public static boolean checkAutoDT(Context c) {
         return Settings.Global.getInt(c.getContentResolver(), Settings.Global.AUTO_TIME, 0) == 1;
     }
 
