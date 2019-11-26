@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/shadow_round">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/img_logo_layout"
             android:layout_width="match_parent"
             android:layout_height="190dp"
@@ -40,7 +40,7 @@
                 android:textColor="@color/white"
                 android:visibility="gone" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
 
         <LinearLayout

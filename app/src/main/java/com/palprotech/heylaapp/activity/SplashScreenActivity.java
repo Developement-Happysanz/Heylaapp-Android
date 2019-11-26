@@ -11,9 +11,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Base64;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -100,6 +102,18 @@ public class SplashScreenActivity extends Activity {
             }, SPLASH_TIME_OUT);
         }
     }
+
+    public void hashFromSHA1(String sha1) {
+        String[] arr = sha1.split(":");
+        byte[] byteArr = new  byte[arr.length];
+
+        for (int i = 0; i< arr.length; i++) {
+            byteArr[i] = Integer.decode("0x" + arr[i]).byteValue();
+        }
+
+        Log.e("hash : ", Base64.encodeToString(byteArr, Base64.NO_WRAP));
+    }
+
     public static boolean checkAutoDT(Context c){
         return Settings.Global.getInt(c.getContentResolver(), Settings.Global.AUTO_TIME, 0) == 1;
     }

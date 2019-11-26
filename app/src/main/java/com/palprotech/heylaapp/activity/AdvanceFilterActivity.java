@@ -6,8 +6,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +21,9 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -104,8 +105,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
     private Button btnCancel, btnSubmit;
 
     private TextView endRangeText;
-    double startRange , mSelectedPriceRange;
+    double startRange, mSelectedPriceRange;
     String range = "";
+    private boolean lalala = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,6 +243,14 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
     public void onClick(View v) {
 
         if (v == ivBack) {
+            PreferenceStorage.saveFilterSingleDate(this, "");
+            PreferenceStorage.saveFilterCity(this, "");
+            PreferenceStorage.saveFilterRange(this, "");
+            PreferenceStorage.saveFilterEventType(this, "");
+            PreferenceStorage.saveFilterEventCategory(this, "");
+            PreferenceStorage.saveFilterPreference(this, "");
+            PreferenceStorage.saveFilterToDate(this, "");
+            PreferenceStorage.saveFilterFromDate(this, "");
             finish();
         }
         if (v == etEventTypeList) {
@@ -280,6 +290,19 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
             btnFromDate.setText("DD-MM-YYYY");
 
             btnToDate.setText("DD-MM-YYYY");
+            sb = new StringBuilder();
+            sb1 = new StringBuilder();
+            sb.append("");
+            sb1.append(" ");
+            PreferenceStorage.saveFilterSingleDate(this, "");
+            PreferenceStorage.saveFilterCity(this, "");
+            PreferenceStorage.saveFilterRange(this, "");
+            PreferenceStorage.saveFilterEventType(this, "");
+            PreferenceStorage.saveFilterEventCategory(this, "");
+            PreferenceStorage.saveFilterPreference(this, "");
+            PreferenceStorage.saveFilterToDate(this, "");
+            PreferenceStorage.saveFilterFromDate(this, "");
+
         }
 
         switch (v.getId()) {
@@ -291,9 +314,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advance_filter_orange);
                     findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    ((Button)findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
-                    ((Button)findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
-                    ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.white));
+                    ((Button) findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.white));
                     final DatePickerDialog.OnDateSetListener singledate = new DatePickerDialog.OnDateSetListener() {
 
                         public void onDateSet(DatePicker view, int year, int month, int day) {
@@ -304,7 +327,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                             } else {
                                 Log.e("Close", "Close");
                                 ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
-                                ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
+                                ((Button) findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
                             }
                         }
 
@@ -340,9 +363,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    ((Button)findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
-                    ((Button)findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
-                    ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
                     singleDate = "";
                     datePressed = false;
                     todayPressed = false;
@@ -359,10 +382,11 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advance_filter_orange);
                     findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    ((Button)findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
-                    ((Button)findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.white));
-                    ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.white));
+                    ((Button) findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
                     final Calendar c = Calendar.getInstance();
+                    c.add(Calendar.DATE, 1);
                     final int currentYear = c.get(Calendar.YEAR);
                     final int currentMonth = c.get(Calendar.MONTH);
                     final int currentDay = (c.get(Calendar.DAY_OF_MONTH));
@@ -375,9 +399,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    ((Button)findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
-                    ((Button)findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
-                    ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
                     singleDate = "";
                     tomorrowPressed = false;
                     datePressed = false;
@@ -395,9 +419,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advance_filter_orange);
-                    ((Button)findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.white));
-                    ((Button)findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
-                    ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.white));
+                    ((Button) findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
                     final Calendar c1 = Calendar.getInstance();
                     final int currentYear1 = c1.get(Calendar.YEAR);
                     final int currentMonth1 = c1.get(Calendar.MONTH);
@@ -410,9 +434,9 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     findViewById(R.id.btnselectdate).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                     findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
-                    ((Button)findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
-                    ((Button)findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
-                    ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btntoday)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btntomorrow)).setTextColor(getResources().getColor(R.color.appColorBase));
+                    ((Button) findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
                     singleDate = "";
                     todayPressed = false;
                     datePressed = false;
@@ -423,94 +447,98 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
             case R.id.btnapply:
 
                 findViewById(R.id.btnapply).setBackgroundResource(R.drawable.button_sign_in);
-                String eventTypeStr = etEventTypeList.getText().toString();
-                String eventPreferenceStr = etPreferenceList.getText().toString();
-                String eventPreferenceIdStr = "";
-                if (eventPreferenceStr.equalsIgnoreCase("")) {
-                    eventPreferenceIdStr = "";
-                } else {
-                    eventPreferenceIdStr = sb1.toString();
-                }
-                String city = etCityList.getText().toString();
-                if (mSelectedPriceRange > 0.00) {
-                    range = "0.00-" + mSelectedPriceRange + "0";
-                } else {
-                    range = "";
-                }
-//                String price = etPriceList.getText().toString();
-//                String city = spincity.getSelectedItem().toString();
-                String eventCategoryStr = etEventCategoryList.getText().toString();
-                String fromdate = ((Button) findViewById(R.id.btnfrom)).getText().toString();
-                String todate = ((Button) findViewById(R.id.btnto)).getText().toString();
-                if (!singleDate.equalsIgnoreCase("") && singleDate != null) {
-                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
-                    PreferenceStorage.saveFilterFromDate(this, "");
-                    PreferenceStorage.saveFilterToDate(this, "");
-                    if (!city.equalsIgnoreCase("Select your city")) {
-                        PreferenceStorage.saveFilterCity(this, city);
-                    }
-                    PreferenceStorage.saveFilterEventType(this, eventTypeStr);
-                    PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
-
-                    PreferenceStorage.saveFilterRange(this, range);
-
-                    if (!eventCategoryStr.equalsIgnoreCase("Select category")) {
-                        PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
-                    } else {
-                        PreferenceStorage.saveFilterPreference(this, "");
-                    }
+                if (valdite()) {
                     startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
-                } else if (fromdate.trim().length() > 0 || todate.trim().length() > 0) {
-                    singleDate = "";
-                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
-
-                    if (fromdate.equalsIgnoreCase("")) {
-                        Toast.makeText(this, "Select from date", Toast.LENGTH_SHORT).show();
-                    } else if (todate.equalsIgnoreCase("")) {
-                        Toast.makeText(this, "Select to date", Toast.LENGTH_SHORT).show();
-                    } else {
-
-                        PreferenceStorage.saveFilterFromDate(this, mFromDateVal);
-                        PreferenceStorage.saveFilterToDate(this, mTodateVal);
-                        if (!city.equalsIgnoreCase("Select Your City")) {
-                            PreferenceStorage.saveFilterCity(this, city);
-                        }
-                        PreferenceStorage.saveFilterEventType(this, eventTypeStr);
-                        PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
-
-                        PreferenceStorage.saveFilterRange(this, range);
-
-                        if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
-                            PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
-                        } else {
-                            PreferenceStorage.saveFilterPreference(this, "");
-                        }
-                        startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
+                }
+                else {
+                    if (!lalala) {
+                        AlertDialogHelper.showSimpleAlertDialog(this, "Select at least one criteria");
                     }
-
-                } else if (!city.equalsIgnoreCase("Select Your City") || !eventCategoryStr.equalsIgnoreCase("Select Category")) {
-                    singleDate = "";
-                    PreferenceStorage.saveFilterSingleDate(this, singleDate);
-                    if (!city.equalsIgnoreCase("Select Your City")) {
-                        PreferenceStorage.saveFilterCity(this, city);
-                    }
-                    PreferenceStorage.saveFilterEventType(this, eventTypeStr);
-                    PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
-
-                    PreferenceStorage.saveFilterRange(this, range);
-
-                    if (!eventCategoryStr.equalsIgnoreCase("Select Category")) {
-                        PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
-                    } else {
-                        PreferenceStorage.saveFilterPreference(this, "");
-                    }
-                    startActivity(new Intent(AdvanceFilterActivity.this, AdvancedFilterResultActivity.class));
-                } else {
-                    Toast.makeText(AdvanceFilterActivity.this, "select any criteria", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
         }
+    }
+
+    private boolean valdite() {
+        String eventTypeStr = etEventTypeList.getText().toString();
+        String eventPreferenceStr = etPreferenceList.getText().toString();
+        String eventPreferenceIdStr = "";
+        if (eventPreferenceStr.equalsIgnoreCase("")) {
+            eventPreferenceIdStr = "";
+        } else {
+            eventPreferenceIdStr = sb1.toString();
+        }
+        String city = etCityList.getText().toString();
+        if (mSelectedPriceRange > 0.00) {
+            range = "0.00-" + mSelectedPriceRange + "0";
+        } else {
+            range = "";
+        }
+//                String price = etPriceList.getText().toString();
+//                String city = spincity.getSelectedItem().toString();
+        String eventCategoryStr = etEventCategoryList.getText().toString();
+        String fromdate = ((Button) findViewById(R.id.btnfrom)).getText().toString();
+        String todate = ((Button) findViewById(R.id.btnto)).getText().toString();
+        if (!singleDate.equalsIgnoreCase("") ||
+                (!city.isEmpty() || !eventCategoryStr.isEmpty()) ||
+                (!eventTypeStr.isEmpty() || !range.isEmpty() || !eventPreferenceIdStr.isEmpty())) {
+            PreferenceStorage.saveFilterSingleDate(this, singleDate);
+
+            if (!city.equalsIgnoreCase("Select your city")) {
+                PreferenceStorage.saveFilterCity(this, city);
+            } else {
+                PreferenceStorage.saveFilterCity(this, "");
+            }
+            if (!range.isEmpty()) {
+                PreferenceStorage.saveFilterRange(this, range);
+            } else {
+                PreferenceStorage.saveFilterRange(this, "");
+            }
+            if (!eventTypeStr.isEmpty()) {
+                PreferenceStorage.saveFilterEventType(this, eventTypeStr);
+            } else {
+                PreferenceStorage.saveFilterEventType(this, "");
+            }
+            if (!eventTypeStr.isEmpty()) {
+                PreferenceStorage.saveFilterEventCategory(this, eventCategoryStr);
+            } else {
+                PreferenceStorage.saveFilterEventCategory(this, "");
+            }
+            if (!eventPreferenceIdStr.isEmpty()) {
+                PreferenceStorage.saveFilterPreference(this, eventPreferenceIdStr);
+            } else {
+                PreferenceStorage.saveFilterPreference(this, "");
+            }
+            return true;
+        } else if ((!fromdate.equalsIgnoreCase("DD-MM-YYYY") ||
+                !todate.equalsIgnoreCase("DD-MM-YYYY"))) {
+            if (!fromdate.equalsIgnoreCase("DD-MM-YYYY")) {
+                if (todate.equalsIgnoreCase("DD-MM-YYYY")) {
+                    AlertDialogHelper.showSimpleAlertDialog(this, "You need select both from and to dates");
+                    lalala = true;
+                    return false;
+                } else {
+                    PreferenceStorage.saveFilterToDate(this, todate);
+                    PreferenceStorage.saveFilterFromDate(this, fromdate);
+                    return true;
+                }
+            }
+            if (!todate.equalsIgnoreCase("DD-MM-YYYY")) {
+                if (fromdate.equalsIgnoreCase("DD-MM-YYYY")) {
+                    AlertDialogHelper.showSimpleAlertDialog(this, "You need select both from and to dates");
+                    lalala = true;
+                    return false;
+                } else {
+                    PreferenceStorage.saveFilterToDate(this, todate);
+                    PreferenceStorage.saveFilterFromDate(this, fromdate);
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+        return true;
     }
 
     private void showEventTypeList() {
@@ -581,7 +609,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                 findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                 ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
-                ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
+                ((Button) findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
 
                 singleDate = "";
                 todayPressed = false;
@@ -646,7 +674,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                 findViewById(R.id.btntomorrow).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                 findViewById(R.id.btntoday).setBackgroundResource(R.drawable.bg_advanced_filter_properties);
                 ((Button) findViewById(R.id.btnselectdate)).setText("DD-MM-YYYY");
-                ((Button)findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
+                ((Button) findViewById(R.id.btnselectdate)).setTextColor(getResources().getColor(R.color.appColorBase));
                 singleDate = "";
                 todayPressed = false;
                 datePressed = false;
@@ -860,7 +888,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 //        builderSingle.show();
     }
 
-   private void GetPriceRange() {
+    private void GetPriceRange() {
 
         checkState = "price";
 
@@ -996,7 +1024,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
                     startRange = Double.parseDouble(maxRange);
                     int endPoint = (int) startRange;
                     etPriceList.setMax(endPoint);
-                    endRangeText.setText("S$"+ endPoint);
+                    endRangeText.setText("S$" + endPoint);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -1037,7 +1065,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        Toast.makeText(getApplicationContext(),"Price range: Rs.0 - Rs."+seekBar.getProgress(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Price range: Rs.0 - Rs." + seekBar.getProgress(), Toast.LENGTH_SHORT).show();
     }
 }
 

@@ -1,5 +1,6 @@
 package com.palprotech.heylaapp.customview;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,11 +10,12 @@ import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.LayoutRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -26,10 +28,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.BlogViewActivity;
 import com.palprotech.heylaapp.activity.BookingHistoryActivity;
-import com.palprotech.heylaapp.activity.MenuActivity;
 import com.palprotech.heylaapp.activity.NotificationActivity;
 import com.palprotech.heylaapp.activity.ProfileActivity;
 import com.palprotech.heylaapp.activity.SelectCityActivity;
@@ -41,14 +48,14 @@ import com.palprotech.heylaapp.activity.WishListActivity;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.squareup.picasso.Picasso;
 
-import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class SideMenuView extends RelativeLayout implements View.OnClickListener{
     private static final String TAG_FOOTER = "footer";
     private static final String TAG_HEADER = "header";
-
+    private ViewGroup vg;
+    private GoogleSignInClient mGoogleSignInClient;
     @DrawableRes
     private static final int DEFAULT_DRAWABLE_ATTRIBUTE_VALUE = 0b11111111111111110010101111001111;
     @LayoutRes
@@ -367,16 +374,21 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
         private TextView profileName, userName;
 
         MenuViewHolder(ViewGroup rootView, final Context context) {
+            vg = rootView;
             this.mMenuOptions = (LinearLayout) rootView.findViewById(R.id.side_view_menu_options_layout);
             this.mMenuBackground = (ImageView) rootView.findViewById(R.id.side_view_menu_background);
             this.mMenuHeader = (ViewGroup) rootView.findViewById(R.id.side_view_menu_header_layout);
             this.mMenuFooter = (ViewGroup) rootView.findViewById(R.id.side_view_menu_footer_layout);
 
             profileName = (TextView) rootView.findViewById(R.id.profile_name);
-            if(PreferenceStorage.getFullName(context).equalsIgnoreCase("")){
-                profileName.setText("Guest User");
+            if (PreferenceStorage.getUserType(context).equalsIgnoreCase("1")) {
+                if(PreferenceStorage.getFullName(context).equalsIgnoreCase("")){
+                    profileName.setText("");
+                } else {
+                    profileName.setText(PreferenceStorage.getFullName(context));
+                }
             } else {
-                profileName.setText(PreferenceStorage.getFullName(context));
+                profileName.setText("Guest User");
             }
             vUserImage = (ImageView) rootView.findViewById(R.id.profile_img);
             String url = PreferenceStorage.getUserPicture(context);
@@ -487,7 +499,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                     Intent i = new Intent(android.content.Intent.ACTION_SEND);
                     i.setType("text/plain");
                     i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share");
-                    i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey! Get Heyla app and win some exciting rewards. https://goo.gl/JTmdEX");
+                    i.putExtra(android.content.Intent.EXTRA_TEXT, "Hi! Get Heyla app and win exciting rewards. https://goo.gl/JTmdEX");
                     context.startActivity(Intent.createChooser(i, "Share via"));
                 }
             });
@@ -550,6 +562,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                     Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.palprotech.heylaapp&hl=en");
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     context.startActivity(intent);
+//                    gogogo();
                 }
             });
             this.vSignOut = (RelativeLayout) rootView.findViewById(R.id.sign_out_img);
@@ -565,6 +578,15 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
                             sharedPreferences.edit().clear().apply();
 //        TwitterUtil.getInstance().resetTwitterRequestToken();
+
+                            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                    .requestEmail()
+                                    .build();
+                            // Build a GoogleSignInClient with the options specified by gso.
+                            LoginManager.getInstance().logOut();
+                            mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gso);
+                            mGoogleSignInClient.signOut();
+
 
                             Intent homeIntent = new Intent(context, SplashScreenActivity.class);
                             homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

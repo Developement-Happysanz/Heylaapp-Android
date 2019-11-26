@@ -3,11 +3,12 @@ package com.palprotech.heylaapp.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ import com.palprotech.heylaapp.interfaces.DialogClickListener;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
+import com.palprotech.heylaapp.utils.HeylaAppValidator;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 import org.json.JSONArray;
@@ -93,16 +95,40 @@ public class EventReviewAddActivity extends AppCompatActivity implements DialogC
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    private boolean validateFields() {
+        if (!HeylaAppValidator.checkNullString(this.edtComments.getText().toString().trim())) {
+            edtComments.setError(getString(R.string.err_review));
+            requestFocus(edtComments);
+            return false;
+        }
+//        else if (!HeylaAppValidator.checkNullString(this.email.getText().toString().trim())) {
+//            email.setError(getString(R.string.err_email));
+//            requestFocus(email);
+//            return false;
+//        }
+        else {
+            return true;
+        }
+    }
     @Override
     public void onClick(View v) {
         if (v == btnSubmit) {
-            if (checkString.equalsIgnoreCase("new")) {
-                submitNewRecord();
+            if (validateFields()) {
+                if (checkString.equalsIgnoreCase("new")) {
+                    submitNewRecord();
 
-            } else if (checkString.equalsIgnoreCase("update")) {
-                submitUpdatedRecord();
+                } else if (checkString.equalsIgnoreCase("update")) {
+                    submitUpdatedRecord();
 
-            } else {
+                }
+            }
+            else {
 
             }
         }

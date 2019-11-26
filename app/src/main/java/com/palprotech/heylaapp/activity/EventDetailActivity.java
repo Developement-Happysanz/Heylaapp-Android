@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -16,12 +14,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -42,7 +39,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -70,8 +66,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-
-import okhttp3.internal.Version;
 
 import static android.text.Layout.JUSTIFICATION_MODE_INTER_WORD;
 
@@ -592,7 +586,6 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
                             longitude1 = Double.parseDouble(event.getEventLongitude());
                             latitude1 = Double.parseDouble(event.getEventLatitude());
                             if (distance(latitude, longitude, latitude1, longitude1) < 0.1) {
-                                Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString(), Toast.LENGTH_LONG).show();
                                 sendCheckinStatus();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Please check-in once you've reached " + event.getEventName().toString(), Toast.LENGTH_LONG).show();
@@ -667,6 +660,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
     }
 
     private void sendCheckinStatus() {
+        res = "sendCheck";
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         System.out.println(dateFormat.format(date));
@@ -751,6 +745,9 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 //                        if (!res.equalsIgnoreCase("reviewList")){
 //                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
 //                        }
+                        if (res.equalsIgnoreCase("sendCheck")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                        }
 
                     } else {
                         signInSuccess = true;
@@ -797,6 +794,8 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
                         imEventFavourite.setImageResource(R.drawable.ic_fav_select);
                     }
                     Toast.makeText(this, wishliststatus, Toast.LENGTH_SHORT).show();
+                }else if (res.equalsIgnoreCase("sendCheck")) {
+                    Toast.makeText(getApplicationContext(), "You have successfully checked-in for the event - " + event.getEventName().toString(), Toast.LENGTH_LONG).show();
                 } else if (res.equalsIgnoreCase("reviewList")) {
                     JSONArray getData = response.getJSONArray("Reviewdetails");
                     if (getData != null && getData.length() > 0) {

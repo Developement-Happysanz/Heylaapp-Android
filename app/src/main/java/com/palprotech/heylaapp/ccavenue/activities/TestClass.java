@@ -1,14 +1,15 @@
 package com.palprotech.heylaapp.ccavenue.activities;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by Admin on 22-12-2017.
  */
 
-public class TestClass extends AppCompatActivity{
+public class TestClass extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

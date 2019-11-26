@@ -1,21 +1,5 @@
 package com.palprotech.heylaapp.pageradapter;
 
-import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
-import android.util.SparseArray;
-import android.view.ViewGroup;
-
-import com.palprotech.heylaapp.fragment.FavouriteFragment;
-import com.palprotech.heylaapp.fragment.HotspotFragment;
-import com.palprotech.heylaapp.fragment.LeaderboardFragment;
-import com.palprotech.heylaapp.fragment.PopularFragment;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Admin on 16-01-2018.
  */

@@ -1,38 +1,7 @@
 package com.palprotech.heylaapp.fragment;
 
-import android.support.v4.app.Fragment;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.palprotech.heylaapp.R;
-import com.palprotech.heylaapp.activity.EventDetailActivity;
-import com.palprotech.heylaapp.adapter.EventsListAdapter;
-import com.palprotech.heylaapp.bean.support.Event;
-import com.palprotech.heylaapp.bean.support.EventList;
-import com.palprotech.heylaapp.helper.AlertDialogHelper;
-import com.palprotech.heylaapp.helper.ProgressDialogHelper;
-import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
-import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
-import com.palprotech.heylaapp.utils.CommonUtils;
-import com.palprotech.heylaapp.utils.HeylaAppConstants;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
+import androidx.fragment.app.Fragment;
 
 /**
  * Created by Admin on 08-11-2017.

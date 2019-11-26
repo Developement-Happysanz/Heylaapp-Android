@@ -3,8 +3,8 @@ package com.palprotech.heylaapp.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -37,6 +37,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     ImageView ivBack;
     String res = "";
     Switch aSwitch;
+    boolean firsttime = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -140,22 +141,22 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         if (view == profile) {
             startActivity(new Intent(SettingsActivity.this, ProfileActivity.class));
         } else if (view == privacyPoclicy) {
-            Intent newI = new Intent(new Intent(SettingsActivity.this, BlogViewActivity.class));
+            Intent newI = new Intent(new Intent(SettingsActivity.this, AboutHeylaActivity.class));
             newI.putExtra("pageval", "setting_privacy");
             startActivity(newI);
 //            startActivity(new Intent(SettingsActivity.this, ForgotPasswordActivity.class));
         } else if (view == aboutUs) {
-            Intent newI = new Intent(new Intent(SettingsActivity.this, BlogViewActivity.class));
+            Intent newI = new Intent(new Intent(SettingsActivity.this, AboutHeylaActivity.class));
             newI.putExtra("pageval", "setting_about");
             startActivity(newI);
 //            startActivity(new Intent(SettingsActivity.this, ChangeNumberActivity.class));
         } else if (view == paymentPolicy) {
-            Intent newI = new Intent(new Intent(SettingsActivity.this, BlogViewActivity.class));
+            Intent newI = new Intent(new Intent(SettingsActivity.this, AboutHeylaActivity.class));
             newI.putExtra("pageval", "setting_payment");
             startActivity(newI);
 //            startActivity(new Intent(SettingsActivity.this, ChangeNumberActivity.class));
         } else if (view == termsConditions) {
-            Intent newI = new Intent(new Intent(SettingsActivity.this, BlogViewActivity.class));
+            Intent newI = new Intent(new Intent(SettingsActivity.this, AboutHeylaActivity.class));
             newI.putExtra("pageval", "setting_terms");
             startActivity(newI);
 //            startActivity(new Intent(SettingsActivity.this, ChangeNumberActivity.class));
@@ -191,12 +192,18 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     } else {
                         aSwitch.setChecked(true);
                     }
-                } else {
-                    if (aSwitch.isChecked()){
-                        Toast.makeText(this, "Push notification enabled", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(this, "Push notification disabled", Toast.LENGTH_SHORT).show();
-                    }
+                } if (res.equalsIgnoreCase("noti")) {
+//                    if (aSwitch.isChecked()){
+//                        if (!firsttime) {
+//                            Toast.makeText(this, "Push notification enabled", Toast.LENGTH_SHORT).show();
+//                        }
+//                        firsttime = false;
+//                    } else {
+//                        if (!firsttime) {
+//                            Toast.makeText(this, "Push notification disabled", Toast.LENGTH_SHORT).show();
+//                        }
+//                        firsttime = false;
+//                    }
                 }
             }
         } catch (JSONException e) {

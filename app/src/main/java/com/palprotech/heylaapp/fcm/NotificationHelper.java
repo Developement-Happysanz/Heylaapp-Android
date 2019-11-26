@@ -1,6 +1,5 @@
 package com.palprotech.heylaapp.fcm;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,12 +9,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.provider.Settings;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import android.text.Html;
 
 import com.palprotech.heylaapp.R;
-import com.palprotech.heylaapp.activity.MainActivity;
 import com.palprotech.heylaapp.activity.NotificationActivity;
 
 import java.io.IOException;

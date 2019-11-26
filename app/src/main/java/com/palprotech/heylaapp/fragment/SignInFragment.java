@@ -9,10 +9,6 @@ import android.content.pm.Signature;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,22 +23,32 @@ import android.widget.TextView;
 
 //import androidx.fragment.app.Fragment;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.Task;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.ForgotPasswordActivity;
 import com.palprotech.heylaapp.activity.LoginActivity;
@@ -63,8 +69,15 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class SignInFragment extends Fragment implements View.OnClickListener, IServiceListener, DialogClickListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -83,7 +96,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
     SQLiteHelper database;
     String IMEINo = "";
     private static final int PERMISSION_REQUEST_CODE = 1;
-
+    private GoogleSignInClient mGoogleSignInClient;
 
     public static SignInFragment newInstance(int position) {
         SignInFragment frag = new SignInFragment();
@@ -140,30 +153,11 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
         }
 
         callbackManager = CallbackManager.Factory.create();
-
-        // [START configure_signin]
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        // [END configure_signin]
-
-        // [START build_client]
-        // Build a GoogleApiClient with access to the Google Sign-In API and the
-        // options specified by gso.
-        mGoogleApiClient = new GoogleApiClient.Builder(getContext())
-                .enableAutoManage(getActivity() /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-        // [END build_client]
-
-        /*Boolean saveLogin = PreferenceStorage.isRemembered(getContext());
-        if (saveLogin) {
-            edtUsername.setText(PreferenceStorage.getUsername(getContext()));
-            edtPassword.setText(PreferenceStorage.getPassword(getContext()));
-            saveLoginCheckBox.setChecked(true);
-        }*/
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(rootView.getContext(), gso);
 
         Boolean savedLogin = database.checkRememberMe();
         if (savedLogin) {
@@ -180,10 +174,39 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
         }
     }
 
+    private void sendGoogleLogin(GoogleSignInAccount account) {
+        String name = ""+account.getDisplayName();
+        String mail = ""+account.getEmail();
+        String photoUrl = "" + account.getPhotoUrl();
+        PreferenceStorage.saveSocialNetworkProfilePic(getActivity(), photoUrl);
+
+        String GCMKey = PreferenceStorage.getGCM(getContext());
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(HeylaAppConstants.PARAMS_NAME, name);
+            jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_ID, mail);
+            jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
+            jsonObject.put(HeylaAppConstants.PARAMS_LOGIN_TYPE, "1");
+            jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String serverURL = HeylaAppConstants.BASE_URL + HeylaAppConstants.FB_GPLUS_LOGIN;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), serverURL);
+    }
+
     // [START signIn]
     private void signIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(rootView.getContext());
+        if (account != null) {
+            sendGoogleLogin(account);
+        } else {
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        }
     }
     // [END signIn]
 
@@ -200,6 +223,36 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                 });
     }
     // [END signOut]
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            String name = ""+account.getDisplayName();
+            String mail = ""+account.getEmail();
+            String photoUrl = "" + account.getPhotoUrl();
+            PreferenceStorage.saveSocialNetworkProfilePic(getActivity(), photoUrl);
+
+            String GCMKey = PreferenceStorage.getGCM(getContext());
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put(HeylaAppConstants.PARAMS_NAME, name);
+                jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_ID, mail);
+                jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
+                jsonObject.put(HeylaAppConstants.PARAMS_LOGIN_TYPE, "1");
+                jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            String serverURL = HeylaAppConstants.BASE_URL + HeylaAppConstants.FB_GPLUS_LOGIN;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), serverURL);
+            // Signed in successfully, show authenticated UI.
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -207,47 +260,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
         callbackManager.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-            if (result.isSuccess()) {
-                // Signed in successfully, show authenticated UI.
-                GoogleSignInAccount acct = result.getSignInAccount();
-
-                /*tvDetails.setText("Profile Name :" + acct.getDisplayName() +
-                        "\nEmail : " + acct.getEmail() +
-                        "\nFamily Name :" + acct.getFamilyName() +
-                        "\n Given Name :" + acct.getGivenName() +
-                        "\n ID :" + acct.getId());*/
-
-                String okSet = "Profile Name :" + acct.getDisplayName() +
-                        "\nEmail : " + acct.getEmail() +
-                        "\nFamily Name :" + acct.getFamilyName() +
-                        "\n Given Name :" + acct.getGivenName() +
-                        "\n ID :" + acct.getId() + "\n Image URL :" + acct.getPhotoUrl();
-                String newOk = okSet;
-                String photoUrl = "" + acct.getPhotoUrl();
-                PreferenceStorage.saveSocialNetworkProfilePic(getActivity(), photoUrl);
-
-                String GCMKey = PreferenceStorage.getGCM(getContext());
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put(HeylaAppConstants.PARAMS_NAME, acct.getDisplayName());
-                    jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_ID, acct.getEmail());
-                    jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
-                    jsonObject.put(HeylaAppConstants.PARAMS_LOGIN_TYPE, "1");
-                    jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-                String serverURL = HeylaAppConstants.BASE_URL + HeylaAppConstants.FB_GPLUS_LOGIN;
-                serviceHelper.makeGetServiceCall(jsonObject.toString(), serverURL);
-
-                /*Picasso.with(getContext())
-                        .load(acct.getPhotoUrl())
-                        .into(ivProfileImage);*/
-//                updateUI(true);
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
             } else {
                 // Signed out, show unauthenticated UI.
 //                tvDetails.setText("error occured..!");
@@ -259,7 +273,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
         /*if(requestCode == RC_SIGN_IN_FB){
 
         }*/
-    }
+
 
     @Override
     public void onClick(View v) {
@@ -287,16 +301,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                     String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.SIGN_IN;
                     serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
-                    /*if (saveLoginCheckBox.isChecked()) {
-                        PreferenceStorage.saveUsername(getContext(), username);
-                        PreferenceStorage.savePassword(getContext(), password);
-                        PreferenceStorage.setRememberMe(getContext(), true);
-                    } else {
-                        PreferenceStorage.saveUsername(getContext(), "");
-                        PreferenceStorage.savePassword(getContext(), "");
-                        PreferenceStorage.setRememberMe(getContext(), false);
-                    }*/
-
                     PreferenceStorage.saveLoginMode(getActivity(), HeylaAppConstants.NORMAL_SIGNUP);
                     mSelectedLoginMode = HeylaAppConstants.NORMAL_SIGNUP;
                 }
@@ -310,9 +314,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                 signIn();
 //                signOut();
             } if (v == btnFacebook) {
-//                FacebookSdk.sdkInitialize(getActivity());
-//                LoginManager.getInstance().logOut();
-                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email"));
+                LoginManager.getInstance().logInWithReadPermissions(SignInFragment.this, (Arrays.asList("public_profile", "email")));
                 initFacebook();
                 PreferenceStorage.saveLoginMode(getActivity(), HeylaAppConstants.FACEBOOK);
                 mSelectedLoginMode = HeylaAppConstants.FACEBOOK;
@@ -349,75 +351,67 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
     // Login with facebook
     private void initFacebook() {
         Log.d(TAG, "Initializing facebook");
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        Log.d(TAG, "facebook Login Registration success");
-                        // App code
-                        GraphRequest request = GraphRequest.newMeRequest(
-                                loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                                    @Override
-                                    public void onCompleted(JSONObject me, GraphResponse response) {
-                                        if (response.getError() != null) {
-                                            // handle error
-                                        } else {
-                                            String email = me.optString("email");
-                                            String id = me.optString("id");
-                                            String name = me.optString("name");
-                                            String gender = me.optString("gender");
-                                            String birthday = me.optString("birthday");
-                                            Log.d(TAG, "facebook gender" + gender + "birthday" + birthday);
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // Retrieving access token using the LoginResult
+                AccessToken accessToken = loginResult.getAccessToken();
+                GraphRequest request = GraphRequest.newMeRequest( accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject me, GraphResponse response) {
+                                if (response.getError() != null) {
+                                    // handle error
+                                } else {
+                                    String email = me.optString("email");
+                                    String id = me.optString("id");
+                                    String name = me.optString("name");
+                                    String gender = me.optString("gender");
+                                    String birthday = me.optString("birthday");
+                                    Log.d(TAG, "facebook gender" + gender + "birthday" + birthday);
 //                                            PreferenceStorage.saveUserEmail(getActivity(), email);
 //                                            PreferenceStorage.saveUserName(getActivity(), name);
-                                            String url = "https://graph.facebook.com/" + id + "/picture?type=large";
-                                            Log.d(TAG, "facebook birthday" + birthday);
-                                            PreferenceStorage.saveSocialNetworkProfilePic(getActivity(), url);
-                                            if (gender != null) {
+                                    String url = "https://graph.facebook.com/" + id + "/picture?type=large";
+                                    Log.d(TAG, "facebook birthday" + birthday);
+                                    PreferenceStorage.saveSocialNetworkProfilePic(getActivity(), url);
+                                    if (gender != null) {
 //                                                PreferenceStorage.saveUserGender(getActivity(), gender);
-                                            }
-                                            if (birthday != null) {
-//                                                PreferenceStorage.saveUserBirthday(getActivity(), birthday);
-                                            }
-                                            // send email and id to your web server
-                                            String GCMKey = PreferenceStorage.getGCM(getContext());
-                                            JSONObject jsonObject = new JSONObject();
-                                            try {
-                                                jsonObject.put(HeylaAppConstants.PARAMS_NAME, name);
-                                                jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_ID, email);
-                                                jsonObject.put(HeylaAppConstants.PARAMS_SOCIAL_IMAGE, url);
-                                                jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
-                                                jsonObject.put(HeylaAppConstants.PARAMS_LOGIN_TYPE, "1");
-                                                jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-
-                                            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-                                            String serverURL = HeylaAppConstants.BASE_URL + HeylaAppConstants.FB_GPLUS_LOGIN;
-                                            serviceHelper.makeGetServiceCall(jsonObject.toString(), serverURL);
-                                        }
                                     }
-                                });
-                        Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id,email,name,link,birthday,gender");
-                        request.setParameters(parameters);
-                        request.executeAsync();
+                                    if (birthday != null) {
+//                                                PreferenceStorage.saveUserBirthday(getActivity(), birthday);
+                                    }
+                                    // send email and id to your web server
+                                    String GCMKey = PreferenceStorage.getGCM(getContext());
+                                    JSONObject jsonObject = new JSONObject();
+                                    try {
+                                        jsonObject.put(HeylaAppConstants.PARAMS_NAME, name);
+                                        jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_ID, email);
+                                        jsonObject.put(HeylaAppConstants.PARAMS_SOCIAL_IMAGE, url);
+                                        jsonObject.put(HeylaAppConstants.PARAMS_GCM_KEY, GCMKey);
+                                        jsonObject.put(HeylaAppConstants.PARAMS_LOGIN_TYPE, "1");
+                                        jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_TYPE, "1");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
 
-                    }
+                                    progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                                    String serverURL = HeylaAppConstants.BASE_URL + HeylaAppConstants.FB_GPLUS_LOGIN;
+                                    serviceHelper.makeGetServiceCall(jsonObject.toString(), serverURL);
+                                }
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,email,name,link,birthday,gender");
+                request.setParameters(parameters);
+                request.executeAsync();
 
-                    @Override
-                    public void onCancel() {
-                        // App code
-                        Log.e(TAG, "" );
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        // App code
-                        Log.e(TAG, "" + exception.toString());
-                    }
-                });
+            }
+            @Override
+            public void onCancel() {
+            }
+            @Override
+            public void onError(FacebookException error) {
+            }
+        });
     }
 
     private boolean validateFields() {
@@ -494,6 +488,10 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                 String emailId = userData.getString("email_id");
                 String fullName = userData.getString("full_name");
                 String birthDate = userData.getString("birth_date");
+                DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
+                Date date = (Date) formatter.parse(birthDate);
+                SimpleDateFormat event_date = new SimpleDateFormat("dd-MM-yyyy", Locale.UK);
+                String birthday = event_date.format(date.getTime());
                 String gender = userData.getString("gender");
                 String occupation = userData.getString("occupation");
                 String addressLine1 = userData.getString("address_line_1");
@@ -528,8 +526,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                 if ((fullName != null) && !(fullName.isEmpty()) && !fullName.equalsIgnoreCase("null")) {
                     PreferenceStorage.saveFullName(getActivity(), fullName);
                 }
-                if ((birthDate != null) && !(birthDate.isEmpty()) && !birthDate.equalsIgnoreCase("null")) {
-                    PreferenceStorage.saveUserBirthday(getActivity(), birthDate);
+                if ((birthday != null) && !(birthday.isEmpty()) && !birthday.equalsIgnoreCase("null")) {
+                    PreferenceStorage.saveUserBirthday(getActivity(), birthday);
                 }
                 if ((gender != null) && !(gender.isEmpty()) && !gender.equalsIgnoreCase("null")) {
                     PreferenceStorage.saveUserGender(getActivity(), gender);
@@ -598,6 +596,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
 
             } catch (JSONException ex) {
                 ex.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
 
             Intent homeIntent = new Intent(getActivity(), SelectCityActivity.class);

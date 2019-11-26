@@ -1,22 +1,16 @@
 package com.palprotech.heylaapp.activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +23,6 @@ import android.widget.TextView;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.bean.database.SQLiteHelper;
 import com.palprotech.heylaapp.utils.FirstTimePreference;
-import com.palprotech.heylaapp.utils.PermissionUtil;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 
 /**

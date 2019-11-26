@@ -11,22 +11,22 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,11 +36,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.adapter.SideMenuAdapterTemp;
 import com.palprotech.heylaapp.bean.support.EventCities;
-import com.palprotech.heylaapp.bean.support.EventCitiesList;
 import com.palprotech.heylaapp.bean.support.EventCitiesListAll;
 import com.palprotech.heylaapp.customview.SideDrawerLayout;
 import com.palprotech.heylaapp.customview.SideDrawerToggle;
@@ -58,7 +58,6 @@ import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.CommonUtils;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,7 +67,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -145,7 +143,9 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
                         switch (item.getItemId()) {
 
                             case R.id.action_favorites:
-                                changeFragment(0);
+//                                changeFragment(0);
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
 //                                fabView.setVisibility(View.VISIBLE);
                                 break;
 
@@ -569,7 +569,9 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
                 } else if (res.equalsIgnoreCase("info")) {
                     JSONObject getData = response.getJSONObject("userData");
                     PreferenceStorage.saveUserPicture(this, getData.getString("picture_url"));
+                    PreferenceStorage.saveFullName(this, getData.getString("full_name"));
                 } else if (res.equalsIgnoreCase("login")) {
+                    Log.d(TAG, "status val" + res);
 
                 }
             } catch (JSONException e) {
@@ -826,7 +828,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuView.OnMe
         }
     }
 
-    private void goToFragment(android.support.v4.app.Fragment fragment, boolean addToBackStack) {
+    private void goToFragment(Fragment fragment, boolean addToBackStack) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         if (addToBackStack) {

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ti_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,9 +30,9 @@
                 android:text=""
                 android:textSize="14sp" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ti_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                 android:text=""
                 android:textSize="14sp" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -87,7 +87,7 @@
         <Button
             android:id="@+id/signin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:fontFamily="@font/muli_bold"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="10dp"
@@ -115,32 +115,31 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:paddingBottom="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/login_using_fb"
                 android:layout_width="match_parent"
-                android:layout_weight="0.5"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/btn_square_facebook"
-                android:drawableLeft="@drawable/ic_fb_login"
+                android:drawableLeft="@drawable/ic_facebook_icon"
                 android:gravity="center"
                 android:fontFamily="@font/muli"
                 android:paddingEnd="8dp"
-                android:text="Facebook"
-                android:visibility="gone"
+                android:text="Login using Facebook"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/login_using_gplus"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_height="50dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/muli"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/btn_square_google"
                 android:drawableLeft="@drawable/ic_btn_google_light_normal_ios"
                 android:gravity="center"

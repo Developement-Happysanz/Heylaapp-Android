@@ -1,57 +1,7 @@
 package com.palprotech.heylaapp.activity;
 
-import android.Manifest;
-import android.app.Fragment;
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AutoCompleteTextView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.palprotech.heylaapp.R;
-import com.palprotech.heylaapp.bean.support.Event;
-import com.palprotech.heylaapp.bean.support.EventList;
-import com.palprotech.heylaapp.fragment.FavouriteFragment;
-import com.palprotech.heylaapp.fragment.HotspotFragment;
-import com.palprotech.heylaapp.fragment.LandingPagerFragment;
-import com.palprotech.heylaapp.fragment.LeaderboardFragment;
-import com.palprotech.heylaapp.fragment.PopularFragment;
-import com.palprotech.heylaapp.helper.AlertDialogHelper;
-import com.palprotech.heylaapp.helper.ProgressDialogHelper;
-import com.palprotech.heylaapp.interfaces.DialogClickListener;
-import com.palprotech.heylaapp.pageradapter.LandingPagerAdapter;
-import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
-import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
-import com.palprotech.heylaapp.utils.HeylaAppConstants;
-import com.palprotech.heylaapp.utils.PreferenceStorage;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Field;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by Admin on 16-01-2018.

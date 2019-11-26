@@ -1,24 +1,16 @@
 package com.palprotech.heylaapp.activity;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -26,9 +18,14 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.adapter.LoginAdapter;
-import com.palprotech.heylaapp.bean.database.SQLiteHelper;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
@@ -72,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        if (!checkAutoDT(this)) {
+        if(!checkAutoDT(this)){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
             // Setting Dialog Title
@@ -171,19 +168,33 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
                 }
             });
 
+//            try {
+//                PackageInfo info = getPackageManager().getPackageInfo(
+//                        "com.palprotech.heylaapp",
+//                        PackageManager.GET_SIGNATURES);
+//                for (Signature signature : info.signatures) {
+//                    MessageDigest md = MessageDigest.getInstance("SHA");
+//                    md.update(signature.toByteArray());
+//                    Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//                }
+//            } catch (PackageManager.NameNotFoundException e) {
+//
+//            } catch (NoSuchAlgorithmException e) {
+//
+//            }
             try {
-                PackageInfo info = getPackageManager().getPackageInfo(
-                        "com.palprotech.heylaapp",
-                        PackageManager.GET_SIGNATURES);
-                for (Signature signature : info.signatures) {
-                    MessageDigest md = MessageDigest.getInstance("SHA");
-                    md.update(signature.toByteArray());
-                    Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                if(Build.VERSION.SDK_INT >= 28) {
+                    @SuppressLint("WrongConstant") final PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNING_CERTIFICATES);
+                    final Signature[] signatures = packageInfo.signingInfo.getApkContentsSigners();
+                    final MessageDigest md = MessageDigest.getInstance("SHA");
+                    for (Signature signature : signatures) {
+                        md.update(signature.toByteArray());
+                        final String signatureBase64 = new String(Base64.encode(md.digest(), Base64.DEFAULT));
+                        Log.d("KeyHash", signatureBase64);
+                    }
                 }
-            } catch (PackageManager.NameNotFoundException e) {
-
-            } catch (NoSuchAlgorithmException e) {
-
+            } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
             }
         }
 
@@ -220,7 +231,6 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
 
         return true;
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -269,7 +279,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
     public boolean onTouchEvent(MotionEvent event) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.
                 INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(new View(this).getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(), 0);
         return true;
     }
 
@@ -335,7 +345,7 @@ public class LoginActivity extends AppCompatActivity implements DialogClickListe
         }
     }
 
-    public static boolean checkAutoDT(Context c) {
+    public static boolean checkAutoDT(Context c){
         return Settings.Global.getInt(c.getContentResolver(), Settings.Global.AUTO_TIME, 0) == 1;
     }
 
