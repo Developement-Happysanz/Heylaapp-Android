@@ -141,22 +141,22 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         if (view == profile) {
             startActivity(new Intent(SettingsActivity.this, ProfileActivity.class));
         } else if (view == privacyPoclicy) {
-            Intent newI = new Intent(new Intent(SettingsActivity.this, BlogViewActivity.class));
+            Intent newI = new Intent(new Intent(SettingsActivity.this, AboutHeylaActivity.class));
             newI.putExtra("pageval", "setting_privacy");
             startActivity(newI);
 //            startActivity(new Intent(SettingsActivity.this, ForgotPasswordActivity.class));
         } else if (view == aboutUs) {
-            Intent newI = new Intent(new Intent(SettingsActivity.this, BlogViewActivity.class));
+            Intent newI = new Intent(new Intent(SettingsActivity.this, AboutHeylaActivity.class));
             newI.putExtra("pageval", "setting_about");
             startActivity(newI);
 //            startActivity(new Intent(SettingsActivity.this, ChangeNumberActivity.class));
         } else if (view == paymentPolicy) {
-            Intent newI = new Intent(new Intent(SettingsActivity.this, BlogViewActivity.class));
+            Intent newI = new Intent(new Intent(SettingsActivity.this, AboutHeylaActivity.class));
             newI.putExtra("pageval", "setting_payment");
             startActivity(newI);
 //            startActivity(new Intent(SettingsActivity.this, ChangeNumberActivity.class));
         } else if (view == termsConditions) {
-            Intent newI = new Intent(new Intent(SettingsActivity.this, BlogViewActivity.class));
+            Intent newI = new Intent(new Intent(SettingsActivity.this, AboutHeylaActivity.class));
             newI.putExtra("pageval", "setting_terms");
             startActivity(newI);
 //            startActivity(new Intent(SettingsActivity.this, ChangeNumberActivity.class));

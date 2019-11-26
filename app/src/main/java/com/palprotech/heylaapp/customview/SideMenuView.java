@@ -499,7 +499,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                     Intent i = new Intent(android.content.Intent.ACTION_SEND);
                     i.setType("text/plain");
                     i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share");
-                    i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey! Get Heyla app and win some exciting rewards. https://goo.gl/JTmdEX");
+                    i.putExtra(android.content.Intent.EXTRA_TEXT, "Hi! Get Heyla app and win exciting rewards. https://goo.gl/JTmdEX");
                     context.startActivity(Intent.createChooser(i, "Share via"));
                 }
             });

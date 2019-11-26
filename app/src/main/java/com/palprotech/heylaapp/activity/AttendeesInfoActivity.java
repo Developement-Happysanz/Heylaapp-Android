@@ -85,7 +85,7 @@ public class AttendeesInfoActivity extends AppCompatActivity implements View.OnC
             updateAttendees();
         }
         if (v == back) {
-            finish();
+            updateNoAttendees();
         }
         if (v == btnSkip) {
             updateNoAttendees();

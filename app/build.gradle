@@ -61,6 +61,15 @@ android {
             zipAlignEnabled true
             signingConfig signingConfigs.config
         }
+        debug {
+            versionNameSuffix ".debug"
+            resValue "string", "app_version",
+                    "${defaultConfig.versionName}${versionNameSuffix}"
+        }
+        release {
+            resValue "string", "app_version",
+                    "${defaultConfig.versionName}"
+        }
     }
 
 //            outputFileName = file("$project.buildDir/apk/Heylaapp.apk")
@@ -113,7 +122,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'com.google.firebase:firebase-messaging:17.6.0'
+    implementation 'com.google.firebase:firebase-messaging:20.0.1'
     implementation 'com.mcxiaoke.volley:library:1.0.19'
     implementation 'com.squareup.picasso:picasso:2.71828'
 
@@ -121,10 +130,10 @@ dependencies {
     implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
 //    implementation 'com.facebook.android:facebook-android-sdk:5.4.0'
 //    implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
-    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
-    implementation 'com.google.android.gms:play-services-gcm:16.0.0'
-    implementation 'com.google.android.gms:play-services-location:16.0.0'
-    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation 'com.facebook.android:facebook-login:5.11.2'
+    implementation 'com.google.android.gms:play-services-gcm:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
 //    implementation 'com.google.android.gms:play-services-ads:18.1.1'
 //    implementation 'com.google.android.gms:play-services-analytics:17.0.0'

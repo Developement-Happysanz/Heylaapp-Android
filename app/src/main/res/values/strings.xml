@@ -10,8 +10,8 @@
     <!--Login Screen-->
     <string name="facebook_app_id">323262168628257</string>
     <string name="fb_login_protocol_scheme">fb323262168628257</string>
-<!--    <string name="facebook_app_id">1166380566904530</string>-->
-<!--    <string name="fb_login_protocol_scheme">fb1166380566904530</string>-->
+    <!--    <string name="facebook_app_id">1166380566904530</string>-->
+    <!--    <string name="fb_login_protocol_scheme">fb1166380566904530</string>-->
 
 
     <string name="signup">Sign Up</string>
@@ -65,6 +65,7 @@
     <!--Sign Up -->
     <string name="err_email">Enter valid email ID</string>
     <string name="err_name">Enter valid name</string>
+    <string name="err_review">Review cannot be empty</string>
     <string name="err_username">Enter valid username</string>
     <string name="err_min_username_length">Enter an username with at least 4 characters</string>
     <string name="err_password">Enter valid password</string>
@@ -95,7 +96,7 @@
     <string name="selectstate">State</string>
     <string name="selectcity">City</string>
     <string name="pincode">Pincode</string>
-<!--    <string name="recieve_notification">Notification</string>-->
+    <!--    <string name="recieve_notification">Notification</string>-->
     <string name="recieve_notification">Newsletter</string>
     <string name="save">Save</string>
 
@@ -122,20 +123,83 @@
     </string-array>
 
     <!--<string-array name="menuOptions">-->
-        <!--<item>Booking History</item>-->
-        <!--<item>Preference</item>-->
-        <!--<item>Change City</item>-->
-        <!--<item>Wishlist</item>-->
-        <!--<item>Share App</item>-->
-        <!--<item>Rate App</item>-->
-        <!--<item>Blog</item>-->
-        <!--<item>City Guide</item>-->
-        <!--<item>Settings</item>-->
+    <!--<item>Booking History</item>-->
+    <!--<item>Preference</item>-->
+    <!--<item>Change City</item>-->
+    <!--<item>Wishlist</item>-->
+    <!--<item>Share App</item>-->
+    <!--<item>Rate App</item>-->
+    <!--<item>Blog</item>-->
+    <!--<item>City Guide</item>-->
+    <!--<item>Settings</item>-->
     <!--</string-array>-->
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="feedback_new">How was your experience with Heyla?</string>
 
+    <string name="about_heading">About Heyla</string>
+    <string name="about_heading1">Want to know what’s happening in Singapore?</string>
+    <string name="about_heading2">For organizers</string>
+    <string name="about_heading3">For users</string>
+    <string name="about_content">Heyla is an encyclopaedia of “What, When and Where” for the world of events, from entertainment, shopping, sports, dining, travelling, business, and many more. You can organize events or attend them, or choose to do both.Heyla acts as a connecting link between event organizers and event seekers. It is your gateway in your pocket to the world outside, waiting to be explored, shared and enjoyed. Know what buzzing events are happening in Singapore today.</string>
+    <string name="about_content1">There’s always something happening in the Little Red Dot. The question is, “are you ready to step out and make a memory”?  We got determined to step in, after learning that there is a huge gap between event organizers and event seekers. Heyla is that bridge. It’s a conduit between organizers and general public.</string>
+    <string name="about_content2">By becoming an event organizer, you can create or organize any type of event such as entertainment, business meets, family gatherings, travellers, casual or formal meet-ups, and many more. The organizer\'s imagination is the limit. Get in touch with us  to know more.</string>
+    <string name="about_content3">Whether you’re an individual or with a group of buddies, local or travelling, Heyla satisfies your event hunting like never before.You can find events of your choice within a few clicks. Whether it’s nearby or around the city-state you can expect events that keep you engaged at any given time.You can take a look at our ‘Map View’ of the events, to choose them location wise. Make sure to check out ‘Hotspots’ or ‘Popular’ events to explore the most happening places.But the best way to know is by simply exploring the app.Download the app now to discover the world of entertainment, knowledge and networking.</string>
+
+
+    <string name="privacy_heading">Introduction to the Privacy Policy</string>
+    <string name="privacy_heading1">The Website &amp; App</string>
+    <string name="privacy_heading2">Personal Information</string>
+    <string name="privacy_heading3">Email Newsletter</string>
+    <string name="privacy_heading4">Use of Cookies</string>
+    <string name="privacy_heading5">External Links</string>
+    <string name="privacy_heading6">Social Media Platforms</string>
+    <string name="privacy_heading7">Shortened Links in Social Media</string>
+    <string name="privacy_heading8">Updates to this policy</string>
+    <string name="privacy_content">This privacy policy is for the website heyla application, and served by HeylaApp and governs the privacy of its users who choose to use it. The policy sets out the different areas where user privacy is concerned. It outlines the obligations and requirements of the users, the app, the website and website owners. Furthermore, the way it processes, stores and protects user data and information will also be detailed within this policy.</string>
+    <string name="privacy_content1">This Website and the App take a proactive approach to users’ privacy and ensures that the necessary steps are taken to protect the privacy of its users throughout their visiting experience.</string>
+    <string name="privacy_content2">We collect information directly from you when you register for an event or buy tickets. We also collect information if you post a comment on our app, website or social media pages or ask us a question through phone or email. We also collect information about you through third parties. If you use, Facebook &amp; Gmail to login then we obtain information about you through the third party sites.\n\nWhenever you use our app/website, we will detect your location to customize the events based on your location. This information will remain discrete with us. Your location information will be collected only if you enable your location services. We may collect demographic information about you, events you like, events you intend to participate in, tickets you buy, or any other information provided by you during the use of our app/website. For the users who register for an event through our app, we will collect basic attendees details required for registration / booking and this will be shared with the organizers of the event. For users who book tickets through us, we will process your payments through  one97 Communication Limited. Please visit http://www.one97.com/payments.php to know about their privacy policy. We will not ask for any banking details on our app/website.</string>
+    <string name="privacy_content3">This website/app operates an email newsletter program that is used to inform subscribers about new events added on this website/app. Users can subscribe through an online automated process if they wish to do so but at their own discretion. Email marketing campaigns published by this website/app or its owners may contain tracking facilities within the actual email. Subscriber activity is tracked and stored in a database for future analysis and evaluation. Such tracked activity may include; the opening and forwarding of emails, the clicking of links within the email content, time, dates and frequency of activity. This information is used to refine future email campaigns and supply the users with more relevant content based around their activity.</string>
+    <string name="privacy_content4">This website uses cookies to better the user experience while visiting the website. Wherever applicable, this website uses a cookie control system, enabling the users on their visit to the website, to allow or disallow the use of cookies on their computer/device. This complies with recent legislation requirements for websites to obtain explicit consent from users before leaving behind or reading files such as cookies on a user’s computer/device. Cookies are small files saved to the user computer’s hard drive, or devices that track, save and store information about the user interactions and usage of the website. This allows the website, through its server to provide the users with a tailored experience within this website. Users are advised that if they wish to deny the use and saving of cookies from this website onto their computer\'s hard drive, they should take the necessary steps within their web browser\'s security settings to block all cookies from this website and its external serving vendors. Other cookies may be stored on your computer’s hard drive by external vendors when this website uses referral programs, sponsored links or adverts. Such cookies are used for the conversion and referral tracking. No personal information is stored, saved or collected.</string>
+    <string name="privacy_content5">Although this website/App only looks to include quality, safe and relevant external links, users should always adopt a policy of caution before clicking on any external web links mentioned anywhere in this website/App. The owners of this website/App cannot guarantee or verify the contents of any externally linked website despite their best efforts. Users should therefore note that, they click on external links at their own risk and this website/App and its owners cannot be held liable for any damages or implications caused by visiting any external links mentioned.</string>
+    <string name="privacy_content6">Any communication, engagement or action taken by the website or the App through an external social media platform are in custom to the terms and conditions, and privacy policies held with each social media platform. Users are advised to use social media platforms wisely and communicate or engage upon them with due care and caution in regard to their own privacy and personal details. The Website or the App will never ask for personal or sensitive information through any social media platform. It encourages the users who wish to discuss sensitive details, to contact them through primary communication channels, such as, by telephone or email. This Website or the App may use social sharing buttons, which help to share web content directly from web pages to the respective social media platform. Users are advised before using the social sharing buttons that, they do it at their own discretion, and also note that the social media platform may track and save your request to share a web page respectively through your social media platform account.</string>
+    <string name="privacy_content7">The website and the App may share links to relevant pages on their social media accounts. Some social media platforms, by default, shorten the length of the URL’s. Users are advised to take caution before clicking on the shortened URLs published on social media platforms by this website or the App. Team Heyla will put all efforts to ensure only genuine URL’s are published, but many social media platforms are prone to spam as well as hacking. Thus, the website, the App or it\'s owners cannot be held liable for any damage or implication caused by visiting any shortened URL’s.</string>
+    <string name="privacy_content8">This Privacy Policy was last updated on 08.09.2018. From time to time we may change or make additions to our privacy policy. We will notify you of any material changes to this policy as required by law. We will also post an updated copy on our website and during App updates.</string>
+
+    <string name="payment_heading">Payment Policy</string>
+    <string name="payment_heading1">General Pricing</string>
+    <string name="payment_heading2">Heyla Event Service Charge: 2%</string>
+    <string name="payment_heading3">Payment Gateway Charge: 1.99%</string>
+    <string name="payment_heading4">Total: 4.71% (Total 3.99% +18%GST)</string>
+    <string name="payment_heading5">Payment Confirmation</string>
+    <string name="payment_heading6">Refund / Cancellation / Exchanges</string>
+    <string name="payment_heading7">Customer Care</string>
+    <string name="payment_heading8">Changes on Pricing</string>
+    <string name="payment_content">Heyla accepts Visa, MasterCard, American Express, selected Credit &amp; Debit Cards and Net Banking. Other payment methods may be added from time to time. We process our payments through one97 Communication Limited. Users are subject to internet-handling fees and a non-refundable, processing fees per ticket.\n\n         Heyla acts as an agent to promote the events and sell tickets on behalf of the event organizers. We do not hold any control on the availability and pricing of the tickets.</string>
+    <string name="payment_content1"> </string>
+    <string name="payment_content2"> </string>
+    <string name="payment_content3"> </string>
+    <string name="payment_content4">Ex: Your event ticket is 100. Final payout after deduction of payment gateway fee + taxes = (100 x 4.71) / 100 = INR 95.29\nNote: Payments would be processed in 3 to 5 working days after the completion of the event</string>
+    <string name="payment_content5">Once your payment is successful, you will be directed to the confirmation page which will contain all the details regarding your order. You will also receive a text message and email regarding your order confirmation. If you do not receive a confirmation or experience an error during payments, contact the customer care regarding your order. We are not liable for your losses if you do not contact us regarding your issue faced during booking.</string>
+    <string name="payment_content6">Once the payment is made and the booking is confirmed, you cannot make any changes in the order. Kindly read the details of the event and eligibility before making the booking. We are not liable to make any refund for tickets purchased.\nIf the event gets cancelled by the organizers of the event, we will refund the amount as per the policy of the organizer. If in case the organizer changes the event date, we will contact you and proceed as per the policy of the organizer.\nHeyla App may, in its discretion, attempt to mediate such dispute, however, we will have no liability for an Organizer’s failure to give refunds, our failure to mediate a dispute; or our decision if it does mediate the dispute.</string>
+    <string name="payment_content7">If there are any queries regarding your order, you can get in touch with us at <a href="mailto:hello@heylaapp.sg">hello@heylaapp.sg </a> / 9443471551. We assure you a response within one business day.</string>
+    <string name="payment_content8">This Pricing Policy was last updated on 08.09.2018. From time to time we may change or make additions to our Pricing Policy. We will notify you of any material changes to this policy as required by law. We will also post an updated copy on our website and during app updates.</string>
+
+
+    <string name="terms_heading">Acceptance of Terms</string>
+    <string name="terms_heading1">Privacy Policy</string>
+    <string name="terms_heading2">Services</string>
+    <string name="terms_heading3">Restrictions on use</string>
+    <string name="terms_heading4">Changes on Terms &amp; Conditions</string>
+    <string name="terms_heading5">Contact Us</string>
+    <string name="terms_content">The HeylaApp is a one stop platform for all your event needs, which is owned and operated by Happy Sanz Tech. #28, Bukit Pasoh Road, Singapore 089842.\n\nThrough our platforms, mobile apps and website, Heyla enables its users to view and share events and book tickets for events in  Singapore. This User Agreement (Agreement) sets out the terms and conditions on which Heyla will provide the services to the User through its Website and App.\n\nThe usage of the Website/App is offered to users conditioned on acceptance without modification, of all the terms, conditions and notices contained in this Agreement, as may be posted on the Website/App from time to time. For the removal of doubts, it is clarified that the use of the Website/App by the User constitutes an acknowledgement and acceptance by the User of this Agreement.\n\nHeylaApp reserves the right to change the terms &amp; conditions and notices under which the Services are offered through Website/ App, including but not limited to the Services provided through the Website/App. The User shall be responsible for regularly reviewing these terms and conditions.</string>
+    <string name="terms_content1">The User hereby consents, expresses and agrees that he/she has read and fully understood the Privacy Policy of Helya in respect to the website/app. The User further confirms that the terms and contents of such Privacy Policy are acceptable to him/her.-</string>
+    <string name="terms_content2">Users are entitled to make use of the services including viewing, and sharing of events. Heyla also lets users book their tickets or register for events through the app. Heyla reserves the right to modify the nature of its services. It also lets the organizers to post their events.\n\nIf the users are booking their tickets through our platform, they hereby consent, express and agree that they have read and fully understood the Pricing Policy of Heyla in respect to the website/app. The User further confirms that the terms of such Pricing Policy are acceptable to him/her.</string>
+    <string name="terms_content3">Your use of the website/app is restricted to viewing information of events, booking tickets, giving suggestions or raising queries or complaints. To protect our website, app and other users, we reserve all the rights to delete any content from the website/app. We also reserve the right to restrict the access of the website/app to certain users.</string>
+    <string name="terms_content4">These terms &amp; conditions were last updated on 08.09.2018. From time to time we may change or make additions to our terms &amp; Conditions. We will notify you of any material changes to this policy as required by law. We will also post an updated copy on our website and during app updates.</string>
+    <string name="terms_content5">If there is any query regarding the terms &amp; conditions, you may contact us at hello@heylaapp.sg / +91 9443471551</string>
+
+    <string name="versioncode"></string>
 
 </resources>
