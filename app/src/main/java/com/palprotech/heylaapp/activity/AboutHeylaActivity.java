@@ -20,9 +20,9 @@ public class AboutHeylaActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("pageval").equalsIgnoreCase("setting_about")) {
             setContentView(R.layout.activity_about_us);
         } else if (getIntent().getStringExtra("pageval").equalsIgnoreCase("setting_payment")) {
-            setContentView(R.layout.activity_privacy_policy);
-        } else if (getIntent().getStringExtra("pageval").equalsIgnoreCase("setting_privacy")) {
             setContentView(R.layout.activity_payment_policy);
+        } else if (getIntent().getStringExtra("pageval").equalsIgnoreCase("setting_privacy")) {
+            setContentView(R.layout.activity_privacy_policy);
         } else if (getIntent().getStringExtra("pageval").equalsIgnoreCase("setting_terms")) {
             setContentView(R.layout.activity_terms);
         }
