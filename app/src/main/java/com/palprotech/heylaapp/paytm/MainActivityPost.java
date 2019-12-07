@@ -164,7 +164,9 @@ public class MainActivityPost extends Activity implements IServiceListener, Dial
                 finish();
             }
         });
+        alertDialogBuilder.setCancelable(false);
         alertDialogBuilder.show();
+//        alertDialogBuilder.set(false);
     }
 
     // This is to refresh the order id: Only for the Sample App’s purpose.

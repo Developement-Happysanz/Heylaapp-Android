@@ -5,13 +5,16 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -37,6 +40,7 @@ import com.palprotech.heylaapp.paytm.MainActivityPost;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
 import com.palprotech.heylaapp.serviceinterfaces.IServiceListener;
 import com.palprotech.heylaapp.utils.HeylaAppConstants;
+import com.palprotech.heylaapp.utils.HeylaAppValidator;
 import com.palprotech.heylaapp.utils.PreferenceStorage;
 import com.squareup.picasso.Picasso;
 
@@ -55,7 +59,7 @@ import java.util.Locale;
  * Created by Admin on 09-11-2017.
  */
 
-public class BookingActivity extends AppCompatActivity implements IServiceListener, View.OnClickListener,  DialogClickListener, AdapterView.OnItemClickListener {
+public class BookingActivity extends AppCompatActivity implements IServiceListener, View.OnClickListener, DialogClickListener, AdapterView.OnItemClickListener {
 
     private static final String TAG = BookingActivity.class.getName();
     private Event event;
@@ -163,15 +167,40 @@ public class BookingActivity extends AppCompatActivity implements IServiceListen
         }
         if (v == bookNow) {
 
-            String getTickets = result.getText().toString();
-
-            if ((flagPlan.equalsIgnoreCase("no")) || (flagTicket.equalsIgnoreCase("no")) || (flagBookingDate.equalsIgnoreCase("no"))) {
-                Toast.makeText(this, "Select ticket or plan or date", Toast.LENGTH_SHORT).show();
-            } else if (Integer.parseInt(getTickets) > Integer.parseInt(noOfTickets)) {
-                Toast.makeText(this, "Only " + noOfTickets + " tickets available", Toast.LENGTH_SHORT).show();
-            } else {
+//            String getTickets = result.getText().toString();
+//
+//            if ((flagPlan.equalsIgnoreCase("no")) || (flagTicket.equalsIgnoreCase("no")) || (flagBookingDate.equalsIgnoreCase("no"))) {
+//                Toast.makeText(this, "Select ticket or plan or date", Toast.LENGTH_SHORT).show();
+//            } else if (Integer.parseInt(getTickets) > Integer.parseInt(noOfTickets)) {
+//                Toast.makeText(this, "Only " + noOfTickets + " tickets available", Toast.LENGTH_SHORT).show();
+//            } else {
+//                updateBookingProcess();
+//            }
+            if (validateFields()) {
                 updateBookingProcess();
             }
+        }
+    }
+
+    private boolean validateFields() {
+        String getTickets = result.getText().toString();
+        if (flagBookingDate.equalsIgnoreCase("no")) {
+            Toast.makeText(this, "Select ticket date", Toast.LENGTH_SHORT).show();
+            return false;
+        } if (showTime.isEmpty()) {
+            Toast.makeText(this, "Select ticket time", Toast.LENGTH_SHORT).show();
+            return false;
+        } if (flagPlan.equalsIgnoreCase("no")) {
+            Toast.makeText(this, "Select ticket plan", Toast.LENGTH_SHORT).show();
+            return false;
+        } if (flagTicket.equalsIgnoreCase("no")) {
+            Toast.makeText(this, "Select ticket count", Toast.LENGTH_SHORT).show();
+            return false;
+        } if (Integer.parseInt(getTickets) > Integer.parseInt(noOfTickets)) {
+            Toast.makeText(this, "Only " + noOfTickets + " tickets available", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -693,7 +722,7 @@ public class BookingActivity extends AppCompatActivity implements IServiceListen
             planName1.setTextColor(Color.parseColor("#468DCB"));
             TextView planRate1 = parent.getChildAt(a).findViewById(R.id.txt_plan_rate);
             planRate1.setTextColor(Color.parseColor("#468DCB"));
-           }
+        }
         planLayout.setBackground(getResources().getDrawable(R.drawable.bg_advanced_filter_properties_filled));
         planName.setTextColor(Color.WHITE);
         planRate.setTextColor(Color.WHITE);
