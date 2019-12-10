@@ -63,7 +63,7 @@
             android:layout_alignTop="@id/tvtitletext"
             android:paddingEnd="12dp"
             android:paddingStart="12dp"
-            android:src="@drawable/ic_fav_deselect" />
+            android:src="@drawable/ic_fav_unselect" />
 
     </RelativeLayout>
 
