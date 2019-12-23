@@ -593,7 +593,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                             context.startActivity(homeIntent);
                         }
                     });
-                    alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();

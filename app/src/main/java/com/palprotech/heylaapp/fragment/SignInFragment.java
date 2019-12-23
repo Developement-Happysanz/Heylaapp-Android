@@ -3,12 +3,14 @@ package com.palprotech.heylaapp.fragment;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -462,7 +464,15 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                         signInSuccess = false;
                         Log.d(TAG, "Show error dialog");
                         AlertDialogHelper.showSimpleAlertDialog(getContext(), msg);
-
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                        sharedPreferences.edit().clear().apply();
+                        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                .requestEmail()
+                                .build();
+                        // Build a GoogleSignInClient with the options specified by gso.
+                        LoginManager.getInstance().logOut();
+                        mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gso);
+                        mGoogleSignInClient.signOut();
                     } else {
                         signInSuccess = true;
                     }
