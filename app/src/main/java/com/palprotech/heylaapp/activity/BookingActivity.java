@@ -149,6 +149,7 @@ public class BookingActivity extends AppCompatActivity implements IServiceListen
 
             if (getTicketCount == 10) {
                 inc.setEnabled(false);
+                setTicketCount = 10;
                 Toast.makeText(this, "Selected maximum tickets for the booking...", Toast.LENGTH_SHORT).show();
             } else {
                 inc.setEnabled(true);
