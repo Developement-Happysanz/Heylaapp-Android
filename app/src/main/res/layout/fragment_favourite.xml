@@ -277,7 +277,6 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    
                     android:src="@drawable/ic_map_view"
                     android:background="@color/leaderboard_checkin"
                     app:backgroundTint="@color/leaderboard_checkin"
