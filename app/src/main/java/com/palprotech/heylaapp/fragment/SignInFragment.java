@@ -54,6 +54,7 @@ import com.google.android.gms.tasks.Task;
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.activity.ForgotPasswordActivity;
 import com.palprotech.heylaapp.activity.LoginActivity;
+import com.palprotech.heylaapp.activity.ReactivateAccountActivity;
 import com.palprotech.heylaapp.activity.SelectCityActivity;
 import com.palprotech.heylaapp.bean.database.SQLiteHelper;
 import com.palprotech.heylaapp.helper.AlertDialogHelper;
@@ -463,7 +464,11 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         Log.d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(getContext(), msg);
+                        if (msg.equalsIgnoreCase("Account Deactivated")) {
+                            activateAccAlert();
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(getContext(), msg);
+                        }
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                         sharedPreferences.edit().clear().apply();
                         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -482,6 +487,20 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
             }
         }
         return signInSuccess;
+    }
+
+    private void activateAccAlert() {
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity());
+        alertDialogBuilder.setTitle("Deactivated Account");
+        alertDialogBuilder.setMessage("This account has been deactivated. Do you wish to reactivate it?");
+        alertDialogBuilder.setPositiveButton("Yes", (arg0, arg1) -> deactivateAcc());
+        alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+        alertDialogBuilder.show();
+    }
+
+    private void deactivateAcc() {
+        Intent homeIntent = new Intent(getApplicationContext(), ReactivateAccountActivity.class);
+        startActivity(homeIntent);
     }
 
     @Override

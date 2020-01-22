@@ -27,11 +27,7 @@ import com.palprotech.heylaapp.utils.HeylaAppValidator;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by Narendar on 12/10/17.
- */
-
-public class ForgotPasswordActivity extends AppCompatActivity implements View.OnClickListener, IServiceListener, DialogClickListener {
+public class ReactivateAccountActivity extends AppCompatActivity implements View.OnClickListener, IServiceListener, DialogClickListener {
 
     private static final String TAG = ForgotPasswordActivity.class.getName();
 
@@ -44,7 +40,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forgot_password);
+        setContentView(R.layout.activity_reactivate_account);
 
         inputEmailOrMobileNo = (TextInputLayout) findViewById(R.id.ti_mailormobile);
         edtEmailOrMobileNo = (EditText) findViewById(R.id.edtMailormobile);
@@ -75,8 +71,8 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                     try {
                         JSONObject jsonObject = new JSONObject();
 
-                        jsonObject.put(HeylaAppConstants.PARAMS_USERNAME, username);
-                        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.FORGOT_PASSWORD;
+                        jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_OR_MOB, username);
+                        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_REACTIVATE_CHECK;
                         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
                     } catch (JSONException e) {
@@ -139,41 +135,14 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     @Override
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
-        try {
-            if (validateSignInResponse(response)) {
+        if (validateSignInResponse(response)) {
 
-                String reqType = response.getString("type");
-                if (reqType.equalsIgnoreCase("Mobile")) {
-                    Intent homeIntent = new Intent(getApplicationContext(), ForgotPasswordNumberVerificationActivity.class);
-                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    homeIntent.putExtra("mobile_no", edtEmailOrMobileNo.getText().toString());
-                    homeIntent.putExtra("page_from", "forgot");
-                    startActivity(homeIntent);
-                    finish();
-                } else {
-                  /*  AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
-                    alertDialogBuilder.setTitle("Reset Successful");
-
-                    alertDialogBuilder.setMessage("Activation Link sent to your email.");
-                    alertDialogBuilder.setPositiveButton("OK",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface arg0, int arg1) {*/
-                    Toast.makeText(getApplicationContext(), "We have mailed you a link to reset your password", Toast.LENGTH_LONG).show();
-                    Intent homeIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    homeIntent.putExtra("mobile_no", edtEmailOrMobileNo.getText().toString());
-                    startActivity(homeIntent);
-                    finish();
-                               /* }
-                            });
-
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();*/
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+            Intent homeIntent = new Intent(getApplicationContext(), ForgotPasswordNumberVerificationActivity.class);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            homeIntent.putExtra("mobile_no", edtEmailOrMobileNo.getText().toString());
+            homeIntent.putExtra("page_from", "activate");
+            startActivity(homeIntent);
+            finish();
         }
     }
 

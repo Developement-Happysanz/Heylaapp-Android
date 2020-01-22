@@ -3,14 +3,17 @@ package com.palprotech.heylaapp.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.palprotech.heylaapp.R;
 import com.palprotech.heylaapp.customview.CustomOtpEditText;
@@ -39,6 +42,8 @@ public class ForgotPasswordNumberVerificationActivity extends AppCompatActivity 
     private TextView txtResend;
     private CustomOtpEditText otpEditText;
     private String mobileNo;
+    private String pageCheck;
+    private String resCheck;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +55,7 @@ public class ForgotPasswordNumberVerificationActivity extends AppCompatActivity 
         progressDialogHelper = new ProgressDialogHelper(this);
 
         mobileNo = getIntent().getStringExtra("mobile_no");
+        pageCheck = getIntent().getStringExtra("page_from");
 
         btnSubmit = (Button) findViewById(R.id.sendcode);
         btnSubmit.setOnClickListener(this);
@@ -74,42 +80,91 @@ public class ForgotPasswordNumberVerificationActivity extends AppCompatActivity 
         if (CommonUtils.isNetworkAvailable(getApplicationContext())) {
             if (v == btnSubmit) {
                 if (otpEditText.hasValidOTP()) {
-
-                    JSONObject jsonObject = new JSONObject();
-                    try {
-                        jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, mobileNo);
-                        jsonObject.put(HeylaAppConstants.PARAMS_OTP, otpEditText.getOTP());
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    if (pageCheck.equalsIgnoreCase("forgot")) {
+                        forgotSubmit();
+                    } else {
+                        reactivateSubmit();
                     }
-
-                    progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-                    String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.FORGOT_PASSWORD_OTP_REQUEST;
-                    serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
                 } else {
                     AlertDialogHelper.showSimpleAlertDialog(this, "Invalid OTP");
                 }
 
             } else if (v == txtResend) {
-
-                JSONObject jsonObject = new JSONObject();
-                try {
-
-                    jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, mobileNo);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (pageCheck.equalsIgnoreCase("forgot")) {
+                    forgotResend();
+                } else {
+                    reactivateResend();
                 }
 
-                progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-                String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.RESEND_OTP_REQUEST;
-                serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
             }
         } else {
             AlertDialogHelper.showSimpleAlertDialog(getApplicationContext(), "No Network connection available");
         }
+    }
+
+    private void forgotSubmit() {
+        resCheck = "forgotSubmit";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, mobileNo);
+            jsonObject.put(HeylaAppConstants.PARAMS_OTP, otpEditText.getOTP());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.FORGOT_PASSWORD_OTP_REQUEST;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void reactivateSubmit() {
+        resCheck = "reactivateSubmit";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_OR_MOB, mobileNo);
+            jsonObject.put(HeylaAppConstants.PARAMS_CODE, otpEditText.getOTP());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_REACTIVATE;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void forgotResend() {
+        resCheck = "forgotResend";
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, mobileNo);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.RESEND_OTP_REQUEST;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void reactivateResend() {
+        resCheck = "reactivateResend";
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, mobileNo);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_REACTIVATE_CHECK;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
     @Override
@@ -153,12 +208,22 @@ public class ForgotPasswordNumberVerificationActivity extends AppCompatActivity 
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
             try {
-                String userId = response.getString("User_id");
-                Intent homeIntent = new Intent(getApplicationContext(), UpdatePasswordActivity.class);
-                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                homeIntent.putExtra("user_id", userId);
-                startActivity(homeIntent);
-                this.finish();
+                if (resCheck.equalsIgnoreCase("reactivateSubmit")) {
+                    Toast.makeText(this, "Account has been reactivated!", Toast.LENGTH_SHORT).show();
+                    Intent homeIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(homeIntent);
+                    this.finish();
+                } else if (resCheck.equalsIgnoreCase("forgotSubmit")) {
+                    String userId = response.getString("User_id");
+                    Intent homeIntent = new Intent(getApplicationContext(), UpdatePasswordActivity.class);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    homeIntent.putExtra("user_id", userId);
+                    startActivity(homeIntent);
+                    this.finish();
+                } else {
+                    Toast.makeText(this, "OTP has been resent", Toast.LENGTH_SHORT).show();
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }

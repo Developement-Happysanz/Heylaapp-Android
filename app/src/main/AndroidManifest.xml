@@ -133,6 +133,13 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
+            android:name=".activity.ReactivateAccountActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBarLogin"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
             android:name=".activity.ForgotPasswordNumberVerificationActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

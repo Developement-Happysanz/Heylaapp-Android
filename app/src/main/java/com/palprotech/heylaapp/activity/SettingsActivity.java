@@ -2,18 +2,27 @@ package com.palprotech.heylaapp.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.gson.JsonObject;
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.helper.AlertDialogHelper;
 import com.palprotech.heylaapp.helper.ProgressDialogHelper;
 import com.palprotech.heylaapp.interfaces.DialogClickListener;
 import com.palprotech.heylaapp.servicehelpers.ServiceHelper;
@@ -33,11 +42,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     private static final String TAG = EventReviewAddActivity.class.getName();
     private ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
-    TextView profile, privacyPoclicy, paymentPolicy, reportProblem, aboutUs, termsConditions;
+    TextView profile, deactivate, privacyPoclicy, paymentPolicy, reportProblem, aboutUs, termsConditions;
     ImageView ivBack;
     String res = "";
     Switch aSwitch;
     boolean firsttime = true;
+    private RelativeLayout swLayout, daLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,9 +108,30 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
+    private void deactivateAcc() {
+        res = "deactive";
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_DEACTIVE;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
     private void iniView() {
         profile = findViewById(R.id.profile_settings);
         profile.setOnClickListener(this);
+
+        deactivate = findViewById(R.id.deactive_settings);
+        deactivate.setOnClickListener(this);
 
         privacyPoclicy = findViewById(R.id.privacy_policy_settings);
         privacyPoclicy.setOnClickListener(this);
@@ -117,6 +148,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         aboutUs = findViewById(R.id.about_us);
         aboutUs.setOnClickListener(this);
 
+        swLayout = findViewById(R.id.sw_lay);
+        daLayout = findViewById(R.id.da_lay);
+
         ivBack = findViewById(R.id.back_res);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,21 +164,59 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // do something, the isChecked will be
                 // true if the switch is in the On position
-                sendNotif();
+                checkLogIn();
             }
         });
+        checkLogIn();
 
+    }
+
+    private void checkLogIn() {
+        if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
+            swLayout.setVisibility(View.VISIBLE);
+            daLayout.setVisibility(View.VISIBLE);
+        }
+        else {
+            swLayout.setVisibility(View.GONE);
+            daLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onClick(View view) {
         if (view == profile) {
-            startActivity(new Intent(SettingsActivity.this, ProfileActivity.class));
+            if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
+                startActivity(new Intent(SettingsActivity.this, ProfileActivity.class));
+            }
+            else {
+                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getApplicationContext());
+                alertDialogBuilder.setTitle("Login");
+                alertDialogBuilder.setMessage("Log in to Access");
+                alertDialogBuilder.setPositiveButton("OK", (arg0, arg1) -> {
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    sharedPreferences.edit().clear().apply();
+//        TwitterUtil.getInstance().resetTwitterRequestToken();
+
+                    Intent homeIntent = new Intent(getApplicationContext(), SplashScreenActivity.class);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(homeIntent);
+
+                });
+                alertDialogBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+                alertDialogBuilder.show();
+            }
         } else if (view == privacyPoclicy) {
             Intent newI = new Intent(new Intent(SettingsActivity.this, AboutHeylaActivity.class));
             newI.putExtra("pageval", "setting_privacy");
             startActivity(newI);
 //            startActivity(new Intent(SettingsActivity.this, ForgotPasswordActivity.class));
+        } else if (view == deactivate) {
+            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Deactivate Account");
+            alertDialogBuilder.setMessage("Are you are you want to deactivate your account?");
+            alertDialogBuilder.setPositiveButton("Yes", (arg0, arg1) -> deactivateAcc());
+            alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+            alertDialogBuilder.show();
         } else if (view == aboutUs) {
             Intent newI = new Intent(new Intent(SettingsActivity.this, AboutHeylaActivity.class));
             newI.putExtra("pageval", "setting_about");
@@ -183,6 +255,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         progressDialogHelper.hideProgressDialog();
         try {
             String status = response.getString("status");
+            String msg = response.getString("msg");
             if (status.equalsIgnoreCase("success")) {
                 if (res.equalsIgnoreCase("info")) {
                     JSONObject data = response.getJSONObject("userData");
@@ -204,7 +277,28 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 //                        }
 //                        firsttime = false;
 //                    }
+                } if (res.equalsIgnoreCase("deactive")) {
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    sharedPreferences.edit().clear().apply();
+//        TwitterUtil.getInstance().resetTwitterRequestToken();
+
+                    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                            .requestEmail()
+                            .build();
+                    // Build a GoogleSignInClient with the options specified by gso.
+                    LoginManager.getInstance().logOut();
+                    GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);
+                    mGoogleSignInClient.signOut();
+
+
+                    Intent homeIntent = new Intent(getApplicationContext(), SplashScreenActivity.class);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(homeIntent);
+                    Toast.makeText(this, "Account deactivated successfully!", Toast.LENGTH_SHORT).show();
+//                    AlertDialogHelper.showSimpleAlertDialog(this, "Account Deactivated");
                 }
+            } else {
+                AlertDialogHelper.showSimpleAlertDialog(this, msg);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -213,6 +307,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onError(String error) {
+        progressDialogHelper.hideProgressDialog();
+        AlertDialogHelper.showSimpleAlertDialog(this, error);
 
     }
 }

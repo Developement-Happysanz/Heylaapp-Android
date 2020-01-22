@@ -11,7 +11,8 @@ public class HeylaAppConstants {
 //    public static final String BASE_URL = "https://heylaapp.com/testing/";
 //    public static final String BASE_URL = "https://heylaapp.sg/demo/";
 //    public static final String BASE_URL = "https://happysanz.in/heyla/";
-    public static final String BASE_URL = "https://heylaapp.com/";
+    public static final String BASE_URL = "https://heyla.happysanz.net/";
+//    public static final String BASE_URL = "https://heylaapp.com/";
 
     //    SignIn
     public static final String SIGN_IN = "apimain/login/";
@@ -41,6 +42,7 @@ public class HeylaAppConstants {
 
     //    SignUp params
     public static final String PARAMS_EMAIL_ID = "email_id";
+    public static final String PARAMS_EMAIL_OR_MOB = "email_or_mobile";
     public static final String PARAMS_SOCIAL_IMAGE = "social_img_url";
     public static final String PARAMS_MOBILE_NUMBER = "mobile_no";
     public static final String PARAMS_PASSWORD = "password";
@@ -51,6 +53,7 @@ public class HeylaAppConstants {
 
     //    Mobile number verification params
     public static final String PARAMS_OTP = "OTP";
+    public static final String PARAMS_CODE = "code";
     public static final String PARAMS_REQUEST_MODE = "request_mode";
 
     //    Resend OTP
@@ -153,6 +156,15 @@ public class HeylaAppConstants {
 
     //    User activity
     public static final String USER_NOTIFICATION = "apimain/updateNotification";
+
+    //    User activity
+    public static final String USER_DEACTIVE = "apimain/account_deactive";
+
+    //    User activity
+    public static final String USER_REACTIVATE_CHECK = "apimain/check_account_activate";
+
+    //    User activity
+    public static final String USER_REACTIVATE = "apimain/reactivate_account";
 
     //    User activity Parms
     public static final String PARAMS_DATE = "date";
