@@ -788,7 +788,7 @@ public class EventDetailActivity extends AppCompatActivity implements LocationLi
 
                 } else if (res.equalsIgnoreCase("wishlistDEL")) {
                     wishliststatus = response.getString("msg");
-                    if (wishliststatus.equalsIgnoreCase("Wishlist Deleted")) {
+                    if (wishliststatus.equalsIgnoreCase("Event removed from wish list!")) {
                         imEventFavourite.setImageResource(R.drawable.ic_fav_unselect);
                     } else {
                         imEventFavourite.setImageResource(R.drawable.ic_fav_select);
