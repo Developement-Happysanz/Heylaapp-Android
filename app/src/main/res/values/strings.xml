@@ -75,6 +75,7 @@
     <string name="err_empty_password_login">Password can\'t be empty</string>
     <string name="err_min_pass_length">Short passwords are easy to guess! Try one with at least 6 characters</string>
     <string name="forgot_text">Please enter your registered mobile number to reset your password</string>
+    <string name="reactivate_text">Please enter your registered mobile number or email to reactivate your account</string>
 
     <!--Dialog Fragment-->
     <string name="alert_button_ok">OK</string>
