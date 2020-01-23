@@ -165,6 +165,9 @@ public class HeylaAppConstants {
     public static final String USER_REACTIVATE_CHECK = "apimain/check_account_activate";
 
     //    User activity
+    public static final String USER_REACTIVATE_ADMIN_REQUEST = "apimain/request_to_activate";
+
+    //    User activity
     public static final String USER_REACTIVATE = "apimain/reactivate_account";
 
     //    User activity Parms
