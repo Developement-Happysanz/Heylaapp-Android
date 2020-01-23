@@ -36,6 +36,7 @@ public class ReactivateAccountActivity extends AppCompatActivity implements View
     private Button btnSubmit;
     private ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
+    private String resCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class ReactivateAccountActivity extends AppCompatActivity implements View
             if (v == btnSubmit) {
                 String username = edtEmailOrMobileNo.getText().toString();
                 if ((HeylaAppValidator.checkNullString(username))) {
-
+                    resCheck = "active_check";
 
                     progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
                     try {
@@ -79,11 +80,11 @@ public class ReactivateAccountActivity extends AppCompatActivity implements View
                         e.printStackTrace();
                     }
                 } else {
-                    AlertDialogHelper.showSimpleAlertDialog(getApplicationContext(), "Email ID/Mobile number is mandatory");
+                    AlertDialogHelper.showSimpleAlertDialog(this, "Email ID/Mobile number is mandatory");
                 }
             }
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(getApplicationContext(), "No Network connection available");
+            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection available");
         }
 
     }
@@ -119,8 +120,11 @@ public class ReactivateAccountActivity extends AppCompatActivity implements View
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         Log.d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
-
+                        if (msg.equalsIgnoreCase("Please Contact Heyla Team!.")) {
+                            activateAccAlert();
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                        }
                     } else {
                         signInSuccess = true;
                     }
@@ -132,17 +136,46 @@ public class ReactivateAccountActivity extends AppCompatActivity implements View
         return signInSuccess;
     }
 
+    private void activateAccAlert() {
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Deactivated Account");
+        alertDialogBuilder.setMessage("This account has been deactivated by the admin. Do you wish to send a request to reactivate it?");
+        alertDialogBuilder.setPositiveButton("Yes", (arg0, arg1) -> deactivateAcc());
+        alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+        alertDialogBuilder.show();
+    }
+
+    private void deactivateAcc() {
+        resCheck = "admin_request";
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        try {
+            JSONObject jsonObject = new JSONObject();
+            String username = edtEmailOrMobileNo.getText().toString();
+
+            jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_OR_MOB, username);
+            String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.USER_REACTIVATE_ADMIN_REQUEST;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
-
-            Intent homeIntent = new Intent(getApplicationContext(), ForgotPasswordNumberVerificationActivity.class);
-            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            homeIntent.putExtra("mobile_no", edtEmailOrMobileNo.getText().toString());
-            homeIntent.putExtra("page_from", "activate");
-            startActivity(homeIntent);
-            finish();
+            if (resCheck.equalsIgnoreCase("active_check")) {
+                Intent homeIntent = new Intent(getApplicationContext(), ForgotPasswordNumberVerificationActivity.class);
+                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                homeIntent.putExtra("mobile_no", edtEmailOrMobileNo.getText().toString());
+                homeIntent.putExtra("page_from", "activate");
+                startActivity(homeIntent);
+                finish();
+            } else {
+                Toast.makeText(this, "Request sent to the admin!", Toast.LENGTH_SHORT).show();
+                finish();
+            }
         }
     }
 

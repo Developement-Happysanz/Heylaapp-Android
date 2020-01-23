@@ -10,8 +10,8 @@ public class HeylaAppConstants {
     //    BASE URL
 //    public static final String BASE_URL = "https://heylaapp.com/testing/";
 //    public static final String BASE_URL = "https://heylaapp.sg/demo/";
-//    public static final String BASE_URL = "https://happysanz.in/heyla/";
-    public static final String BASE_URL = "https://heyla.happysanz.net/";
+    public static final String BASE_URL = "https://happysanz.in/heyla/";
+//    public static final String BASE_URL = "https://heyla.happysanz.net/";
 //    public static final String BASE_URL = "https://heylaapp.com/";
 
     //    SignIn
@@ -162,6 +162,9 @@ public class HeylaAppConstants {
 
     //    User activity
     public static final String USER_REACTIVATE_CHECK = "apimain/check_account_activate";
+
+    //    User activity
+    public static final String USER_REACTIVATE_ADMIN_REQUEST = "apimain/request_to_activate";
 
     //    User activity
     public static final String USER_REACTIVATE = "apimain/reactivate_account";
