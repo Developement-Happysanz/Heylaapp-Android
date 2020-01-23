@@ -167,11 +167,9 @@ public class ReactivateAccountActivity extends AppCompatActivity implements View
         if (validateSignInResponse(response)) {
             if (resCheck.equalsIgnoreCase("active_check")) {
                 Intent homeIntent = new Intent(getApplicationContext(), ForgotPasswordNumberVerificationActivity.class);
-                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 homeIntent.putExtra("mobile_no", edtEmailOrMobileNo.getText().toString());
                 homeIntent.putExtra("page_from", "activate");
                 startActivity(homeIntent);
-                finish();
             } else {
                 Toast.makeText(this, "Request sent to the admin!", Toast.LENGTH_SHORT).show();
                 finish();

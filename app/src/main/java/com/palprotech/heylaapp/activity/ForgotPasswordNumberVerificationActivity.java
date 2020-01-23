@@ -64,6 +64,14 @@ public class ForgotPasswordNumberVerificationActivity extends AppCompatActivity 
         txtResend.setOnClickListener(this);
 
         otpEditText = (CustomOtpEditText) findViewById(R.id.otp_view);
+
+        findViewById(R.id.back_res).setVisibility(View.VISIBLE);
+        findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -156,7 +164,7 @@ public class ForgotPasswordNumberVerificationActivity extends AppCompatActivity 
         JSONObject jsonObject = new JSONObject();
         try {
 
-            jsonObject.put(HeylaAppConstants.PARAMS_MOBILE_NUMBER, mobileNo);
+            jsonObject.put(HeylaAppConstants.PARAMS_EMAIL_OR_MOB, mobileNo);
 
         } catch (JSONException e) {
             e.printStackTrace();
