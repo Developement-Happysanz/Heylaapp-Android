@@ -164,7 +164,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // do something, the isChecked will be
                 // true if the switch is in the On position
-                checkLogIn();
+                sendNotif();
             }
         });
         checkLogIn();

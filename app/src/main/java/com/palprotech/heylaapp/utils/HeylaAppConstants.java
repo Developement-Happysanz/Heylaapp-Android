@@ -231,7 +231,7 @@ public class HeylaAppConstants {
     public static final String FILTERPREF = "selected_preference";
     public static final String FILTERRANGE = "price_range";
 
-    //    Event review list
+    //    Event review listf
     public static final String EVENT_REVIEW_LIST = "apimain/listEventReview/";
 
     //    Event review check

@@ -1065,7 +1065,7 @@ public class AdvanceFilterActivity extends AppCompatActivity implements AdapterV
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        Toast.makeText(getApplicationContext(), "Price range: Rs.0 - Rs." + seekBar.getProgress(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Price range: S$.0 - S$." + seekBar.getProgress(), Toast.LENGTH_SHORT).show();
     }
 }
 
