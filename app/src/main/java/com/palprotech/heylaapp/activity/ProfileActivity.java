@@ -256,7 +256,11 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         inputBirthday = (TextInputLayout) findViewById(R.id.ti_birthday);
         mBirthday = (EditText) findViewById(R.id.edtBirthday);
         if (PreferenceStorage.getUserBirthday(this) != null) {
-            mBirthday.setText(PreferenceStorage.getUserBirthday(this));
+            if (PreferenceStorage.getUserBirthday(this) != "") {
+                mBirthday.setText(PreferenceStorage.getUserBirthday(this));
+            } else {
+                mBirthday.setText("");
+            }
         }
         mBirthday.setFocusable(false);
         inputOccupation = (TextInputLayout) findViewById(R.id.ti_occupation);

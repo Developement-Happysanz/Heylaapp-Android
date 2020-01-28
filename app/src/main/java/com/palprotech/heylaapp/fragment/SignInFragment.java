@@ -517,10 +517,13 @@ public class SignInFragment extends Fragment implements View.OnClickListener, IS
                 String emailId = userData.getString("email_id");
                 String fullName = userData.getString("full_name");
                 String birthDate = userData.getString("birth_date");
-                DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
-                Date date = (Date) formatter.parse(birthDate);
-                SimpleDateFormat event_date = new SimpleDateFormat("dd-MM-yyyy", Locale.UK);
-                String birthday = event_date.format(date.getTime());
+                String birthday = "";
+                if (!birthDate.isEmpty()) {
+                    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
+                    Date date = (Date) formatter.parse(birthDate);
+                    SimpleDateFormat event_date = new SimpleDateFormat("dd-MM-yyyy", Locale.UK);
+                    birthday = event_date.format(date.getTime());
+                }
                 String gender = userData.getString("gender");
                 String occupation = userData.getString("occupation");
                 String addressLine1 = userData.getString("address_line_1");

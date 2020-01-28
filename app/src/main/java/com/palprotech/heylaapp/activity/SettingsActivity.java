@@ -42,12 +42,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     private static final String TAG = EventReviewAddActivity.class.getName();
     private ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
-    TextView profile, deactivate, privacyPoclicy, paymentPolicy, reportProblem, aboutUs, termsConditions;
+    TextView profile, deactivate, resetPass, privacyPoclicy, paymentPolicy, reportProblem, aboutUs, termsConditions;
     ImageView ivBack;
     String res = "";
     Switch aSwitch;
     boolean firsttime = true;
-    private RelativeLayout swLayout, daLayout;
+    private RelativeLayout swLayout, daLayout, cpLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -148,8 +148,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         aboutUs = findViewById(R.id.about_us);
         aboutUs.setOnClickListener(this);
 
+        resetPass = findViewById(R.id.change_pass_settings);
+        resetPass.setOnClickListener(this);
+
         swLayout = findViewById(R.id.sw_lay);
         daLayout = findViewById(R.id.da_lay);
+        cpLayout = findViewById(R.id.cp_lay);
 
         ivBack = findViewById(R.id.back_res);
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -175,11 +179,30 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         if (PreferenceStorage.getUserType(getApplicationContext()).equalsIgnoreCase("1")) {
             swLayout.setVisibility(View.VISIBLE);
             daLayout.setVisibility(View.VISIBLE);
+            cpLayout.setVisibility(View.VISIBLE);
         }
         else {
             swLayout.setVisibility(View.GONE);
             daLayout.setVisibility(View.GONE);
+            cpLayout.setVisibility(View.GONE);
         }
+    }
+
+    private void forgotInit() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sharedPreferences.edit().clear().apply();
+//        TwitterUtil.getInstance().resetTwitterRequestToken();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        // Build a GoogleSignInClient with the options specified by gso.
+        LoginManager.getInstance().logOut();
+        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);
+        mGoogleSignInClient.signOut();
+        Intent newI = new Intent(new Intent(SettingsActivity.this, ForgotPasswordActivity.class));
+        startActivity(newI);
+        finish();
     }
 
     @Override
@@ -215,6 +238,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             alertDialogBuilder.setTitle("Deactivate Account");
             alertDialogBuilder.setMessage("Are you are you want to deactivate your account?");
             alertDialogBuilder.setPositiveButton("Yes", (arg0, arg1) -> deactivateAcc());
+            alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+            alertDialogBuilder.show();
+        } else if (view == resetPass) {
+            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Reset Password");
+            alertDialogBuilder.setMessage("Are you are you want to reset your account password? Doing this will log you out of all current sessions.");
+            alertDialogBuilder.setPositiveButton("Yes", (arg0, arg1) -> forgotInit());
             alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
             alertDialogBuilder.show();
         } else if (view == aboutUs) {
