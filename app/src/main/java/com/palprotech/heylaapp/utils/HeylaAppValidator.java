@@ -24,7 +24,7 @@ public class HeylaAppValidator {
     }
 
     public static boolean checkMobileNumLength(String mobile) {
-        if (mobile.length() < 8 || mobile.length() > 13) {
+        if (mobile.length() < 8 || mobile.length() > 12) {
             return false;
         } else {
             return true;
