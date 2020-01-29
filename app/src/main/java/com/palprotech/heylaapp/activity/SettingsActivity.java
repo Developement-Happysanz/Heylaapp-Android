@@ -226,14 +226,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         } else if (view == deactivate) {
             android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
             alertDialogBuilder.setTitle("Deactivate Account");
-            alertDialogBuilder.setMessage("Are sure you want to deactivate your account?");
+            alertDialogBuilder.setMessage("Are you sure you want to deactivate your account?");
             alertDialogBuilder.setPositiveButton("Yes", (arg0, arg1) -> deactivateAcc());
             alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
             alertDialogBuilder.show();
         } else if (view == resetPass) {
             android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
             alertDialogBuilder.setTitle("Reset Password");
-            alertDialogBuilder.setMessage("Are you sure want to reset your account password? Doing this will log you out of all current sessions.");
+            alertDialogBuilder.setMessage("Are you sure you want to reset your account password? Doing this will log you out of all current sessions.");
             alertDialogBuilder.setPositiveButton("Yes", (arg0, arg1) -> forgotInit());
             alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
             alertDialogBuilder.show();

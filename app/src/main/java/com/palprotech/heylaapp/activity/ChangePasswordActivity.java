@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -107,8 +108,26 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         } else if (!this.etNewPassword.getText().toString().trim().equalsIgnoreCase(this.etConfirmPassword.getText().toString().trim())) {
             AlertDialogHelper.showSimpleAlertDialog(this, "Password does not match new password");
             return false;
+        } else if (!HeylaAppValidator.checkStringMinLength(6, this.etOldPassword.getText().toString().trim())) {
+            etOldPassword.setError(getString(R.string.err_password));
+            requestFocus(etOldPassword);
+            return false;
+        } else if (!HeylaAppValidator.checkStringMinLength(6, this.etNewPassword.getText().toString().trim())) {
+            etNewPassword.setError(getString(R.string.err_password));
+            requestFocus(etNewPassword);
+            return false;
+        } else if (!HeylaAppValidator.checkStringMinLength(6, this.etConfirmPassword.getText().toString().trim())) {
+            etConfirmPassword.setError(getString(R.string.err_password));
+            requestFocus(etConfirmPassword);
+            return false;
         } else {
             return true;
+        }
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+           this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
     }
 
