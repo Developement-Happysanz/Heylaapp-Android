@@ -200,7 +200,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         LoginManager.getInstance().logOut();
         GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);
         mGoogleSignInClient.signOut();
-        Intent newI = new Intent(new Intent(SettingsActivity.this, ForgotPasswordActivity.class));
+        Intent newI = new Intent(new Intent(SettingsActivity.this, ChangePasswordActivity.class));
         startActivity(newI);
         finish();
     }
