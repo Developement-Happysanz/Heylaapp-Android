@@ -147,6 +147,13 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBarLogin"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
             android:name=".activity.UpdatePasswordActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

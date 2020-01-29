@@ -105,6 +105,8 @@ public class HeylaAppConstants {
     public static final String PARAMS_USER_ROLE = "user_role";
     public static final String PARAMS_USER_ROLE_NAME = "user_role_name";
     public static final String PARAMS_USER_REFERRAL_CODE = "user_referral_code";
+    public static final String PARAMS_OLD_PASSWORD = "old_password";
+    public static final String PARAMS_NEW_PASSWORD = "password";
 
     //    Country list
     public static final String COUNTRY_LIST = "apimain/selectCountry/";
@@ -123,6 +125,9 @@ public class HeylaAppConstants {
 
     //    Change username
     public static final String CHANGE_USERNAME = "apimain/updateUsername/";
+
+    //    Change password
+    public static final String CHANGE_PASSWORD = "apimain/change_password/";
 
     //    Change username params
     public static final String CHANGE_USERNAME1 = "full_name";

@@ -28,6 +28,8 @@
     <string name="usernameormail">Username/Email ID/Mobile Number</string>
     <string name="new_mobile_number">Mobile Number</string>
     <string name="newpassword">New Password</string>
+    <string name="oldpassword">Old Password</string>
+    <string name="confirmpassword">Confirm Password</string>
     <string name="remember">Remember me</string>
     <string name="alternatelogin">Or</string>
     <string name="forgot">Forgot password?</string>
