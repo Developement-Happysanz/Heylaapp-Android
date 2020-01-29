@@ -189,17 +189,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void forgotInit() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        sharedPreferences.edit().clear().apply();
-//        TwitterUtil.getInstance().resetTwitterRequestToken();
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        // Build a GoogleSignInClient with the options specified by gso.
-        LoginManager.getInstance().logOut();
-        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);
-        mGoogleSignInClient.signOut();
         Intent newI = new Intent(new Intent(SettingsActivity.this, ChangePasswordActivity.class));
         startActivity(newI);
         finish();
