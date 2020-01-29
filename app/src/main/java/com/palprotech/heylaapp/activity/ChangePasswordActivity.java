@@ -104,7 +104,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         } else if (!HeylaAppValidator.checkNullString(this.etConfirmPassword.getText().toString().trim())) {
             AlertDialogHelper.showSimpleAlertDialog(this, "Confirm password required");
             return false;
-        } else if (!this.etNewPassword.getText().toString().trim().equalsIgnoreCase(this.etNewPassword.getText().toString().trim())) {
+        } else if (!this.etNewPassword.getText().toString().trim().equalsIgnoreCase(this.etConfirmPassword.getText().toString().trim())) {
             AlertDialogHelper.showSimpleAlertDialog(this, "Password does not match new password");
             return false;
         } else {
