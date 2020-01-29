@@ -109,15 +109,15 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
             AlertDialogHelper.showSimpleAlertDialog(this, "Password does not match new password");
             return false;
         } else if (!HeylaAppValidator.checkStringMinLength(6, this.etOldPassword.getText().toString().trim())) {
-            etOldPassword.setError(getString(R.string.err_password));
+            etOldPassword.setError(getString(R.string.err_min_pass_length));
             requestFocus(etOldPassword);
             return false;
         } else if (!HeylaAppValidator.checkStringMinLength(6, this.etNewPassword.getText().toString().trim())) {
-            etNewPassword.setError(getString(R.string.err_password));
+            etNewPassword.setError(getString(R.string.err_min_pass_length));
             requestFocus(etNewPassword);
             return false;
         } else if (!HeylaAppValidator.checkStringMinLength(6, this.etConfirmPassword.getText().toString().trim())) {
-            etConfirmPassword.setError(getString(R.string.err_password));
+            etConfirmPassword.setError(getString(R.string.err_min_pass_length));
             requestFocus(etConfirmPassword);
             return false;
         } else {
