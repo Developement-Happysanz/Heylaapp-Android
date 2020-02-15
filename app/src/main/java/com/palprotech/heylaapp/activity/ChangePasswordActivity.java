@@ -194,6 +194,6 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     @Override
     public void onError(String error) {
         progressDialogHelper.hideProgressDialog();
-        AlertDialogHelper.showSimpleAlertDialog(getApplicationContext(), error);
+        AlertDialogHelper.showSimpleAlertDialog(this, error);
     }
 }

@@ -387,10 +387,40 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/sign_out_img"
+                        android:id="@+id/become_org_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/user_guide_layout"
+                        android:paddingBottom="10dp"
+                        android:layout_centerVertical="true"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:id="@+id/become_org"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_event_organiser" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/become_org"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@+id/become_org"
+                            android:fontFamily="@font/muli"
+                            android:text="Become an Organiser"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/sign_out_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/become_org_layout"
                         android:paddingBottom="10dp"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
