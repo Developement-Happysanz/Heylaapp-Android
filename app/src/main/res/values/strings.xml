@@ -52,6 +52,7 @@
 
     <!--App Intro Screen-->
     <string name="next">NEXT</string>
+    <string name="previous">PREVIOUS</string>
     <string name="skip">SKIP</string>
     <string name="start">DIVE IN</string>
 

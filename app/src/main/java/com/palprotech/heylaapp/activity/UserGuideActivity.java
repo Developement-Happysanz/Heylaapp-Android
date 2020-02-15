@@ -24,7 +24,7 @@ public class UserGuideActivity extends AppCompatActivity implements View.OnClick
     ImageView guideImg;
     TextView userExplain, skip, userExplainTitle;
     int imgCount = 1;
-    Button next;
+    Button next,previous;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +50,8 @@ public class UserGuideActivity extends AppCompatActivity implements View.OnClick
         userExplain.setText("Here we list the events based on your preferences. And you can change your preferences anytime.");
         next = (Button) findViewById(R.id.next);
         next.setOnClickListener(this);
+        previous = (Button) findViewById(R.id.previous);
+        previous.setOnClickListener(this);
         skip = (TextView) findViewById(R.id.skip);
         skip.setOnClickListener(this);
     }
@@ -129,6 +131,7 @@ public class UserGuideActivity extends AppCompatActivity implements View.OnClick
             default:
                 skip.setText("Finish");
                 next.setVisibility(View.GONE);
+                previous.setVisibility(View.GONE);
                 userExplainTitle.setVisibility(View.GONE);
                 userExplain.setVisibility(View.GONE);
         }
@@ -139,6 +142,12 @@ public class UserGuideActivity extends AppCompatActivity implements View.OnClick
         if (v == next) {
             imgCount++;
             changeImage(imgCount);
+        }
+        if (v == previous) {
+            if (imgCount != 1) {
+                imgCount--;
+                changeImage(imgCount);
+            }
         }
         if (v == skip) {
             finish();

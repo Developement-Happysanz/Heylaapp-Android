@@ -35,6 +35,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.palprotech.heylaapp.R;
+import com.palprotech.heylaapp.activity.BecomeAnOrgActivity;
 import com.palprotech.heylaapp.activity.BlogViewActivity;
 import com.palprotech.heylaapp.activity.BookingHistoryActivity;
 import com.palprotech.heylaapp.activity.NotificationActivity;
@@ -367,7 +368,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
      */
     private class MenuViewHolder {
         private LinearLayout mMenuOptions;
-        private RelativeLayout vBooking, vCategory, vChangeCity, vWishList, vShare, vAboutUs, vRateUs, vSignOut, vSettings, vProfile, vUserGuide;
+        private RelativeLayout vBooking, vCategory, vChangeCity, vWishList, vShare, vAboutUs, vRateUs, vSignOut, vSettings, vProfile, vUserGuide, vBecomOrg;
         private ImageView mMenuBackground, vUserImage, vNotification;
         private ViewGroup mMenuHeader;
         private ViewGroup mMenuFooter;
@@ -400,7 +401,6 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
             }
             userName = rootView.findViewById(R.id.user_name);
             userName.setText(PreferenceStorage.getEventCityName(context));
-
             this.vBooking = (RelativeLayout) rootView.findViewById(R.id.booking_history_img);
             this.vBooking.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -455,6 +455,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                 @Override
                 public void onClick(View v) {
                     Intent homeIntent = new Intent(context, SelectCityActivity.class);
+                    homeIntent.putExtra("page", "side");
                     context.startActivity(homeIntent);
                 }
             });
@@ -520,6 +521,47 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                     context.startActivity(homeIntent);
                 }
             });
+            this.vBecomOrg = (RelativeLayout) rootView.findViewById(R.id.become_org_layout);
+            this.vBecomOrg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (PreferenceStorage.getUserType(context).equalsIgnoreCase("1")) {
+                        Intent homeIntent = new Intent(context, BecomeAnOrgActivity.class);
+                        context.startActivity(homeIntent);
+                    }
+                    else {
+                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context);
+                        alertDialogBuilder.setTitle("Login");
+                        alertDialogBuilder.setMessage("Log in to Access");
+                        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+                                sharedPreferences.edit().clear().apply();
+//        TwitterUtil.getInstance().resetTwitterRequestToken();
+
+                                Intent homeIntent = new Intent(context, SplashScreenActivity.class);
+                                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                context.startActivity(homeIntent);
+
+                            }
+                        });
+                        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        alertDialogBuilder.show();
+                    }
+                }
+            });
+            if (PreferenceStorage.getUserRole(context).equalsIgnoreCase("2")) {
+                vBecomOrg.setVisibility(GONE);
+            } else {
+                vBecomOrg.setVisibility(VISIBLE);
+            }
             this.vSettings = (RelativeLayout) rootView.findViewById(R.id.settings_img);
             this.vSettings.setOnClickListener(new View.OnClickListener() {
                 @Override

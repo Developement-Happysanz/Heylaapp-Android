@@ -287,6 +287,9 @@ public class HeylaAppConstants {
     //    Attendees
     public static final String UPDATE_ATTENDEES = "apimain/bookingAttendees/";
 
+    //    Attendees
+    public static final String REQUEST_ORG = "apimain/user_organiser_request/";
+
     //    Booking history
     public static final String BOOKING_HISTORY = "apimain/bookingHistory/";
 

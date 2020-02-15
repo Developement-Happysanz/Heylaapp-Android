@@ -73,12 +73,13 @@ public class SelectCityActivity extends AppCompatActivity implements LocationLis
     protected Double latitude, longitude;
     String address = "", resString = "", storeCountryId = "";
     TextView loc;
+    String page;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_city);
-
+        page = getIntent().getStringExtra("page");
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
@@ -258,12 +259,15 @@ public class SelectCityActivity extends AppCompatActivity implements LocationLis
                 } else if (resString.equalsIgnoreCase("select")) {
 
 //                    Toast.makeText(getApplicationContext(), "You are in now " + eventCities.getCityName(), Toast.LENGTH_LONG).show();
-
-                    Intent intent = new Intent(this, SetUpPreferenceActivity.class);
+                    if (page!=null && page.equalsIgnoreCase("side")) {
+                        finish();
+                    } else {
+                        Intent intent = new Intent(this, SetUpPreferenceActivity.class);
 //        intent.putExtra("eventObj", eventCities);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
 
             } catch (JSONException e) {
