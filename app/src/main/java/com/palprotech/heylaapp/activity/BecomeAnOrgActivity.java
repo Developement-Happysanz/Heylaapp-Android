@@ -1,5 +1,7 @@
 package com.palprotech.heylaapp.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
@@ -49,6 +51,7 @@ public class BecomeAnOrgActivity extends AppCompatActivity implements View.OnCli
     private Button btnSkip;
     protected ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
+    String res = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,9 +67,13 @@ public class BecomeAnOrgActivity extends AppCompatActivity implements View.OnCli
         findViewById(R.id.back_res).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent (getApplicationContext(), MainActivity.class);
+                startActivity(i);
                 finish();
             }
         });
+
+        orgStatus();
 
     }
 
@@ -78,7 +85,7 @@ public class BecomeAnOrgActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void updateAttendeesToServer() {
-
+        res = "request";
         JSONObject jsonObject = new JSONObject();
         try {
 
@@ -94,13 +101,54 @@ public class BecomeAnOrgActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+    private void orgStatus() {
+        res = "status";
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(HeylaAppConstants.KEY_USER_ID, PreferenceStorage.getUserId(this));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = HeylaAppConstants.BASE_URL + HeylaAppConstants.ORG_STATUS;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+    }
+
     @Override
     public void onResponse(JSONObject response) {
 
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
             try {
-                AlertDialogHelper.showSimpleAlertDialog(this, response.getString("msg"));
+                if (res.equalsIgnoreCase("request")) {
+                    AlertDialogHelper.showSimpleAlertDialog(this, response.getString("msg"));
+                } else if (res.equalsIgnoreCase("status")) {
+                    if (response.getString("msg").equalsIgnoreCase("Approved")) {
+                        btnProceed.setClickable(false);
+                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+                        alertDialogBuilder.setTitle("Organiser status");
+                        alertDialogBuilder.setMessage("You have been approved as an organizer!\nSign in to Heyla web app to create and organize events.");
+                        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                Intent i = new Intent (getApplicationContext(), MainActivity.class);
+                                startActivity(i);
+                                finish();
+                            }
+                        });
+                        alertDialogBuilder.setCancelable(false);
+                        alertDialogBuilder.show();
+                        PreferenceStorage.saveUserRole(this, "2");
+                    } else {
+                        AlertDialogHelper.showSimpleAlertDialog(this, response.getString("msg"));
+                        btnProceed.setVisibility(View.GONE);
+                    }
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -136,8 +184,24 @@ public class BecomeAnOrgActivity extends AppCompatActivity implements View.OnCli
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         Log.d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                        if (msg.equalsIgnoreCase("No request found")) {
 
+                        } else {
+                            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+                            alertDialogBuilder.setTitle("Organiser status");
+                            alertDialogBuilder.setMessage(msg);
+                            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    Intent i = new Intent (getApplicationContext(), MainActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                }
+                            });
+                            alertDialogBuilder.setCancelable(false);
+                            alertDialogBuilder.show();
+//                            btnProceed.setVisibility(View.GONE);
+                        }
                     } else {
                         signInSuccess = true;
                     }
