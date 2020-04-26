@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AppWorkSpace-HeylaApp.iml" filepath="$PROJECT_DIR$/AppWorkSpace-HeylaApp.iml" group="HeylaApp" />
       <module fileurl="file://$PROJECT_DIR$/HeylaApp.iml" filepath="$PROJECT_DIR$/HeylaApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/HeylaApp-app.iml" filepath="$PROJECT_DIR$/app/HeylaApp-app.iml" group="HeylaApp/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
