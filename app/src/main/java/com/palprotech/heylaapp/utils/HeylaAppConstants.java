@@ -11,9 +11,9 @@ public class HeylaAppConstants {
 //    public static final String BASE_URL = "https://heylaapp.com/testing/";
 //    public static final String BASE_URL = "https://heylaapp.sg/demo/";
 //    public static final String BASE_URL = "https://happysanz.in/heyla/";
-//    public static final String BASE_URL = "https://happysanz.net/old_heyla/";
+    public static final String BASE_URL = "https://happysanz.net/old_heyla/";
 //    public static final String BASE_URL = "https://heyla.happysanz.net/";
-    public static final String BASE_URL = "https://heylaapp.com/";
+//    public static final String BASE_URL = "https://heylaapp.com/";
 
     //    SignIn
     public static final String SIGN_IN = "apimain/login/";

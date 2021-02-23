@@ -6,7 +6,7 @@ android {
             keyAlias 'heylaapp_alias'
             keyPassword 'Heylaapp@123'
 //            storeFile file('E:\\StudioProjects\\Heylaapp\\app\\heylaapp.jks')
-            storeFile file('D:\\HappySanzTech\\AppWorkSpace\\Heylaapp\\app\\heylaapp.jks')
+            storeFile file('G:\\HappySanzTech\\AppWorkSpace\\Heylaapp\\app\\heylaapp.jks')
             storePassword 'Heylaapp@123'
             flavorDimensions "default"
         }
@@ -30,16 +30,16 @@ android {
         javaMaxHeapSize "4g"
     }
 
-    afterEvaluate {
-        tasks.matching {
-            it.name.startsWith('dex')
-        }.each { dx ->
-            if (dx.additionalParameters == null) {
-                dx.additionalParameters = []
-            }
-            dx.additionalParameters += "--set-max-idx-number=55000"
-        }
-    }
+//    afterEvaluate {
+//        tasks.matching {
+//            it.name.startsWith('dex')
+//        }.each { dx ->
+//            if (dx.additionalParameters == null) {
+//                dx.additionalParameters = []
+//            }
+//            dx.additionalParameters += "--set-max-idx-number=55000"
+//        }
+//    }
 
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
